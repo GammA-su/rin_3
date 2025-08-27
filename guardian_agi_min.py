@@ -393,9 +393,15 @@ class LLMClient:
                 {"role":"system","content":system_msg},
                 {"role":"user","content":user_msg}
             ],
-            "options": {"temperature": float(temperature), "top_p": float(top_p),
-                        "repeat_penalty": float(repeat_penalty), "num_predict": int(num_predict),
-                        "num_ctx": int(num_ctx), **({"format":"json"} if force_json else {})},
+            "options": {
+                "temperature": float(temperature),
+                "top_p": float(top_p),
+                "repeat_penalty": float(repeat_penalty),
+                "num_predict": int(num_predict),
+                "num_ctx": int(num_ctx),
+                **({"format":"json"} if force_json else {}),
+                **({"stop": ["\n\n"]} if force_json else {})
+            },
             "stream": False
         }
         try:
@@ -425,9 +431,15 @@ class LLMClient:
         gen_payload = {
             "model": self.model,
             "prompt": f"{system_msg}\n\nUser:\n{user_msg}\n\nAssistant:",
-            "options": {"temperature": float(temperature), "top_p": float(top_p),
-                        "repeat_penalty": float(repeat_penalty), "num_predict": int(num_predict),
-                        "num_ctx": int(num_ctx), **({"format":"json"} if force_json else {})},
+            "options": {
+                "temperature": float(temperature),
+                "top_p": float(top_p),
+                "repeat_penalty": float(repeat_penalty),
+                "num_predict": int(num_predict),
+                "num_ctx": int(num_ctx),
+                **({"format":"json"} if force_json else {}),
+                **({"stop": ["\n\n"]} if force_json else {})
+            },
             "stream": False
         }
         try:
@@ -491,28 +503,54 @@ CRITIC_SYS = (
 )
 
 def extract_json_object(s: str) -> dict:
-    if not s: raise ValueError("empty")
-    try: return json.loads(s)
-    except Exception: pass
-    last_obj = None; stack = []; start_idx = None
+    if not s:
+        raise ValueError("empty")
+
+    # 1) Try direct parse
+    try:
+        return json.loads(s)
+    except Exception:
+        pass
+
+    # 2) Grab the longest balanced {...} slice
+    start_idx = None
+    stack = 0
+    best = None
     for i, ch in enumerate(s):
         if ch == '{':
-            if not stack: start_idx = i
-            stack.append('{')
+            if stack == 0:
+                start_idx = i
+            stack += 1
         elif ch == '}':
-            if stack:
-                stack.pop()
-                if not stack and start_idx is not None:
-                    cand = s[start_idx:i+1]; last_obj = cand
-    if last_obj:
-        return json.loads(last_obj)
-    raise ValueError("no JSON found")
+            if stack > 0:
+                stack -= 1
+                if stack == 0 and start_idx is not None:
+                    cand = s[start_idx:i+1]
+                    best = cand  # keep last balanced object
+
+    if best:
+        try:
+            return json.loads(best)
+        except Exception:
+            pass
+
+    # 3) Heuristic repairs: strip trailing commas and drop everything after first "thinking"
+    t = s.split('"thinking"', 1)[0]
+    # Remove common trailing comma errors
+    t = t.replace(",]", "]").replace(",}", "}")
+    # Try to close with a final brace if there is at least one opening '{'
+    if t.count('{') > t.count('}'):
+        t = t + "}" * (t.count('{') - t.count('}'))
+    try:
+        return json.loads(t)
+    except Exception:
+        raise ValueError("no JSON found")
 
 def run_critic(llm: LLMClient, answer: str, mu: Mu, attempts_log: List[dict]) -> dict:
     temperature = max(0.1, 0.9 - 0.6*mu.s5ht)
     top_p = 0.8
     repeat_penalty = 1.10 + 0.10*mu.s5ht
-    num_predict = 220
+    num_predict = 512  # was 220
     best = {"q_overall": 0.0, "has_conflict_note": False, "reasons": ["heuristic fallback (no JSON)"]}
     passes = 1 + int(2*mu.ach)
     for _ in range(passes):
