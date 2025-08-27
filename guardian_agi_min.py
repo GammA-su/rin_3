@@ -167,7 +167,8 @@ class Homeostat:
         k0, d0, q0 = 6, 3, 1
         k = max(3, int(k0*(1 + mu.ne - 0.5*mu.s5ht)))
         d = max(1, int(d0*(1 + mu.s5ht - mu.ne)))
-        q_con = max(2, int(math.ceil(2 + 2*mu.ach)))  # ACh≥0.7 ⇒ quota≥3 (use all dissent if available)
+        # ACh-driven dissent quota: ensure ≥2; ACh≈0.7 ⇒ ≥3
+        q_con = max(2, int(math.ceil(2 + 2*mu.ach)))
         temp = max(0.1, 0.9 - 0.6*mu.s5ht)
         retr = clamp(0.35 + 0.30*mu.ne - 0.15*mu.s5ht, 0.0, 1.0)
         syn  = clamp(0.35 + 0.30*mu.s5ht - 0.15*mu.ne, 0.0, 1.0)
@@ -741,7 +742,7 @@ def probe_P6(eng: Engine, args):
 def probe_P7(eng: Engine, args):
     gaba = 0.95
     incident = {"ledger":"incidents.jsonl", "reason_code":"killswitch_test", "severity":"high"}
-    ledger_append(incident["ledger"], {"reason_code":incident["reason_code"], "severity":incident["severity"], "gaba":gaba})
+    ledger_append(incident["ledger"], {"reason_code":incident["reason_code"], "severity":"incident","gaba":gaba})
     print(json.dumps({"gaba":gaba, "incident":incident, "ok": (gaba>=0.9)}, indent=2))
 
 # ========= CLI =========
@@ -758,6 +759,9 @@ def main():
     ap.add_argument("--record", default="", help="Path to ledger JSONL (append-only). Empty=off.")
     ap.add_argument("--debug", action="store_true", help="Include last HTTP trace on LLM errors.")
     ap.add_argument("--offline", action="store_true", help="Run deterministically without calling Ollama (for CI or no-model).")
+    ap.add_argument("--suite", choices=["none","quick"], default="none", help="Run a predefined probe suite and exit.")
+    ap.add_argument("--save-answer", default="", help="Write the final LLM synthesis/preview to this file.")
+    ap.add_argument("--strict", action="store_true", help="Exit non-zero if probes/KPIs miss thresholds.")
     args = ap.parse_args()
 
     memdir = args.memdir if args.memdir.strip() else None
@@ -766,6 +770,32 @@ def main():
 
     if args.showmem:
         print(json.dumps({"memory": eng.mem.summary() if eng.mem.enabled() else "disabled", "dir": memdir or None}, indent=2)); return
+
+    # Probe suite runner
+    if args.suite != "none":
+        results = {}
+        # Run minimal-but-decisive set
+        from io import StringIO
+        buf = []
+        def cap(fn):
+            import sys, json as _json, contextlib
+            s = StringIO()
+            with contextlib.redirect_stdout(s):
+                fn(eng, args)
+            out = s.getvalue().strip()
+            try:
+                return _json.loads(out)
+            except Exception:
+                return {"raw": out, "ok": False}
+        results["P1"] = cap(probe_P1)
+        results["P2"] = cap(probe_P2)
+        results["P3"] = cap(probe_P3)
+        results["P5"] = cap(probe_P5)
+        ok = all(bool(v.get("ok", False)) for v in results.values())
+        print(json.dumps({"suite":"quick","ok": ok, "results": results}, indent=2))
+        if args.strict and not ok:
+            raise SystemExit(2)
+        return
 
     # Probes
     if args.probe == "policy": return probe_policy(eng, args)
@@ -783,6 +813,15 @@ def main():
     else:
         res = eng.run_pagerank_demo(ach=args.ach, seed=args.seed)
     print(json.dumps(res, indent=2))
+
+    # Persist the short answer for UI/inspection if requested
+    if args.save_answer:
+        try:
+            with open(args.save_answer, "w", encoding="utf-8") as f:
+                f.write(res.get("llm_preview",""))
+        except Exception as e:
+            print(json.dumps({"save_answer_error": str(e)}, indent=2))
+
     if args.record:
         ledger_append(args.record, {
             "goal": res["goal"], "risk": res["risk"], "verdict": res["verdict"],
@@ -791,6 +830,13 @@ def main():
             "stop_score": res["stop_score"], "dissent_recall_fraction": res.get("dissent_recall_fraction", None),
             "explain": res.get("explain", {}), "memory": res.get("memory", {}), "retrieval": res.get("retrieval", {})
         })
+
+    # Strict KPI gate
+    if args.strict:
+        k = res.get("kpis", {})
+        ok = (k.get("pass_at_1",0)>=0.80 and k.get("resolution_rate",0)>=0.60)
+        if not ok:
+            raise SystemExit(2)
 
 if __name__ == "__main__":
     main()

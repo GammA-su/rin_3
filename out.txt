@@ -1,0 +1,3 @@
+Assumptions: random-surfer model; official sources prioritized. Tests: ≤150w, ≥3 cites, resolve misconception.
+PageRank measures the stationary probability that a random surfer lands on a page; a damping factor d≈0.85 models continuing to follow links. Rank flows from a page proportionally to its own rank and is divided by its outdegree, so high-rank links weigh more and hubs pass less per link. Teleportation (1−d) prevents sinks and spam clusters from hoarding rank. [1] pagerank_primary.txt [2] pagerank_dissent.txt [3] pagerank_dissent_2.txt
+Misconception: It is not raw link counts; quality-weighted links and damping govern rank.
