@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 # guardian_agi_min.py — Guardian-AGI scaffold (seed=137)
 # Ollama chat-first with /api/generate fallback; Critic JSON parsing without regex recursion.
+# Safe, additive upgrades:
+#  - Explainability bundle `payload["explain"]`
+#  - Pilot no longer leaks `thinking`; Critic may fall back to `thinking`
+#  - Minimal T2 Compare-Resolve task (--task compare)
 
 from __future__ import annotations
 import argparse, json, os, random, time, http.client, hashlib
@@ -234,7 +238,8 @@ class LLMClient:
 
     def ask(self, system_msg: str, user_msg: str, *, temperature: float, top_p: float,
             repeat_penalty: float, num_predict: int, num_ctx: int=8192, force_json: bool=False,
-            attempts_log: Optional[List[dict]]=None, phase_label:str="pilot") -> str:
+            attempts_log: Optional[List[dict]]=None, phase_label:str="pilot",
+            allow_thinking_fallback: bool=False) -> str:
         chat_payload = {
             "model": self.model,
             "messages": [
@@ -250,9 +255,13 @@ class LLMClient:
             data, httpm = self._post("/api/chat", chat_payload, phase_label)
             out = ""
             if isinstance(data, dict) and "message" in data and isinstance(data["message"], dict):
-                out = data["message"].get("content","") or data["message"].get("thinking","")
+                out = data["message"].get("content","")
+                if not out and allow_thinking_fallback:
+                    out = data["message"].get("thinking","")
             elif isinstance(data, dict):
-                out = data.get("response","") or data.get("thinking","")
+                out = data.get("response","")
+                if not out and allow_thinking_fallback:
+                    out = data.get("thinking","")
             if attempts_log is not None:
                 attempts_log.append({"kind": phase_label, "ok": bool(out), "http": httpm, "len": len(out or "")})
             if out:
@@ -273,7 +282,9 @@ class LLMClient:
             data2, httpm2 = self._post("/api/generate", gen_payload, phase_label + ("-fallback" if phase_label=="pilot" else "-repair-salvage"))
             out2 = ""
             if isinstance(data2, dict):
-                out2 = data2.get("response","") or data2.get("thinking","")
+                out2 = data2.get("response","")
+                if not out2 and allow_thinking_fallback:
+                    out2 = data2.get("thinking","")
             if attempts_log is not None:
                 attempts_log.append({"kind": phase_label + ("-fallback" if phase_label=="pilot" else "-repair-salvage"),
                                      "ok": bool(out2), "http": httpm2, "len": len(out2 or "")})
@@ -330,7 +341,8 @@ def run_critic(llm: LLMClient, answer: str, mu: Mu, attempts_log: List[dict]) ->
             j = llm.ask(CRITIC_SYS, f"Answer:\n{answer}\n\nReturn JSON only.",
                         temperature=temperature, top_p=top_p,
                         repeat_penalty=repeat_penalty, num_predict=num_predict,
-                        force_json=True, attempts_log=attempts_log, phase_label="critic")
+                        force_json=True, attempts_log=attempts_log, phase_label="critic",
+                        allow_thinking_fallback=True)
             data = extract_json_object(j)
             if isinstance(data, dict) and data.get("q_overall", 0) >= best.get("q_overall", 0):
                 best = data
@@ -414,7 +426,8 @@ class Engine:
                 llm_answer = self.llm.ask(system_msg, user_msg,
                     temperature=temperature, top_p=top_p,
                     repeat_penalty=repeat_penalty, num_predict=num_predict,
-                    attempts_log=attempts, phase_label="pilot")
+                    attempts_log=attempts, phase_label="pilot",
+                    allow_thinking_fallback=False)  # Pilot should not leak 'thinking'
             except Exception as e:
                 http_trace = self.llm.last_http
                 llm_answer = f"[LLM error] {e} | http={http_trace}"
@@ -471,6 +484,59 @@ class Engine:
         }
         if self.debug and verdict["action"] == "allow":
             payload["last_http"] = getattr(self.llm, "last_http", {})
+
+        # Explainability bundle (additive; keeps normal payload intact)
+        payload["explain"] = {
+            "claim_ids": [c["id"] for c in payload["claims"]],
+            "source_ids": payload["evidence"],
+            "policy_verdict": verdict,
+            "contradiction_graph": getattr(self.arch, "contradict", {})
+        }
+        return payload
+
+    def run_compare_demo(self, ach: Optional[float]=None, seed:int=SEED_DEFAULT) -> Dict[str,Any]:
+        """T2 Compare-Resolve: c2 (technical claim) vs c3 (media simplification)."""
+        seed_everything(seed)
+        self.ensure_demo_claims()
+        mu_in = Mu(self.neuro0.da, self.neuro0.ne, self.neuro0.s5ht,
+                   ach if ach is not None else self.neuro0.ach,
+                   self.neuro0.gaba, self.neuro0.oxt)
+
+        goal = "Compare A (technical) vs B (media claim) about PageRank and resolve the contradiction."
+        risk = self.cust.classify(goal)
+        verdict = self.cust.preflight(risk)
+        intent = self.pilot.draft_intent(goal, risk)
+
+        # No LLM needed here; deterministic synthesis for demo
+        c2 = self.arch.claims["c2"].to_dict()
+        c3 = self.arch.claims["c3"].to_dict()
+        table = [
+            {"aspect":"Definition", "A":"Weighted by linking-page rank / outdegree", "B":"Raw link counts"},
+            {"aspect":"Damping",    "A":"Uses d≈0.85 + teleport",                   "B":"Not modeled"},
+            {"aspect":"Implication","A":"Quality matters; hubs dilute",             "B":"Quantity dominates"}
+        ]
+        rationale = ("Resolution: B is an oversimplification. PageRank distributes rank "
+                     "proportionally to the linking page’s rank and normalizes by its outdegree; "
+                     "the damping factor prevents rank sinks. Therefore A is correct; B is misleading.")
+
+        kpis = self.wit.score({"goal_met": True, "sources": 3, "resolved": True})
+        stop = soft_stop(1.0, mu_in.gaba, 0.2, 0.0)
+
+        payload = {
+            "goal": goal, "risk": risk, "verdict": verdict["action"],
+            "intent": asdict(intent), "mu_out": asdict(mu_in), "policy": asdict(self.homeo.couple(mu_in)),
+            "plan": asdict(self.oper.plan_compare()),
+            "compare": {"A": c2, "B": c3, "table": table, "resolution": rationale},
+            "kpis": kpis, "stop_score": stop,
+            "claims": [self.arch.claims["c1"].to_dict(), c2, c3],
+            "evidence": ["pagerank_primary.txt","pagerank_dissent.txt","pagerank_media.txt"],
+        }
+        payload["explain"] = {
+            "claim_ids": [c["id"] for c in payload["claims"]],
+            "source_ids": payload["evidence"],
+            "policy_verdict": verdict,
+            "contradiction_graph": getattr(self.arch, "contradict", {})
+        }
         return payload
 
 # ========= Probes =========
@@ -565,12 +631,14 @@ def main():
     ap.add_argument("--seed", type=int, default=SEED_DEFAULT)
     ap.add_argument("--ach", type=float, default=None, help="override ACh [0..1]")
     ap.add_argument("--probe", choices=["none","policy","P1","P2","P3","P4","P5","P6","P7"], default="none")
+    ap.add_argument("--task", choices=["pagerank","compare"], default="pagerank", help="demo task: T1 pagerank or T2 compare-resolve")
     ap.add_argument("--record", default="", help="Path to ledger JSONL (append-only). Empty=off.")
     ap.add_argument("--debug", action="store_true", help="Include last HTTP trace on LLM errors.")
     args = ap.parse_args()
 
     eng = Engine(model_name=args.model, debug=args.debug)
 
+    # Probes
     if args.probe == "policy": return probe_policy(eng, args)
     if args.probe == "P1":     return probe_P1(eng, args)
     if args.probe == "P2":     return probe_P2(eng, args)
@@ -580,16 +648,21 @@ def main():
     if args.probe == "P6":     return probe_P6(eng, args)
     if args.probe == "P7":     return probe_P7(eng, args)
 
-    # default run
-    res = eng.run_pagerank_demo(ach=args.ach, seed=args.seed)
+    # Default runs (tasks)
+    if args.task == "compare":
+        res = eng.run_compare_demo(ach=args.ach, seed=args.seed)
+    else:
+        res = eng.run_pagerank_demo(ach=args.ach, seed=args.seed)
+
     print(json.dumps(res, indent=2))
     if args.record:
         ledger_append(args.record, {
             "goal": res["goal"], "risk": res["risk"], "verdict": res["verdict"],
-            "mu_out": res["mu_out"], "policy": res["policy"],
-            "llm_knobs": res["llm_knobs"], "critic": res.get("critic", {}),
+            "mu_out": res.get("mu_out", {}), "policy": res.get("policy", {}),
+            "llm_knobs": res.get("llm_knobs", {}), "critic": res.get("critic", {}),
             "adopted": res.get("adopted", True), "kpis": res["kpis"], "stop_score": res["stop_score"],
-            "dissent_recall_fraction": res.get("dissent_recall_fraction", None)
+            "dissent_recall_fraction": res.get("dissent_recall_fraction", None),
+            "explain": res.get("explain", {})
         })
 
 if __name__ == "__main__":
