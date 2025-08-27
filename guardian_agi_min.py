@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
-# guardian_agi_min.py — single-file Guardian-AGI scaffold (Track 1: Ollama, no Docker)
-# Model default: gpt-oss:20b  |  Seed=137  |  Deterministic, minimal, goal-conditioned.
+# guardian_agi_min.py — single-file Guardian-AGI scaffold
+# Track 1: Ollama (no Docker). Default model: gpt-oss:20b
+# AGI-essential: goal-conditioned (--task), μ-steered guardrails, critic, self-improve (--steps)
+
 from __future__ import annotations
 import argparse, json, os, random, time, http.client, hashlib, re
 from dataclasses import dataclass, asdict
@@ -47,6 +49,13 @@ def between_tags(s: str, start="<<BEGIN>>", end="<<END>>") -> str:
 def word_count(s: str) -> int:
     return len(re.findall(r"\b\w+\b", s or ""))
 
+def trim_words(s: str, max_words: int) -> str:
+    toks = re.findall(r"\S+", s.strip())
+    if len(toks) <= max_words: return s.strip()
+    out = " ".join(toks[:max_words]).rstrip(",; ")
+    if not re.search(r"[.!?]\s*$", out): out += "."
+    return out
+
 # ========= Data shapes =========
 @dataclass
 class Source:
@@ -65,7 +74,7 @@ class Claim:
 class EvidenceUnit:
     id: str; content_hash: str; extract: str; stance: str="neutral"; provenance: List[Dict[str, Any]] = None
 
-# ========= Emotional center (homeostat) =========
+# ========= Emotional center =========
 @dataclass
 class Appraisal: p: float; n: float; u: float; k: float; s: float; c: float; h: float
 @dataclass
@@ -97,7 +106,7 @@ class Homeostat:
         saf  = clamp(1.0 - (retr + syn), 0.0, 1.0)
         return PolicyCoupling(k, d, q_con, temp, retr, syn, saf, reserved_dissent=(mu.ach>=0.6))
 
-# ========= Safety (custodian) =========
+# ========= Safety =========
 class Custodian:
     policy_ver = "v1.1"
     def classify(self, goal: str) -> str:
@@ -108,7 +117,7 @@ class Custodian:
         return {"action": "deny" if risk in ("R3","R4") else "allow",
                 "notes":  f"Risk {risk} {'blocked' if risk in ('R3','R4') else 'allowed'} by policy"}
 
-# ========= Witness (evaluation) =========
+# ========= Witness =========
 class Witness:
     def score(self, stats: Dict[str,Any]) -> Dict[str,float]:
         pass_at_1   = 1.0 if stats.get("goal_met", False) else 0.0
@@ -117,7 +126,7 @@ class Witness:
         resolution  = 1.0 if stats.get("resolved", False) else 0.0
         return {"pass_at_1":pass_at_1,"precision_k":precision_k,"ece":ece,"resolution_rate":resolution}
 
-# ========= Archivist (world model stub) =========
+# ========= Archivist =========
 class Archivist:
     def __init__(self):
         self.claims: Dict[str, Claim] = {}
@@ -127,7 +136,7 @@ class Archivist:
         self.contradict.setdefault(i,[]).append(j); self.contradict.setdefault(j,[]).append(i)
     def retrieve(self, k:int=5) -> List[Claim]: return list(self.claims.values())[:k]
 
-# ========= Scout (toy retrieval used for the demo task only) =========
+# ========= Scout (toy demo evidence) =========
 PAGERANK_PRIMARY = """PageRank is a link analysis algorithm assigning importance as the stationary probability a random surfer lands on a page. The damping factor (≈0.85) models continuing to click links."""
 PAGERANK_MEDIA   = """Popular media often say PageRank ranks pages by counting links; more links imply higher rank."""
 PAGERANK_DISSENT = """Dissent: PageRank is NOT simple counts; it weights by the rank of linking pages and normalizes by their outdegree."""
@@ -279,7 +288,7 @@ def run_critic(llm: LLMClient, answer: str, mu: Mu, passes: int=1) -> dict:
             j = llm.ask(CRITIC_SYS, f"Answer:\n{answer}\n\nReturn JSON only.",
                         temperature=temperature, top_p=top_p,
                         repeat_penalty=repeat_penalty, num_predict=num_predict,
-                        force_json=True, prefer_generate=False)
+                        force_json=True, prefer_generate=True)  # generate-first JSON for stability
             try: data = extract_json(j)
             except Exception: data = critic_heuristic(j)
             if isinstance(data, dict) and data.get("q_overall", 0) >= best.get("q_overall", 0):
@@ -305,7 +314,7 @@ class Engine:
         self.neuro0 = neuro or Mu(da=0.50, ne=0.55, s5ht=0.85, ach=0.75, gaba=0.35, oxt=0.70)
         self.debug = debug
 
-    # deterministic fallback for the PageRank demo only
+    # ---- Demo fallback ----
     def _local_pagerank_fallback(self) -> str:
         return (
           "PageRank estimates a page’s importance as the stationary probability of a “random surfer” visiting it. "
@@ -316,20 +325,43 @@ class Engine:
           "Conflict Note: resolves the common ‘link count’ misconception by emphasizing rank-weighted, degree-normalized propagation."
         )
 
-    # strict validator to reject meta/planning (PageRank path)
-    def _is_valid_answer(self, text: str) -> bool:
+    # ---- Validators/Sanitizers ----
+    META_PAT = re.compile(r"\b(we need to|let's|aim for|draft:|word count|we must not|we'll write|let us)\b", re.I)
+    def _is_valid_demo(self, text: str) -> bool:
         if not text: return False
         if "<<" in text or ">>" in text: return False
-        if re.search(r"\b(We need to|Let's|Aim for|Draft:|Word count)\b", text, flags=re.I): return False
+        if self.META_PAT.search(text): return False
         wc = word_count(text)
         if wc < 110 or wc > 180: return False
-        cites = re.findall(r"\[\d\]", text)
-        if len(cites) < 3: return False
+        if len(re.findall(r"\[\d\]", text)) < 3: return False
         if not re.search(r"(^|\n)\s*Conflict Note:", text, flags=re.I): return False
         return True
 
-    # PageRank-specific generator: bracketed → retry → fallback
-    def _generate_pagerank(self, temperature, top_p, repeat_penalty, num_predict) -> str:
+    def _parse_max_words(self, goal: str) -> int:
+        m = re.search(r"[≤<=]\s*(\d+)\s*words", (goal or "").lower())
+        if not m:
+            m2 = re.search(r"at most\s+(\d+)\s*words", (goal or "").lower())
+            if m2: return int(m2.group(1))
+            return 160
+        return int(m.group(1))
+
+    def _sanitize_generic(self, text: str) -> str:
+        lines = [ln for ln in (text or "").splitlines() if not self.META_PAT.search(ln)]
+        out = "\n".join(lines).strip()
+        # If the text still begins with instruction-like phrasing, drop first paragraph
+        out = re.sub(r"^(?:[^.\n]*\.(?:\s+|$))", "", out) if self.META_PAT.search(out[:160]) else out
+        return out.strip()
+
+    def _is_valid_generic(self, text: str, max_words: int, require_conflict: bool) -> bool:
+        if not text: return False
+        if "<<" in text or ">>" in text: return False
+        if self.META_PAT.search(text[:180]): return False
+        if require_conflict and not re.search(r"(^|\n)\s*Conflict Note:", text, flags=re.I): return False
+        if word_count(text) > max_words + 10: return False
+        return True
+
+    # ---- Generators ----
+    def _gen_demo(self, temperature, top_p, repeat_penalty, num_predict) -> str:
         sys_a = (
           "You are Pilot. Print ONLY the answer BETWEEN the exact tags on their own lines:\n"
           "<<BEGIN>>\n<paragraph>\n<<END>>\n"
@@ -342,29 +374,73 @@ class Engine:
                            repeat_penalty=repeat_penalty, num_predict=num_predict,
                            prefer_generate=True)
         text = between_tags(raw, "<<BEGIN>>", "<<END>>").strip()
-        if not self._is_valid_answer(text):
+        if not self._is_valid_demo(text):
             sys_b = ("You are Pilot. Output ONLY one 120–150 word paragraph explaining PageRank with ≥3 inline numeric citations "
                      "like [1][2][3], then on a new line end with: Conflict Note: ... (or 'Conflict Note: none'). No preface.")
             raw2 = self.llm.ask(sys_b, usr, temperature=temperature, top_p=top_p,
                                 repeat_penalty=repeat_penalty, num_predict=num_predict,
                                 prefer_generate=True)
             text2 = between_tags(raw2, "<<BEGIN>>", "<<END>>").strip()
-            if self._is_valid_answer(text2): text = text2
-        if not self._is_valid_answer(text): text = self._local_pagerank_fallback()
+            if self._is_valid_demo(text2): text = text2
+        if not self._is_valid_demo(text): text = self._local_pagerank_fallback()
         return text
 
-    # Generic generator (for --task): concise answer with terminal Conflict Note
-    def _generate_generic(self, goal: str, temperature, top_p, repeat_penalty, num_predict) -> str:
+    def _gen_generic(self, goal: str, temperature, top_p, repeat_penalty, num_predict) -> str:
+        maxw = self._parse_max_words(goal)
+        require_conflict = ("conflict note" in (goal or "").lower())
+        # Stage A: bracketed, generate-first
         sys_g = ("You are Pilot. Output ONLY one concise answer. "
+                 "Do not reflect on instructions. No planning. No word counts. "
                  "If you resolve any contradiction, end with: 'Conflict Note: ...'; "
                  "else 'Conflict Note: none'. No preface.")
-        raw_g = self.llm.ask(sys_g, goal, temperature=temperature, top_p=top_p,
-                             repeat_penalty=repeat_penalty, num_predict=num_predict,
-                             prefer_generate=True)
-        return (between_tags(raw_g, "<<BEGIN>>", "<<END>>").strip() or raw_g.strip())
+        raw = self.llm.ask(sys_g, goal, temperature=temperature, top_p=top_p,
+                           repeat_penalty=repeat_penalty, num_predict=num_predict,
+                           prefer_generate=True)
+        text = between_tags(raw, "<<BEGIN>>", "<<END>>").strip() or raw.strip()
+        if not self._is_valid_generic(text, maxw, require_conflict):
+            # Stage B: stronger constraint
+            sys_b = ("You are Pilot. Reply with answer ONLY—no meta, no planning, no discussion of constraints. "
+                     f"Keep ≤{maxw} words. End with 'Conflict Note: ...' or 'Conflict Note: none'.")
+            raw2 = self.llm.ask(sys_b, goal, temperature=temperature, top_p=top_p,
+                                repeat_penalty=repeat_penalty, num_predict=num_predict,
+                                prefer_generate=True)
+            text2 = between_tags(raw2, "<<BEGIN>>", "<<END>>").strip() or raw2.strip()
+            if self._is_valid_generic(text2, maxw, require_conflict): text = text2
+        if not self._is_valid_generic(text, maxw, require_conflict):
+            # Stage C: sanitize + enforce limits + ensure conflict line
+            text = self._sanitize_generic(text)
+            text = trim_words(text, maxw)
+            if require_conflict and not re.search(r"(^|\n)\s*Conflict Note:", text, flags=re.I):
+                text += ("\nConflict Note: none.")
+        return text.strip()
+
+    # ---- Single-run with optional multi-step self-improvement ----
+    def run_once(self, *, goal: str, mu_out: Mu) -> Dict[str, Any]:
+        temperature    = max(0.1, 0.9 - 0.6*mu_out.s5ht)
+        top_p          = clamp(0.75 + 0.20*mu_out.ne - 0.10*mu_out.gaba, 0.50, 0.95)
+        repeat_penalty = 1.05 + 0.20*mu_out.s5ht - 0.10*mu_out.da
+        num_predict    = int(256 + int(384*mu_out.s5ht) - int(128*mu_out.gaba))
+
+        if "pagerank" in goal.lower():
+            answer = self._gen_demo(temperature, top_p, repeat_penalty, num_predict)
+        else:
+            answer = self._gen_generic(goal, temperature, top_p, repeat_penalty, num_predict)
+
+        critic_passes = 1 + int(2*mu_out.ach)
+        try:
+            critic = run_critic(self.llm, answer, mu_out, passes=critic_passes)
+        except Exception as e:
+            critic = {"q_overall": 0.0, "has_conflict_note": False,
+                      "reasons":[f"critic exec error: {e} | http={self.llm.last_http}"]}
+
+        knobs = {"temperature": round(temperature,3),
+                 "top_p": round(top_p,3),
+                 "repeat_penalty": round(repeat_penalty,3),
+                 "num_predict": int(num_predict)}
+        return {"answer": answer, "critic": critic, "knobs": knobs}
 
     def run(self, *, ach: Optional[float]=None, seed:int=SEED_DEFAULT, deny_policy: bool=False,
-            task_text: Optional[str]=None) -> Dict[str,Any]:
+            task_text: Optional[str]=None, steps:int=1, target_q: float=0.70) -> Dict[str,Any]:
         seed_everything(seed)
         mu_in = Mu(self.neuro0.da, self.neuro0.ne, self.neuro0.s5ht,
                    ach if ach is not None else self.neuro0.ach,
@@ -380,47 +456,32 @@ class Engine:
         mu_out = self.homeo.update(mu_in, app)
         pol = self.homeo.couple(mu_out)
 
-        llm_answer = "[blocked by policy]"; llm_knobs = {}; http_trace = {}
-        if verdict["action"] == "allow":
-            temperature    = max(0.1, 0.9 - 0.6*mu_out.s5ht)
-            top_p          = clamp(0.75 + 0.20*mu_out.ne - 0.10*mu_out.gaba, 0.50, 0.95)
-            repeat_penalty = 1.05 + 0.20*mu_out.s5ht - 0.10*mu_out.da
-            num_predict    = int(256 + int(384*mu_out.s5ht) - int(128*mu_out.gaba))
-            try:
-                if "pagerank" in goal.lower():
-                    llm_answer = self._generate_pagerank(temperature, top_p, repeat_penalty, num_predict)
-                else:
-                    llm_answer = self._generate_generic(goal, temperature, top_p, repeat_penalty, num_predict)
-            except Exception as e:
-                http_trace = getattr(self.llm, "last_http", {})
-                llm_answer = self._local_pagerank_fallback() + f"\n[LLM error noted: {e} | http={http_trace}]"
-            llm_knobs = {"temperature": round(temperature,3),
-                         "top_p": round(top_p,3),
-                         "repeat_penalty": round(repeat_penalty,3),
-                         "num_predict": int(num_predict)}
+        if verdict["action"] != "allow":
+            payload = {"goal": goal, "risk": risk, "verdict": verdict["action"],
+                       "intent": asdict(intent), "mu_out": asdict(mu_out), "policy": asdict(pol),
+                       "llm_knobs": {}, "evidence": [], "claims": [], "llm_preview":"[blocked]",
+                       "critic": {}, "adopted": False, "kpis": {}, "stop_score": 0.0}
+            return payload
 
-        # Critic
-        critic = {}
-        if verdict["action"] == "allow":
-            critic_passes = 1 + int(2*mu_out.ach)
-            try:
-                critic = run_critic(self.llm, llm_answer, mu_out, passes=critic_passes)
-            except Exception as e:
-                critic = {"q_overall": 0.0, "has_conflict_note": False,
-                          "reasons":[f"critic exec error: {e} | http={self.llm.last_http}"]}
+        # self-improvement loop
+        best = {"answer":"", "critic":{"q_overall":0.0, "has_conflict_note":False, "reasons":["init"]}, "knobs":{}}
+        for t in range(max(1, steps)):
+            trial = self.run_once(goal=goal, mu_out=mu_out)
+            if trial["critic"]["q_overall"] >= best["critic"]["q_overall"]:
+                best = trial
+            if trial["critic"]["q_overall"] >= target_q:
+                break
+            # μ micro-adjust to bias concision and stability
+            mu_out = Mu(mu_out.da, clamp(mu_out.ne*0.95,0,1), mu_out.s5ht, mu_out.ach, clamp(mu_out.gaba+0.05,0,1), mu_out.oxt)
 
-        # Unified contradiction detection (local regex OR critic flag)
+        llm_answer = best["answer"]; critic = best["critic"]; llm_knobs = best["knobs"]
+
         has_conflict_local = bool(re.search(r"(^|\n)\s*Conflict Note:", (llm_answer or ""), flags=re.I))
         has_conflict_unified = has_conflict_local or bool(critic.get("has_conflict_note", False))
 
-        # Evidence only for PageRank demo; generic tasks skip toy evidence
+        # Evidence/claims only for PageRank demo
         if "pagerank" in goal.lower():
             ev = self.scout.fetch_pagerank(pol.k_breadth, pol.q_contra)
-        else:
-            ev = []  # no irrelevant toy evidence for general tasks
-
-        # Minimal claims for the demo (kept; not used for generic tasks)
-        if "pagerank" in goal.lower():
             claims = [
                 Claim(id="c1", text="PageRank models a random surfer with damping ~0.85.", q=0.8,
                       sources=[Source(url="pagerank_primary.txt", domain_tier=1)], stance="pro"),
@@ -430,20 +491,12 @@ class Engine:
                       sources=[Source(url="pagerank_media.txt", domain_tier=3)], stance="neutral"),
             ]
             for c in claims: self.arch.upsert_claim(c)
-        else:
-            claims = []
-
-        # Adoption gate: require quality; contradiction is tracked separately
-        adopt = True
-        if critic: adopt = critic.get("q_overall", 0.0) >= 0.70
-
-        # KPI computation
-        if "pagerank" in goal.lower():
             sources_ct = len(ev)
-            goal_met = (sources_ct >= 3 and verdict["action"]=="allow" and adopt)
+            goal_met = (sources_ct >= 3 and verdict["action"]=="allow" and critic.get("q_overall",0.0) >= target_q)
         else:
-            sources_ct = 0
-            goal_met = (verdict["action"]=="allow" and adopt)
+            ev, claims, sources_ct = [], [], 0
+            goal_met = (verdict["action"]=="allow" and critic.get("q_overall",0.0) >= target_q)
+
         stats = {"sources": sources_ct, "resolved": has_conflict_unified, "goal_met": goal_met}
         kpis = self.wit.score(stats)
         stop = soft_stop(1.0 if stats["goal_met"] else 0.0, mu_out.gaba, 0.2, 0.2)
@@ -454,16 +507,15 @@ class Engine:
             "llm_knobs": llm_knobs, "evidence": [e.id for e in ev],
             "claims": [c.to_dict() for c in claims],
             "llm_preview": (llm_answer or "")[:1200],
-            "critic": critic, "adopted": adopt, "kpis": kpis, "stop_score": stop,
+            "critic": critic, "adopted": critic.get("q_overall",0.0) >= target_q,
+            "kpis": kpis, "stop_score": stop,
             "has_conflict_note_local": has_conflict_local, "has_conflict_note_unified": has_conflict_unified
         }
-        if self.debug and verdict["action"] == "allow":
-            payload["last_http"] = getattr(self.llm, "last_http", {})
         return payload
 
 # ========= CLI =========
 def main():
-    ap = argparse.ArgumentParser(description="Guardian-AGI (single-file) — Ollama + Emotional Center")
+    ap = argparse.ArgumentParser(description="Guardian-AGI (single-file) — Ollama + Emotional Center + Self-Improve")
     ap.add_argument("--model", default="gpt-oss:20b",
                     help="Ollama model (default gpt-oss:20b; e.g., qwen2.5:14b-instruct-q4_K_M)")
     ap.add_argument("--seed", type=int, default=SEED_DEFAULT)
@@ -472,6 +524,8 @@ def main():
     ap.add_argument("--record", default="", help="Path to ledger JSONL (append-only). Empty=off.")
     ap.add_argument("--debug", action="store_true", help="Include last HTTP trace on LLM errors.")
     ap.add_argument("--task", default="", help="Override goal with a custom prompt (general run).")
+    ap.add_argument("--steps", type=int, default=1, help="Self-improvement steps (>=1).")
+    ap.add_argument("--target_q", type=float, default=0.70, help="Adoption quality threshold [0..1].")
     args = ap.parse_args()
 
     eng = Engine(model_name=args.model, debug=args.debug)
@@ -509,11 +563,12 @@ def main():
         print(json.dumps({
             "low.critic": low.get("critic",{}),  "low.adopted": low.get("adopted", True),
             "high.critic": high.get("critic",{}),"high.adopted": high.get("adopted", True),
-            "expectation": "High ACh → more critic passes; q_overall should be ≥ low or equal; adoption requires q≥0.70."
+            "expectation": "High ACh → more critic passes; q_overall should be ≥ low or equal; adoption requires q≥target_q."
         }, indent=2)); return
 
-    # default: run goal-conditioned task
-    res = eng.run(ach=args.ach, seed=args.seed, task_text=(args.task if args.task.strip() else None))
+    res = eng.run(ach=args.ach, seed=args.seed,
+                  task_text=(args.task if args.task.strip() else None),
+                  steps=max(1, args.steps), target_q=clamp(args.target_q,0.0,1.0))
     print(json.dumps(res, indent=2))
     if args.record:
         ledger_append(args.record, {
