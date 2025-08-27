@@ -316,6 +316,21 @@ class Scout:
             if len(selected) >= max(1, k_breadth): break
             selected.append(ev)
         return selected[:max(1, k_breadth)]
+    def count_dissent_candidates(self) -> int:
+        """Number of *available* dissent candidates in the corpus."""
+        if self.docs_dir and os.path.isdir(self.docs_dir):
+            cnt = 0
+            for root, _, files in os.walk(self.docs_dir):
+                for fn in files:
+                    if not fn.lower().endswith((".txt",".md",".markdown")): continue
+                    path = os.path.join(root, fn)
+                    text = self._read_text(path)
+                    if not text.strip(): continue
+                    if self._stance_from_text_or_path(text, path) == "con": cnt += 1
+            return max(1, cnt)
+        # builtin toy corpus has 3 dissent docs
+        return 3
+
 
 # ========= Planner (Operator) =========
 @dataclass
@@ -600,7 +615,7 @@ class Engine:
 
         dissent_present = any(e.stance=="con" for e in ev)
         conflict_note_present = ("conflict" in (llm_answer or "").lower()) or ("misconception" in (llm_answer or "").lower())
-        total_dissent_available = max(1, sum(1 for e in ev if e.stance == "con"))  # measure real pool only
+        total_dissent_available = max(1, self.scout.count_dissent_candidates())
         cons_selected = sum(1 for e in ev if e.stance == "con")
         dissent_recall_fraction = cons_selected / float(total_dissent_available)
 
