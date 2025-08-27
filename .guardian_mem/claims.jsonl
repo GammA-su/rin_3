@@ -1,0 +1,3 @@
+{"id": "c1", "text": "PageRank models a random surfer with damping ~0.85.", "q": 0.8, "stance": "pro", "sources": [{"url": "pagerank_primary.txt", "seg": null, "h": null, "ts": null, "domain_tier": 1}], "supports": [], "contradicts": []}
+{"id": "c2", "text": "Not simple link counts; weights depend on inlink ranks/outdegree.", "q": 0.8, "stance": "pro", "sources": [{"url": "pagerank_dissent.txt", "seg": null, "h": null, "ts": null, "domain_tier": 3}], "supports": [], "contradicts": []}
+{"id": "c3", "text": "Media often oversimplify as mere link counts (misleading).", "q": 0.7, "stance": "neutral", "sources": [{"url": "pagerank_media.txt", "seg": null, "h": null, "ts": null, "domain_tier": 3}], "supports": [], "contradicts": []}
