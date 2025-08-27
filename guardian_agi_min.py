@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 # guardian_agi_min.py — single-file Guardian-AGI scaffold (seed=137)
 # Track 1: Ollama (no Docker). Default model: gpt-oss:20b (override via --model)
-# Chat-first with generate fallback; bracketed output + auto-retry + deterministic final fallback.
-from __future__ import annotations
+# Chat-first client with generate fallback; for MAIN answer we do generate-first.
+# Bracketed output + strict validation + auto-retry + deterministic fallback.
 
-import argparse, json, os, random, time, http.client, hashlib
+from __future__ import annotations
+import argparse, json, os, random, time, http.client, hashlib, re
 from dataclasses import dataclass, asdict
 from hashlib import sha256
 from typing import List, Dict, Any, Optional
@@ -45,6 +46,9 @@ def between_tags(s: str, start="<<BEGIN>>", end="<<END>>") -> str:
     j = s.find(end, i + len(start))
     if j == -1: return s[i + len(start):].strip()
     return s[i + len(start):j].strip()
+
+def word_count(s: str) -> int:
+    return len([w for w in re.findall(r"\b\w+\b", s)])
 
 # ========= Data Contracts =========
 @dataclass
@@ -167,7 +171,7 @@ class Pilot:
             risk=risk,
         )
 
-# ========= Ollama LLM Client (chat-first with generate fallback; stop tokens) =========
+# ========= Ollama LLM Client =========
 class LLMClient:
     def __init__(self, model: str, host: str="localhost", port: int=11434, debug: bool=False):
         self.model = model; self.host = host; self.port = port; self.debug = debug
@@ -192,46 +196,57 @@ class LLMClient:
         return data
 
     def ask(self, system_msg: str, user_msg: str, *, temperature: float, top_p: float,
-            repeat_penalty: float, num_predict: int, num_ctx: int=8192, force_json: bool=False) -> str:
+            repeat_penalty: float, num_predict: int, num_ctx: int=8192,
+            force_json: bool=False, prefer_generate: bool=False) -> str:
         stop_tokens = ["<<END>>", "User:", "\nUser:"]
-        # 1) chat
-        chat_payload = {
-            "model": self.model,
-            "messages": [
-                {"role":"system","content":system_msg},
-                {"role":"user","content":user_msg}
-            ],
-            "options": {"temperature": float(temperature), "top_p": float(top_p),
-                        "repeat_penalty": float(repeat_penalty), "num_predict": int(num_predict),
-                        "num_ctx": int(num_ctx), "stop": stop_tokens,
-                        **({"format":"json"} if force_json else {})},
-            "stream": False
-        }
-        data = self._post("/api/chat", chat_payload)
-        out = ""
-        if isinstance(data, dict) and "message" in data and isinstance(data["message"], dict):
-            out = data["message"].get("content","") or data["message"].get("thinking","")
-        elif isinstance(data, dict):
-            out = data.get("response","") or data.get("thinking","")
-        if out: return out.strip()
+        def _chat() -> str:
+            payload = {
+                "model": self.model,
+                "messages": [{"role":"system","content":system_msg},{"role":"user","content":user_msg}],
+                "options": {"temperature": float(temperature), "top_p": float(top_p),
+                            "repeat_penalty": float(repeat_penalty), "num_predict": int(num_predict),
+                            "num_ctx": int(num_ctx), "stop": stop_tokens,
+                            **({"format":"json"} if force_json else {})},
+                "stream": False
+            }
+            data = self._post("/api/chat", payload)
+            out = ""
+            if isinstance(data, dict) and isinstance(data.get("message"), dict):
+                out = data["message"].get("content","") or data["message"].get("thinking","")
+            else:
+                out = data.get("response","") or data.get("thinking","")
+            return (out or "").strip()
 
-        # 2) generate fallback
-        gen_payload = {
-            "model": self.model,
-            "prompt": f"{system_msg}\n\nUser:\n{user_msg}\n\nAssistant:",
-            "options": {"temperature": float(temperature), "top_p": float(top_p),
-                        "repeat_penalty": float(repeat_penalty), "num_predict": int(num_predict),
-                        "num_ctx": int(num_ctx), "stop": stop_tokens,
-                        **({"format":"json"} if force_json else {})},
-            "stream": False
-        }
-        data2 = self._post("/api/generate", gen_payload)
-        out2 = ""
-        if isinstance(data2, dict): out2 = data2.get("response","") or data2.get("thinking","")
-        if not out2: raise RuntimeError("Ollama returned empty text from both chat and generate.")
-        return out2.strip()
+        def _gen() -> str:
+            payload = {
+                "model": self.model,
+                "prompt": f"{system_msg}\n\nUser:\n{user_msg}\n\nAssistant:",
+                "options": {"temperature": float(temperature), "top_p": float(top_p),
+                            "repeat_penalty": float(repeat_penalty), "num_predict": int(num_predict),
+                            "num_ctx": int(num_ctx), "stop": stop_tokens,
+                            **({"format":"json"} if force_json else {})},
+                "stream": False
+            }
+            data = self._post("/api/generate", payload)
+            out = ""
+            if isinstance(data, dict):
+                out = data.get("response","") or data.get("thinking","")
+            return (out or "").strip()
 
-# ========= Critic (ACh-gated; JSON with heuristic fallback) =========
+        if prefer_generate:
+            out = _gen()
+            if out: return out
+            out = _chat()
+            if out: return out
+            raise RuntimeError("Ollama returned empty from both generate and chat.")
+        else:
+            out = _chat()
+            if out: return out
+            out = _gen()
+            if out: return out
+            raise RuntimeError("Ollama returned empty from both chat and generate.")
+
+# ========= Critic (JSON with heuristic fallback) =========
 CRITIC_SYS = (
   "You are Critic. Given an answer about PageRank, return STRICT JSON with keys: "
   "{'q_overall': float in [0,1], 'has_conflict_note': bool, 'reasons': [str]}. "
@@ -256,7 +271,7 @@ def extract_json(s: str) -> dict:
 
 def critic_heuristic(answer: str) -> dict:
     text = (answer or "").strip()
-    has_conflict = ("conflict note" in text.lower()) or ("contradiction" in text.lower())
+    has_conflict = bool(re.search(r"(^|\n)\s*Conflict Note:", text, flags=re.I))
     L = len(text); q = 0.15
     if L > 60: q += 0.25
     if L > 120: q += 0.20
@@ -274,7 +289,7 @@ def run_critic(llm: LLMClient, answer: str, mu: Mu, passes: int=1) -> dict:
             j = llm.ask(CRITIC_SYS, f"Answer:\n{answer}\n\nReturn JSON only.",
                         temperature=temperature, top_p=top_p,
                         repeat_penalty=repeat_penalty, num_predict=num_predict,
-                        force_json=True)
+                        force_json=True, prefer_generate=False)
             try: data = extract_json(j)
             except Exception: data = critic_heuristic(j)
             if isinstance(data, dict) and data.get("q_overall", 0) >= best.get("q_overall", 0):
@@ -296,43 +311,54 @@ class Engine:
         self.neuro0 = neuro or Mu(da=0.50, ne=0.55, s5ht=0.85, ach=0.75, gaba=0.35, oxt=0.70)
         self.debug = debug
 
-    # ---- deterministic local fallback paragraph (last resort) ----
+    # deterministic local fallback (guarantees constraints)
     def _local_pagerank_fallback(self) -> str:
         return (
           "PageRank estimates a page’s importance as the stationary probability of a “random surfer” visiting it. "
-          "At each step the surfer follows an out-link from the current page with probability α (≈0.85) or “teleports” "
-          "to a random page with probability 1−α, preventing sinks and ensuring a unique distribution. "
-          "A page’s rank is the sum of its in-neighbors’ ranks divided by their out-degrees, iterated to convergence. "
-          "Thus PageRank is not a raw link count: a single link from a highly ranked page can outweigh many links from weak pages. "
+          "At each step the surfer follows an out-link with probability α (≈0.85) or teleports to a random page with probability 1−α, "
+          "preventing sinks and ensuring a unique distribution. A page’s score aggregates the ranks of linking pages normalized by their out-degrees, "
+          "iterated to convergence. Thus PageRank is not a raw link count: one link from a highly ranked page can outweigh many from weak pages. "
           "[1][2][3]\n"
-          "Conflict Note: resolves the misconception that PageRank equals link counts by emphasizing rank-weighted, degree-normalized propagation."
+          "Conflict Note: resolves the common ‘link count’ misconception by emphasizing rank-weighted, degree-normalized propagation."
         )
 
-    # ---- two-stage generation with bracketed extraction and retry ----
+    # strict validator to reject meta/planning
+    def _is_valid_answer(self, text: str) -> bool:
+        if not text: return False
+        if "<<" in text or ">>" in text: return False  # leaked tags
+        if re.search(r"\b(We need to|Let's|Aim for|Draft:|Word count)\b", text, flags=re.I): return False
+        wc = word_count(text)
+        if wc < 110 or wc > 180: return False
+        cites = re.findall(r"\[\d\]", text)
+        if len(cites) < 3: return False
+        if not re.search(r"(^|\n)\s*Conflict Note:", text, flags=re.I): return False
+        return True
+
     def _generate_answer(self, temperature, top_p, repeat_penalty, num_predict) -> str:
-        # Stage A: bracketed form
+        # Stage A: bracketed, generate-first to reduce chat meta
         sys_a = (
           "You are Pilot. Print ONLY the answer BETWEEN the exact tags on their own lines:\n"
           "<<BEGIN>>\n<paragraph>\n<<END>>\n"
           "Constraints: 120–150 words; ≥3 numeric citations like [1][2][3]; "
-          "append a final line: Conflict Note: ... (or 'Conflict Note: none')."
+          "append a final line: Conflict Note: ... (or 'Conflict Note: none'). No preface."
         )
         usr = ("Explain PageRank in ≤150 words with ≥3 citations. Prefer the Brin & Page 1998 paper, "
                "Google patent US 6,285,999, and an official Google source. Resolve the 'just link counts' misconception.")
         raw = self.llm.ask(sys_a, usr, temperature=temperature, top_p=top_p,
-                           repeat_penalty=repeat_penalty, num_predict=num_predict)
+                           repeat_penalty=repeat_penalty, num_predict=num_predict,
+                           prefer_generate=True)
         text = between_tags(raw, "<<BEGIN>>", "<<END>>").strip()
-        # If the model printed only filler (e.g., "and") or too short, retry with a simpler, no-tag instruction.
-        if len(text) < 80 or text.lower() in {"and","", "<<begin>>", "<<end>>"} or "conflict note" not in text.lower():
-            sys_b = ("You are Pilot. Output ONLY a single 120–150 word paragraph explaining PageRank with ≥3 inline numeric citations "
-                     "like [1][2][3], and end with a line: Conflict Note: ... (or 'Conflict Note: none'). No preface.")
+        if not self._is_valid_answer(text):
+            # Stage B: simple no-tag instruction, still generate-first
+            sys_b = ("You are Pilot. Output ONLY one 120–150 word paragraph explaining PageRank with ≥3 inline numeric citations "
+                     "like [1][2][3], then on a new line end with: Conflict Note: ... (or 'Conflict Note: none'). No preface.")
             raw2 = self.llm.ask(sys_b, usr, temperature=temperature, top_p=top_p,
-                                repeat_penalty=repeat_penalty, num_predict=num_predict)
-            # Strip any accidental tags if present
+                                repeat_penalty=repeat_penalty, num_predict=num_predict,
+                                prefer_generate=True)
             text2 = between_tags(raw2, "<<BEGIN>>", "<<END>>").strip()
-            text = text2 if len(text2) > len(text) else text
-        # Last resort: deterministic local paragraph
-        if len(text) < 80 or "conflict note" not in text.lower():
+            if self._is_valid_answer(text2):
+                text = text2
+        if not self._is_valid_answer(text):
             text = self._local_pagerank_fallback()
         return text
 
@@ -351,7 +377,7 @@ class Engine:
         mu_out = self.homeo.update(mu_in, app)
         pol = self.homeo.couple(mu_out)
 
-        llm_answer = "[blocked by policy]"; llm_knobs = {}
+        llm_answer = "[blocked by policy]"; llm_knobs = {}; http_trace = {}
         if verdict["action"] == "allow":
             temperature    = max(0.1, 0.9 - 0.6*mu_out.s5ht)
             top_p          = clamp(0.75 + 0.20*mu_out.ne - 0.10*mu_out.gaba, 0.50, 0.95)
@@ -360,11 +386,13 @@ class Engine:
             try:
                 llm_answer = self._generate_answer(temperature, top_p, repeat_penalty, num_predict)
             except Exception as e:
-                llm_answer = self._local_pagerank_fallback() + f"\n[LLM error noted: {e}]"
-            llm_knobs = {"temperature": round(temperature,3), "top_p": round(top_p,3),
-                         "repeat_penalty": round(repeat_penalty,3), "num_predict": int(num_predict)}
+                http_trace = getattr(self.llm, "last_http", {})
+                llm_answer = self._local_pagerank_fallback() + f"\n[LLM error noted: {e} | http={http_trace}]"
+            llm_knobs = {"temperature": round(temperature,3),
+                         "top_p": round(top_p,3),
+                         "repeat_penalty": round(repeat_penalty,3),
+                         "num_predict": int(num_predict)}
 
-        # Critic (ACh-gated)
         critic = {}
         if verdict["action"] == "allow":
             critic_passes = 1 + int(2*mu_out.ach)
@@ -374,11 +402,9 @@ class Engine:
                 critic = {"q_overall": 0.0, "has_conflict_note": False,
                           "reasons":[f"critic exec error: {e} | http={self.llm.last_http}"]}
 
-        # Evidence (toy)
         ev = self.scout.fetch_pagerank(pol.k_breadth, pol.q_contra)
-        conflict_note_present = ("conflict note" in (llm_answer or "").lower())
+        conflict_note_present = bool(re.search(r"(^|\n)\s*Conflict Note:", (llm_answer or ""), flags=re.I))
 
-        # Claims
         claims = [
             Claim(id="c1", text="PageRank models a random surfer with damping ~0.85.", q=0.8,
                   sources=[Source(url="pagerank_primary.txt", domain_tier=1)], stance="pro"),
@@ -388,6 +414,8 @@ class Engine:
                   sources=[Source(url="pagerank_media.txt", domain_tier=3)], stance="neutral"),
         ]
         for c in claims: self.arch.upsert_claim(c)
+        # potential contradiction graph: c2 vs c3
+        # self.arch.link_contradiction("c2","c3")  # not strictly used in output
 
         adopt = True
         if critic: adopt = critic.get("q_overall", 0.0) >= 0.70
@@ -411,7 +439,7 @@ class Engine:
 
 # ========= CLI & Probes =========
 def main():
-    ap = argparse.ArgumentParser(description="Guardian-AGI (single-file) — Ollama chat-first + Emotional Center")
+    ap = argparse.ArgumentParser(description="Guardian-AGI (single-file) — Ollama chat/generate + Emotional Center")
     ap.add_argument("--model", default="gpt-oss:20b",
                     help="Ollama model name (default gpt-oss:20b; e.g., qwen2.5:14b-instruct-q4_K_M)")
     ap.add_argument("--seed", type=int, default=SEED_DEFAULT)
