@@ -177,20 +177,45 @@ class Homeostat:
 # ========= Safety (Custodian) =========
 class Custodian:
     policy_ver = "v1.1"
+    ACTIONS = {
+        "R0": {"action":"allow", "notes":"benign"},
+        "R1": {"action":"allow", "notes":"redact identifiers"},
+        "R2": {"action":"allow", "notes":"require justification + citations"},
+        "R3": {"action":"deny",  "notes":"sandbox/two-man rule required"},
+        "R4": {"action":"deny",  "notes":"physical actuation blocked"},
+    }
     def classify(self, goal: str) -> str:
         g = goal.lower()
         if any(x in g for x in ["bio", "exploit", "weapon", "malware", "lab"]): return "R3"
+        if any(x in g for x in ["finance","legal","medical"]): return "R2"
+        if any(x in g for x in ["personal","pii","identifier"]): return "R1"
         return "R0"
     def preflight(self, risk: str) -> Dict[str,str]:
-        return {"action": "deny" if risk in ("R3","R4") else "allow",
-                "notes":  f"Risk {risk} {'blocked' if risk in ('R3','R4') else 'allowed'} by policy"}
+        a = self.ACTIONS.get(risk, self.ACTIONS["R0"]).copy()
+        a["notes"] = f"Risk {risk}: {a['notes']}"
+        return a
 
 # ========= Evaluation (Witness) =========
 class Witness:
+    def _ece(self, confidences, outcomes, bins=10):
+        if not confidences or not outcomes or len(confidences)!=len(outcomes): return 0.0
+        bs = [i/bins for i in range(bins+1)]
+        ece = 0.0
+        for i in range(bins):
+            lo, hi = bs[i], bs[i+1]
+            idx = [j for j,c in enumerate(confidences) if lo <= c < hi or (hi==1.0 and c==1.0)]
+            if not idx: continue
+            avg_c = sum(confidences[j] for j in idx)/len(idx)
+            avg_a = sum(outcomes[j] for j in idx)/len(idx)
+            ece += (len(idx)/len(confidences)) * abs(avg_c - avg_a)
+        return float(ece)
     def score(self, stats: Dict[str,Any]) -> Dict[str,float]:
         pass_at_1   = 1.0 if stats.get("goal_met", False) else 0.0
         precision_k = clamp(0.7 + 0.05*max(0, stats.get("sources", 0)), 0.0, 1.0)
-        ece         = 0.08
+        # crude: treat critic q_overall as a proxy confidence and adoption as outcome
+        confidences = [float(stats.get("critic_q", 0.7))]
+        outcomes    = [1.0 if stats.get("adopted", False) else 0.0]
+        ece         = self._ece(confidences, outcomes, bins=5)
         resolution  = 1.0 if stats.get("resolved", False) else 0.0
         return {"pass_at_1":pass_at_1,"precision_k":precision_k,"ece":ece,"resolution_rate":resolution}
 
@@ -250,8 +275,9 @@ class Scout:
 
     def _mk_ev(self, name: str, txt: str, stance: str, provenance=None) -> EvidenceUnit:
         h = sha256(txt.encode()).hexdigest()[:16]
-        return EvidenceUnit(id=name, content_hash=h, extract=txt[:600], stance=stance,
-                            provenance=provenance or [{"source": name}])
+        span = {"start": 0, "end": min(len(txt), 600)}
+        prov = provenance or [{"source": name, "offsets": span}]
+        return EvidenceUnit(id=name, content_hash=h, extract=txt[:600], stance=stance, provenance=prov)
 
     # Built-in toy corpus
     def fetch_pagerank_builtin(self, k_breadth:int, dissent_quota:int) -> List[EvidenceUnit]:
@@ -317,7 +343,7 @@ class Scout:
                 authority = {1:0.95,2:0.85,3:0.60,4:0.45,5:0.30}.get(tier,0.45)
                 dissent_bonus = 0.1 if stance=="con" else 0.0
                 r = 0.35*authority + 0.20*recency + 0.25*topicality - 0.10*0.0 + 0.10*dissent_bonus
-                prov = [{"source": path, "tier": tier}]
+                prov = [{"source": path, "tier": tier, "offsets": {"start": 0, "end": min(len(text), 600)}}]
                 ev = self._mk_ev(path, text, stance, provenance=prov)
                 candidates.append((r, ev))
         if not candidates:
@@ -856,9 +882,9 @@ def probe_P5(eng: Engine, args):
     }, indent=2))
 
 def probe_P6(eng: Engine, args):
-    ev = eng.scout.fetch_pagerank_builtin(5, 2)  # keep legacy behavior for probe stability
+    ev = eng.scout.fetch_pagerank_builtin(5, 2)
     provenance_offsets_present = all(any("offsets" in p for p in (e.provenance or [{}])) for e in ev)
-    print(json.dumps({"provenance_offsets_present": provenance_offsets_present, "ok": (provenance_offsets_present is False)}, indent=2))
+    print(json.dumps({"provenance_offsets_present": provenance_offsets_present, "ok": bool(provenance_offsets_present)}, indent=2))
 
 def probe_P7(eng: Engine, args):
     gaba = 0.95
