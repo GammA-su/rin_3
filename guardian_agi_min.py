@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 # guardian_agi_min.py — Guardian-AGI (seed=137)
-# Hardened Pilot: detects & repairs truncated answers; strict word-count acceptance; no CoT leakage.
-# Critic: strict-JSON scorer with salvage+heuristic; output normalized to a compact dict.
-# Logging: per-phase traces; full raw bodies ONLY for Critic when --debug.
+# Resilient Pilot + strict Critic with Ollama /api/chat and /api/generate fallbacks.
+# - Detects/repairs truncation; enforces 110–160 words, ≥3 bracketed citations, and a resolution line.
+# - Critic output is sanitized to a compact dict (no model/message blobs).
+# - Debug traces preserved; critic raw kept internal only.
 
 from __future__ import annotations
 import argparse, json, os, random, time, http.client, hashlib, re, copy
@@ -10,14 +11,17 @@ from dataclasses import dataclass, asdict
 from hashlib import sha256
 from typing import List, Dict, Any, Optional
 
+# ========= Determinism & helpers =========
 SEED_DEFAULT = 137
 
 def seed_everything(seed: int = SEED_DEFAULT):
     os.environ["PYTHONHASHSEED"] = str(seed); random.seed(seed)
 
-def clamp(x: float, lo: float=0.0, hi: float=1.0) -> float: return max(lo, min(hi, x))
+def clamp(x: float, lo: float=0.0, hi: float=1.0) -> float:
+    return max(lo, min(hi, x))
 
 def soft_stop(goal_met: float, gaba: float, budget_exhaust: float, unresolved_conflict: float) -> float:
+    # S_s = 0.5·goal_met + 0.2·GABA + 0.2·τ_exhaust − 0.2·unresolved_conflict
     return 0.5*goal_met + 0.2*gaba + 0.2*budget_exhaust - 0.2*unresolved_conflict
 
 def sha(s: str) -> str: return hashlib.sha256(s.encode("utf-8")).hexdigest()
@@ -33,7 +37,8 @@ def ledger_append(path: str, entry: dict):
                 prev = json.loads(last).get("this_hash","")
             except Exception:
                 prev = ""
-    entry["ts"] = int(time.time()); entry["prev_hash"] = prev
+    entry["ts"] = int(time.time())
+    entry["prev_hash"] = prev
     entry["this_hash"] = sha(prev + json.dumps(entry, sort_keys=True))
     with open(path, "a", encoding="utf-8") as f:
         f.write(json.dumps(entry, ensure_ascii=False) + "\n")
@@ -44,15 +49,23 @@ def log_jsonl(path: str, obj: dict):
     with open(path, "a", encoding="utf-8") as f:
         f.write(json.dumps(obj, ensure_ascii=False) + "\n")
 
-# ===== Data Contracts =====
+# ========= Data Contracts =========
 @dataclass
 class Source:
-    url: str; seg: Optional[str]=None; h: Optional[str]=None; ts: Optional[str]=None; domain_tier: int=1
+    url: str
+    seg: Optional[str]=None
+    h: Optional[str]=None
+    ts: Optional[str]=None
+    domain_tier: int=1
 
 @dataclass
 class Claim:
-    id: str; text: str; q: float = 0.5
-    sources: List[Source] = None; supports: List[str] = None; contradicts: List[str] = None
+    id: str
+    text: str
+    q: float = 0.5
+    sources: List[Source] = None
+    supports: List[str] = None
+    contradicts: List[str] = None
     stance: str = "neutral"
     def to_dict(self):
         return {"id": self.id, "text": self.text, "q": self.q, "stance": self.stance,
@@ -61,16 +74,26 @@ class Claim:
 
 @dataclass
 class EvidenceUnit:
-    id: str; content_hash: str; extract: str; stance: str="neutral"; provenance: List[Dict[str, Any]] = None
+    id: str
+    content_hash: str
+    extract: str
+    stance: str="neutral"
+    provenance: List[Dict[str, Any]] = None
+
+# ========= Emotional Center (Homeostat) =========
+@dataclass
+class Appraisal:
+    p: float; n: float; u: float; k: float; s: float; c: float; h: float
 
 @dataclass
-class Appraisal: p: float; n: float; u: float; k: float; s: float; c: float; h: float
-@dataclass
-class Mu: da: float; ne: float; s5ht: float; ach: float; gaba: float; oxt: float
+class Mu:
+    da: float; ne: float; s5ht: float; ach: float; gaba: float; oxt: float
+
 @dataclass
 class PolicyCoupling:
     k_breadth: int; d_depth: int; q_contra: int; temperature: float
-    retrieval_share: float; synthesis_share: float; safety_share: float; reserved_dissent: bool
+    retrieval_share: float; synthesis_share: float; safety_share: float
+    reserved_dissent: bool
 
 class Homeostat:
     def update(self, mu: Mu, a: Appraisal) -> Mu:
@@ -81,6 +104,7 @@ class Homeostat:
         gb  = clamp(mu.gaba + 0.50*0.5 + 0.30*0.5 - 0.25*0.5)
         oxt = clamp(mu.oxt + 0.40*a.h)
         return Mu(da, ne, s5, ach, gb, oxt)
+
     def couple(self, mu: Mu) -> PolicyCoupling:
         k0, d0, q0 = 6, 3, 1
         k = max(3, int(k0*(1 + mu.ne - 0.5*mu.s5ht)))
@@ -92,6 +116,7 @@ class Homeostat:
         saf  = clamp(1.0 - (retr + syn), 0.0, 1.0)
         return PolicyCoupling(k, d, q_con, temp, retr, syn, saf, reserved_dissent=(mu.ach>=0.6))
 
+# ========= Safety (Custodian) =========
 class Custodian:
     policy_ver = "v1.1"
     def classify(self, goal: str) -> str:
@@ -102,6 +127,7 @@ class Custodian:
         return {"action": "deny" if risk in ("R3","R4") else "allow",
                 "notes":  f"Risk {risk} {'blocked' if risk in ('R3','R4') else 'allowed'} by policy"}
 
+# ========= Evaluation (Witness) =========
 class Witness:
     def score(self, stats: Dict[str,Any]) -> Dict[str,float]:
         pass_at_1   = 1.0 if stats.get("goal_met", False) else 0.0
@@ -110,6 +136,7 @@ class Witness:
         resolution  = 1.0 if stats.get("resolved", False) else 0.0
         return {"pass_at_1":pass_at_1,"precision_k":precision_k,"ece":ece,"resolution_rate":resolution}
 
+# ========= World-Model (Archivist) =========
 class Archivist:
     def __init__(self): self.claims: Dict[str, Claim] = {}; self.contradict: Dict[str, List[str]] = {}
     def upsert_claim(self, c: Claim): self.claims[c.id] = c
@@ -117,7 +144,7 @@ class Archivist:
         self.contradict.setdefault(i,[]).append(j); self.contradict.setdefault(j,[]).append(i)
     def retrieve(self, k:int=5) -> List[Claim]: return list(self.claims.values())[:k]
 
-# ===== Local corpus demo =====
+# ========= Retrieval (Scout: local corpus demo) =========
 PAGERANK_PRIMARY = "PageRank is a link analysis algorithm assigning importance as the stationary probability a random surfer lands on a page. The damping factor (≈0.85) models continuing to click links."
 PAGERANK_MEDIA   = "Popular media often say PageRank ranks pages by counting links; more links imply higher rank."
 PAGERANK_DISSENT = "Dissent: PageRank is NOT simple counts; it weights by the rank of linking pages and normalizes by their outdegree."
@@ -125,18 +152,23 @@ PAGERANK_DISSENT = "Dissent: PageRank is NOT simple counts; it weights by the ra
 class Scout:
     def _mk_ev(self, name: str, txt: str, stance: str) -> EvidenceUnit:
         h = sha256(txt.encode()).hexdigest()[:16]
-        return EvidenceUnit(id=name, content_hash=h, extract=txt[:400], stance=stance, provenance=[{"source": name}])
+        return EvidenceUnit(id=name, content_hash=h, extract=txt[:400], stance=stance,
+                            provenance=[{"source": name}])
     def fetch_pagerank(self, k_breadth:int, dissent_quota:int) -> List[EvidenceUnit]:
-        pool = [self._mk_ev("pagerank_primary.txt", PAGERANK_PRIMARY, "pro"),
-                self._mk_ev("pagerank_media.txt",   PAGERANK_MEDIA,   "neutral"),
-                self._mk_ev("pagerank_dissent.txt", PAGERANK_DISSENT, "con")]
+        pool = [
+            self._mk_ev("pagerank_primary.txt", PAGERANK_PRIMARY, "pro"),
+            self._mk_ev("pagerank_media.txt",   PAGERANK_MEDIA,   "neutral"),
+            self._mk_ev("pagerank_dissent.txt", PAGERANK_DISSENT, "con"),
+        ]
         dissent = [e for e in pool if e.stance=="con"][:max(1, dissent_quota-1)]
         others  = [e for e in pool if e.stance!="con"]
         return (dissent + others)[:max(1, k_breadth)]
 
-# ===== Pilot =====
+# ========= Pilot (Intent) =========
 @dataclass
-class Intent: assumptions: str; unknowns: str; tests: str; stop: str; risk: str
+class Intent:
+    assumptions: str; unknowns: str; tests: str; stop: str; risk: str
+
 class Pilot:
     def draft_intent(self, goal: str, risk: str) -> Intent:
         return Intent(
@@ -147,11 +179,13 @@ class Pilot:
             risk=risk,
         )
 
-# ===== JSON extractor =====
+# ========= JSON extractor =========
 def extract_last_json(text: str) -> dict:
     if not text: raise ValueError("empty text")
-    try: return json.loads(text)
-    except Exception: pass
+    try:
+        return json.loads(text)
+    except Exception:
+        pass
     depth = 0; start = None; last = None
     for idx, ch in enumerate(text):
         if ch == "{":
@@ -166,7 +200,7 @@ def extract_last_json(text: str) -> dict:
     if last is not None: return last
     raise ValueError("no JSON object found")
 
-# ===== Ollama client =====
+# ========= Ollama LLM Client =========
 class LLMClient:
     def __init__(self, model: str, host: str="localhost", port: int=11434, debug: bool=False,
                  timeout: int=45, retries: int=2, backoff: float=0.75):
@@ -176,6 +210,7 @@ class LLMClient:
         self.retries = int(os.getenv("GUARDIAN_RETRIES", retries))
         self.backoff = backoff
         self.last_http: Dict[str,Any] = {}
+
     def _post(self, path: str, payload: dict, phase: str) -> Dict[str,Any]:
         body = json.dumps(payload); attempt = 0; err: Optional[Exception] = None
         while attempt <= self.retries:
@@ -185,7 +220,8 @@ class LLMClient:
                 conn.request("POST", path, body=body, headers={"Content-Type":"application/json"})
                 resp = conn.getresponse(); status = resp.status
                 raw = resp.read().decode("utf-8") if resp else ""
-            except Exception as e: err = e
+            except Exception as e:
+                err = e
             finally:
                 try: conn.close()
                 except Exception: pass
@@ -203,11 +239,16 @@ class LLMClient:
             time.sleep(self.backoff * (2**attempt)); attempt += 1
         if err: raise err
         raise RuntimeError(f"Ollama HTTP {self.last_http.get('status')} at {self.last_http.get('path')}: {self.last_http.get('raw_preview')}")
+
     def _render_chat_as_prompt(self, system_msg: str, user_msg: str) -> str:
         return f"<|system|>\n{system_msg}\n<|user|>\n{user_msg}\n<|assistant|>\n"
-    def _generate(self, prompt: str, opts: dict, phase: str) -> str:
-        gen = self._post("/api/generate", {"model": self.model, "prompt": prompt, "options": opts, "stream": False}, phase)
+
+    def _generate(self, prompt: str, opts: dict, phase: str, stop: Optional[List[str]]=None) -> str:
+        payload = {"model": self.model, "prompt": prompt, "options": opts, "stream": False}
+        if stop: payload["stop"] = stop
+        gen = self._post("/api/generate", payload, phase)
         return (gen.get("response") or gen.get("thinking") or "").strip()
+
     def ask(self, system_msg: str, user_msg: str, *, temperature: float, top_p: float,
             repeat_penalty: float, num_predict: int, num_ctx: int=8192,
             force_json: bool=False, phase: str="pilot", allow_thinking: bool=False) -> str:
@@ -217,7 +258,8 @@ class LLMClient:
         if force_json: opts["format"] = "json"
         data = self._post("/api/chat", {
             "model": self.model,
-            "messages": [{"role":"system","content":system_msg},{"role":"user","content":user_msg}],
+            "messages": [{"role":"system","content":system_msg},
+                         {"role":"user","content":user_msg}],
             "options": opts, "stream": False
         }, phase=phase)
         content = ""; thinking = ""
@@ -227,26 +269,42 @@ class LLMClient:
             thinking = (msg.get("thinking") or data.get("thinking") or "").strip()
         if content: return content
         if allow_thinking and thinking: return thinking
-        # fallback
+        # fallback to generate
         return self._generate(self._render_chat_as_prompt(system_msg, user_msg), opts, f"{phase}-fallback")
+
     def rewrite_from_notes(self, system_msg: str, user_msg: str, notes: str, *, phase: str,
-                           temperature: float, top_p: float, repeat_penalty: float, num_predict: int, num_ctx:int=8192) -> str:
-        prompt = (
+                           temperature: float, top_p: float, repeat_penalty: float,
+                           num_predict: int, num_ctx:int=8192, max_tries:int=3) -> str:
+        stop_token = "### END"
+        base_prompt = (
             f"{system_msg}\n\nUser:\n{user_msg}\n\n"
-            "Assistant (rewrite task): Convert the following NOTES into the FINAL ANSWER ONLY, "
-            "110–160 words, ≥3 bracketed citations like [1][2][3], include either a 'Conflict Note:' "
-            "or a 'Misconception:' line. No steps, no analysis.\n\nNOTES:\n"
-            f"{notes}\n\nFinal answer:\n"
+            "Assistant task: Use the NOTES to produce the FINAL ANSWER ONLY.\n"
+            "Requirements: 110–160 words, ≥3 bracketed citations like [1][2][3], "
+            "include either a 'Conflict Note:' or a 'Misconception:' line. "
+            "Do NOT include steps or analysis. End with the literal token: ### END\n\n"
+            f"NOTES:\n{notes}\n\nFINAL ANSWER:\n"
         )
-        opts = {"temperature": float(temperature), "top_p": float(top_p),
-                "repeat_penalty": float(repeat_penalty), "num_predict": int(max(num_predict, 640)),
-                "num_ctx": int(num_ctx)}
-        out = self._generate(prompt, opts, f"{phase}-salvage"); 
-        if not out: raise RuntimeError("Salvage generate returned empty text.")
+        opts = {
+            "temperature": float(max(0.1, temperature-0.05)),
+            "top_p": float(max(0.5, top_p-0.1)),
+            "repeat_penalty": float(repeat_penalty+0.05),
+            "num_predict": int(max(900, num_predict, 700)),
+            "num_ctx": int(max(8192, num_ctx))
+        }
+        out = ""
+        for _ in range(max_tries):
+            raw = self._generate(base_prompt, opts, f"{phase}-salvage", stop=[stop_token])
+            out = raw.split(stop_token)[0].strip() if raw else ""
+            if out: break
+            opts["num_predict"] = int(opts["num_predict"] + 120)
+            opts["temperature"] = max(0.1, opts["temperature"] - 0.02)
+        if not out:
+            raise RuntimeError("Salvage generate returned empty text.")
         return out
+
     def get_last_http(self) -> Dict[str,Any]: return copy.deepcopy(self.last_http)
 
-# ===== Critic =====
+# ========= Critic =========
 CRITIC_SYS = (
   "You are Critic. Respond in STRICT JSON only.\n"
   "Schema: {\"q_overall\": float, \"has_conflict_note\": bool, \"reasons\": [string]}\n"
@@ -257,25 +315,36 @@ def _heuristic_score(answer: str) -> dict:
     s = (answer or "").strip()
     if not s: return {"q_overall": 0.0, "has_conflict_note": False, "reasons": ["empty answer"]}
     words = len(re.findall(r"\b\w+\b", s))
-    cites = len(set(re.findall(r"\[[0-9]+\]", s))) + len(re.findall(r"\([A-Z][A-Za-z].*?(19|20)\d{2}\)", s))
+    cites = len(set(re.findall(r"\[[0-9]+\]", s)))
     resolved = any(x in s.lower() for x in ["conflict note", "misconception:"])
-    q = 0.0; q += 0.35 if 110 <= words <= 160 else 0.0; q += 0.35 if cites >= 3 else 0.0; q += 0.30 if resolved else 0.0
+    q = 0.0
+    q += 0.35 if 110 <= words <= 160 else 0.0
+    q += 0.35 if cites >= 3 else 0.0
+    q += 0.30 if resolved else 0.0
     return {"q_overall": float(clamp(q,0.0,1.0)), "has_conflict_note": resolved,
             "reasons": [("length ok" if 110<=words<=160 else "length off"),
                         ("≥3 citations" if cites>=3 else "<3 citations"),
                         ("resolution line present" if resolved else "no resolution line")]}
 
+def _sanitize_critic(d: dict) -> dict:
+    out = {
+        "q_overall": float(clamp(float(d.get("q_overall", 0.0)), 0.0, 1.0)),
+        "has_conflict_note": bool(d.get("has_conflict_note", False)),
+        "reasons": [str(r)[:160] for r in (d.get("reasons", []) or [])][:6],
+    }
+    return out
+
 def run_critic(llm: LLMClient, answer: str, passes: int=1, temperature: float=0.2, log_path:str="") -> dict:
-    top_p=0.7; repeat_penalty=1.15; num_predict=160
+    top_p=0.7; repeat_penalty=1.15; num_predict=220
     best=None; any_json=False
     for i in range(max(1,passes)):
         try:
             j = llm.ask(CRITIC_SYS, f"Answer:\n{answer}", temperature=temperature, top_p=top_p,
                         repeat_penalty=repeat_penalty, num_predict=num_predict,
-                        force_json=True, phase="critic", allow_thinking=True)
+                        force_json=True, phase="critic", allow_thinking=False)
             data = extract_last_json(j); any_json=True
             if (best is None) or (data.get("q_overall",0.0)>best.get("q_overall",0.0)): best=data
-            log_jsonl(log_path, {"phase":"critic","pass":i,"raw":str(j)[:240],"http": llm.get_last_http()})
+            log_jsonl(log_path, {"phase":"critic","pass":i,"raw":str(j)[:240]})
         except Exception as e:
             h = llm.get_last_http()
             blob = h.get("raw_full") or h.get("raw_mid") or h.get("raw_preview","")
@@ -283,50 +352,47 @@ def run_critic(llm: LLMClient, answer: str, passes: int=1, temperature: float=0.
                 salvage = extract_last_json(blob); any_json=True
                 if (best is None) or (salvage.get("q_overall",0.0) > (best.get("q_overall",0.0) if isinstance(best,dict) else 0.0)):
                     best = salvage
-                log_jsonl(log_path, {"phase":"critic","pass":i,"salvaged": True,"len_blob": len(blob)})
+                log_jsonl(log_path, {"phase":"critic","pass":i,"salvaged": True})
             except Exception:
                 log_jsonl(log_path, {"phase":"critic","pass":i,"error": str(e)})
-    if best is None and not any_json:
+    if not any_json:
         best = _heuristic_score(answer)
         best["reasons"].insert(0, "heuristic fallback (no JSON from critic)")
-    best["q_overall"] = float(clamp(best.get("q_overall",0.0),0.0,1.0))
-    best["has_conflict_note"] = bool(best.get("has_conflict_note",False))
-    if "reasons" not in best: best["reasons"]=[]
-    return best
+    return _sanitize_critic(best or {})
 
-# ===== Acceptance & Repair =====
+# ========= Acceptance & Repair =========
 def word_count(s: str) -> int: return len(re.findall(r"\b\w+\b", s))
 
 def balanced_brackets(s: str) -> bool:
-    return s.count("[")==s.count("]") and s.count("(")>=s.count(")")
+    # require equal counts for both [] and ()
+    return (s.count("[") == s.count("]")) and (s.count("(") == s.count(")"))
 
 def ends_with_sentence(s: str) -> bool:
     s = s.rstrip()
-    return bool(re.search(r"[.!?][\"')\]]*$", s))
+    return bool(re.search(r"[.!?](?:['\")\]]+)?$", s))
 
 def seems_truncated(s: str) -> bool:
     if not s: return True
-    too_short = word_count(s) < 80
+    wc = word_count(s)
     broken = not ends_with_sentence(s)
-    open_br = s.count("[") > s.count("]")
-    return too_short or broken or open_br
+    unbalanced = not balanced_brackets(s)
+    return (wc < 90) or broken or unbalanced
 
 def acceptable_answer(txt: str) -> bool:
     if not txt: return False
     s = txt.strip()
     wc = word_count(s)
     if not (110 <= wc <= 160): return False
-    cites = len(set(re.findall(r"\[[0-9]+\]", s))) + len(re.findall(r"\([A-Z][A-Za-z].*?(19|20)\d{2}\)", s))
+    cites = len(set(re.findall(r"\[[0-9]+\]", s)))
     if cites < 3: return False
     if ("conflict note" not in s.lower()) and ("misconception:" not in s.lower()): return False
     if re.search(r"\bwe need to\b|\blet'?s\b|step by step|first, we|i will\b", s.lower()): return False
-    if not balanced_brackets(s): return False
-    if seems_truncated(s): return False
-    return True
+    return ends_with_sentence(s) and balanced_brackets(s)
 
-# ===== Engine =====
+# ========= Engine =========
 @dataclass
-class IntentObj: assumptions: str; unknowns: str; tests: str; stop: str; risk: str  # unused alias
+class IntentObj:  # alias (not used elsewhere but kept for clarity)
+    assumptions: str; unknowns: str; tests: str; stop: str; risk: str
 
 class Engine:
     def __init__(self, pilot_model: str="gpt-oss:20b", critic_model: Optional[str]=None,
@@ -377,6 +443,7 @@ class Engine:
         pol = self.homeo.couple(mu_out)
 
         llm_answer = "[blocked by policy]"; llm_knobs = {}; attempts: List[Dict[str,Any]] = []
+
         if verdict["action"] == "allow":
             temperature    = max(0.1, 0.9 - 0.6*mu_out.s5ht)
             top_p          = clamp(0.75 + 0.20*mu_out.ne - 0.10*mu_out.gaba, 0.50, 0.95)
@@ -385,9 +452,10 @@ class Engine:
 
             system_msg = (f"You are Pilot (seed={SEED_DEFAULT}). Think privately but DO NOT reveal chain-of-thought. "
                           "Final answer only: 110–160 words, ≥3 bracketed citations. Include either 'Conflict Note:' or 'Misconception:' line.")
-            user_msg = ("Explain PageRank in ≤150 words with ≥3 citations. Prioritize primary/official. Resolve the link-count misconception.")
+            user_msg = ("Explain PageRank in ≤150 words with ≥3 citations. Prioritize primary/official. "
+                        "Resolve the link-count misconception.")
 
-            # Attempt 1 (no thinking allowed)
+            # Attempt 1 (chat)
             try:
                 ans = self.pilot_llm.ask(system_msg, user_msg,
                                          temperature=temperature, top_p=top_p,
@@ -398,56 +466,57 @@ class Engine:
                 attempts.append({"kind":"pilot","ok":False,"error":str(e),"http":self.pilot_llm.get_last_http()})
                 ans = ""
 
-            # If we got notes but no content, salvage rewrite from notes
+            # Salvage from notes if we got no content
             if (not ans):
                 h = self.pilot_llm.get_last_http(); notes = ""
-                # try to extract notes if any are present in last response
                 for k in ("raw_full", "raw_mid", "raw_preview"):
                     notes = notes or h.get(k,"")
                 if notes:
                     try:
                         ans = self.pilot_llm.rewrite_from_notes(system_msg, user_msg, notes,
-                            phase="pilot", temperature=temperature, top_p=top_p,
+                            phase="pilot-repair", temperature=temperature, top_p=top_p,
                             repeat_penalty=repeat_penalty, num_predict=num_predict)
-                        attempts.append({"kind":"pilot-salvage","ok":True,"http":self.pilot_llm.get_last_http(),"len":len(ans)})
+                        attempts.append({"kind":"pilot-repair-salvage","ok":True,"http":self.pilot_llm.get_last_http(),"len":len(ans)})
                     except Exception as e:
-                        attempts.append({"kind":"pilot-salvage","ok":False,"error":str(e),"http":self.pilot_llm.get_last_http()})
+                        attempts.append({"kind":"pilot-repair-salvage","ok":False,"error":str(e),"http":self.pilot_llm.get_last_http()})
 
-            # Repair if truncated/imbalanced
-            if ans and (seems_truncated(ans) or not balanced_brackets(ans) or not (110<=word_count(ans)<=200)):
+            # Repair if truncated/off-spec (pass 1)
+            if ans and (seems_truncated(ans) or not acceptable_answer(ans)):
                 try:
                     ans = self.pilot_llm.rewrite_from_notes(
                         system_msg, user_msg,
-                        f"DRAFT (possibly truncated):\n{ans}\n\nREPAIR: polish to 110–160 words, fix incomplete sentence, ensure ≥3 bracketed citations and include a resolution line.",
-                        phase="pilot-repair", temperature=max(0.1,temperature-0.1), top_p=max(0.5,top_p-0.1),
-                        repeat_penalty=repeat_penalty+0.05, num_predict=max(640,num_predict))
-                    attempts.append({"kind":"pilot-repair","ok":True,"http":self.pilot_llm.get_last_http(),"len":len(ans)})
+                        f"DRAFT (incomplete or off-spec):\n{ans}\n\nREPAIR: polish to 110–160 words, ensure ≥3 bracketed citations and include a resolution line.",
+                        phase="pilot-repair-1",
+                        temperature=temperature, top_p=top_p,
+                        repeat_penalty=repeat_penalty, num_predict=num_predict
+                    )
+                    attempts.append({"kind":"pilot-repair-1","ok":True,"http":self.pilot_llm.get_last_http(),"len":len(ans)})
                 except Exception as e:
-                    attempts.append({"kind":"pilot-repair","ok":False,"error":str(e),"http":self.pilot_llm.get_last_http()})
+                    attempts.append({"kind":"pilot-repair-1","ok":False,"error":str(e),"http":self.pilot_llm.get_last_http()})
 
-            # Acceptance gate; one controlled re-prompt if still not acceptable
-            if not acceptable_answer(ans):
-                remsg = (user_msg + "\n\nCRITICAL: 110–160 words, ≥3 bracketed citations [1][2][3], include a 'Conflict Note:' or 'Misconception:' line. Final answer only.")
+            # Acceptance loop (up to two retries with rewrite-based repair)
+            tries = 0
+            while not acceptable_answer(ans) and tries < 2:
+                tries += 1
+                remsg = (user_msg + "\n\nCRITICAL: Output 110–160 words, ≥3 bracketed citations [1][2][3], "
+                         "include exactly one 'Misconception:' or 'Conflict Note:' line. Final answer only.")
                 try:
-                    ans2 = self.pilot_llm.ask(system_msg, remsg,
-                                temperature=max(0.1, temperature-0.1),
-                                top_p=max(0.5, top_p-0.15),
-                                repeat_penalty=repeat_penalty+0.05,
-                                num_predict=max(num_predict, 640),
-                                phase="pilot-reprompt", allow_thinking=False)
-                    # Repair again if needed
-                    if seems_truncated(ans2) or not acceptable_answer(ans2):
-                        ans2 = self.pilot_llm.rewrite_from_notes(system_msg, user_msg,
-                                f"DRAFT:\n{ans2}\n\nREPAIR to spec (110–160 words, ≥3 bracketed citations, include resolution line).",
-                                phase="pilot-reprompt-repair", temperature=max(0.1,temperature-0.1),
-                                top_p=max(0.5,top_p-0.15), repeat_penalty=repeat_penalty+0.05,
-                                num_predict=max(num_predict, 700))
-                    attempts.append({"kind":"pilot-reprompt","ok":True,"http":self.pilot_llm.get_last_http(),"len":len(ans2)})
+                    ans2 = self.pilot_llm.rewrite_from_notes(
+                        system_msg, remsg,
+                        f"NOTES (why previous failed):\n- {'too short' if word_count(ans)<110 else 'too long' if word_count(ans)>160 else 'bad ending or brackets'}\n- ensure [1][2][3]\n- include resolution line\n\nDRAFT:\n{ans}",
+                        phase=f"pilot-reprompt-repair-{tries}",
+                        temperature=max(0.1, temperature-0.1*tries),
+                        top_p=max(0.5, top_p-0.1*tries),
+                        repeat_penalty=repeat_penalty+0.05*tries,
+                        num_predict=max(num_predict, 900+100*tries)
+                    )
+                    attempts.append({"kind":f"pilot-reprompt-repair-{tries}","ok":True,"http":self.pilot_llm.get_last_http(),"len":len(ans2)})
                     ans = ans2
                 except Exception as e:
-                    attempts.append({"kind":"pilot-reprompt","ok":False,"error":str(e),"http":self.pilot_llm.get_last_http()})
+                    attempts.append({"kind":f"pilot-reprompt-repair-{tries}","ok":False,"error":str(e),"http":self.pilot_llm.get_last_http()})
+                    break
 
-            # Optional alt model
+            # Optional alt model path
             if not acceptable_answer(ans) and pilot_alt_model:
                 alt_llm = LLMClient(pilot_alt_model, debug=self.debug)
                 try:
@@ -456,16 +525,19 @@ class Engine:
                                        phase="pilot-alt", allow_thinking=False)
                     if seems_truncated(ans3) or not acceptable_answer(ans3):
                         ans3 = alt_llm.rewrite_from_notes(system_msg, user_msg,
-                                f"DRAFT:\n{ans3}\n\nREPAIR to spec.", phase="pilot-alt-repair",
-                                temperature=0.2, top_p=0.7, repeat_penalty=1.15, num_predict=700)
+                                f"DRAFT:\n{ans3}\n\nREPAIR to spec (110–160 words, ≥3 bracketed citations, include resolution line).",
+                                phase="pilot-alt-repair",
+                                temperature=0.2, top_p=0.7, repeat_penalty=1.15, num_predict=900)
                     attempts.append({"kind":"pilot-alt","model":pilot_alt_model,"ok":True,"http":alt_llm.get_last_http(),"len":len(ans3)})
                     ans = ans3
                 except Exception as e:
                     attempts.append({"kind":"pilot-alt","model":pilot_alt_model,"ok":False,"error":str(e),"http":alt_llm.get_last_http()})
 
             llm_answer = ans
-            llm_knobs = {"temperature": round(temperature,3), "top_p": round(top_p,3),
-                         "repeat_penalty": round(repeat_penalty,3), "num_predict": int(num_predict)}
+            llm_knobs = {"temperature": round(temperature,3),
+                         "top_p": round(top_p,3),
+                         "repeat_penalty": round(repeat_penalty,3),
+                         "num_predict": int(num_predict)}
 
         # Critic (compact dict only)
         critic = {}
@@ -478,6 +550,7 @@ class Engine:
                 critic = {"q_overall": 0.0, "has_conflict_note": False,
                           "reasons":[f"critic exec error: {e}"]}
 
+        # Evidence & claims
         ev = self.scout.fetch_pagerank(pol.k_breadth, pol.q_contra)
         resolution_line_present = any(x in (llm_answer or "").lower() for x in ["conflict note", "misconception:"])
 
@@ -489,7 +562,8 @@ class Engine:
             Claim(id="c3", text="Media often oversimplify as mere link counts (misleading).", q=0.7,
                   sources=[Source(url="pagerank_media.txt", domain_tier=3)], stance="neutral"),
         ]
-        for c in claims: self.arch.upsert_claim(c); self.arch.link_contradiction("c2", "c3")
+        for c in claims: self.arch.upsert_claim(c)
+        self.arch.link_contradiction("c2", "c3")
 
         adopt = critic.get("q_overall", 0.0) >= 0.70 if critic else False
         stats = {"sources": len(ev),
@@ -500,18 +574,20 @@ class Engine:
 
         payload = {
             "goal": goal, "risk": risk, "verdict": verdict["action"],
-            "intent": asdict(self.pilot.draft_intent(goal, risk)),
-            "mu_out": asdict(mu_out), "policy": asdict(pol),
+            "intent": asdict(intent), "mu_out": asdict(mu_out), "policy": asdict(pol),
             "llm_knobs": llm_knobs, "evidence": [e.id for e in ev],
             "claims": [c.to_dict() for c in claims], "llm_preview": (llm_answer or "")[:700],
             "critic": critic, "adopted": adopt, "kpis": kpis, "stop_score": stop
         }
         if self.debug and verdict["action"] == "allow":
-            payload["last_http"] = {"pilot": (attempts[-1]["http"] if attempts else {}), "critic": self.critic_llm.get_last_http()}
+            payload["last_http"] = {
+                "pilot": (attempts[-1]["http"] if attempts else self.pilot_llm.get_last_http()),
+                "critic": self.critic_llm.get_last_http()
+            }
             payload["attempts"] = attempts
         return payload
 
-# ===== CLI =====
+# ========= CLI =========
 def main():
     ap = argparse.ArgumentParser(description="Guardian-AGI — resilient Ollama + Emotional Center")
     ap.add_argument("--pilot-model", default=os.getenv("GUARDIAN_PILOT", "gpt-oss:20b"))
