@@ -156,7 +156,7 @@ class Homeostat:
         da  = clamp(mu.da  + 0.35*(a.p-0.5) - 0.30*a.k)
         ne  = clamp(mu.ne  + 0.40*a.u + 0.30*a.n)
         s5  = clamp(mu.s5ht + 0.45*a.s)
-        ach = clamp(mu.ach + 0.50*a.c)
+        ach = clamp(mu.ach + 0.20*a.c)
         gb  = clamp(mu.gaba + 0.50*0.5 + 0.30*0.5 - 0.25*0.5)
         oxt = clamp(mu.oxt + 0.40*a.h)
         return Mu(da, ne, s5, ach, gb, oxt)
