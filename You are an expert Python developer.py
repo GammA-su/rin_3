@@ -1,3 +1,82 @@
+You are an expert Python developer.
+You are **not** allowed to run any commands, patch tools, or container.exec calls.
+
+**Task:** Apply the diff to the original file and output the **ENTIRE updated Python file** as plain text.
+- Do NOT describe steps.
+- Do NOT summarize.
+- Do NOT add explanations.
+- Output the updated file ONLY.
+- Write the FULL code dont ommit any part
+- Be the fastest possible, go straight to rewriting the full code
+- Don't think, just rewrite the full code.
+- You must fully write the changed code
+- The code must be full not any part of it.
+- Dont write only some part. Write everything
+
+rewrite code with these changes accordingly 
+diff --git a/guardian_agi_min.py b/guardian_agi_min.py
+--- a/guardian_agi_min.py
++++ b/guardian_agi_min.py
+@@ -705,11 +705,17 @@ def main():
+-    ap.add_argument("--record", default="", help="Path to ledger JSONL (append-only). Empty=off.")
++    ap.add_argument("--record", default="", help="Path to ledger JSONL (append-only). Empty=off.")
+     ap.add_argument("--debug", action="store_true", help="Include last HTTP trace on LLM errors.")
+     ap.add_argument("--offline", action="store_true", help="Run deterministically without calling Ollama (for CI or no-model).")
++    ap.add_argument("--suite", choices=["none","quick"], default="none", help="Run a predefined probe suite and exit.")
++    ap.add_argument("--save-answer", default="", help="Write the final LLM synthesis/preview to this file.")
++    ap.add_argument("--strict", action="store_true", help="Exit non-zero if probes/KPIs miss thresholds.")
+     args = ap.parse_args()
+@@ -721,6 +727,38 @@ def main():
+         print(json.dumps({"memory": eng.mem.summary() if eng.mem.enabled() else "disabled", "dir": memdir or None}, indent=2)); return
++    # Probe suite runner
++    if args.suite != "none":
++        results = {}
++        # Run minimal-but-decisive set
++        from io import StringIO
++        buf = []
++        def cap(fn):
++            import sys, json as _json, contextlib
++            s = StringIO()
++            with contextlib.redirect_stdout(s):
++                fn(eng, args)
++            out = s.getvalue().strip()
++            try:
++                return _json.loads(out)
++            except Exception:
++                return {"raw": out, "ok": False}
++        results["P1"] = cap(probe_P1)
++        results["P2"] = cap(probe_P2)
++        results["P3"] = cap(probe_P3)
++        results["P5"] = cap(probe_P5)
++        ok = all(bool(v.get("ok", False)) for v in results.values())
++        print(json.dumps({"suite":"quick","ok": ok, "results": results}, indent=2))
++        if args.strict and not ok:
++            raise SystemExit(2)
++        return
+@@ -745,6 +783,13 @@ def main():
+         res = eng.run_pagerank_demo(ach=args.ach, seed=args.seed)
+     print(json.dumps(res, indent=2))
++    # Persist the short answer for UI/inspection if requested
++    if args.save_answer:
++        try:
++            with open(args.save_answer, "w", encoding="utf-8") as f:
++                f.write(res.get("llm_preview",""))
++        except Exception as e:
++            print(json.dumps({"save_answer_error": str(e)}, indent=2))
+     if args.record:
+         ledger_append(args.record, {
+             "goal": res["goal"], "risk": res["risk"], "verdict": res["verdict"],
+@@ -755,6 +800,12 @@ def main():
+             "explain": res.get("explain", {}), "memory": res.get("memory", {}), "retrieval": res.get("retrieval", {})
+         })
++    # Strict KPI gate
++    if args.strict:
++        k = res.get("kpis", {})
++        ok = (k.get("pass_at_1",0)>=0.80 and k.get("resolution_rate",0)>=0.60)
++        if not ok:
++            raise SystemExit(2)
+
+
 #!/usr/bin/env python3
 # guardian_agi_min.py — Guardian-AGI scaffold (seed=137)
 # Single-file: emotional center + safety + memory + local-docs retrieval + strict-JSON critic + probes.
@@ -794,3 +873,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+change the code with the changes accordingly
