@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # guardian_agi_min.py — single-file Guardian-AGI scaffold (Track 1: Ollama, no Docker)
-# Model default: gpt-oss:20b | Deterministic seed | Goal-conditioned, μ-steered, critic-gated, self-improving.
+# Model default: gpt-oss:20b | Goal-conditioned, μ-steered, critic-gated, critique-guided rewrite loop.
 from __future__ import annotations
 import argparse, json, os, random, time, http.client, hashlib, re
 from dataclasses import dataclass, asdict
@@ -286,7 +286,7 @@ def run_critic(llm: LLMClient, answer: str, mu: Mu, passes: int=1) -> dict:
             j = llm.ask(CRITIC_SYS, f"Answer:\n{answer}\n\nReturn JSON only.",
                         temperature=temperature, top_p=top_p,
                         repeat_penalty=repeat_penalty, num_predict=num_predict,
-                        force_json=True, prefer_generate=True)  # generate-first JSON for stability
+                        force_json=True, prefer_generate=True)
             try: data = extract_json(j)
             except Exception: data = critic_heuristic(j)
             if isinstance(data, dict) and data.get("q_overall", 0) >= best.get("q_overall", 0):
@@ -349,7 +349,7 @@ class Engine:
 
     def _sanitize_generic(self, text: str) -> str:
         t = (text or "")
-        # Drop obvious meta blocks and token-count lines like Bayesian(1) updating(2) …
+        # Drop obvious meta and token-count lines like Bayesian(1) updating(2)
         lines = []
         for ln in t.splitlines():
             s = ln.strip()
@@ -361,7 +361,7 @@ class Engine:
         out = "\n".join(lines).strip()
         if self.META_PAT.search(out[:200]):
             out = re.sub(r"^(?:[^.\n]*\.(?:\s+|$))", "", out).lstrip()
-        # Remove stray word(123) patterns anywhere, then collapse spaces
+        # Remove stray word(123) patterns, collapse spaces
         out = re.sub(r"\b\w+\(\d+\)", "", out)
         out = re.sub(r"\s{2,}", " ", out).strip()
         return out
@@ -373,7 +373,6 @@ class Engine:
         if text.strip().lower().startswith("draft:"): return False
         if re.search(r"\b\w+\(\d+\)", text): return False
         if require_conflict and not re.search(r"(^|\n)\s*Conflict Note:", text, flags=re.I): return False
-        # ≤ max_words + 5 headroom
         if word_count(text) > max_words + 5: return False
         return True
 
@@ -405,7 +404,6 @@ class Engine:
     def _gen_generic(self, goal: str, temperature, top_p, repeat_penalty, num_predict) -> str:
         maxw = self._parse_max_words(goal)
         require_conflict = ("conflict note" in (goal or "").lower())
-        # Stage A: bracketed, generate-first
         sys_g = ("You are Pilot. Output ONLY one concise answer. "
                  "Do not reflect on instructions. No planning. No word counts. "
                  "If you resolve any contradiction, end with: 'Conflict Note: ...'; "
@@ -415,7 +413,6 @@ class Engine:
                            prefer_generate=True)
         text = between_tags(raw, "<<BEGIN>>", "<<END>>").strip() or raw.strip()
         if not self._is_valid_generic(text, maxw, require_conflict):
-            # Stage B: stronger constraint
             sys_b = ("You are Pilot. Reply with answer ONLY—no meta, no planning, no discussion of constraints. "
                      f"Keep ≤{maxw} words. End with 'Conflict Note: ...' or 'Conflict Note: none'.")
             raw2 = self.llm.ask(sys_b, goal, temperature=temperature, top_p=top_p,
@@ -424,12 +421,42 @@ class Engine:
             text2 = self._sanitize_generic(between_tags(raw2, "<<BEGIN>>", "<<END>>").strip() or raw2.strip())
             if self._is_valid_generic(text2, maxw, require_conflict): text = text2
         if not self._is_valid_generic(text, maxw, require_conflict):
-            # Stage C: sanitize + enforce limits + ensure conflict line
             text = self._sanitize_generic(text)
             text = trim_words(text, maxw)
             if require_conflict and not re.search(r"(^|\n)\s*Conflict Note:", text, flags=re.I):
                 text += ("\nConflict Note: none.")
         return text.strip()
+
+    # ---- Critique-guided rewriter ----
+    def _top_reason(self, critic: dict) -> str:
+        rs = critic.get("reasons") or []
+        for r in rs:
+            r = (r or "").strip()
+            if r: return r[:240]
+        return "Improve clarity, remove meta, satisfy constraints."
+
+    def _rewrite_generic(self, goal: str, prev_answer: str, maxw: int, reason: str,
+                         *, temperature: float, top_p: float, repeat_penalty: float,
+                         num_predict: int, step_idx: int) -> str:
+        # deterministically nudge repeat_penalty by step to escape local minima
+        rp = repeat_penalty + 0.03*min(5, step_idx)
+        sys_r = (
+          "You are Editor. Rewrite the prior answer to satisfy the critique and constraints.\n"
+          "Rules: No meta, no planning, no mention of constraints; ≤{MAXW} words; keep math; end with 'Conflict Note: ...' or 'Conflict Note: none'. "
+          "Output ONLY the rewritten answer."
+        ).replace("{MAXW}", str(maxw))
+        usr_r = (
+          f"Task: {goal}\n"
+          f"Critique to address: {reason}\n"
+          "<<BEGIN_ANSWER>>\n" + prev_answer.strip() + "\n<<END_ANSWER>>"
+        )
+        raw = self.llm.ask(sys_r, usr_r, temperature=temperature, top_p=top_p,
+                           repeat_penalty=rp, num_predict=num_predict, prefer_generate=True)
+        out = between_tags(raw, "<<BEGIN>>", "<<END>>").strip() or raw.strip()
+        out = self._sanitize_generic(out)
+        if not re.search(r"(^|\n)\s*Conflict Note:", out, flags=re.I):
+            out += "\nConflict Note: none."
+        return trim_words(out, maxw).strip()
 
     # ---- Single pass ----
     def run_once(self, *, goal: str, mu_out: Mu) -> Dict[str, Any]:
@@ -456,7 +483,7 @@ class Engine:
                  "num_predict": int(num_predict)}
         return {"answer": answer, "critic": critic, "knobs": knobs}
 
-    # ---- Main run (with self-improvement loop) ----
+    # ---- Main run (with critique-guided rewrite loop) ----
     def run(self, *, ach: Optional[float]=None, seed:int=SEED_DEFAULT, deny_policy: bool=False,
             task_text: Optional[str]=None, steps:int=1, target_q: float=0.70) -> Dict[str,Any]:
         seed_everything(seed)
@@ -475,20 +502,43 @@ class Engine:
         pol = self.homeo.couple(mu_out)
 
         if verdict["action"] != "allow":
-            payload = {"goal": goal, "risk": risk, "verdict": verdict["action"],
-                       "intent": asdict(intent), "mu_out": asdict(mu_out), "policy": asdict(pol),
-                       "llm_knobs": {}, "evidence": [], "claims": [], "llm_preview":"[blocked]",
-                       "critic": {}, "adopted": False, "kpis": {}, "stop_score": 0.0}
-            return payload
+            return {"goal": goal, "risk": risk, "verdict": verdict["action"],
+                    "intent": asdict(intent), "mu_out": asdict(mu_out), "policy": asdict(pol),
+                    "llm_knobs": {}, "evidence": [], "claims": [], "llm_preview":"[blocked]",
+                    "critic": {}, "adopted": False, "kpis": {}, "stop_score": 0.0}
 
         best = {"answer":"", "critic":{"q_overall":0.0, "has_conflict_note":False, "reasons":["init"]}, "knobs":{}}
-        for _ in range(max(1, steps)):
+        seen_hashes = set()
+        maxw = self._parse_max_words(goal)
+        for t in range(max(1, steps)):
             trial = self.run_once(goal=goal, mu_out=mu_out)
-            if trial["critic"]["q_overall"] >= best["critic"]["q_overall"]:
-                best = trial
-            if trial["critic"]["q_overall"] >= target_q:
+            cand = trial
+            # If quality below target: one guided rewrite using top reason
+            if cand["critic"]["q_overall"] < target_q and "pagerank" not in goal.lower():
+                reason = self._top_reason(cand["critic"])
+                rewritten = self._rewrite_generic(
+                    goal, cand["answer"], maxw, reason,
+                    temperature=trial["knobs"]["temperature"],
+                    top_p=trial["knobs"]["top_p"],
+                    repeat_penalty=trial["knobs"]["repeat_penalty"],
+                    num_predict=trial["knobs"]["num_predict"],
+                    step_idx=t+1
+                )
+                rew_critic = run_critic(self.llm, rewritten, mu_out, passes=1 + int(mu_out.ach))
+                if rew_critic.get("q_overall",0.0) >= cand["critic"].get("q_overall",0.0):
+                    cand = {"answer": rewritten, "critic": rew_critic, "knobs": trial["knobs"]}
+
+            h = sha(cand["answer"])
+            if h in seen_hashes:
+                # deterministic μ tweak to push diversity in next loop
+                mu_out = Mu(mu_out.da, clamp(mu_out.ne*0.93,0,1), mu_out.s5ht, mu_out.ach, clamp(mu_out.gaba+0.06,0,1), mu_out.oxt)
+            seen_hashes.add(h)
+
+            if cand["critic"]["q_overall"] >= best["critic"]["q_overall"]:
+                best = cand
+            if cand["critic"]["q_overall"] >= target_q:
                 break
-            # μ adjust to bias concision/stability across steps
+            # μ micro-adjust for next iteration
             mu_out = Mu(mu_out.da, clamp(mu_out.ne*0.95,0,1), mu_out.s5ht, mu_out.ach, clamp(mu_out.gaba+0.05,0,1), mu_out.oxt)
 
         llm_answer = best["answer"]; critic = best["critic"]; llm_knobs = best["knobs"]
@@ -534,7 +584,7 @@ class Engine:
 
 # ========= CLI =========
 def main():
-    ap = argparse.ArgumentParser(description="Guardian-AGI (single-file) — Ollama + Emotional Center + Self-Improve")
+    ap = argparse.ArgumentParser(description="Guardian-AGI (single-file) — Ollama + Emotional Center + Critique-Guided Rewrite")
     ap.add_argument("--model", default="gpt-oss:20b",
                     help="Ollama model (default gpt-oss:20b; e.g., qwen2.5:14b-instruct-q4_K_M)")
     ap.add_argument("--seed", type=int, default=SEED_DEFAULT)
