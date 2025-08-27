@@ -1,0 +1,15 @@
+policy_ver: v1.1
+matrices:
+  R0: { allow: true,  notes: "General info", disclaimer: "" }
+  R1: { allow: true,  notes: "Sanitize PII", disclaimer: "Personal data must be redacted." }
+  R2: { allow: true,  notes: "Conservative language + citations", disclaimer: "Informational only; not professional advice." }
+  R3: { allow: false, notes: "Dual-use/bio/cyber denied unless sanctioned playbook", disclaimer: "Denied by safety policy." }
+  R4: { allow: false, notes: "Physical actuation denied", disclaimer: "Denied by safety policy." }
+kill_switch:
+  trigger: "any signer"
+  effect: { freeze_tools: true, set_gaba: 0.95, open_incident_within_min: 5 }
+  resume: { two_man_reset: true }
+explainability_pack: [claims, q, sources, policy_verdicts, unresolved_conflicts]
+red_team:
+  cadence: weekly
+  on_hit: { cap_DA: 0.5_for_24h: true, ACh_floor: 0.6 }

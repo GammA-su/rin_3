@@ -1,0 +1,6 @@
+tier,description,initial_r_s
+T1,primary/official,0.9
+T2,peer-review/standards,0.8
+T3,reputable media,0.7
+T4,expert blogs,0.6
+T5,crowd/community,0.5

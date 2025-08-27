@@ -469,10 +469,9 @@ class Engine:
 
         # Evidence (ACh controls dissent quota)
         ev = self.scout.fetch_pagerank(pol.k_breadth, pol.q_contra)
-        cons_total = 3  # we added 3 dissent items
-        cons_selected = sum(1 for e in ev if e.stance=="con")
-        dissent_recall_fraction = cons_selected / max(1, min(cons_total, pol.q_contra if pol.q_contra>0 else cons_total))
-
+        cons_total = 3  # total dissent items in pool
++       cons_selected = sum(1 for e in ev if e.stance == "con")
++       dissent_recall_fraction = cons_selected / cons_total
         conflict_note_present = _has_resolution_line(llm_answer or "")
 
         # Minimal claims + contradiction link
