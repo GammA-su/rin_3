@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
-# guardian_agi_min.py — single-file Guardian-AGI scaffold
-# Track 1: Ollama (no Docker). Default model: gpt-oss:20b
-# AGI-essential: goal-conditioned (--task), μ-steered guardrails, critic, self-improve (--steps)
-
+# guardian_agi_min.py — single-file Guardian-AGI scaffold (Track 1: Ollama, no Docker)
+# Model default: gpt-oss:20b | Deterministic seed | Goal-conditioned, μ-steered, critic-gated, self-improving.
 from __future__ import annotations
 import argparse, json, os, random, time, http.client, hashlib, re
 from dataclasses import dataclass, asdict
@@ -326,7 +324,11 @@ class Engine:
         )
 
     # ---- Validators/Sanitizers ----
-    META_PAT = re.compile(r"\b(we need to|let's|aim for|draft:|word count|we must not|we'll write|let us)\b", re.I)
+    META_PAT = re.compile(
+        r"\b(we need to|let's|aim for|draft:|word count|we must not|we'll write|let us|we should|let’s)\b",
+        re.I,
+    )
+
     def _is_valid_demo(self, text: str) -> bool:
         if not text: return False
         if "<<" in text or ">>" in text: return False
@@ -346,18 +348,33 @@ class Engine:
         return int(m.group(1))
 
     def _sanitize_generic(self, text: str) -> str:
-        lines = [ln for ln in (text or "").splitlines() if not self.META_PAT.search(ln)]
+        t = (text or "")
+        # Drop obvious meta blocks and token-count lines like Bayesian(1) updating(2) …
+        lines = []
+        for ln in t.splitlines():
+            s = ln.strip()
+            if not s: continue
+            if s.lower().startswith("draft:"): continue
+            if self.META_PAT.search(s): continue
+            if re.search(r"\b\w+\(\d+\)", s): continue
+            lines.append(ln)
         out = "\n".join(lines).strip()
-        # If the text still begins with instruction-like phrasing, drop first paragraph
-        out = re.sub(r"^(?:[^.\n]*\.(?:\s+|$))", "", out) if self.META_PAT.search(out[:160]) else out
-        return out.strip()
+        if self.META_PAT.search(out[:200]):
+            out = re.sub(r"^(?:[^.\n]*\.(?:\s+|$))", "", out).lstrip()
+        # Remove stray word(123) patterns anywhere, then collapse spaces
+        out = re.sub(r"\b\w+\(\d+\)", "", out)
+        out = re.sub(r"\s{2,}", " ", out).strip()
+        return out
 
     def _is_valid_generic(self, text: str, max_words: int, require_conflict: bool) -> bool:
         if not text: return False
         if "<<" in text or ">>" in text: return False
-        if self.META_PAT.search(text[:180]): return False
+        if self.META_PAT.search(text[:200]): return False
+        if text.strip().lower().startswith("draft:"): return False
+        if re.search(r"\b\w+\(\d+\)", text): return False
         if require_conflict and not re.search(r"(^|\n)\s*Conflict Note:", text, flags=re.I): return False
-        if word_count(text) > max_words + 10: return False
+        # ≤ max_words + 5 headroom
+        if word_count(text) > max_words + 5: return False
         return True
 
     # ---- Generators ----
@@ -404,7 +421,7 @@ class Engine:
             raw2 = self.llm.ask(sys_b, goal, temperature=temperature, top_p=top_p,
                                 repeat_penalty=repeat_penalty, num_predict=num_predict,
                                 prefer_generate=True)
-            text2 = between_tags(raw2, "<<BEGIN>>", "<<END>>").strip() or raw2.strip()
+            text2 = self._sanitize_generic(between_tags(raw2, "<<BEGIN>>", "<<END>>").strip() or raw2.strip())
             if self._is_valid_generic(text2, maxw, require_conflict): text = text2
         if not self._is_valid_generic(text, maxw, require_conflict):
             # Stage C: sanitize + enforce limits + ensure conflict line
@@ -414,7 +431,7 @@ class Engine:
                 text += ("\nConflict Note: none.")
         return text.strip()
 
-    # ---- Single-run with optional multi-step self-improvement ----
+    # ---- Single pass ----
     def run_once(self, *, goal: str, mu_out: Mu) -> Dict[str, Any]:
         temperature    = max(0.1, 0.9 - 0.6*mu_out.s5ht)
         top_p          = clamp(0.75 + 0.20*mu_out.ne - 0.10*mu_out.gaba, 0.50, 0.95)
@@ -439,6 +456,7 @@ class Engine:
                  "num_predict": int(num_predict)}
         return {"answer": answer, "critic": critic, "knobs": knobs}
 
+    # ---- Main run (with self-improvement loop) ----
     def run(self, *, ach: Optional[float]=None, seed:int=SEED_DEFAULT, deny_policy: bool=False,
             task_text: Optional[str]=None, steps:int=1, target_q: float=0.70) -> Dict[str,Any]:
         seed_everything(seed)
@@ -463,15 +481,14 @@ class Engine:
                        "critic": {}, "adopted": False, "kpis": {}, "stop_score": 0.0}
             return payload
 
-        # self-improvement loop
         best = {"answer":"", "critic":{"q_overall":0.0, "has_conflict_note":False, "reasons":["init"]}, "knobs":{}}
-        for t in range(max(1, steps)):
+        for _ in range(max(1, steps)):
             trial = self.run_once(goal=goal, mu_out=mu_out)
             if trial["critic"]["q_overall"] >= best["critic"]["q_overall"]:
                 best = trial
             if trial["critic"]["q_overall"] >= target_q:
                 break
-            # μ micro-adjust to bias concision and stability
+            # μ adjust to bias concision/stability across steps
             mu_out = Mu(mu_out.da, clamp(mu_out.ne*0.95,0,1), mu_out.s5ht, mu_out.ach, clamp(mu_out.gaba+0.05,0,1), mu_out.oxt)
 
         llm_answer = best["answer"]; critic = best["critic"]; llm_knobs = best["knobs"]
@@ -511,6 +528,8 @@ class Engine:
             "kpis": kpis, "stop_score": stop,
             "has_conflict_note_local": has_conflict_local, "has_conflict_note_unified": has_conflict_unified
         }
+        if self.debug:
+            payload["last_http"] = getattr(self.llm, "last_http", {})
         return payload
 
 # ========= CLI =========
