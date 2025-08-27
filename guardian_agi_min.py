@@ -162,10 +162,11 @@ class Homeostat:
         return Mu(da, ne, s5, ach, gb, oxt)
 
     def couple(self, mu: Mu) -> PolicyCoupling:
-        k0, d0, q0 = 6, 3, 1
+        k0, d0 = 6, 3
         k = max(3, int(k0*(1 + mu.ne - 0.5*mu.s5ht)))
         d = max(1, int(d0*(1 + mu.s5ht - mu.ne)))
-        q_con = max(1, int(q0*(1 + mu.ach)))
+        # Dissent quota (ACh step-up): <0.5→1, 0.5–<0.8→2, ≥0.8→3
+        q_con = 1 + (1 if mu.ach >= 0.5 else 0) + (1 if mu.ach >= 0.8 else 0)
         temp = max(0.1, 0.9 - 0.6*mu.s5ht)
         retr = clamp(0.35 + 0.30*mu.ne - 0.15*mu.s5ht, 0.0, 1.0)
         syn  = clamp(0.35 + 0.30*mu.s5ht - 0.15*mu.ne, 0.0, 1.0)
