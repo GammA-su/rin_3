@@ -1,0 +1,1 @@
+Bayes theorem P(H|D)=P(D|H)P(H)/P(D); posterior becomes new prior.

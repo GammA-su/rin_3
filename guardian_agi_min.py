@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # guardian_agi_min.py — single-file Guardian-AGI scaffold (Track 1: Ollama, no Docker)
-# Model default: gpt-oss:20b | Goal-conditioned, μ-steered, critic-gated, critique-guided rewrite loop.
+# Model: gpt-oss:20b | μ-steered | critic-gated | critique-guided rewrite | optional local retrieval | internal verifier
 from __future__ import annotations
 import argparse, json, os, random, time, http.client, hashlib, re
 from dataclasses import dataclass, asdict
@@ -347,34 +347,52 @@ class Engine:
             return 160
         return int(m.group(1))
 
-    def _sanitize_generic(self, text: str) -> str:
-        t = (text or "")
-        # Drop obvious meta and token-count lines like Bayesian(1) updating(2)
-        lines = []
-        for ln in t.splitlines():
-            s = ln.strip()
-            if not s: continue
-            if s.lower().startswith("draft:"): continue
-            if self.META_PAT.search(s): continue
-            if re.search(r"\b\w+\(\d+\)", s): continue
-            lines.append(ln)
-        out = "\n".join(lines).strip()
-        if self.META_PAT.search(out[:200]):
-            out = re.sub(r"^(?:[^.\n]*\.(?:\s+|$))", "", out).lstrip()
-        # Remove stray word(123) patterns, collapse spaces
-        out = re.sub(r"\b\w+\(\d+\)", "", out)
-        out = re.sub(r"\s{2,}", " ", out).strip()
-        return out
+    # ---------- Local retrieval (only if user asks for citations) ----------
+    def _need_citations(self, goal: str) -> bool:
+        g = (goal or "").lower()
+        return any(k in g for k in ["cite", "citation", "citations", "references", "sources"])
 
-    def _is_valid_generic(self, text: str, max_words: int, require_conflict: bool) -> bool:
-        if not text: return False
-        if "<<" in text or ">>" in text: return False
-        if self.META_PAT.search(text[:200]): return False
-        if text.strip().lower().startswith("draft:"): return False
-        if re.search(r"\b\w+\(\d+\)", text): return False
-        if require_conflict and not re.search(r"(^|\n)\s*Conflict Note:", text, flags=re.I): return False
-        if word_count(text) > max_words + 5: return False
-        return True
+    def _load_corpus(self, folder: str="./evidence") -> list[tuple[str,str]]:
+        items: list[tuple[str,str]] = []
+        if not os.path.isdir(folder): return items
+        for fn in os.listdir(folder):
+            if not fn.lower().endswith(".txt"): continue
+            path = os.path.join(folder, fn)
+            try:
+                with open(path, "r", encoding="utf-8", errors="ignore") as f:
+                    txt = f.read()
+                if txt.strip(): items.append((fn, txt))
+            except Exception:
+                continue
+        return items
+
+    def _score(self, q: str, d: str) -> float:
+        # Tiny BM25-lite: sum idf * sqrt(tf)
+        qterms = [t for t in re.findall(r"[a-z0-9]+", (q or "").lower()) if len(t) > 2]
+        if not qterms: return 0.0
+        toks = [t for t in re.findall(r"[a-z0-9]+", (d or "").lower())]
+        if not toks: return 0.0
+        from collections import Counter
+        tf = Counter(toks)
+        N = max(1, len(set(toks)))
+        score = 0.0
+        for t in set(qterms):
+            f = tf.get(t, 0)
+            if f == 0: continue
+            idf = 1.0 + max(0.0, (1.5 - (tf.get(t,0)/N)))  # crude idf-ish
+            score += idf * (f ** 0.5)
+        return float(score)
+
+    def _retrieve(self, goal: str, k: int=3) -> list[tuple[str,str]]:
+        corpus = self._load_corpus()
+        if not corpus: return []
+        scored = sorted(((self._score(goal, txt), fn, txt) for fn, txt in corpus), reverse=True)
+        top: list[tuple[str,str]] = []
+        for _, fn, txt in scored[:max(1, k)]:
+            snip = txt.strip().splitlines()
+            extract = " ".join(snip[:8])[:800]
+            top.append((fn, extract))
+        return top
 
     # ---- Generators ----
     def _gen_demo(self, temperature, top_p, repeat_penalty, num_predict) -> str:
@@ -401,30 +419,79 @@ class Engine:
         if not self._is_valid_demo(text): text = self._local_pagerank_fallback()
         return text
 
+    def _sanitize_generic(self, text: str) -> str:
+        t = (text or "")
+        lines = []
+        for ln in t.splitlines():
+            s = ln.strip()
+            if not s: continue
+            if s.lower().startswith("draft:"): continue
+            if self.META_PAT.search(s): continue
+            if re.search(r"\b\w+\(\d+\)", s): continue
+            lines.append(ln)
+        out = "\n".join(lines).strip()
+        if self.META_PAT.search(out[:200]):
+            out = re.sub(r"^(?:[^.\n]*\.(?:\s+|$))", "", out).lstrip()
+        out = re.sub(r"\b\w+\(\d+\)", "", out)
+        out = re.sub(r"\s{2,}", " ", out).strip()
+        return out
+
+    def _is_valid_generic(self, text: str, max_words: int, require_conflict: bool) -> bool:
+        if not text: return False
+        if "<<" in text or ">>" in text: return False
+        if self.META_PAT.search(text[:200]): return False
+        if text.strip().lower().startswith("draft:"): return False
+        if re.search(r"\b\w+\(\d+\)", text): return False
+        if require_conflict and not re.search(r"(^|\n)\s*Conflict Note:", text, flags=re.I): return False
+        if word_count(text) > max_words + 5: return False
+        return True
+
     def _gen_generic(self, goal: str, temperature, top_p, repeat_penalty, num_predict) -> str:
         maxw = self._parse_max_words(goal)
         require_conflict = ("conflict note" in (goal or "").lower())
+        # Optional retrieval context
+        ctx = ""
+        refs: list[tuple[int,str]] = []
+        if self._need_citations(goal):
+            items = self._retrieve(goal, k=3)
+            if items:
+                ctx_lines = []
+                for i, (fn, snip) in enumerate(items, start=1):
+                    ctx_lines.append(f"[{i}] {fn}: {snip}")
+                    refs.append((i, fn))
+                ctx = "CONTEXT:\n" + "\n".join(ctx_lines) + "\n---\n"
+
         sys_g = ("You are Pilot. Output ONLY one concise answer. "
                  "Do not reflect on instructions. No planning. No word counts. "
                  "If you resolve any contradiction, end with: 'Conflict Note: ...'; "
                  "else 'Conflict Note: none'. No preface.")
-        raw = self.llm.ask(sys_g, goal, temperature=temperature, top_p=top_p,
+        usr = (ctx + goal) if ctx else goal
+        raw = self.llm.ask(sys_g, usr, temperature=temperature, top_p=top_p,
                            repeat_penalty=repeat_penalty, num_predict=num_predict,
                            prefer_generate=True)
         text = between_tags(raw, "<<BEGIN>>", "<<END>>").strip() or raw.strip()
+
         if not self._is_valid_generic(text, maxw, require_conflict):
             sys_b = ("You are Pilot. Reply with answer ONLY—no meta, no planning, no discussion of constraints. "
                      f"Keep ≤{maxw} words. End with 'Conflict Note: ...' or 'Conflict Note: none'.")
-            raw2 = self.llm.ask(sys_b, goal, temperature=temperature, top_p=top_p,
+            raw2 = self.llm.ask(sys_b, usr, temperature=temperature, top_p=top_p,
                                 repeat_penalty=repeat_penalty, num_predict=num_predict,
                                 prefer_generate=True)
             text2 = self._sanitize_generic(between_tags(raw2, "<<BEGIN>>", "<<END>>").strip() or raw2.strip())
             if self._is_valid_generic(text2, maxw, require_conflict): text = text2
+
         if not self._is_valid_generic(text, maxw, require_conflict):
             text = self._sanitize_generic(text)
             text = trim_words(text, maxw)
             if require_conflict and not re.search(r"(^|\n)\s*Conflict Note:", text, flags=re.I):
                 text += ("\nConflict Note: none.")
+
+        # Append compact reference list if retrieval used and numeric citations present
+        if refs and len(re.findall(r"\[\d+\]", text)) >= 1:
+            remain = max(0, (maxw + 5) - word_count(text))
+            ref_line = " ".join([f"[{i}] {name}" for i, name in refs])[:300]
+            if remain > 4:
+                text = trim_words(text + "\n" + ref_line, maxw + 5)
         return text.strip()
 
     # ---- Critique-guided rewriter ----
@@ -438,7 +505,6 @@ class Engine:
     def _rewrite_generic(self, goal: str, prev_answer: str, maxw: int, reason: str,
                          *, temperature: float, top_p: float, repeat_penalty: float,
                          num_predict: int, step_idx: int) -> str:
-        # deterministically nudge repeat_penalty by step to escape local minima
         rp = repeat_penalty + 0.03*min(5, step_idx)
         sys_r = (
           "You are Editor. Rewrite the prior answer to satisfy the critique and constraints.\n"
@@ -513,7 +579,7 @@ class Engine:
         for t in range(max(1, steps)):
             trial = self.run_once(goal=goal, mu_out=mu_out)
             cand = trial
-            # If quality below target: one guided rewrite using top reason
+            # If quality below target: one guided rewrite using top reason (for non-demo tasks)
             if cand["critic"]["q_overall"] < target_q and "pagerank" not in goal.lower():
                 reason = self._top_reason(cand["critic"])
                 rewritten = self._rewrite_generic(
@@ -530,7 +596,6 @@ class Engine:
 
             h = sha(cand["answer"])
             if h in seen_hashes:
-                # deterministic μ tweak to push diversity in next loop
                 mu_out = Mu(mu_out.da, clamp(mu_out.ne*0.93,0,1), mu_out.s5ht, mu_out.ach, clamp(mu_out.gaba+0.06,0,1), mu_out.oxt)
             seen_hashes.add(h)
 
@@ -538,7 +603,6 @@ class Engine:
                 best = cand
             if cand["critic"]["q_overall"] >= target_q:
                 break
-            # μ micro-adjust for next iteration
             mu_out = Mu(mu_out.da, clamp(mu_out.ne*0.95,0,1), mu_out.s5ht, mu_out.ach, clamp(mu_out.gaba+0.05,0,1), mu_out.oxt)
 
         llm_answer = best["answer"]; critic = best["critic"]; llm_knobs = best["knobs"]
@@ -584,7 +648,7 @@ class Engine:
 
 # ========= CLI =========
 def main():
-    ap = argparse.ArgumentParser(description="Guardian-AGI (single-file) — Ollama + Emotional Center + Critique-Guided Rewrite")
+    ap = argparse.ArgumentParser(description="Guardian-AGI (single-file) — Ollama + Emotional Center + Critique-Guided Rewrite + Retrieval + Verifier")
     ap.add_argument("--model", default="gpt-oss:20b",
                     help="Ollama model (default gpt-oss:20b; e.g., qwen2.5:14b-instruct-q4_K_M)")
     ap.add_argument("--seed", type=int, default=SEED_DEFAULT)
@@ -595,6 +659,7 @@ def main():
     ap.add_argument("--task", default="", help="Override goal with a custom prompt (general run).")
     ap.add_argument("--steps", type=int, default=1, help="Self-improvement steps (>=1).")
     ap.add_argument("--target_q", type=float, default=0.70, help="Adoption quality threshold [0..1].")
+    ap.add_argument("--check", action="store_true", help="Run internal validator on llm_preview (no extra generation).")
     args = ap.parse_args()
 
     eng = Engine(model_name=args.model, debug=args.debug)
@@ -638,6 +703,19 @@ def main():
     res = eng.run(ach=args.ach, seed=args.seed,
                   task_text=(args.task if args.task.strip() else None),
                   steps=max(1, args.steps), target_q=clamp(args.target_q,0.0,1.0))
+    if args.check:
+        txt = res.get("llm_preview","")
+        goal = res.get("goal","")
+        maxw = eng._parse_max_words(goal)
+        require_conflict = ("conflict note" in (goal or "").lower())
+        verdict = {
+            "meta": bool(eng.META_PAT.search(txt[:200]) or txt.strip().lower().startswith("draft:")),
+            "tokens_pattern": bool(re.search(r"\b\w+\(\d+\)", txt)),
+            "words": word_count(txt),
+            "conflict": bool(re.search(r"(^|\n)\s*Conflict Note:", txt, flags=re.I)),
+            "within_cap": word_count(txt) <= (maxw + 5)
+        }
+        res["check"] = verdict
     print(json.dumps(res, indent=2))
     if args.record:
         ledger_append(args.record, {
