@@ -1,0 +1,3 @@
+Assumptions: prioritize primary sources; damping≈0.85. Unknowns: notation variants. Tests: ≤150w, ≥3 cites, note & resolve one misconception.
+PageRank models a random surfer who follows links with probability d and teleports with 1−d, yielding the stationary distribution over pages. Rank flows from important pages and is normalized by each linker’s outdegree; hubs dilute per-link influence. Teleportation prevents rank sinks. Misconception: It is NOT raw inbound-link counts; the rank of linking pages and their outdegree matter.
+[1] Brin & Page (original paper). [2] Google patent summaries/official docs. [3] Reputable overviews contrasting counts vs weighted links.

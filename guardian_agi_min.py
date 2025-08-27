@@ -3,7 +3,7 @@
 # Additive upgrade: persistent memory + trust calculus + local-docs retrieval + strict-JSON critic.
 
 from __future__ import annotations
-import argparse, json, os, random, time, http.client, hashlib, math
+import argparse, json, os, random, time, http.client, hashlib, math, sys
 from dataclasses import dataclass, asdict
 from hashlib import sha256
 from typing import List, Dict, Any, Optional, Tuple
@@ -911,9 +911,10 @@ def smoke_suite(eng: Engine, args):
         "P3_depths": depths, "P3_ok": p3_ok,
         "P5_retrieval_share": rx, "P5_synthesis_share": sy, "P5_ok": p5_ok,
         "E2E_adopted": end_ok
-    }
+     }
     out["ok"] = bool(p1_ok and p2_ok and p3_ok and p5_ok and end_ok)
     print(json.dumps(out, indent=2))
+    return out
 
 # ========= CLI =========
 def main():
@@ -931,6 +932,9 @@ def main():
     ap.add_argument("--debug", action="store_true", help="Include last HTTP trace on LLM errors.")
     ap.add_argument("--mock-llm", action="store_true", help="Use offline MockLLM (no Ollama required).")
     ap.add_argument("--smoke", action="store_true", help="Run offline smoke suite (P1,P2,P3,P5 + E2E).")
+    ap.add_argument("--suite", choices=["none","quick"], default="none", help="Run a predefined probe suite and exit.")
+    ap.add_argument("--strict", action="store_true", help="Exit non-zero if suite/probes fail or task not adopted.")
+    ap.add_argument("--save-answer", default="", help="Write final LLM synthesis preview to this file (if any).")
     args = ap.parse_args()
 
     memdir = args.memdir if args.memdir.strip() else None
@@ -938,21 +942,27 @@ def main():
     eng = Engine(model_name=args.model, debug=args.debug, memdir=memdir, docsdir=docsdir, use_mock=args.mock_llm)
 
     if args.showmem:
-        print(json.dumps({"memory": eng.mem.summary() if eng.mem.enabled() else "disabled",
-                          "dir": memdir or None}, indent=2)); return
-
+        print(json.dumps({"memory": eng.mem.summary() if eng.mem.enabled() else "disabled","dir": memdir or None}, indent=2)); return
     # Probes
-    if args.probe == "policy": return probe_policy(eng, args)
-    if args.probe == "P1":     return probe_P1(eng, args)
-    if args.probe == "P2":     return probe_P2(eng, args)
-    if args.probe == "P3":     return probe_P3(eng, args)
-    if args.probe == "P4":     return probe_P4(eng, args)
-    if args.probe == "P5":     return probe_P5(eng, args)
-    if args.probe == "P6":     return probe_P6(eng, args)
-    if args.probe == "P7":     return probe_P7(eng, args)
+    if args.probe != "none":
+        if args.probe == "policy": probe_policy(eng, args); return
+        if args.probe == "P1":     probe_P1(eng, args);     return
+        if args.probe == "P2":     probe_P2(eng, args);     return
+        if args.probe == "P3":     probe_P3(eng, args);     return
+        if args.probe == "P4":     probe_P4(eng, args);     return
+        if args.probe == "P5":     probe_P5(eng, args);     return
+        if args.probe == "P6":     probe_P6(eng, args);     return
+        if args.probe == "P7":     probe_P7(eng, args);     return
+
 
     if args.smoke:
-        return smoke_suite(eng, args)
+        out = smoke_suite(eng, args)
+        if args.strict and not out.get("ok", False): sys.exit(2)        
+        return
+    if args.suite == "quick":
+        out = smoke_suite(eng, args)
+        if args.strict and not out.get("ok", False): sys.exit(2)
+        return
 
     # Default runs (tasks)
     if args.task == "compare":
@@ -961,6 +971,17 @@ def main():
         res = eng.run_pagerank_demo(ach=args.ach, seed=args.seed)
 
     print(json.dumps(res, indent=2))
+    # optional save of the text preview
+    if args.save_answer:
+        try:
+            with open(args.save_answer, "w", encoding="utf-8") as f:
+                f.write(res.get("llm_preview",""))
+        except Exception as e:
+            print(json.dumps({"save_answer_error": str(e), "path": args.save_answer}), file=sys.stderr)
+    if args.strict:
+        if not res.get("adopted", True): rc = 2
+        k = res.get("kpis",{}); 
+        if float(k.get("pass_at_1",0.0)) < 1.0: rc = 2
     if args.record:
         ledger_append(args.record, {
             "goal": res["goal"], "risk": res["risk"], "verdict": res["verdict"],
