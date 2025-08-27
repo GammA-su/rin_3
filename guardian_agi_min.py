@@ -442,6 +442,37 @@ class LLMClient:
                                      "http": getattr(self, "last_http", {})})
             raise
 
+# ========= Offline Mock LLM (deterministic, seed=137) =========
+class MockLLM(LLMClient):
+    def __init__(self, debug: bool=False):
+        # no HTTP; keep interface for polymorphism
+        self.model = "mock"
+        self.debug = debug
+        self.last_http = {"phase":"mock","path":"mock","status":200,"lat_ms":0,
+                          "raw_preview":"", "raw_mid":"", "raw_full":""}
+        random.seed(137)
+    def ask(self, system_msg: str, user_msg: str, *, temperature: float, top_p: float,
+            repeat_penalty: float, num_predict: int, num_ctx: int=8192, force_json: bool=False,
+            attempts_log: Optional[List[dict]]=None, phase_label:str="pilot",
+            allow_thinking_fallback: bool=False) -> str:
+        if attempts_log is not None:
+            attempts_log.append({"kind": f"mock-{phase_label}", "ok": True, "http": self.last_http, "len": 1})
+        if phase_label == "critic" or force_json:
+            return json.dumps({
+                "q_overall": 0.78,
+                "has_conflict_note": True,
+                "reasons": ["offline mock critic; calibrated for smoke tests"]
+            })
+        # pilot text (≤150 words) with a misconception note
+        text = (
+            "Assumptions: prioritize primary sources; damping≈0.85. Unknowns: notation variants. Tests: ≤150w, ≥3 cites, note & resolve one misconception.\n"
+            "PageRank models a random surfer who follows links with probability d and teleports with 1−d, yielding the stationary distribution over pages. "
+            "Rank flows from important pages and is normalized by each linker’s outdegree; hubs dilute per-link influence. Teleportation prevents rank sinks. "
+            "Misconception: It is NOT raw inbound-link counts; the rank of linking pages and their outdegree matter.\n"
+            "[1] Brin & Page (original paper). [2] Google patent summaries/official docs. [3] Reputable overviews contrasting counts vs weighted links."
+        )
+        return text
+
 # ========= Critic (ACh-gated calibration; JSON enforced) =========
 CRITIC_SYS = (
   "You are Critic. Given an answer about PageRank, return STRICT JSON with keys: "
@@ -493,13 +524,18 @@ def run_critic(llm: LLMClient, answer: str, mu: Mu, attempts_log: List[dict]) ->
 
 # ========= Engine =========
 class Engine:
+    # add use_mock to enable offline path
     def __init__(self, model_name: str="gpt-oss:20b", neuro: Mu=None, debug: bool=False,
-                 memdir: Optional[str]=None, docsdir: Optional[str]=None):
+                 memdir: Optional[str]=None, docsdir: Optional[str]=None, use_mock: bool=False):
         self.mem   = MemoryStore(memdir) if memdir else MemoryStore(None)
         self.docsdir = docsdir if docsdir and docsdir.strip() else None
         self.homeo = Homeostat(); self.cust  = Custodian(); self.wit   = Witness()
         self.scout = Scout(self.docsdir);   self.arch  = Archivist(self.mem); self.pilot = Pilot()
-        self.oper  = Operator();            self.llm   = LLMClient(model_name, debug=debug)
+        self.oper  = Operator()
+        if use_mock or os.getenv("GUARDIAN_MOCK","") == "1":
+            self.llm = MockLLM(debug=debug)
+        else:
+            self.llm = LLMClient(model_name, debug=debug)
         self.neuro0 = neuro or Mu(da=0.50, ne=0.55, s5ht=0.85, ach=0.75, gaba=0.35, oxt=0.70)
         self.debug = debug
 
@@ -781,6 +817,55 @@ def probe_P7(eng: Engine, args):
     ledger_append(incident["ledger"], {"reason_code":incident["reason_code"], "severity":incident["severity"], "gaba":gaba})
     print(json.dumps({"gaba":gaba, "incident":incident, "ok": (gaba>=0.9)}, indent=2))
 
+# ========= Smoke Suite (offline-compatible) =========
+def smoke_suite(eng: Engine, args):
+    # P1-like: dissent recall increases with ACh
+    low  = eng.run_pagerank_demo(ach=0.3, seed=args.seed)
+    high = eng.run_pagerank_demo(ach=0.8, seed=args.seed)
+    def frac(res):
+        if "dissent_recall_fraction" in res: return float(res["dissent_recall_fraction"])
+        names = res.get("evidence",[])
+        return (sum(1 for n in names if "dissent" in n))/max(1.0, len(names))
+    p1 = {
+        "low": round(frac(low),4),
+        "high": round(frac(high),4),
+        "delta": round(frac(high)-frac(low),4)
+    }
+    p1_ok = (p1["delta"] >= 0.25)
+
+    # P2-like: brake integrity (deny policy)
+    sim = eng.simulate_risky_branch()
+    p2_ok = sim["halted"] and (sim["pre_hash"] == sim["post_hash"]) and sim["gaba"] >= 0.9 and os.path.exists(sim["ledger"])
+
+    # P3-like: depth monotone with 5HT
+    depths=[]
+    for s5 in (0.3, 0.6, 0.9):
+        mu_tmp = Mu(da=0.5, ne=0.55, s5ht=s5, ach=0.6, gaba=0.35, oxt=0.7)
+        pol = eng.homeo.couple(mu_tmp); depths.append(pol.d_depth)
+    p3_ok = (depths[0] <= depths[1] <= depths[2])
+
+    # P5-like: budget arbitration shares
+    def shares(ne, s5):
+        mu_tmp = Mu(da=0.5, ne=ne, s5ht=s5, ach=0.6, gaba=0.35, oxt=0.7)
+        pol = eng.homeo.couple(mu_tmp)
+        return pol.retrieval_share, pol.synthesis_share
+    rx, sx = shares(0.8, 0.3); ry, sy = shares(0.3, 0.8)
+    p5_ok = (rx>ry and sy>sx and (rx-ry)>=0.20-1e-9 and (sy-sx)>=0.20-1e-9)
+
+    # Pilot end-to-end (mock LLM): adopted must be True with critic q≥0.70
+    end = eng.run_pagerank_demo(ach=0.75, seed=args.seed)
+    end_ok = bool(end.get("adopted", False)) and float(end.get("critic",{}).get("q_overall",0.0)) >= 0.70
+
+    out = {
+        "P1_dissent_delta": p1, "P1_ok": p1_ok,
+        "P2_brake_ok": p2_ok,
+        "P3_depths": depths, "P3_ok": p3_ok,
+        "P5_retrieval_share": rx, "P5_synthesis_share": sy, "P5_ok": p5_ok,
+        "E2E_adopted": end_ok
+    }
+    out["ok"] = bool(p1_ok and p2_ok and p3_ok and p5_ok and end_ok)
+    print(json.dumps(out, indent=2))
+
 # ========= CLI =========
 def main():
     ap = argparse.ArgumentParser(description="Guardian-AGI — Ollama chat-first + Emotional Center + Probes + Memory + Docs")
@@ -795,11 +880,13 @@ def main():
     ap.add_argument("--showmem", action="store_true", help="Print memory summary and exit.")
     ap.add_argument("--record", default="", help="Path to ledger JSONL (append-only). Empty=off.")
     ap.add_argument("--debug", action="store_true", help="Include last HTTP trace on LLM errors.")
+    ap.add_argument("--mock-llm", action="store_true", help="Use offline MockLLM (no Ollama required).")
+    ap.add_argument("--smoke", action="store_true", help="Run offline smoke suite (P1,P2,P3,P5 + E2E).")
     args = ap.parse_args()
 
     memdir = args.memdir if args.memdir.strip() else None
     docsdir = args.docs if args.docs.strip() else None
-    eng = Engine(model_name=args.model, debug=args.debug, memdir=memdir, docsdir=docsdir)
+    eng = Engine(model_name=args.model, debug=args.debug, memdir=memdir, docsdir=docsdir, use_mock=args.mock_llm)
 
     if args.showmem:
         print(json.dumps({"memory": eng.mem.summary() if eng.mem.enabled() else "disabled",
@@ -814,6 +901,9 @@ def main():
     if args.probe == "P5":     return probe_P5(eng, args)
     if args.probe == "P6":     return probe_P6(eng, args)
     if args.probe == "P7":     return probe_P7(eng, args)
+
+    if args.smoke:
+        return smoke_suite(eng, args)
 
     # Default runs (tasks)
     if args.task == "compare":
