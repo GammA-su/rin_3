@@ -1,0 +1,1 @@
+Dissent: Without teleportation (1−d), PageRank can get trapped in sinks or spider-traps and mis-rank tightly-coupled spam farms. The damping/teleport step breaks cycles and limits manipulation by dense link clusters. Therefore “just count links” fails in adversarial webs.

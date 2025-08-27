@@ -401,14 +401,19 @@ class LLMClient:
         try:
             data, httpm = self._post("/api/chat", chat_payload, phase_label)
             out = ""
+            thought = ""
             if isinstance(data, dict) and "message" in data and isinstance(data["message"], dict):
                 out = data["message"].get("content","")
-                if not out and allow_thinking_fallback:
-                    out = data["message"].get("thinking","")
+                thought = data["message"].get("thinking","")
+                if not out and allow_thinking_fallback and thought:
+                    out = thought
+
             elif isinstance(data, dict):
                 out = data.get("response","")
-                if not out and allow_thinking_fallback:
-                    out = data.get("thinking","")
+                thought = data.get("thinking","")
+                if not out and allow_thinking_fallback and thought:
+                    out = thought
+
             if attempts_log is not None:
                 attempts_log.append({"kind": phase_label, "ok": bool(out), "http": httpm, "len": len(out or "")})
             if out:
@@ -428,10 +433,13 @@ class LLMClient:
         try:
             data2, httpm2 = self._post("/api/generate", gen_payload, phase_label + ("-fallback" if phase_label=="pilot" else "-repair-salvage"))
             out2 = ""
+            thought2 = ""
             if isinstance(data2, dict):
                 out2 = data2.get("response","")
-                if not out2 and allow_thinking_fallback:
-                    out2 = data2.get("thinking","")
+                thought2 = data2.get("thinking","")
+                if not out2 and allow_thinking_fallback and thought2:
+                    out2 = thought2
+
             if attempts_log is not None:
                 attempts_log.append({"kind": phase_label + ("-fallback" if phase_label=="pilot" else "-repair-salvage"),
                                      "ok": bool(out2), "http": httpm2, "len": len(out2 or "")})
@@ -611,7 +619,8 @@ class Engine:
                     temperature=temperature, top_p=top_p,
                     repeat_penalty=repeat_penalty, num_predict=num_predict,
                     attempts_log=attempts, phase_label="pilot",
-                    allow_thinking_fallback=False)
+                    allow_thinking_fallback=True)
+
             except Exception as e:
                 http_trace = self.llm.last_http
                 llm_answer = f"[LLM error] {e} | http={http_trace}"

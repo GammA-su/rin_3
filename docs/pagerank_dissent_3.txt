@@ -1,0 +1,1 @@
+Dissent: The media trope “more links ⇒ more rank” ignores that PageRank depends on the linking pages’ rank and the normalization by their outdegree. Outdegree normalization means a page with many outlinks passes less rank per link; sheer link volume is not rank volume.

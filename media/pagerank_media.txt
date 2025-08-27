@@ -1,0 +1,1 @@
+Popular descriptions often equate PageRank with counting how many sites link to a page, implying quantity over quality. However, such summaries are incomplete: PageRank weights links by the importance of the source page and includes a damping factor (teleportation) near 0.85 to avoid rank sinks.

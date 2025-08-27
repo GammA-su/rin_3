@@ -1,0 +1,1 @@
+Dissent: PageRank is NOT raw inbound-link counts. It is a weighted vote where weights are the rank of the linking pages divided by their outdegree L(j). Thus, many links from a low-ranked hub can pass less rank per edge than a single link from a high-ranked, low-outdegree page. Any explanation omitting outdegree normalization misleads.
