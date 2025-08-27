@@ -1,0 +1,109 @@
+diff --git a/guardian_agi_min.py b/guardian_agi_min.py
+@@
+ class LLMClient:
+@@
+     def ask(self, system_msg: str, user_msg: str, *, temperature: float, top_p: float,
+             repeat_penalty: float, num_predict: int, num_ctx: int=8192, force_json: bool=False,
+             attempts_log: Optional[List[dict]]=None, phase_label:str="pilot",
+             allow_thinking_fallback: bool=False) -> str:
+@@
+         try:
+             data, httpm = self._post("/api/chat", chat_payload, phase_label)
+@@
+         except Exception as e:
+             if attempts_log is not None:
+                 attempts_log.append({"kind": phase_label, "ok": False, "error": str(e), "http": getattr(self, "last_http", {})})
+@@
+         try:
+             data2, httpm2 = self._post("/api/generate", gen_payload, phase_label + ("-fallback" if phase_label=="pilot" else "-repair-salvage"))
+@@
+         except Exception as e:
+             if attempts_log is not None:
+                 attempts_log.append({"kind": phase_label + "-fallback", "ok": False, "error": str(e),
+                                      "http": getattr(self, "last_http", {})})
+             raise
+@@
+ def run_critic(llm: LLMClient, answer: str, mu: Mu, attempts_log: List[dict]) -> dict:
+@@
+     for _ in range(passes):
+         try:
+             j = llm.ask(CRITIC_SYS, f"Answer:\n{answer}\n\nReturn JSON only.",
+                         temperature=temperature, top_p=top_p,
+                         repeat_penalty=repeat_penalty, num_predict=num_predict,
+-                        force_json=True, attempts_log=attempts_log, phase_label="critic",
++                        force_json=True, attempts_log=attempts_log, phase_label="critic",
+                         allow_thinking_fallback=False)  # <-- STRICT
+             data = extract_json_object(j)
+             if isinstance(data, dict) and data.get("q_overall", 0) >= best.get("q_overall", 0):
+                 best = data
+         except Exception as e:
+-            attempts_log.append({"kind":"critic", "ok":False, "error":f"critic error: {e}", "http": getattr(llm, "last_http", {})})
++            # Fallback: non-JSON-capable models
++            try:
++                j2 = llm.ask(CRITIC_SYS, f"Answer:\n{answer}\n\nReturn JSON only.",
++                             temperature=temperature, top_p=top_p,
++                             repeat_penalty=repeat_penalty, num_predict=num_predict,
++                             force_json=False, attempts_log=attempts_log, phase_label="critic-retry",
++                             allow_thinking_fallback=False)
++                data2 = extract_json_object(j2)
++                if isinstance(data2, dict) and data2.get("q_overall", 0) >= best.get("q_overall", 0):
++                    best = data2
++            except Exception as e2:
++                attempts_log.append({"kind":"critic", "ok":False, "error":f"critic error: {e} / retry: {e2}", "http": getattr(llm, "last_http", {})})
+@@
+ class Engine:
+     def __init__(self, model_name: str="gpt-oss:20b", neuro: Mu=None, debug: bool=False,
+                  memdir: Optional[str]=None, docsdir: Optional[str]=None):
+@@
+-    def run_pagerank_demo(self, ach: Optional[float]=None, seed:int=SEED_DEFAULT, deny_policy: bool=False) -> Dict[str,Any]:
++    def _offline_pagerank_answer(self) -> str:
++        # Deterministic 120–150 words; includes a misconception + conflict note; cites built-ins.
++        return ("Assumptions: prioritize primary/official sources; clarify damping.\n"
++                "PageRank models a random surfer who follows links with probability d≈0.85 "
++                "and teleports otherwise. A page’s rank is the stationary probability of landing "
++                "on it, so votes from important pages count more, and each page divides its rank by "
++                "its outdegree. Misconception: it is NOT raw inbound-link counts; quality and normalization "
++                "by outdegree matter. Conflict Note: media explanations that equate PageRank with link totals "
++                "ignore damping and outdegree, which prevent rank sinks and spam-farm loops. "
++                "[pagerank_primary.txt; pagerank_dissent.txt; pagerank_dissent_2.txt]")
++
++    def run_pagerank_demo(self, ach: Optional[float]=None, seed:int=SEED_DEFAULT, deny_policy: bool=False, offline: bool=False) -> Dict[str,Any]:
+@@
+-        llm_answer = "[blocked by policy]"; llm_knobs = {}; http_trace = {}; attempts=[]
+-        if verdict["action"] == "allow":
++        llm_answer = "[blocked by policy]"; llm_knobs = {}; http_trace = {}; attempts=[]
++        if verdict["action"] == "allow" and offline:
++            llm_answer = self._offline_pagerank_answer()
++            critic = {"q_overall": 0.80, "has_conflict_note": True, "reasons": ["offline-smoke"]}
++        if verdict["action"] == "allow" and not offline:
+             temperature    = max(0.1, 0.9 - 0.6*mu_out.s5ht)
+@@
+-            llm_knobs = {"temperature": round(temperature,3),
++            llm_knobs = {"temperature": round(temperature,3),
+                          "top_p": round(top_p,3),
+                          "repeat_penalty": round(repeat_penalty,3),
+                          "num_predict": int(num_predict)}
+ 
+-        critic = {}
+-        if verdict["action"] == "allow":
++        critic = locals().get("critic", {})
++        if verdict["action"] == "allow" and not offline:
+             try:
+                 critic = run_critic(self.llm, llm_answer, mu_out, attempts)
+             except Exception as e:
+                 critic = {"q_overall": 0.0, "has_conflict_note": False,
+                           "reasons":[f"critic exec error: {e}"], "http": getattr(self.llm,"last_http",{})}
+@@
+ def main():
+@@
+-    ap.add_argument("--task", choices=["pagerank","compare"], default="pagerank", help="demo task: T1 pagerank or T2 compare-resolve")
++    ap.add_argument("--task", choices=["pagerank","compare"], default="pagerank", help="demo task: T1 pagerank or T2 compare-resolve")
++    ap.add_argument("--offline", action="store_true", help="Skip LLM; use deterministic built-in answer (smoke tests).")
+@@
+-    if args.task == "compare":
+-        res = eng.run_compare_demo(ach=args.ach, seed=args.seed)
++    if args.task == "compare":
++        res = eng.run_compare_demo(ach=args.ach, seed=args.seed)
+     else:
+-        res = eng.run_pagerank_demo(ach=args.ach, seed=args.seed)
++        res = eng.run_pagerank_demo(ach=args.ach, seed=args.seed, offline=args.offline)
