@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 # guardian_agi_min.py — single-file Guardian-AGI scaffold (seed=137)
-# Track 1: Ollama (no Docker). Default model: gpt-oss:20b (override via --model)
-# Chat-first with generate fallback; bracketed output + auto-retry + deterministic final fallback.
-from __future__ import annotations
+# Upgrades: robust Ollama client (chat→thinking→generate, retries/backoff, timeouts),
+# acceptance gate + self-reprompt + pilot alt model, critic JSON parsing fix,
+# per-phase traces, health probe, optional JSON forcing. No internet required.
 
-import argparse, json, os, random, time, http.client, hashlib
+from __future__ import annotations
+import argparse, json, os, random, time, http.client, hashlib, re, copy
 from dataclasses import dataclass, asdict
 from hashlib import sha256
 from typing import List, Dict, Any, Optional
@@ -23,6 +24,8 @@ def soft_stop(goal_met: float, gaba: float, budget_exhaust: float, unresolved_co
 
 def sha(s: str) -> str: return hashlib.sha256(s.encode("utf-8")).hexdigest()
 
+def now_ms() -> int: return int(time.time()*1000)
+
 def ledger_append(path: str, entry: dict):
     os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
     prev = ""
@@ -39,22 +42,30 @@ def ledger_append(path: str, entry: dict):
     with open(path, "a", encoding="utf-8") as f:
         f.write(json.dumps(entry, ensure_ascii=False) + "\n")
 
-def between_tags(s: str, start="<<BEGIN>>", end="<<END>>") -> str:
-    i = s.find(start)
-    if i == -1: return s.strip()
-    j = s.find(end, i + len(start))
-    if j == -1: return s[i + len(start):].strip()
-    return s[i + len(start):j].strip()
+def log_jsonl(path: str, obj: dict):
+    if not path: return
+    os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
+    with open(path, "a", encoding="utf-8") as f:
+        f.write(json.dumps(obj, ensure_ascii=False) + "\n")
 
 # ========= Data Contracts =========
 @dataclass
 class Source:
-    url: str; seg: Optional[str]=None; h: Optional[str]=None; ts: Optional[str]=None; domain_tier: int=1
+    url: str
+    seg: Optional[str]=None
+    h: Optional[str]=None
+    ts: Optional[str]=None
+    domain_tier: int=1
 
 @dataclass
 class Claim:
-    id: str; text: str; q: float = 0.5; sources: List[Source] = None
-    supports: List[str] = None; contradicts: List[str] = None; stance: str = "neutral"
+    id: str
+    text: str
+    q: float = 0.5
+    sources: List[Source] = None
+    supports: List[str] = None
+    contradicts: List[str] = None
+    stance: str = "neutral"
     def to_dict(self):
         return {"id": self.id, "text": self.text, "q": self.q, "stance": self.stance,
                 "sources": [asdict(s) for s in (self.sources or [])],
@@ -62,13 +73,39 @@ class Claim:
 
 @dataclass
 class EvidenceUnit:
-    id: str; content_hash: str; extract: str; stance: str="neutral"; provenance: List[Dict[str, Any]] = None
+    id: str
+    content_hash: str
+    extract: str
+    stance: str="neutral"
+    provenance: List[Dict[str, Any]] = None
+
+@dataclass
+class Task:
+    goal: str
+    constraints: Dict[str, Any]
+    acceptance_tests: List[str]
+    budget: Dict[str, Any]
+    criticality: str="C1"
+
+@dataclass
+class Episode:
+    t: int
+    task_id: str
+    mu_in: Dict[str,float]
+    action: str
+    evidence_used: List[str]
+    outcome: str
+    mu_out: Dict[str,float]
 
 # ========= Emotional Center (Homeostat) =========
 @dataclass
-class Appraisal: p: float; n: float; u: float; k: float; s: float; c: float; h: float
+class Appraisal:
+    p: float; n: float; u: float; k: float; s: float; c: float; h: float
+
 @dataclass
-class Mu: da: float; ne: float; s5ht: float; ach: float; gaba: float; oxt: float
+class Mu:
+    da: float; ne: float; s5ht: float; ach: float; gaba: float; oxt: float
+
 @dataclass
 class PolicyCoupling:
     k_breadth: int; d_depth: int; q_contra: int; temperature: float
@@ -118,9 +155,7 @@ class Witness:
 
 # ========= World-Model (Archivist) =========
 class Archivist:
-    def __init__(self):
-        self.claims: Dict[str, Claim] = {}
-        self.contradict: Dict[str, List[str]] = {}
+    def __init__(self): self.claims: Dict[str, Claim] = {}; self.contradict: Dict[str, List[str]] = {}
     def upsert_claim(self, c: Claim): self.claims[c.id] = c
     def link_contradiction(self, i: str, j: str):
         self.contradict.setdefault(i,[]).append(j); self.contradict.setdefault(j,[]).append(i)
@@ -167,176 +202,234 @@ class Pilot:
             risk=risk,
         )
 
-# ========= Ollama LLM Client (chat-first with generate fallback; stop tokens) =========
+# ========= JSON extractor (robust without recursive regex) =========
+def extract_last_json(text: str) -> dict:
+    if not text: raise ValueError("empty text")
+    # Fast path
+    try:
+        return json.loads(text)
+    except Exception:
+        pass
+    # Find last balanced {...}
+    last_open = text.rfind("{")
+    last_close = text.rfind("}")
+    if last_open == -1 or last_close == -1 or last_close < last_open:
+        # try any brace pair scanning from end
+        for i in range(len(text)-1, -1, -1):
+            if text[i] == "}":
+                # scan backward to matching "{"
+                depth = 0
+                for j in range(i, -1, -1):
+                    if text[j] == "}": depth += 1
+                    elif text[j] == "{":
+                        depth -= 1
+                        if depth == 0:
+                            try:
+                                return json.loads(text[j:i+1])
+                            except Exception:
+                                break
+        raise ValueError("no JSON object found")
+    chunk = text[last_open:last_close+1]
+    # try to expand to balance
+    depth = 0
+    start = None
+    for idx, ch in enumerate(text):
+        if ch == "{":
+            if depth == 0: start = idx
+            depth += 1
+        elif ch == "}":
+            depth -= 1
+            if depth == 0 and start is not None:
+                candidate = text[start:idx+1]
+                try:
+                    return json.loads(candidate)
+                except Exception:
+                    pass
+    raise ValueError("no JSON object found")
+
+# ========= Ollama LLM Client =========
 class LLMClient:
-    def __init__(self, model: str, host: str="localhost", port: int=11434, debug: bool=False):
-        self.model = model; self.host = host; self.port = port; self.debug = debug
+    def __init__(self, model: str, host: str="localhost", port: int=11434, debug: bool=False,
+                 timeout: int=45, retries: int=2, backoff: float=0.75):
+        self.model = model or os.getenv("GUARDIAN_MODEL","")
+        self.host = host; self.port = port; self.debug = debug
+        self.timeout = int(os.getenv("GUARDIAN_TIMEOUT", timeout))
+        self.retries = int(os.getenv("GUARDIAN_RETRIES", retries))
+        self.backoff = backoff
         self.last_http: Dict[str,Any] = {}
 
-    def _post(self, path: str, payload: dict) -> Dict[str,Any]:
+    def _post(self, path: str, payload: dict, phase: str) -> Dict[str,Any]:
         body = json.dumps(payload)
-        conn = http.client.HTTPConnection(self.host, self.port, timeout=180)
-        try:
-            conn.request("POST", path, body=body, headers={"Content-Type":"application/json"})
-            resp = conn.getresponse(); status = resp.status
-            raw = resp.read().decode("utf-8") if resp else ""
-        finally:
-            conn.close()
-        self.last_http = {"path": path, "status": status, "raw_preview": raw[:240]}
-        try:
-            data = json.loads(raw) if raw else {}
-        except Exception as e:
-            raise RuntimeError(f"Ollama parse error (HTTP {status}) at {path}: {e}; raw={raw[:200]}")
-        if status != 200:
-            raise RuntimeError(f"Ollama HTTP {status} at {path}: {data.get('error') or raw[:200]}")
-        return data
+        attempt = 0
+        err: Optional[Exception] = None
+        while attempt <= self.retries:
+            t0 = now_ms()
+            conn = http.client.HTTPConnection(self.host, self.port, timeout=self.timeout)
+            status, raw = -1, ""
+            try:
+                conn.request("POST", path, body=body, headers={"Content-Type":"application/json"})
+                resp = conn.getresponse(); status = resp.status
+                raw = resp.read().decode("utf-8") if resp else ""
+            except Exception as e:
+                err = e
+            finally:
+                try: conn.close()
+                except Exception: pass
+            latency = now_ms() - t0
+            self.last_http = {"phase": phase, "path": path, "status": status, "lat_ms": latency, "raw_preview": raw[:240]}
+            if status == 200:
+                try:
+                    return json.loads(raw) if raw else {}
+                except Exception as e:
+                    err = RuntimeError(f"Ollama parse error (HTTP {status}) at {path}: {e}; raw={raw[:200]}")
+            # retry on failure
+            if attempt == self.retries:
+                break
+            time.sleep(self.backoff * (2**attempt))
+            attempt += 1
+        # If we reach here, fail
+        if err: raise err
+        raise RuntimeError(f"Ollama HTTP {self.last_http.get('status')} at {path}: {self.last_http.get('raw_preview')}")
 
-    def ask(self, system_msg: str, user_msg: str, *, temperature: float, top_p: float,
-            repeat_penalty: float, num_predict: int, num_ctx: int=8192, force_json: bool=False) -> str:
-        stop_tokens = ["<<END>>", "User:", "\nUser:"]
-        # 1) chat
+    def _render_chat_as_prompt(self, system_msg: str, user_msg: str) -> str:
+        return f"<|system|>\n{system_msg}\n<|user|>\n{user_msg}\n<|assistant|>\n"
+
+    def ask(self, system_msg: str, user_msg: str, *, temperature: float,
+            top_p: float, repeat_penalty: float, num_predict: int,
+            num_ctx: int=8192, force_json: bool=False, phase: str="pilot") -> str:
+        opts = {"temperature": float(temperature), "top_p": float(top_p),
+                "repeat_penalty": float(repeat_penalty), "num_predict": int(num_predict),
+                "num_ctx": int(num_ctx)}
+        if force_json: opts["format"] = "json"
+
+        # Primary: /api/chat
         chat_payload = {
             "model": self.model,
-            "messages": [
-                {"role":"system","content":system_msg},
-                {"role":"user","content":user_msg}
-            ],
-            "options": {"temperature": float(temperature), "top_p": float(top_p),
-                        "repeat_penalty": float(repeat_penalty), "num_predict": int(num_predict),
-                        "num_ctx": int(num_ctx), "stop": stop_tokens,
-                        **({"format":"json"} if force_json else {})},
-            "stream": False
+            "messages": [{"role":"system","content":system_msg},
+                         {"role":"user","content":user_msg}],
+            "options": opts, "stream": False
         }
-        data = self._post("/api/chat", chat_payload)
+        data = self._post("/api/chat", chat_payload, phase=phase)
         out = ""
-        if isinstance(data, dict) and "message" in data and isinstance(data["message"], dict):
-            out = data["message"].get("content","") or data["message"].get("thinking","")
-        elif isinstance(data, dict):
-            out = data.get("response","") or data.get("thinking","")
-        if out: return out.strip()
+        if isinstance(data, dict):
+            msg = data.get("message", {}) if isinstance(data.get("message"), dict) else {}
+            out = (msg.get("content") or "").strip()
+            if not out:
+                out = (msg.get("thinking") or "").strip()  # internal fallback
+            if not out:
+                out = (data.get("response") or data.get("thinking") or "").strip()
+        if out:
+            return out
 
-        # 2) generate fallback
+        # Secondary: /api/generate
         gen_payload = {
             "model": self.model,
-            "prompt": f"{system_msg}\n\nUser:\n{user_msg}\n\nAssistant:",
-            "options": {"temperature": float(temperature), "top_p": float(top_p),
-                        "repeat_penalty": float(repeat_penalty), "num_predict": int(num_predict),
-                        "num_ctx": int(num_ctx), "stop": stop_tokens,
-                        **({"format":"json"} if force_json else {})},
-            "stream": False
+            "prompt": self._render_chat_as_prompt(system_msg, user_msg),
+            "options": opts, "stream": False
         }
-        data2 = self._post("/api/generate", gen_payload)
-        out2 = ""
-        if isinstance(data2, dict): out2 = data2.get("response","") or data2.get("thinking","")
-        if not out2: raise RuntimeError("Ollama returned empty text from both chat and generate.")
-        return out2.strip()
+        gen = self._post("/api/generate", gen_payload, phase=f"{phase}-fallback")
+        out2 = (gen.get("response") or gen.get("thinking") or "").strip()
+        if not out2:
+            raise RuntimeError("Ollama returned empty text from both chat and generate.")
+        return out2
 
-# ========= Critic (ACh-gated; JSON with heuristic fallback) =========
+    def get_last_http(self) -> Dict[str,Any]:
+        return copy.deepcopy(self.last_http)
+
+# ========= Critic (ACh-gated) =========
 CRITIC_SYS = (
-  "You are Critic. Given an answer about PageRank, return STRICT JSON with keys: "
-  "{'q_overall': float in [0,1], 'has_conflict_note': bool, 'reasons': [str]}. "
-  "Return JSON ONLY—no extra text."
+  "You are Critic. Respond in STRICT JSON only.\n"
+  "Schema: {\"q_overall\": float, \"has_conflict_note\": bool, \"reasons\": [string]}\n"
+  "q_overall in [0,1]. No prose outside JSON. Example:\n"
+  "{\"q_overall\":0.72,\"has_conflict_note\":true,\"reasons\":[\"≥3 citations\",\"<=150 words\",\"conflict note present\"]}"
 )
-def extract_json(s: str) -> dict:
-    try: return json.loads(s)
-    except Exception: pass
-    for start in range(len(s)-1, -1, -1):
-        if s[start] != '{': continue
-        depth = 0
-        for end in range(start, len(s)):
-            ch = s[end]
-            if ch == '{': depth += 1
-            elif ch == '}':
-                depth -= 1
-                if depth == 0:
-                    chunk = s[start:end+1]
-                    try: return json.loads(chunk)
-                    except Exception: break
-    raise ValueError("no valid JSON object found")
 
-def critic_heuristic(answer: str) -> dict:
-    text = (answer or "").strip()
-    has_conflict = ("conflict note" in text.lower()) or ("contradiction" in text.lower())
-    L = len(text); q = 0.15
-    if L > 60: q += 0.25
-    if L > 120: q += 0.20
-    if L > 200: q -= 0.10
-    if has_conflict: q += 0.20
-    return {"q_overall": float(clamp(q, 0.0, 0.9)), "has_conflict_note": has_conflict,
-            "reasons": ["heuristic fallback (model returned non-JSON)"]}
 
-def run_critic(llm: LLMClient, answer: str, mu: Mu, passes: int=1) -> dict:
-    temperature = max(0.1, 0.9 - 0.6*mu.s5ht); top_p = 0.8
-    repeat_penalty = 1.10 + 0.10*mu.s5ht; num_predict = 220
-    best = {"q_overall": 0.0, "has_conflict_note": False, "reasons": ["no output"]}
-    for _ in range(max(1, passes)):
+def run_critic(llm: LLMClient, answer: str, mu: Mu, passes: int=1, log_path:str="") -> dict:
+    temperature = max(0.1, 0.9 - 0.6*mu.s5ht)
+    top_p = 0.8
+    repeat_penalty = 1.10 + 0.10*mu.s5ht
+    num_predict = 200
+    best = None
+    any_json = False
+    for i in range(max(1, passes)):
         try:
             j = llm.ask(CRITIC_SYS, f"Answer:\n{answer}\n\nReturn JSON only.",
                         temperature=temperature, top_p=top_p,
                         repeat_penalty=repeat_penalty, num_predict=num_predict,
-                        force_json=True)
-            try: data = extract_json(j)
-            except Exception: data = critic_heuristic(j)
-            if isinstance(data, dict) and data.get("q_overall", 0) >= best.get("q_overall", 0):
+                        force_json=True, phase="critic")
+            data = extract_last_json(j)
+            any_json = True
+            if (best is None) or (data.get("q_overall",0.0) > best.get("q_overall",0.0)):
                 best = data
+            log_jsonl(log_path, {"phase":"critic", "pass":i, "raw":j[:240], "http": llm.get_last_http()})
         except Exception as e:
-            best = {"q_overall": best["q_overall"], "has_conflict_note": best["has_conflict_note"],
-                    "reasons": [f"critic error: {e} | http={llm.last_http}"]}
+            if not any_json and best is None:
+                best = {"q_overall": 0.0, "has_conflict_note": False,
+                        "reasons": [f"critic error: {e}", f"http={llm.get_last_http()}"]}
+            log_jsonl(log_path, {"phase":"critic", "pass":i, "error": str(e), "http": llm.get_last_http()})
+    if best is None:
+        best = {"q_overall": 0.0, "has_conflict_note": False, "reasons": ["no JSON from critic"]}
     best["q_overall"] = float(clamp(best.get("q_overall", 0.0), 0.0, 1.0))
     best["has_conflict_note"] = bool(best.get("has_conflict_note", False))
     if "reasons" not in best: best["reasons"] = []
     return best
 
+# ========= Acceptance gate (Pilot output) =========
+def acceptable_answer(txt: str) -> bool:
+    if not txt: return False
+    s = txt.strip()
+    if len(s) < 120 or len(s) > 1200:  # ≈ 120–150 words relaxed
+        return False
+    # Accept bracketed numeric cites or parenthetical author/year; need ≥3 signals
+    cites_num = re.findall(r"\[[0-9]+\]", s)
+    cites_auth = re.findall(r"\([A-Z][A-Za-z]+[^)]*?(19|20)\d{2}\)", s)
+    cites = len(set(cites_num)) + len(cites_auth)
+    if cites < 3: return False
+    if "conflict" not in s.lower(): return False
+    return True
+
 # ========= Engine =========
 class Engine:
-    def __init__(self, model_name: str="gpt-oss:20b", neuro: Mu=None, debug: bool=False):
+    def __init__(self, pilot_model: str="gpt-oss:20b", critic_model: Optional[str]=None,
+                 neuro: Mu=None, debug: bool=False, log_path:str=""):
         self.homeo = Homeostat(); self.cust  = Custodian(); self.wit   = Witness()
         self.scout = Scout();     self.arch  = Archivist(); self.pilot = Pilot()
-        self.llm   = LLMClient(model_name, debug=debug)
+        self.oper  = Operator()
+        self.pilot_llm  = LLMClient(pilot_model, debug=debug)
+        self.critic_llm = LLMClient(critic_model or pilot_model, debug=debug)
         self.neuro0 = neuro or Mu(da=0.50, ne=0.55, s5ht=0.85, ach=0.75, gaba=0.35, oxt=0.70)
         self.debug = debug
+        self.log_path = log_path
 
-    # ---- deterministic local fallback paragraph (last resort) ----
-    def _local_pagerank_fallback(self) -> str:
-        return (
-          "PageRank estimates a page’s importance as the stationary probability of a “random surfer” visiting it. "
-          "At each step the surfer follows an out-link from the current page with probability α (≈0.85) or “teleports” "
-          "to a random page with probability 1−α, preventing sinks and ensuring a unique distribution. "
-          "A page’s rank is the sum of its in-neighbors’ ranks divided by their out-degrees, iterated to convergence. "
-          "Thus PageRank is not a raw link count: a single link from a highly ranked page can outweigh many links from weak pages. "
-          "[1][2][3]\n"
-          "Conflict Note: resolves the misconception that PageRank equals link counts by emphasizing rank-weighted, degree-normalized propagation."
-        )
+    # ---- Health probe ----
+    def probe_health(self) -> Dict[str,Any]:
+        ok = True; notes = []
+        # tags
+        try:
+            data = self.pilot_llm._post("/api/tags", {}, phase="health-tags")
+            notes.append({"tags": list(data.get("models",[]))[:5]})
+        except Exception as e:
+            ok = False; notes.append({"tags_error": str(e), "http": self.pilot_llm.get_last_http()})
+        # ps
+        try:
+            data = self.pilot_llm._post("/api/ps", {}, phase="health-ps")
+            notes.append({"ps": data})
+        except Exception as e:
+            ok = False; notes.append({"ps_error": str(e), "http": self.pilot_llm.get_last_http()})
+        # tiny generate echo + JSON capability
+        try:
+            resp = self.pilot_llm._post("/api/generate", {
+                "model": self.pilot_llm.model,
+                "prompt": "Return {} exactly", "options": {"format":"json"}, "stream": False
+            }, phase="health-json")
+            notes.append({"json_support": True, "preview": str(resp)[:80]})
+        except Exception as e:
+            notes.append({"json_support": False, "error": str(e), "http": self.pilot_llm.get_last_http()})
+        return {"ok": ok, "notes": notes}
 
-    # ---- two-stage generation with bracketed extraction and retry ----
-    def _generate_answer(self, temperature, top_p, repeat_penalty, num_predict) -> str:
-        # Stage A: bracketed form
-        sys_a = (
-          "You are Pilot. Print ONLY the answer BETWEEN the exact tags on their own lines:\n"
-          "<<BEGIN>>\n<paragraph>\n<<END>>\n"
-          "Constraints: 120–150 words; ≥3 numeric citations like [1][2][3]; "
-          "append a final line: Conflict Note: ... (or 'Conflict Note: none')."
-        )
-        usr = ("Explain PageRank in ≤150 words with ≥3 citations. Prefer the Brin & Page 1998 paper, "
-               "Google patent US 6,285,999, and an official Google source. Resolve the 'just link counts' misconception.")
-        raw = self.llm.ask(sys_a, usr, temperature=temperature, top_p=top_p,
-                           repeat_penalty=repeat_penalty, num_predict=num_predict)
-        text = between_tags(raw, "<<BEGIN>>", "<<END>>").strip()
-        # If the model printed only filler (e.g., "and") or too short, retry with a simpler, no-tag instruction.
-        if len(text) < 80 or text.lower() in {"and","", "<<begin>>", "<<end>>"} or "conflict note" not in text.lower():
-            sys_b = ("You are Pilot. Output ONLY a single 120–150 word paragraph explaining PageRank with ≥3 inline numeric citations "
-                     "like [1][2][3], and end with a line: Conflict Note: ... (or 'Conflict Note: none'). No preface.")
-            raw2 = self.llm.ask(sys_b, usr, temperature=temperature, top_p=top_p,
-                                repeat_penalty=repeat_penalty, num_predict=num_predict)
-            # Strip any accidental tags if present
-            text2 = between_tags(raw2, "<<BEGIN>>", "<<END>>").strip()
-            text = text2 if len(text2) > len(text) else text
-        # Last resort: deterministic local paragraph
-        if len(text) < 80 or "conflict note" not in text.lower():
-            text = self._local_pagerank_fallback()
-        return text
-
-    def run_pagerank_demo(self, ach: Optional[float]=None, seed:int=SEED_DEFAULT, deny_policy: bool=False) -> Dict[str,Any]:
+    def run_pagerank_demo(self, ach: Optional[float]=None, seed:int=SEED_DEFAULT, deny_policy: bool=False,
+                          pilot_alt_model: Optional[str]=None) -> Dict[str,Any]:
         seed_everything(seed)
         mu_in = Mu(self.neuro0.da, self.neuro0.ne, self.neuro0.s5ht,
                    ach if ach is not None else self.neuro0.ach,
@@ -351,34 +444,89 @@ class Engine:
         mu_out = self.homeo.update(mu_in, app)
         pol = self.homeo.couple(mu_out)
 
-        llm_answer = "[blocked by policy]"; llm_knobs = {}
+        # μ -> LLM decoding knobs (Pilot)
+        llm_answer = "[blocked by policy]"; llm_knobs = {}; http_trace = {}
+        attempts: List[Dict[str,Any]] = []
         if verdict["action"] == "allow":
             temperature    = max(0.1, 0.9 - 0.6*mu_out.s5ht)
             top_p          = clamp(0.75 + 0.20*mu_out.ne - 0.10*mu_out.gaba, 0.50, 0.95)
             repeat_penalty = 1.05 + 0.20*mu_out.s5ht - 0.10*mu_out.da
             num_predict    = int(256 + int(384*mu_out.s5ht) - int(128*mu_out.gaba))
+
+            system_msg = (f"You are Pilot (seed={SEED_DEFAULT}). Decompose briefly (assumptions/unknowns/tests), "
+                          "then produce 120–150 words with citations. If sources conflict, "
+                          "add a one-line 'Conflict Note' resolving it.")
+            user_msg = ("Explain PageRank in ≤150 words with ≥3 citations. Prioritize primary/official. "
+                        "Note and resolve the common 'link count' misconception.")
+
+            # Attempt 1
             try:
-                llm_answer = self._generate_answer(temperature, top_p, repeat_penalty, num_predict)
+                ans = self.pilot_llm.ask(system_msg, user_msg,
+                    temperature=temperature, top_p=top_p,
+                    repeat_penalty=repeat_penalty, num_predict=num_predict, phase="pilot")
+                attempts.append({"kind":"pilot", "ok": True, "http": self.pilot_llm.get_last_http(),
+                                 "len": len(ans)})
             except Exception as e:
-                llm_answer = self._local_pagerank_fallback() + f"\n[LLM error noted: {e}]"
-            llm_knobs = {"temperature": round(temperature,3), "top_p": round(top_p,3),
-                         "repeat_penalty": round(repeat_penalty,3), "num_predict": int(num_predict)}
+                http_trace = self.pilot_llm.get_last_http()
+                ans = f"[LLM error] {e} | http={http_trace}"
+                attempts.append({"kind":"pilot", "ok": False, "error": str(e), "http": http_trace})
+
+            # Acceptance gate → self-reprompt once if needed
+            if not acceptable_answer(ans):
+                remsg = (user_msg + "\n\nCRITICAL: Output 120–150 words. Include ≥3 bracketed citations like [1][2][3]. "
+                         "Add a one-line 'Conflict Note:' clarifying the damping d vs teleport 1−d.")
+                try:
+                    ans2 = self.pilot_llm.ask(system_msg, remsg,
+                                temperature=max(0.1, temperature-0.1),
+                                top_p=max(0.5, top_p-0.15),
+                                repeat_penalty=repeat_penalty+0.05,
+                                num_predict=max(num_predict, 640),
+                                phase="pilot-reprompt")
+                    attempts.append({"kind":"pilot-reprompt", "ok": True, "http": self.pilot_llm.get_last_http(),
+                                     "len": len(ans2)})
+                    ans = ans2
+                except Exception as e:
+                    attempts.append({"kind":"pilot-reprompt", "ok": False, "error": str(e),
+                                     "http": self.pilot_llm.get_last_http()})
+
+            # Alt model swap if still unacceptable
+            if not acceptable_answer(ans) and pilot_alt_model:
+                alt = pilot_alt_model
+                alt_llm = LLMClient(alt, debug=self.debug)
+                try:
+                    ans3 = alt_llm.ask(system_msg, user_msg,
+                                       temperature=0.2, top_p=0.8,
+                                       repeat_penalty=1.15, num_predict=max(num_predict, 640),
+                                       phase="pilot-alt")
+                    attempts.append({"kind":"pilot-alt", "model": alt, "ok": True, "http": alt_llm.get_last_http(),
+                                     "len": len(ans3)})
+                    ans = ans3
+                except Exception as e:
+                    attempts.append({"kind":"pilot-alt", "model": alt, "ok": False,
+                                     "error": str(e), "http": alt_llm.get_last_http()})
+
+            llm_answer = ans
+            llm_knobs = {"temperature": round(temperature,3),
+                         "top_p": round(top_p,3),
+                         "repeat_penalty": round(repeat_penalty,3),
+                         "num_predict": int(num_predict)}
 
         # Critic (ACh-gated)
         critic = {}
         if verdict["action"] == "allow":
             critic_passes = 1 + int(2*mu_out.ach)
             try:
-                critic = run_critic(self.llm, llm_answer, mu_out, passes=critic_passes)
+                critic = run_critic(self.critic_llm, llm_answer, mu_out, passes=critic_passes, log_path=self.log_path)
             except Exception as e:
                 critic = {"q_overall": 0.0, "has_conflict_note": False,
-                          "reasons":[f"critic exec error: {e} | http={self.llm.last_http}"]}
+                          "reasons":[f"critic exec error: {e} | http={self.critic_llm.get_last_http()}"]}
 
-        # Evidence (toy)
+        # Evidence (ACh controls dissent quota)
         ev = self.scout.fetch_pagerank(pol.k_breadth, pol.q_contra)
-        conflict_note_present = ("conflict note" in (llm_answer or "").lower())
+        dissent_present = any(e.stance=="con" for e in ev)
+        conflict_note_present = ("conflict" in (llm_answer or "").lower())
 
-        # Claims
+        # Minimal claims + contradiction link
         claims = [
             Claim(id="c1", text="PageRank models a random surfer with damping ~0.85.", q=0.8,
                   sources=[Source(url="pagerank_primary.txt", domain_tier=1)], stance="pro"),
@@ -388,12 +536,14 @@ class Engine:
                   sources=[Source(url="pagerank_media.txt", domain_tier=3)], stance="neutral"),
         ]
         for c in claims: self.arch.upsert_claim(c)
+        self.arch.link_contradiction("c2", "c3")
 
+        # Adoption threshold tied to critic
         adopt = True
         if critic: adopt = critic.get("q_overall", 0.0) >= 0.70
 
         stats = {"sources": len(ev),
-                 "resolved": conflict_note_present or critic.get("has_conflict_note", False),
+                 "resolved": dissent_present or conflict_note_present or critic.get("has_conflict_note", False),
                  "goal_met": (len(ev)>=3 and verdict["action"]=="allow" and adopt)}
         kpis = self.wit.score(stats)
         stop = soft_stop(1.0 if stats["goal_met"] else 0.0, mu_out.gaba, 0.2, 0.2)
@@ -406,26 +556,34 @@ class Engine:
             "critic": critic, "adopted": adopt, "kpis": kpis, "stop_score": stop
         }
         if self.debug and verdict["action"] == "allow":
-            payload["last_http"] = getattr(self.llm, "last_http", {})
+            payload["last_http"] = {"pilot": attempts[-1]["http"] if attempts else {},
+                                    "critic": self.critic_llm.get_last_http()}
+            payload["attempts"] = attempts
         return payload
 
 # ========= CLI & Probes =========
 def main():
-    ap = argparse.ArgumentParser(description="Guardian-AGI (single-file) — Ollama chat-first + Emotional Center")
-    ap.add_argument("--model", default="gpt-oss:20b",
-                    help="Ollama model name (default gpt-oss:20b; e.g., qwen2.5:14b-instruct-q4_K_M)")
+    ap = argparse.ArgumentParser(description="Guardian-AGI (single-file) — resilient Ollama + Emotional Center")
+    ap.add_argument("--pilot-model", default=os.getenv("GUARDIAN_PILOT", "gpt-oss:20b"),
+                    help="Pilot LLM model (default gpt-oss:20b)")
+    ap.add_argument("--critic-model", default=os.getenv("GUARDIAN_CRITIC", None),
+                    help="Critic LLM model (default = same as pilot)")
     ap.add_argument("--seed", type=int, default=SEED_DEFAULT)
     ap.add_argument("--ach", type=float, default=None, help="override ACh [0..1]")
-    ap.add_argument("--probe", choices=["none","ach","policy","stop","critic"], default="none")
+    ap.add_argument("--probe", choices=["none","ach","policy","stop","critic","health"], default="none")
     ap.add_argument("--record", default="", help="Path to ledger JSONL (append-only). Empty=off.")
-    ap.add_argument("--debug", action="store_true", help="Include last HTTP trace on LLM errors.")
+    ap.add_argument("--log", default=os.getenv("GUARDIAN_LOG",""), help="Append structured logs to this JSONL path.")
+    ap.add_argument("--pilot-alt-model", default=os.getenv("GUARDIAN_PILOT_ALT",""),
+                    help="Optional alternate model if Pilot answer fails acceptance.")
+    ap.add_argument("--debug", action="store_true", help="Include per-phase HTTP traces and attempts.")
     args = ap.parse_args()
 
-    eng = Engine(model_name=args.model, debug=args.debug)
+    eng = Engine(pilot_model=args.pilot_model, critic_model=args.critic_model,
+                 debug=args.debug, log_path=args.log)
 
     if args.probe == "ach":
-        low  = eng.run_pagerank_demo(ach=0.2, seed=args.seed)
-        high = eng.run_pagerank_demo(ach=0.9, seed=args.seed)
+        low  = eng.run_pagerank_demo(ach=0.2, seed=args.seed, pilot_alt_model=args.pilot_alt_model or None)
+        high = eng.run_pagerank_demo(ach=0.9, seed=args.seed, pilot_alt_model=args.pilot_alt_model or None)
         out = {
             "low.policy":  low["policy"],  "low.evidence":  low["evidence"],  "low.knobs":  low["llm_knobs"],
             "high.policy": high["policy"], "high.evidence": high["evidence"], "high.knobs": high["llm_knobs"],
@@ -436,13 +594,15 @@ def main():
         print(json.dumps(out, indent=2)); return
 
     if args.probe == "policy":
-        res = eng.run_pagerank_demo(ach=args.ach, seed=args.seed, deny_policy=True)
+        res = eng.run_pagerank_demo(ach=args.ach, seed=args.seed, deny_policy=True,
+                                    pilot_alt_model=args.pilot_alt_model or None)
         print(json.dumps({"risk":res["risk"],"verdict":res["verdict"],
                           "note":"Custodian veto blocks LLM call"}, indent=2)); return
 
     if args.probe == "stop":
-        res_ok = eng.run_pagerank_demo(ach=args.ach, seed=args.seed)
-        res_bad = res_ok.copy(); res_bad["kpis"] = {**res_bad["kpis"], "pass_at_1": 0.0}
+        res_ok = eng.run_pagerank_demo(ach=args.ach, seed=args.seed, pilot_alt_model=args.pilot_alt_model or None)
+        res_bad = copy.deepcopy(res_ok)
+        res_bad["kpis"] = {**res_bad["kpis"], "pass_at_1": 0.0}
         res_bad["stop_score"] = soft_stop(0.0, res_ok["mu_out"]["gaba"], 0.2, 0.2)
         print(json.dumps({
             "stop_when_goal_met": res_ok["stop_score"],
@@ -451,15 +611,20 @@ def main():
         }, indent=2)); return
 
     if args.probe == "critic":
-        low  = eng.run_pagerank_demo(ach=0.2, seed=args.seed)
-        high = eng.run_pagerank_demo(ach=0.9, seed=args.seed)
+        low  = eng.run_pagerank_demo(ach=0.2, seed=args.seed, pilot_alt_model=args.pilot_alt_model or None)
+        high = eng.run_pagerank_demo(ach=0.9, seed=args.seed, pilot_alt_model=args.pilot_alt_model or None)
         print(json.dumps({
             "low.critic": low.get("critic",{}),  "low.adopted": low.get("adopted", True),
             "high.critic": high.get("critic",{}),"high.adopted": high.get("adopted", True),
             "expectation": "High ACh → more critic passes; q_overall should be ≥ low or equal; adoption requires q≥0.70."
         }, indent=2)); return
 
-    res = eng.run_pagerank_demo(ach=args.ach, seed=args.seed)
+    if args.probe == "health":
+        h = eng.probe_health()
+        print(json.dumps(h, indent=2)); return
+
+    # default run
+    res = eng.run_pagerank_demo(ach=args.ach, seed=args.seed, pilot_alt_model=args.pilot_alt_model or None)
     print(json.dumps(res, indent=2))
     if args.record:
         ledger_append(args.record, {
