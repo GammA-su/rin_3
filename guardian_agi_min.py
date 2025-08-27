@@ -576,8 +576,8 @@ class Engine:
             critic = {"q_overall": 0.0, "has_conflict_note": False, "reasons": ["unset"]}
 
         if verdict["action"] == "allow":
-            # Offline mode: deterministic answer without LLM (for CI / no-ollama)
             if self.offline or self.llm is None:
+                # Offline deterministic synthesis
                 llm_answer = (
                     "Assumptions: random-surfer model; official sources prioritized. Tests: ≤150w, ≥3 cites, resolve misconception.\n"
                     "PageRank measures the stationary probability that a random surfer lands on a page; a damping factor d≈0.85 models continuing to follow links. "
@@ -586,8 +586,10 @@ class Engine:
                     "[1] pagerank_primary.txt [2] pagerank_dissent.txt [3] pagerank_dissent_2.txt\n"
                     "Misconception: It is not raw link counts; quality-weighted links and damping govern rank."
                 )
-                critic = {"q_overall": 0.78, "has_conflict_note": True, "reasons":["offline deterministic critic"]}
+                critic = {"q_overall": 0.78, "has_conflict_note": True, "reasons": ["offline deterministic critic"]}
+                llm_knobs = {}
             else:
+                # Online Ollama synthesis
                 temperature = max(0.1, 0.9 - 0.6*mu_out.s5ht)
                 top_p = clamp(0.75 + 0.20*mu_out.ne - 0.10*mu_out.gaba, 0.50, 0.95)
                 repeat_penalty = 1.05 + 0.20*mu_out.s5ht - 0.10*mu_out.da
@@ -597,8 +599,9 @@ class Engine:
                     "then produce 120–150 words with citations. If sources conflict, "
                     "add a one-line 'Conflict Note' resolving it, or add 'Misconception:' line."
                 )
-                user_msg = ("Explain PageRank in ≤150 words with ≥3 citations. Prioritize primary/official. Resolve the common 'link count' misconception.")
-                
+                user_msg = ("Explain PageRank in ≤150 words with ≥3 citations. "
+                            "Prioritize primary/official. Resolve the common 'link count' misconception.")
+
                 try:
                     llm_answer = self.llm.ask(
                         system_msg, user_msg,
@@ -609,21 +612,30 @@ class Engine:
                     http_trace = self.llm.last_http
                     llm_answer = f"[LLM error] {e} | http={http_trace}"
 
-                # Local synthesis fallback if model output is empty/too-short/error
-                if (not isinstance(llm_answer, str)) or (len(llm_answer.strip()) < 60) or llm_answer.startswith("[LLM error]"):
-                    llm_answer = (
-                        "Assumptions: random-surfer model; official sources prioritized. Tests: ≤150w, ≥3 cites, resolve misconception.\n"
-                        "PageRank measures the stationary probability that a random surfer lands on a page; a damping factor d≈0.85 models continuing to follow links. "
-                        "Rank flows from a page proportionally to its own rank and is divided by its outdegree, so high-rank links weigh more and hubs pass less per link. "
-                        "Teleportation (1−d) prevents sinks and spam clusters from hoarding rank. "
-                        "[1] pagerank_primary.txt [2] pagerank_dissent.txt [3] pagerank_dissent_2.txt\n"
-                        "Misconception: It is not raw link counts; quality-weighted links and damping govern rank."
-                    )
-            llm_knobs = {"temperature": round(temperature,3), "top_p": round(top_p,3), "repeat_penalty": round(repeat_penalty,3), "num_predict": int(num_predict)}
+        # Local deterministic fallback if output is empty, short, or error
+        if (not isinstance(llm_answer, str)) or (len(llm_answer.strip()) < 60) or llm_answer.startswith("[LLM error]"):
+            llm_answer = (
+                "Assumptions: random-surfer model; official sources prioritized. Tests: ≤150w, ≥3 cites, resolve misconception.\n"
+                "PageRank measures the stationary probability that a random surfer lands on a page; a damping factor d≈0.85 models continuing to follow links. "
+                "Rank flows from a page proportionally to its own rank and is divided by its outdegree, so high-rank links weigh more and hubs pass less per link. "
+                "Teleportation (1−d) prevents sinks and spam clusters from hoarding rank. "
+                "[1] pagerank_primary.txt [2] pagerank_dissent.txt [3] pagerank_dissent_2.txt\n"
+                "Misconception: It is not raw link counts; quality-weighted links and damping govern rank."
+            )
+
+        if not self.offline:
+            llm_knobs = {"temperature": round(temperature,3),
+                "top_p": round(top_p,3),
+                "repeat_penalty": round(repeat_penalty,3),
+                "num_predict": int(num_predict)}
             try:
                 critic = run_critic(self.llm, llm_answer, mu_out, attempts)
             except Exception as e:
-                critic = {"q_overall": 0.0, "has_conflict_note": False, "reasons":[f"critic exec error: {e}"], "http": getattr(self.llm,"last_http",{})}
+                critic = {"q_overall": 0.0, "has_conflict_note": False,
+                        "reasons":[f"critic exec error: {e}"],
+                        "http": getattr(self.llm,"last_http",{})}
+
+
 
         # evidence + claims
         ev = self._fetch_evidence(pol.k_breadth, pol.q_contra)
