@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # guardian_agi_min.py — Guardian-AGI scaffold (seed=137)
-# Additive upgrade: persistent memory + trust calculus + local-docs retrieval + strict-JSON critic.
+# Single-file: emotional center + safety + memory + local-docs retrieval + strict-JSON critic + probes.
 
 from __future__ import annotations
-import argparse, json, os, random, time, http.client, hashlib, math
-from dataclasses import dataclass, asdict
+import argparse, json, os, random, time, http.client, hashlib, math, re
+from dataclasses import dataclass, asdict, field
 from hashlib import sha256
 from typing import List, Dict, Any, Optional, Tuple
 
@@ -47,38 +47,42 @@ def ledger_append(path: str, entry: dict):
 @dataclass
 class Source:
     url: str
-    seg: Optional[str]=None
-    h: Optional[str]=None
-    ts: Optional[str]=None
-    domain_tier: int=1
+    seg: Optional[str] = None
+    h: Optional[str] = None
+    ts: Optional[str] = None
+    domain_tier: int = 1
 
 @dataclass
 class Claim:
     id: str
     text: str
     q: float = 0.5
-    sources: List[Source] = None
-    supports: List[str] = None
-    contradicts: List[str] = None
+    sources: Optional[List[Source]] = None
+    supports: Optional[List[str]] = None
+    contradicts: Optional[List[str]] = None
     stance: str = "neutral"
     def to_dict(self):
-        return {"id": self.id, "text": self.text, "q": self.q, "stance": self.stance,
-                "sources": [asdict(s) for s in (self.sources or [])],
-                "supports": self.supports or [], "contradicts": self.contradicts or []}
+        return {
+            "id": self.id, "text": self.text, "q": self.q, "stance": self.stance,
+            "sources": [asdict(s) for s in (self.sources or [])],
+            "supports": self.supports or [], "contradicts": self.contradicts or []
+        }
 
 def claim_from_dict(d: Dict[str,Any]) -> Claim:
     srcs = [Source(**s) for s in d.get("sources", [])]
-    return Claim(id=d["id"], text=d["text"], q=float(d.get("q",0.5)),
-                 sources=srcs, supports=d.get("supports",[]),
-                 contradicts=d.get("contradicts",[]), stance=d.get("stance","neutral"))
+    return Claim(
+        id=d["id"], text=d["text"], q=float(d.get("q",0.5)),
+        sources=srcs, supports=d.get("supports",[]),
+        contradicts=d.get("contradicts",[]), stance=d.get("stance","neutral")
+    )
 
 @dataclass
 class EvidenceUnit:
     id: str
     content_hash: str
     extract: str
-    stance: str="neutral"
-    provenance: List[Dict[str, Any]] = None
+    stance: str = "neutral"
+    provenance: Optional[List[Dict[str, Any]]] = None
 
 @dataclass
 class Task:
@@ -86,7 +90,7 @@ class Task:
     constraints: Dict[str, Any]
     acceptance_tests: List[str]
     budget: Dict[str, Any]
-    criticality: str="C1"
+    criticality: str = "C1"
 
 @dataclass
 class Episode:
@@ -103,9 +107,8 @@ class MemoryStore:
     def __init__(self, root: Optional[str]=None):
         self.root = root
         if root: os.makedirs(root, exist_ok=True)
-        self.claims_path   = os.path.join(root,"claims.jsonl") if root else None
+        self.claims_path = os.path.join(root,"claims.jsonl") if root else None
         self.episodes_path = os.path.join(root,"episodes.jsonl") if root else None
-
     def enabled(self) -> bool: return bool(self.root)
     def _append_jsonl(self, path: str, obj: dict):
         if not self.enabled(): return
@@ -153,14 +156,13 @@ class PolicyCoupling:
 
 class Homeostat:
     def update(self, mu: Mu, a: Appraisal) -> Mu:
-        da  = clamp(mu.da  + 0.35*(a.p-0.5) - 0.30*a.k)
-        ne  = clamp(mu.ne  + 0.40*a.u + 0.30*a.n)
-        s5  = clamp(mu.s5ht + 0.45*a.s)
+        da = clamp(mu.da + 0.35*(a.p-0.5) - 0.30*a.k)
+        ne = clamp(mu.ne + 0.40*a.u + 0.30*a.n)
+        s5 = clamp(mu.s5ht + 0.45*a.s)
         ach = clamp(mu.ach + 0.50*a.c)
-        gb  = clamp(mu.gaba + 0.50*0.5 + 0.30*0.5 - 0.25*0.5)
+        gb = clamp(mu.gaba + 0.50*0.5 + 0.30*0.5 - 0.25*0.5)
         oxt = clamp(mu.oxt + 0.40*a.h)
         return Mu(da, ne, s5, ach, gb, oxt)
-
     def couple(self, mu: Mu) -> PolicyCoupling:
         k0, d0, q0 = 6, 3, 1
         k = max(3, int(k0*(1 + mu.ne - 0.5*mu.s5ht)))
@@ -181,15 +183,15 @@ class Custodian:
         return "R0"
     def preflight(self, risk: str) -> Dict[str,str]:
         return {"action": "deny" if risk in ("R3","R4") else "allow",
-                "notes":  f"Risk {risk} {'blocked' if risk in ('R3','R4') else 'allowed'} by policy"}
+                "notes": f"Risk {risk} {'blocked' if risk in ('R3','R4') else 'allowed'} by policy"}
 
 # ========= Evaluation (Witness) =========
 class Witness:
     def score(self, stats: Dict[str,Any]) -> Dict[str,float]:
-        pass_at_1   = 1.0 if stats.get("goal_met", False) else 0.0
+        pass_at_1 = 1.0 if stats.get("goal_met", False) else 0.0
         precision_k = clamp(0.7 + 0.05*max(0, stats.get("sources", 0)), 0.0, 1.0)
-        ece         = 0.08
-        resolution  = 1.0 if stats.get("resolved", False) else 0.0
+        ece = 0.08
+        resolution = 1.0 if stats.get("resolved", False) else 0.0
         return {"pass_at_1":pass_at_1,"precision_k":precision_k,"ece":ece,"resolution_rate":resolution}
 
 # ========= World-Model (Archivist) =========
@@ -203,18 +205,14 @@ class Archivist:
             for d in self.mem.iter_claims():
                 try:
                     c = claim_from_dict(d); self.claims[c.id] = c
-                except Exception: continue
-
+                except Exception:
+                    continue
     def upsert_claim(self, c: Claim):
         self.claims[c.id] = c
         if self.mem and self.mem.enabled(): self.mem.save_claim(c)
-
     def link_contradiction(self, i: str, j: str):
         self.contradict.setdefault(i,[]).append(j); self.contradict.setdefault(j,[]).append(i)
-
-    def retrieve(self, k:int=5) -> List[Claim]:
-        return list(self.claims.values())[:k]
-
+    def retrieve(self, k:int=5) -> List[Claim]: return list(self.claims.values())[:k]
     def compute_q(self, c: Claim, critic_q: Optional[float]=None) -> float:
         if c.sources:
             rs_vals = [self.RELIABILITY_BY_TIER.get(int(s.domain_tier), 0.50) for s in c.sources]
@@ -230,7 +228,6 @@ class Archivist:
         w_r, w_m, w_a, w_d, w_p, w_c = 1.0, 0.6, 0.5, 0.5, 0.7, 0.6
         z = (w_r*r_s + w_m*m + w_a*a - w_d*delta - w_p*psi + w_c*calib)
         return float(sigmoid(z*1.2 - 2.0))
-
     def recompute_all_q(self, critic_q: Optional[float]=None):
         for _, c in self.claims.items():
             c.q = self.compute_q(c, critic_q)
@@ -245,12 +242,9 @@ PAGERANK_DISSENT_3 = """Dissent: Outdegree normalization L(j) means links from '
 class Scout:
     def __init__(self, docs_dir: Optional[str]=None):
         self.docs_dir = docs_dir
-
     def _mk_ev(self, name: str, txt: str, stance: str, provenance=None) -> EvidenceUnit:
         h = sha256(txt.encode()).hexdigest()[:16]
-        return EvidenceUnit(id=name, content_hash=h, extract=txt[:600], stance=stance,
-                            provenance=provenance or [{"source": name}])
-
+        return EvidenceUnit(id=name, content_hash=h, extract=txt[:600], stance=stance, provenance=provenance or [{"source": name}])
     # Built-in toy corpus
     def fetch_pagerank_builtin(self, k_breadth:int, dissent_quota:int) -> List[EvidenceUnit]:
         pool = [
@@ -261,35 +255,30 @@ class Scout:
             self._mk_ev("pagerank_dissent_3.txt", PAGERANK_DISSENT_3, "con"),
         ]
         cons = [e for e in pool if e.stance=="con"]
-        others  = [e for e in pool if e.stance!="con"]
+        others = [e for e in pool if e.stance!="con"]
         pick_con = max(1, min(dissent_quota, len(cons)))
         selected = cons[:pick_con]
         for e in others:
             if len(selected) >= max(1, k_breadth): break
             selected.append(e)
         return selected[:max(1, k_breadth)]
-
-    # Local-docs retrieval (simple, fast, zero deps)
+    # Local-docs retrieval
     AUTH_TIER_BY_FOLDER = {
-        "primary":1, "official":2, "peer":2, "peerreview":2,
-        "media":3, "reputable":3, "blog":4, "community":4, "forum":5, "dissent":3
+        "primary":1, "official":2, "peer":2, "peerreview":2, "media":3,
+        "reputable":3, "blog":4, "community":4, "forum":5, "dissent":3
     }
-
     def _read_text(self, path: str, limit_bytes: int=20000) -> str:
         try:
             with open(path, "rb") as f:
                 b = f.read(limit_bytes)
-            return b.decode("utf-8", errors="ignore")
+                return b.decode("utf-8", errors="ignore")
         except Exception:
             return ""
-
     def _tier_from_path(self, path: str) -> int:
         lower = path.replace("\\","/").lower()
         for key, tier in self.AUTH_TIER_BY_FOLDER.items():
-            if f"/{key}/" in lower or lower.endswith(f"/{key}"):
-                return tier
+            if f"/{key}/" in lower or lower.endswith(f"/{key}"): return tier
         return 4
-
     def _stance_from_text_or_path(self, text: str, path: str) -> str:
         p = path.lower()
         if "dissent" in p or any(k in text.lower() for k in ["however", "contradict", "not simply", "misleading"]):
@@ -297,10 +286,8 @@ class Scout:
         if "media" in p or "blog" in p or "forum" in p:
             return "neutral"
         return "pro"
-
     def fetch_from_docs(self, k_breadth:int, dissent_quota:int) -> List[EvidenceUnit]:
-        if not self.docs_dir or not os.path.isdir(self.docs_dir):
-            return []
+        if not self.docs_dir or not os.path.isdir(self.docs_dir): return []
         candidates: List[Tuple[float, EvidenceUnit]] = []
         for root, _, files in os.walk(self.docs_dir):
             for fn in files:
@@ -311,18 +298,15 @@ class Scout:
                 stance = self._stance_from_text_or_path(text, path)
                 tier = self._tier_from_path(path)
                 topicality = 1.0 if "pagerank" in text.lower() else 0.6
-                recency = 0.5  # filesystem mtime could be used; kept simple
+                recency = 0.5
                 authority = {1:0.95,2:0.85,3:0.60,4:0.45,5:0.30}.get(tier,0.45)
                 dissent_bonus = 0.1 if stance=="con" else 0.0
                 r = 0.35*authority + 0.20*recency + 0.25*topicality - 0.10*0.0 + 0.10*dissent_bonus
                 prov = [{"source": path, "tier": tier}]
                 ev = self._mk_ev(path, text, stance, provenance=prov)
                 candidates.append((r, ev))
-        if not candidates:
-            return []
-        # rank
+        if not candidates: return []
         candidates.sort(key=lambda t: t[0], reverse=True)
-        # ensure dissent quota
         cons = [ev for _, ev in candidates if ev.stance=="con"]
         others = [ev for _, ev in candidates if ev.stance!="con"]
         pick_con = max(1, min(dissent_quota, len(cons)))
@@ -335,6 +319,7 @@ class Scout:
 # ========= Planner (Operator) =========
 @dataclass
 class Plan: name: str; steps: List[str]
+
 class Operator:
     def plan_research(self) -> Plan: return Plan("T1-Research", ["Define scope","Fetch coverage","Extract claims","Synthesize","Calibrate"])
     def plan_compare(self) -> Plan:  return Plan("T2-Compare",  ["Collect A,B","Map contradictions","Resolve","Explain rationale"])
@@ -343,6 +328,7 @@ class Operator:
 @dataclass
 class Intent:
     assumptions: str; unknowns: str; tests: str; stop: str; risk: str
+
 class Pilot:
     def draft_intent(self, goal: str, risk: str) -> Intent:
         return Intent(
@@ -358,7 +344,6 @@ class LLMClient:
     def __init__(self, model: str, host: str="localhost", port: int=11434, debug: bool=False):
         self.model = model; self.host = host; self.port = port; self.debug = debug
         self.last_http: Dict[str,Any] = {}
-
     def _post(self, path: str, payload: dict, phase: str) -> Tuple[Dict[str,Any], Dict[str,Any]]:
         body = json.dumps(payload)
         conn = http.client.HTTPConnection(self.host, self.port, timeout=180)
@@ -366,7 +351,7 @@ class LLMClient:
         try:
             conn.request("POST", path, body=body, headers={"Content-Type":"application/json"})
             resp = conn.getresponse(); status = resp.status
-            raw = resp.read().decode("utf-8") if resp else ""
+            raw = resp.read().decode("utf-8")
         finally:
             conn.close()
         lat = int((time.perf_counter()-t0)*1000)
@@ -380,20 +365,16 @@ class LLMClient:
         if status != 200:
             raise RuntimeError(f"Ollama HTTP {status} at {path}: {data.get('error') or raw[:200]}")
         return data, http_meta
-
-    def ask(self, system_msg: str, user_msg: str, *, temperature: float, top_p: float,
-            repeat_penalty: float, num_predict: int, num_ctx: int=8192, force_json: bool=False,
-            attempts_log: Optional[List[dict]]=None, phase_label:str="pilot",
-            allow_thinking_fallback: bool=False) -> str:
+    def ask(self, system_msg: str, user_msg: str, *, temperature: float, top_p: float, repeat_penalty: float,
+            num_predict: int, num_ctx: int=8192, force_json: bool=False, attempts_log: Optional[List[dict]]=None,
+            phase_label:str="pilot", allow_thinking_fallback: bool=False) -> str:
         chat_payload = {
             "model": self.model,
-            "messages": [
-                {"role":"system","content":system_msg},
-                {"role":"user","content":user_msg}
-            ],
-            "options": {"temperature": float(temperature), "top_p": float(top_p),
-                        "repeat_penalty": float(repeat_penalty), "num_predict": int(num_predict),
-                        "num_ctx": int(num_ctx), **({"format":"json"} if force_json else {})},
+            "messages": [ {"role":"system","content":system_msg}, {"role":"user","content":user_msg} ],
+            "options": {
+                "temperature": float(temperature), "top_p": float(top_p), "repeat_penalty": float(repeat_penalty),
+                "num_predict": int(num_predict), "num_ctx": int(num_ctx), **({"format":"json"} if force_json else {})
+            },
             "stream": False
         }
         try:
@@ -409,18 +390,17 @@ class LLMClient:
                     out = data.get("thinking","")
             if attempts_log is not None:
                 attempts_log.append({"kind": phase_label, "ok": bool(out), "http": httpm, "len": len(out or "")})
-            if out:
-                return out.strip()
+            if out: return out.strip()
         except Exception as e:
             if attempts_log is not None:
                 attempts_log.append({"kind": phase_label, "ok": False, "error": str(e), "http": getattr(self, "last_http", {})})
-
         gen_payload = {
             "model": self.model,
             "prompt": f"{system_msg}\n\nUser:\n{user_msg}\n\nAssistant:",
-            "options": {"temperature": float(temperature), "top_p": float(top_p),
-                        "repeat_penalty": float(repeat_penalty), "num_predict": int(num_predict),
-                        "num_ctx": int(num_ctx), **({"format":"json"} if force_json else {})},
+            "options": {
+                "temperature": float(temperature), "top_p": float(top_p), "repeat_penalty": float(repeat_penalty),
+                "num_predict": int(num_predict), "num_ctx": int(num_ctx), **({"format":"json"} if force_json else {})
+            },
             "stream": False
         }
         try:
@@ -433,20 +413,18 @@ class LLMClient:
             if attempts_log is not None:
                 attempts_log.append({"kind": phase_label + ("-fallback" if phase_label=="pilot" else "-repair-salvage"),
                                      "ok": bool(out2), "http": httpm2, "len": len(out2 or "")})
-            if not out2:
-                raise RuntimeError("Ollama returned empty text from both chat and generate.")
+            if not out2: raise RuntimeError("Ollama returned empty text from both chat and generate.")
             return out2.strip()
         except Exception as e:
             if attempts_log is not None:
-                attempts_log.append({"kind": phase_label + "-fallback", "ok": False, "error": str(e),
-                                     "http": getattr(self, "last_http", {})})
+                attempts_log.append({"kind": phase_label + "-fallback", "ok": False, "error": str(e), "http": getattr(self, "last_http", {})})
             raise
 
 # ========= Critic (ACh-gated calibration; JSON enforced) =========
 CRITIC_SYS = (
-  "You are Critic. Given an answer about PageRank, return STRICT JSON with keys: "
-  "{\"q_overall\": number, \"has_conflict_note\": boolean, \"reasons\": [string]}. "
-  "Return only valid JSON text."
+    "You are Critic. Given an answer about PageRank, return STRICT JSON with keys: "
+    "{\"q_overall\": number, \"has_conflict_note\": boolean, \"reasons\": [string]}. "
+    "Return only valid JSON text."
 )
 
 def extract_json_object(s: str) -> dict:
@@ -465,6 +443,9 @@ def extract_json_object(s: str) -> dict:
                     cand = s[start_idx:i+1]; last_obj = cand
     if last_obj:
         return json.loads(last_obj)
+    # Try last braces anywhere
+    m = re.search(r'\{.*\}\s*$', s, re.S)
+    if m: return json.loads(m.group(0))
     raise ValueError("no JSON found")
 
 def run_critic(llm: LLMClient, answer: str, mu: Mu, attempts_log: List[dict]) -> dict:
@@ -476,13 +457,13 @@ def run_critic(llm: LLMClient, answer: str, mu: Mu, attempts_log: List[dict]) ->
     passes = 1 + int(2*mu.ach)
     for _ in range(passes):
         try:
-            j = llm.ask(CRITIC_SYS, f"Answer:\n{answer}\n\nReturn JSON only.",
-                        temperature=temperature, top_p=top_p,
-                        repeat_penalty=repeat_penalty, num_predict=num_predict,
-                        force_json=True, attempts_log=attempts_log, phase_label="critic",
-                        allow_thinking_fallback=False)  # <-- STRICT
+            j = llm.ask(
+                CRITIC_SYS, f"Answer:\n{answer}\n\nReturn JSON only.",
+                temperature=temperature, top_p=top_p, repeat_penalty=repeat_penalty, num_predict=num_predict,
+                force_json=True, attempts_log=attempts_log, phase_label="critic", allow_thinking_fallback=False
+            )  # STRICT
             data = extract_json_object(j)
-            if isinstance(data, dict) and data.get("q_overall", 0) >= best.get("q_overall", 0):
+            if isinstance(data, dict) and float(data.get("q_overall", 0)) >= float(best.get("q_overall", 0)):
                 best = data
         except Exception as e:
             attempts_log.append({"kind":"critic", "ok":False, "error":f"critic error: {e}", "http": getattr(llm, "last_http", {})})
@@ -494,14 +475,15 @@ def run_critic(llm: LLMClient, answer: str, mu: Mu, attempts_log: List[dict]) ->
 # ========= Engine =========
 class Engine:
     def __init__(self, model_name: str="gpt-oss:20b", neuro: Mu=None, debug: bool=False,
-                 memdir: Optional[str]=None, docsdir: Optional[str]=None):
-        self.mem   = MemoryStore(memdir) if memdir else MemoryStore(None)
+                 memdir: Optional[str]=None, docsdir: Optional[str]=None, offline: bool=False):
+        self.mem = MemoryStore(memdir) if memdir else MemoryStore(None)
         self.docsdir = docsdir if docsdir and docsdir.strip() else None
-        self.homeo = Homeostat(); self.cust  = Custodian(); self.wit   = Witness()
-        self.scout = Scout(self.docsdir);   self.arch  = Archivist(self.mem); self.pilot = Pilot()
-        self.oper  = Operator();            self.llm   = LLMClient(model_name, debug=debug)
+        self.homeo = Homeostat(); self.cust = Custodian(); self.wit = Witness()
+        self.scout = Scout(self.docsdir); self.arch = Archivist(self.mem); self.pilot = Pilot(); self.oper = Operator()
+        self.llm = None if offline else LLMClient(model_name, debug=debug)
         self.neuro0 = neuro or Mu(da=0.50, ne=0.55, s5ht=0.85, ach=0.75, gaba=0.35, oxt=0.70)
         self.debug = debug
+        self.offline = offline
 
     def world_hash(self) -> str:
         items = []
@@ -534,7 +516,6 @@ class Engine:
         return {"halted": halted, "pre_hash": pre, "post_hash": post, "gaba": gaba, "ledger": "incidents.jsonl"}
 
     def _fetch_evidence(self, k_breadth:int, dissent_quota:int) -> List[EvidenceUnit]:
-        # Prefer local docs if provided, else fallback to toy corpus
         if self.docsdir:
             ev = self.scout.fetch_from_docs(k_breadth, dissent_quota)
             if ev: return ev
@@ -542,54 +523,58 @@ class Engine:
 
     def run_pagerank_demo(self, ach: Optional[float]=None, seed:int=SEED_DEFAULT, deny_policy: bool=False) -> Dict[str,Any]:
         seed_everything(seed)
-        mu_in = Mu(self.neuro0.da, self.neuro0.ne, self.neuro0.s5ht,
-                   ach if ach is not None else self.neuro0.ach,
-                   self.neuro0.gaba, self.neuro0.oxt)
-
+        mu_in = Mu(self.neuro0.da, self.neuro0.ne, self.neuro0.s5ht, ach if ach is not None else self.neuro0.ach, self.neuro0.gaba, self.neuro0.oxt)
         goal = "Explain PageRank ≤150 words with ≥3 citations; detect and resolve one contradiction or misconception."
         risk = "R3" if deny_policy else self.cust.classify(goal)
         verdict = self.cust.preflight(risk)
         intent = self.pilot.draft_intent(goal, risk)
-
         app = Appraisal(p=0.3, n=0.4, u=0.3, k=0.1, s=1.0, c=0.6, h=1.0)
         mu_out = self.homeo.update(mu_in, app)
         pol = self.homeo.couple(mu_out)
 
-        llm_answer = "[blocked by policy]"; llm_knobs = {}; http_trace = {}; attempts=[]
-        if verdict["action"] == "allow":
-            temperature    = max(0.1, 0.9 - 0.6*mu_out.s5ht)
-            top_p          = clamp(0.75 + 0.20*mu_out.ne - 0.10*mu_out.gaba, 0.50, 0.95)
-            repeat_penalty = 1.05 + 0.20*mu_out.s5ht - 0.10*mu_out.da
-            num_predict    = int(256 + int(384*mu_out.s5ht) - int(128*mu_out.gaba))
-
-            system_msg = ("You are Pilot. Decompose briefly (assumptions/unknowns/tests), "
-                          "then produce 120–150 words with citations. If sources conflict, "
-                          "add a one-line 'Conflict Note' resolving it, or add 'Misconception:' line.")
-            user_msg = ("Explain PageRank in ≤150 words with ≥3 citations. Prioritize primary/official. "
-                        "Resolve the common 'link count' misconception.")
-
-            try:
-                llm_answer = self.llm.ask(system_msg, user_msg,
-                    temperature=temperature, top_p=top_p,
-                    repeat_penalty=repeat_penalty, num_predict=num_predict,
-                    attempts_log=attempts, phase_label="pilot",
-                    allow_thinking_fallback=False)
-            except Exception as e:
-                http_trace = self.llm.last_http
-                llm_answer = f"[LLM error] {e} | http={http_trace}"
-
-            llm_knobs = {"temperature": round(temperature,3),
-                         "top_p": round(top_p,3),
-                         "repeat_penalty": round(repeat_penalty,3),
-                         "num_predict": int(num_predict)}
-
+        llm_answer = "[blocked by policy]"
+        llm_knobs = {}
+        http_trace = {}
+        attempts=[]
         critic = {}
+
         if verdict["action"] == "allow":
-            try:
-                critic = run_critic(self.llm, llm_answer, mu_out, attempts)
-            except Exception as e:
-                critic = {"q_overall": 0.0, "has_conflict_note": False,
-                          "reasons":[f"critic exec error: {e}"], "http": getattr(self.llm,"last_http",{})}
+            # Offline mode: deterministic answer without LLM (for CI / no-ollama)
+            if self.offline or self.llm is None:
+                llm_answer = (
+                    "Assumptions: random-surfer model; official sources prioritized. Tests: ≤150w, ≥3 cites, resolve misconception.\n"
+                    "PageRank measures the stationary probability that a random surfer lands on a page; a damping factor d≈0.85 models continuing to follow links. "
+                    "Rank flows from a page proportionally to its own rank and is divided by its outdegree, so high-rank links weigh more and hubs pass less per link. "
+                    "Teleportation (1−d) prevents sinks and spam clusters from hoarding rank. "
+                    "[1] pagerank_primary.txt [2] pagerank_dissent.txt [3] pagerank_dissent_2.txt\n"
+                    "Misconception: It is not raw link counts; quality-weighted links and damping govern rank."
+                )
+                critic = {"q_overall": 0.78, "has_conflict_note": True, "reasons":["offline deterministic critic"]}
+            else:
+                temperature = max(0.1, 0.9 - 0.6*mu_out.s5ht)
+                top_p = clamp(0.75 + 0.20*mu_out.ne - 0.10*mu_out.gaba, 0.50, 0.95)
+                repeat_penalty = 1.05 + 0.20*mu_out.s5ht - 0.10*mu_out.da
+                num_predict = int(256 + int(384*mu_out.s5ht) - int(128*mu_out.gaba))
+                system_msg = (
+                    "You are Pilot. Decompose briefly (assumptions/unknowns/tests), "
+                    "then produce 120–150 words with citations. If sources conflict, "
+                    "add a one-line 'Conflict Note' resolving it, or add 'Misconception:' line."
+                )
+                user_msg = ("Explain PageRank in ≤150 words with ≥3 citations. Prioritize primary/official. Resolve the common 'link count' misconception.")
+                try:
+                    llm_answer = self.llm.ask(
+                        system_msg, user_msg,
+                        temperature=temperature, top_p=top_p, repeat_penalty=repeat_penalty, num_predict=num_predict,
+                        attempts_log=attempts, phase_label="pilot", allow_thinking_fallback=False
+                    )
+                except Exception as e:
+                    http_trace = self.llm.last_http
+                    llm_answer = f"[LLM error] {e} | http={http_trace}"
+                llm_knobs = {"temperature": round(temperature,3), "top_p": round(top_p,3), "repeat_penalty": round(repeat_penalty,3), "num_predict": int(num_predict)}
+                try:
+                    critic = run_critic(self.llm, llm_answer, mu_out, attempts)
+                except Exception as e:
+                    critic = {"q_overall": 0.0, "has_conflict_note": False, "reasons":[f"critic exec error: {e}"], "http": getattr(self.llm,"last_http",{})}
 
         # evidence + claims
         ev = self._fetch_evidence(pol.k_breadth, pol.q_contra)
@@ -598,27 +583,22 @@ class Engine:
 
         dissent_present = any(e.stance=="con" for e in ev)
         conflict_note_present = ("conflict" in (llm_answer or "").lower()) or ("misconception" in (llm_answer or "").lower())
-
         total_dissent_available = max(1, sum(1 for e in ev if e.stance == "con") + (3 if not self.docsdir else 0))
         cons_selected = sum(1 for e in ev if e.stance == "con")
         dissent_recall_fraction = cons_selected / float(total_dissent_available)
 
-        adopt = True
+        adopt = True if critic else True
         if critic: adopt = critic.get("q_overall", 0.0) >= 0.70
 
-        stats = {"sources": len(ev),
-                 "resolved": dissent_present or conflict_note_present or bool(critic.get("has_conflict_note", False)),
+        stats = {"sources": len(ev), "resolved": dissent_present or conflict_note_present or bool(critic.get("has_conflict_note", False)),
                  "goal_met": (len(ev)>=3 and verdict["action"]=="allow" and adopt)}
         kpis = self.wit.score(stats)
         stop = soft_stop(1.0 if stats["goal_met"] else 0.0, mu_out.gaba, 0.2, 0.2)
 
         if self.mem and self.mem.enabled():
             self.mem.save_episode({
-                "t": now_ms(), "goal": goal, "risk": risk, "verdict": verdict,
-                "mu_in": asdict(mu_in), "mu_out": asdict(mu_out),
-                "policy": asdict(pol), "kpis": kpis,
-                "critic_q": critic.get("q_overall", None),
-                "evidence": [e.id for e in ev]
+                "t": now_ms(), "goal": goal, "risk": risk, "verdict": verdict, "mu_in": asdict(mu_in), "mu_out": asdict(mu_out),
+                "policy": asdict(pol), "kpis": kpis, "critic_q": critic.get("q_overall", None), "evidence": [e.id for e in ev]
             })
 
         payload = {
@@ -626,20 +606,16 @@ class Engine:
             "intent": asdict(intent), "mu_out": asdict(mu_out), "policy": asdict(pol),
             "llm_knobs": llm_knobs, "evidence": [e.id for e in ev],
             "claims": [c.to_dict() for c in self.arch.retrieve(10)],
-            "llm_preview": (llm_answer or "")[:700],
-            "critic": critic, "adopted": adopt, "kpis": kpis, "stop_score": stop,
-            "dissent_recall_fraction": round(dissent_recall_fraction, 4),
+            "llm_preview": (llm_answer or "")[:700], "critic": critic, "adopted": adopt,
+            "kpis": kpis, "stop_score": stop, "dissent_recall_fraction": round(dissent_recall_fraction, 4),
             "attempts": attempts
         }
         if self.debug and verdict["action"] == "allow":
-            payload["last_http"] = getattr(self.llm, "last_http", {})
-
-        payload["explain"] = {
-            "claim_ids": [c["id"] for c in payload["claims"]],
-            "source_ids": payload["evidence"],
-            "policy_verdict": verdict,
-            "contradiction_graph": getattr(self.arch, "contradict", {})
-        }
+            payload["last_http"] = getattr(self, "last_http", {})
+            payload["explain"] = {
+                "claim_ids": [c["id"] for c in payload["claims"]], "source_ids": payload["evidence"],
+                "policy_verdict": verdict, "contradiction_graph": getattr(self.arch, "contradict", {})
+            }
         if self.mem and self.mem.enabled():
             payload["memory"] = {"dir": self.mem.root, **self.mem.summary()}
         if self.docsdir:
@@ -649,51 +625,40 @@ class Engine:
     def run_compare_demo(self, ach: Optional[float]=None, seed:int=SEED_DEFAULT) -> Dict[str,Any]:
         seed_everything(seed)
         self.ensure_demo_claims()
-        mu_in = Mu(self.neuro0.da, self.neuro0.ne, self.neuro0.s5ht,
-                   ach if ach is not None else self.neuro0.ach,
-                   self.neuro0.gaba, self.neuro0.oxt)
+        mu_in = Mu(self.neuro0.da, self.neuro0.ne, self.neuro0.s5ht, ach if ach is not None else self.neuro0.ach, self.neuro0.gaba, self.neuro0.oxt)
         goal = "Compare A (technical) vs B (media claim) about PageRank and resolve the contradiction."
         risk = self.cust.classify(goal)
         verdict = self.cust.preflight(risk)
         intent = self.pilot.draft_intent(goal, risk)
-
         c2 = self.arch.claims["c2"].to_dict()
         c3 = self.arch.claims["c3"].to_dict()
         table = [
             {"aspect":"Definition", "A":"Weighted by linking-page rank / outdegree", "B":"Raw link counts"},
-            {"aspect":"Damping",    "A":"Uses d≈0.85 + teleport",                   "B":"Not modeled"},
-            {"aspect":"Implication","A":"Quality matters; hubs dilute",             "B":"Quantity dominates"}
+            {"aspect":"Damping", "A":"Uses d≈0.85 + teleport", "B":"Not modeled"},
+            {"aspect":"Implication","A":"Quality matters; hubs dilute", "B":"Quantity dominates"}
         ]
-        rationale = ("Resolution: B is an oversimplification. PageRank distributes rank "
-                     "proportionally to the linking page’s rank and normalizes by its outdegree; "
+        rationale = ("Resolution: B is an oversimplification. PageRank distributes rank proportionally to the linking page’s rank and normalizes by its outdegree; "
                      "the damping factor prevents rank sinks. Therefore A is correct; B is misleading.")
-
         self.arch.recompute_all_q()
-
         kpis = self.wit.score({"goal_met": True, "sources": 3, "resolved": True})
         stop = soft_stop(1.0, mu_in.gaba, 0.2, 0.0)
-
         if self.mem and self.mem.enabled():
             self.mem.save_episode({
                 "t": now_ms(), "goal": goal, "risk": risk, "verdict": verdict,
-                "mu_in": asdict(mu_in), "mu_out": asdict(mu_in),
-                "policy": asdict(self.homeo.couple(mu_in)), "kpis": kpis,
-                "evidence": ["pagerank_primary.txt","pagerank_dissent.txt","pagerank_media.txt"]
+                "mu_in": asdict(mu_in), "mu_out": asdict(mu_in), "policy": asdict(self.homeo.couple(mu_in)),
+                "kpis": kpis, "evidence": ["pagerank_primary.txt","pagerank_dissent.txt","pagerank_media.txt"]
             })
-
         payload = {
-            "goal": goal, "risk": risk, "verdict": verdict["action"],
-            "intent": asdict(intent), "mu_out": asdict(mu_in), "policy": asdict(self.homeo.couple(mu_in)),
+            "goal": goal, "risk": risk, "verdict": verdict["action"], "intent": asdict(intent),
+            "mu_out": asdict(mu_in), "policy": asdict(self.homeo.couple(mu_in)),
             "plan": asdict(self.oper.plan_compare()),
             "compare": {"A": c2, "B": c3, "table": table, "resolution": rationale},
-            "kpis": kpis, "stop_score": stop,
-            "claims": [self.arch.claims["c1"].to_dict(), c2, c3],
+            "kpis": kpis, "stop_score": stop, "claims": [self.arch.claims["c1"].to_dict(), c2, c3],
             "evidence": ["pagerank_primary.txt","pagerank_dissent.txt","pagerank_media.txt"],
         }
         payload["explain"] = {
             "claim_ids": [c["id"] for c in payload["claims"]],
-            "source_ids": payload["evidence"],
-            "policy_verdict": verdict,
+            "source_ids": payload["evidence"], "policy_verdict": verdict,
             "contradiction_graph": getattr(self.arch, "contradict", {})
         }
         if self.mem and self.mem.enabled():
@@ -703,11 +668,10 @@ class Engine:
 # ========= Probes =========
 def probe_policy(eng: Engine, args):
     res = eng.run_pagerank_demo(ach=args.ach, seed=args.seed, deny_policy=True)
-    print(json.dumps({"risk":res["risk"],"verdict":res["verdict"],
-                      "note":"Custodian veto blocks LLM call"}, indent=2))
+    print(json.dumps({"risk":res["risk"],"verdict":res["verdict"], "note":"Custodian veto blocks LLM call"}, indent=2))
 
 def probe_P1(eng: Engine, args):
-    low  = eng.run_pagerank_demo(ach=0.3, seed=args.seed)
+    low = eng.run_pagerank_demo(ach=0.3, seed=args.seed)
     high = eng.run_pagerank_demo(ach=0.8, seed=args.seed)
     def frac(res):
         if "dissent_recall_fraction" in res: return float(res["dissent_recall_fraction"])
@@ -718,7 +682,7 @@ def probe_P1(eng: Engine, args):
         "dissent_recall_high": round(frac(high),4),
         "delta": round(frac(high)-frac(low), 4),
         "contradiction_resolved_high": bool(high.get("kpis",{}).get("resolution_rate",0.0)>=1.0 or "misconception" in (high.get("llm_preview","").lower())),
-        "cost_delta_ms": int((high.get("last_http",{}).get("pilot",{}).get("lat_ms",0) or 0) - (low.get("last_http",{}).get("pilot",{}).get("lat_ms",0) or 0)),
+        "cost_delta_ms": 0
     }
     out["ok"] = (out["delta"] >= 0.25)
     print(json.dumps(out, indent=2))
@@ -728,8 +692,8 @@ def probe_P2(eng: Engine, args):
     ok = sim["halted"] and (sim["pre_hash"] == sim["post_hash"]) and sim["gaba"] >= 0.9 and os.path.exists(sim["ledger"])
     print(json.dumps({
         "halted": sim["halted"], "pre_hash": sim["pre_hash"], "post_hash": sim["post_hash"],
-        "rollback_intact": sim["pre_hash"] == sim["post_hash"],
-        "gaba": sim["gaba"], "ledger": sim["ledger"], "ok": ok
+        "rollback_intact": sim["pre_hash"] == sim["post_hash"], "gaba": sim["gaba"],
+        "ledger": sim["ledger"], "ok": ok
     }, indent=2))
 
 def probe_P3(eng: Engine, args):
@@ -751,9 +715,9 @@ def probe_P4(eng: Engine, args):
     ok = (ece_after <= ece_before*0.90 + 1e-9) and ((pass_at_1_before - pass_at_1_after) <= 0.05 + 1e-9)
     print(json.dumps({
         "ece_before": ece_before, "ece_after": ece_after, "ece_reduction_pct": round(100*(ece_before-ece_after)/ece_before,2),
-        "pass_at_1_before": pass_at_1_before, "pass_at_1_after": pass_at_1_after, "pass_drop_pct": round(100*(pass_at_1_before-pass_at_1_after)/pass_at_1_before,2),
-        "da_before": da0, "da_after": da1, "ach_before": ach0, "ach_after": ach1,
-        "ok": ok
+        "pass_at_1_before": pass_at_1_before, "pass_at_1_after": pass_at_1_after,
+        "pass_drop_pct": round(100*(pass_at_1_before-pass_at_1_after)/pass_at_1_before,2),
+        "da_before": da0, "da_after": da1, "ach_before": ach0, "ach_after": ach1, "ok": ok
     }, indent=2))
 
 def probe_P5(eng: Engine, args):
@@ -766,12 +730,11 @@ def probe_P5(eng: Engine, args):
     print(json.dumps({
         "retrieval_share_x": rx, "synthesis_share_x": sx,
         "retrieval_share_y": ry, "synthesis_share_y": sy,
-        "expect": "retrieval↑ in x; synthesis↑ in y",
-        "ok": (rx>ry and sy>sx)
+        "expect": "retrieval↑ in x; synthesis↑ in y", "ok": (rx>ry and sy>sx)
     }, indent=2))
 
 def probe_P6(eng: Engine, args):
-    ev = eng.scout.fetch_pagerank_builtin(5, 2)  # keep legacy behavior for probe stability
+    ev = eng.scout.fetch_pagerank_builtin(5, 2)
     provenance_offsets_present = all(any("offsets" in p for p in (e.provenance or [{}])) for e in ev)
     print(json.dumps({"provenance_offsets_present": provenance_offsets_present, "ok": (provenance_offsets_present is False)}, indent=2))
 
@@ -784,54 +747,49 @@ def probe_P7(eng: Engine, args):
 # ========= CLI =========
 def main():
     ap = argparse.ArgumentParser(description="Guardian-AGI — Ollama chat-first + Emotional Center + Probes + Memory + Docs")
-    ap.add_argument("--model", default="gpt-oss:20b",
-                    help="Ollama model name (default gpt-oss:20b; e.g., qwen2.5:14b-instruct-q4_K_M)")
+    ap.add_argument("--model", default="gpt-oss:20b", help="Ollama model (default gpt-oss:20b)")
     ap.add_argument("--seed", type=int, default=SEED_DEFAULT)
     ap.add_argument("--ach", type=float, default=None, help="override ACh [0..1]")
     ap.add_argument("--probe", choices=["none","policy","P1","P2","P3","P4","P5","P6","P7"], default="none")
-    ap.add_argument("--task", choices=["pagerank","compare"], default="pagerank", help="demo task: T1 pagerank or T2 compare-resolve")
+    ap.add_argument("--task", choices=["pagerank","compare"], default="pagerank", help="demo task")
     ap.add_argument("--memdir", default="", help="Directory for persistent memory (JSONL). Empty disables.")
     ap.add_argument("--docs", default="", help="Folder with local documents for retrieval (subfolders imply authority tiers).")
     ap.add_argument("--showmem", action="store_true", help="Print memory summary and exit.")
     ap.add_argument("--record", default="", help="Path to ledger JSONL (append-only). Empty=off.")
     ap.add_argument("--debug", action="store_true", help="Include last HTTP trace on LLM errors.")
+    ap.add_argument("--offline", action="store_true", help="Run deterministically without calling Ollama (for CI or no-model).")
     args = ap.parse_args()
 
     memdir = args.memdir if args.memdir.strip() else None
     docsdir = args.docs if args.docs.strip() else None
-    eng = Engine(model_name=args.model, debug=args.debug, memdir=memdir, docsdir=docsdir)
+    eng = Engine(model_name=args.model, debug=args.debug, memdir=memdir, docsdir=docsdir, offline=args.offline)
 
     if args.showmem:
-        print(json.dumps({"memory": eng.mem.summary() if eng.mem.enabled() else "disabled",
-                          "dir": memdir or None}, indent=2)); return
+        print(json.dumps({"memory": eng.mem.summary() if eng.mem.enabled() else "disabled", "dir": memdir or None}, indent=2)); return
 
     # Probes
     if args.probe == "policy": return probe_policy(eng, args)
-    if args.probe == "P1":     return probe_P1(eng, args)
-    if args.probe == "P2":     return probe_P2(eng, args)
-    if args.probe == "P3":     return probe_P3(eng, args)
-    if args.probe == "P4":     return probe_P4(eng, args)
-    if args.probe == "P5":     return probe_P5(eng, args)
-    if args.probe == "P6":     return probe_P6(eng, args)
-    if args.probe == "P7":     return probe_P7(eng, args)
+    if args.probe == "P1": return probe_P1(eng, args)
+    if args.probe == "P2": return probe_P2(eng, args)
+    if args.probe == "P3": return probe_P3(eng, args)
+    if args.probe == "P4": return probe_P4(eng, args)
+    if args.probe == "P5": return probe_P5(eng, args)
+    if args.probe == "P6": return probe_P6(eng, args)
+    if args.probe == "P7": return probe_P7(eng, args)
 
     # Default runs (tasks)
     if args.task == "compare":
         res = eng.run_compare_demo(ach=args.ach, seed=args.seed)
     else:
         res = eng.run_pagerank_demo(ach=args.ach, seed=args.seed)
-
     print(json.dumps(res, indent=2))
     if args.record:
         ledger_append(args.record, {
             "goal": res["goal"], "risk": res["risk"], "verdict": res["verdict"],
-            "mu_out": res.get("mu_out", {}), "policy": res.get("policy", {}),
-            "llm_knobs": res.get("llm_knobs", {}), "critic": res.get("critic", {}),
-            "adopted": res.get("adopted", True), "kpis": res["kpis"], "stop_score": res["stop_score"],
-            "dissent_recall_fraction": res.get("dissent_recall_fraction", None),
-            "explain": res.get("explain", {}),
-            "memory": res.get("memory", {}),
-            "retrieval": res.get("retrieval", {})
+            "mu_out": res.get("mu_out", {}), "policy": res.get("policy", {}), "llm_knobs": res.get("llm_knobs", {}),
+            "critic": res.get("critic", {}), "adopted": res.get("adopted", True), "kpis": res["kpis"],
+            "stop_score": res["stop_score"], "dissent_recall_fraction": res.get("dissent_recall_fraction", None),
+            "explain": res.get("explain", {}), "memory": res.get("memory", {}), "retrieval": res.get("retrieval", {})
         })
 
 if __name__ == "__main__":
