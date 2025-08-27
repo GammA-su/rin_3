@@ -168,7 +168,9 @@ class Homeostat:
         k = max(3, int(k0*(1 + mu.ne - 0.5*mu.s5ht)))
         d = max(1, int(d0*(1 + mu.s5ht - mu.ne)))
         # ACh-driven dissent quota: ensure ≥2; ACh≈0.7 ⇒ ≥3
-        q_con = max(1, int(1 + math.ceil(3*mu.ach)))  # ACh lever: ACh=0.3→2, 0.8→4 (creates recall gap)
+        # Use effective ACh that cancels the +0.3 appraisal boost in run loop
+        ach_eff = clamp(mu.ach - 0.3, 0.0, 1.0)
+        q_con = max(1, int(1 + math.ceil(3*ach_eff)))  # ACh=0.3→2 (eff 0.0→1+0=1→min 1? see below), ACh=0.8→1+ceil(1.5)=3
         temp = max(0.1, 0.9 - 0.6*mu.s5ht)
         retr = clamp(0.35 + 0.30*mu.ne - 0.15*mu.s5ht, 0.0, 1.0)
         syn  = clamp(0.35 + 0.30*mu.s5ht - 0.15*mu.ne, 0.0, 1.0)
