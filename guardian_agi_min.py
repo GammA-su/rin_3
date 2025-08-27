@@ -173,6 +173,7 @@ class Homeostat:
         saf  = clamp(1.0 - (retr + syn), 0.0, 1.0)
         return PolicyCoupling(k, d, q_con, temp, retr, syn, saf, reserved_dissent=(mu.ach>=0.6))
 
+
 # ========= Safety (Custodian) =========
 class Custodian:
     policy_ver = "v1.1"

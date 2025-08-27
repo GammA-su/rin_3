@@ -1,1 +1,2 @@
 {"type": "halt", "reason_code": "probe_P2_denied", "severity": "high", "gaba": 0.95, "policy_ver": "v1.1", "ts": 1756319893, "prev_hash": "", "this_hash": "7b690845d981403271919bf8b235cfac83a6f22155be7d326b1b78cc6a91e661"}
+{"type": "halt", "reason_code": "probe_P2_denied", "severity": "high", "gaba": 0.95, "policy_ver": "v1.1", "ts": 1756322605, "prev_hash": "7b690845d981403271919bf8b235cfac83a6f22155be7d326b1b78cc6a91e661", "this_hash": "004cb064c0b7c6fb399b73d94f209876afd831c7d65f2b64dc2d55141235401a"}
