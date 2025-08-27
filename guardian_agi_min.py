@@ -167,10 +167,10 @@ class Homeostat:
         k0, d0, q0 = 6, 3, 1
         k = max(3, int(k0*(1 + mu.ne - 0.5*mu.s5ht)))
         d = max(1, int(d0*(1 + mu.s5ht - mu.ne)))
-        # ACh-driven dissent quota: ensure ≥2; ACh≈0.7 ⇒ ≥3
-        # Use effective ACh that cancels the +0.3 appraisal boost in run loop
+        # ACh-driven dissent quota (piecewise so it hits the intended thresholds):
+        # target: low ACh→1, ≥0.3→2, ≥0.8→3
         ach_eff = clamp(mu.ach - 0.3, 0.0, 1.0)
-        q_con = max(1, int(1 + math.ceil(3*ach_eff)))  # ACh=0.3→2 (eff 0.0→1+0=1→min 1? see below), ACh=0.8→1+ceil(1.5)=3
+        q_con = 1 + (1 if ach_eff >= 0.0 else 0) + (1 if ach_eff >= 0.5 else 0)
         temp = max(0.1, 0.9 - 0.6*mu.s5ht)
         retr = clamp(0.35 + 0.30*mu.ne - 0.15*mu.s5ht, 0.0, 1.0)
         syn  = clamp(0.35 + 0.30*mu.s5ht - 0.15*mu.ne, 0.0, 1.0)
@@ -672,8 +672,8 @@ class Engine:
             "kpis": kpis, "stop_score": stop, "dissent_recall_fraction": round(dissent_recall_fraction, 4),
             "attempts": attempts
         }
-        if self.debug and verdict["action"] == "allow":
-            payload["last_http"] = getattr(self, "last_http", {})
+        if self.debug and verdict["action"] == "allow" and self.llm:
+            payload["last_http"] = getattr(self.llm, "last_http", {})
             payload["explain"] = {
                 "claim_ids": [c["id"] for c in payload["claims"]], "source_ids": payload["evidence"],
                 "policy_verdict": verdict, "contradiction_graph": getattr(self.arch, "contradict", {})
