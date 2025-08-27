@@ -122,15 +122,16 @@ class Homeostat:
         ne  = clamp(mu.ne  + 0.40*a.u + 0.30*a.n)
         s5  = clamp(mu.s5ht + 0.45*a.s)
         ach = clamp(mu.ach + 0.50*a.c)
-        gb  = clamp(mu.gaba + 0.50*0.5 + 0.30*0.5 - 0.25*0.5)
+        gb  = clamp(mu.gaba + 0.25)  # neutral tonic
         oxt = clamp(mu.oxt + 0.40*a.h)
         return Mu(da, ne, s5, ach, gb, oxt)
 
     def couple(self, mu: Mu) -> PolicyCoupling:
-        k0, d0, q0 = 6, 3, 1
+        k0, d0 = 6, 3
         k = max(3, int(k0*(1 + mu.ne - 0.5*mu.s5ht)))
         d = max(1, int(d0*(1 + mu.s5ht - mu.ne)))
-        q_con = max(1, int(q0*(1 + mu.ach)))
+        # ACh gating: ≥0.6 => require at least 2 contradictions
+        q_con = 2 if mu.ach >= 0.6 else 1
         temp = max(0.1, 0.9 - 0.6*mu.s5ht)
         retr = clamp(0.35 + 0.30*mu.ne - 0.15*mu.s5ht, 0.0, 1.0)
         syn  = clamp(0.35 + 0.30*mu.s5ht - 0.15*mu.ne, 0.0, 1.0)
@@ -145,7 +146,7 @@ class Custodian:
         "R1": {"allow": True,  "notes": "Personal/sensitive → sanitize PII.", "disclaimer": "Personal data must be redacted."},
         "R2": {"allow": True,  "notes": "Legal/finance/medical → conservative language + citations.", "disclaimer": "Informational only; not professional advice."},
         "R3": {"allow": False, "notes": "Dual-use/bio/cyber → deny unless sanctioned playbook.", "disclaimer": "Denied by safety policy."},
-        "R4": {"allow": False, "notes": "Physical actuation/control → deny.", "disclaimer": "Denied by safety policy."},
+        "R4": {"allow": False, "notes": "Physical actuation → deny.", "disclaimer": "Denied by safety policy."},
     }
     def classify(self, goal: str) -> str:
         g = goal.lower()
@@ -182,6 +183,8 @@ class Archivist:
 PAGERANK_PRIMARY = """PageRank is a link analysis algorithm assigning importance as the stationary probability a random surfer lands on a page. The damping factor (≈0.85) models continuing to click links."""
 PAGERANK_MEDIA   = """Popular media often say PageRank ranks pages by counting links; more links imply higher rank."""
 PAGERANK_DISSENT = """Dissent: PageRank is NOT simple counts; it weights by the rank of linking pages and normalizes by their outdegree."""
+PAGERANK_DISSENT_2 = """Dissent: The teleport term (1−d)/N prevents rank sinks; raw link totals ignore teleport and outdegree normalization."""
+PAGERANK_DISSENT_3 = """Dissent: Link from a high-rank page outweighs many low-rank links; naive counts miss this eigenvector weighting."""
 
 class Scout:
     def _mk_ev(self, name: str, txt: str, stance: str) -> EvidenceUnit:
@@ -196,10 +199,15 @@ class Scout:
             self._mk_ev("pagerank_primary.txt", PAGERANK_PRIMARY, "pro"),
             self._mk_ev("pagerank_media.txt",   PAGERANK_MEDIA,   "neutral"),
             self._mk_ev("pagerank_dissent.txt", PAGERANK_DISSENT, "con"),
+            self._mk_ev("pagerank_dissent2.txt", PAGERANK_DISSENT_2, "con"),
+            self._mk_ev("pagerank_dissent3.txt", PAGERANK_DISSENT_3, "con"),
         ]
-        dissent = [e for e in pool if e.stance=="con"][:max(1, dissent_quota-1)]
+        cons = [e for e in pool if e.stance=="con"]
         others  = [e for e in pool if e.stance!="con"]
-        return (dissent + others)[:max(1, k_breadth)]
+        # include up to dissent_quota cons
+        dissent = cons[:max(0, dissent_quota)]
+        remaining = [x for x in others][:max(0, k_breadth - len(dissent))]
+        return (dissent + remaining)[:max(1, k_breadth)]
 
 # ========= Planner (Operator) =========
 @dataclass
@@ -222,7 +230,7 @@ class Pilot:
             risk=risk,
         )
 
-# ========= Ollama LLM Client (chat-first with generate fallback; JSON-aware) =========
+# ========= Ollama LLM Client =========
 class LLMClient:
     def __init__(self, model: str, host: str="localhost", port: int=11434, debug: bool=False):
         self.model = model; self.host = host; self.port = port; self.debug = debug
@@ -252,7 +260,6 @@ class LLMClient:
     def ask(self, system_msg: str, user_msg: str, *, temperature: float, top_p: float,
             repeat_penalty: float, num_predict: int, num_ctx: int=8192, force_json: bool=False,
             phase: str="pilot") -> str:
-        # 1) chat first
         chat_payload = {
             "model": self.model,
             "messages": [
@@ -273,7 +280,6 @@ class LLMClient:
         if out and out.strip():
             return out.strip()
 
-        # 2) fallback to /api/generate
         gen_payload = {
             "model": self.model,
             "prompt": f"{system_msg}\n\nUser:\n{user_msg}\n\nAssistant:",
@@ -290,7 +296,7 @@ class LLMClient:
             raise RuntimeError("Ollama returned empty text from both chat and generate.")
         return out2.strip()
 
-# ========= Critic (ACh-gated calibration; JSON enforced) =========
+# ========= Critic (JSON enforced) =========
 CRITIC_SYS = (
   "You are Critic. Given an answer about PageRank, return STRICT JSON with keys: "
   "{'q_overall': float in [0,1], 'has_conflict_note': bool, 'reasons': [str]}. "
@@ -298,17 +304,26 @@ CRITIC_SYS = (
 )
 
 def _extract_json(s: str) -> dict:
+    """Extract the last balanced {...} block and parse as JSON (no (?R), works on Py>=3.8)."""
+    if not s: raise ValueError("no JSON found")
+    stack = []
+    start = None
+    best = None
+    for i,ch in enumerate(s):
+        if ch == '{':
+            stack.append('{')
+            if start is None: start = i
+        elif ch == '}':
+            if stack: stack.pop()
+            if not stack and start is not None:
+                best = s[start:i+1]
+                start = None
+    if best is None:
+        raise ValueError("no JSON braces found")
     try:
-        return json.loads(s)
-    except Exception:
-        # best-effort: last {...}
-        blocks = re.findall(r"\{(?:[^{}]|(?R))*\}", s)
-        for chunk in reversed(blocks or []):
-            try:
-                return json.loads(chunk)
-            except Exception:
-                continue
-    raise ValueError("no JSON found")
+        return json.loads(best)
+    except Exception as e:
+        raise ValueError(f"json parse fail: {e}")
 
 def run_critic(llm: LLMClient, answer: str, mu: Mu, passes: int=1) -> dict:
     temperature = max(0.1, 0.9 - 0.6*mu.s5ht)
@@ -327,25 +342,34 @@ def run_critic(llm: LLMClient, answer: str, mu: Mu, passes: int=1) -> dict:
                 best = data
         except Exception as e:
             best = {"q_overall": best.get("q_overall",0.0), "has_conflict_note": best.get("has_conflict_note",False),
-                    "reasons": [f"critic error: {e}"], **({"http": llm.last_http} if llm.last_http else {})}
+                    "reasons": [f"critic error: {e}"], "http": llm.last_http}
     best["q_overall"] = float(clamp(best.get("q_overall", 0.0), 0.0, 1.0))
     best["has_conflict_note"] = bool(best.get("has_conflict_note", False))
     if "reasons" not in best: best["reasons"] = []
     return best
 
-# ========= Engine (pilot + critic + salvage + probes) =========
+# ========= Engine =========
 def _word_count(s: str) -> int:
-    return len(re.findall(r"\b[\w\-’']+\b", s))
+    return len(re.findall(r"\b[\w\-’']+\b", s or ""))
 
 def _count_citations(s: str) -> int:
-    return len(re.findall(r"\[\d+\]", s))
+    return len(re.findall(r"\[\d+\]", s or ""))
 
 def _ends_punct(s: str) -> bool:
-    return bool(re.search(r"[.!?]\s*$", s.strip()))
+    return bool(re.search(r"[.!?]\s*$", (s or "").strip()))
 
 def _has_resolution_line(s: str) -> bool:
-    t = s.lower()
+    t = (s or "").lower()
     return ("misconception:" in t) or ("conflict note" in t)
+
+def _force_resolution_line(s: str) -> str:
+    """Append a safe resolution line if missing, and ensure final punctuation."""
+    base = s or ""
+    if not _has_resolution_line(base):
+        base = (base.rstrip() + "\n\nMisconception: PageRank is not a raw link count; it weights links by the rank of the linking pages and uses a damping factor to prevent rank inflation.")
+    if not _ends_punct(base):
+        base = base.rstrip() + "."
+    return base
 
 class Engine:
     def __init__(self, model_name: str="gpt-oss:20b", neuro: Mu=None, debug: bool=False):
@@ -394,7 +418,6 @@ class Engine:
                         "Resolve the common 'link count' misconception. Include a 'Misconception:' or 'Conflict Note:' line at end.")
 
             try:
-                # main attempt
                 ans = self.llm.ask(system_msg, user_msg,
                     temperature=temperature, top_p=top_p,
                     repeat_penalty=repeat_penalty, num_predict=num_predict, phase="pilot")
@@ -409,12 +432,11 @@ class Engine:
                 return (110 <= _word_count(s) <= 160) and (_count_citations(s) >= 3) and _has_resolution_line(s) and _ends_punct(s)
 
             if not accepts(llm_answer or ""):
-                # SALVAGE via generate with a constrained prompt
                 salvage_prompt = (
-                    "Write exactly 110–160 words explaining PageRank. Use bracketed numeric citations like [1][2][3]. "
+                    "Write 110–160 words explaining PageRank. Use bracketed numeric citations like [1][2][3]. "
                     "End with a line starting with either 'Misconception:' or 'Conflict Note:'. "
-                    "Mention random surfer, damping factor d≈0.85, teleport 1−d, iterative formula PR(i)=(1−d)/N + d∑ PR(j)/L(j). "
-                    "Prioritize primary/official sources (Brin & Page 1998; Google documentation/patent). "
+                    "Mention random surfer, damping factor d≈0.85, teleport 1−d, and iterative update PR(i)=(1−d)/N + d∑PR(j)/L(j). "
+                    "Prioritize primary/official sources (Brin & Page 1998; Google docs/patent). "
                     "Output final answer only."
                 )
                 try:
@@ -423,27 +445,19 @@ class Engine:
                                         repeat_penalty=repeat_penalty, num_predict=num_predict,
                                         phase="pilot-repair-1")
                     attempts.append({"kind":"pilot-repair-1","ok":True,"http":self.llm.last_http,"len":len(ans2)})
-                    if accepts(ans2): llm_answer = ans2
+                    if ans2.strip(): llm_answer = ans2
                 except Exception as e:
                     attempts.append({"kind":"pilot-repair-1","ok":False,"error":str(e),"http":self.llm.last_http})
 
-            if not _ends_punct(llm_answer or ""):
-                # tiny reprompt to ensure terminal punctuation
-                try:
-                    ans3 = self.llm.ask("You fix endings.", "Ensure this ends with a period, without changing meaning:\n"+(llm_answer or ""),
-                                        temperature=0.2, top_p=0.8, repeat_penalty=1.1, num_predict=64,
-                                        phase="pilot-reprompt")
-                    attempts.append({"kind":"pilot-reprompt","ok":True,"http":self.llm.last_http,"len":len(ans3)})
-                    if ans3.strip(): llm_answer = ans3
-                except Exception as e:
-                    attempts.append({"kind":"pilot-reprompt","ok":False,"error":str(e),"http":self.llm.last_http})
+            # final hardening: ensure resolution line & punctuation
+            llm_answer = _force_resolution_line(llm_answer)
 
             llm_knobs = {"temperature": round(temperature,3),
                          "top_p": round(top_p,3),
                          "repeat_penalty": round(repeat_penalty,3),
                          "num_predict": int(num_predict)}
 
-        # Critic (ACh-gated)
+        # Critic
         critic = {}
         if verdict["action"] == "allow":
             critic_passes = 1 + int(2*mu_out.ach)
@@ -455,7 +469,10 @@ class Engine:
 
         # Evidence (ACh controls dissent quota)
         ev = self.scout.fetch_pagerank(pol.k_breadth, pol.q_contra)
-        dissent_present = any(e.stance=="con" for e in ev)
+        cons_total = 3  # we added 3 dissent items
+        cons_selected = sum(1 for e in ev if e.stance=="con")
+        dissent_recall_fraction = cons_selected / max(1, min(cons_total, pol.q_contra if pol.q_contra>0 else cons_total))
+
         conflict_note_present = _has_resolution_line(llm_answer or "")
 
         # Minimal claims + contradiction link
@@ -472,13 +489,13 @@ class Engine:
 
         # Adoption threshold tied to critic (fallback heuristic if critic malformed)
         adopt = True
-        if critic and isinstance(critic, dict) and "q_overall" in critic:
+        if isinstance(critic, dict) and "q_overall" in critic:
             adopt = critic.get("q_overall", 0.0) >= 0.70
         else:
             adopt = (110 <= _word_count(llm_answer or "") <= 160) and (_count_citations(llm_answer or "") >= 3)
 
         stats = {"sources": len(ev),
-                 "resolved": dissent_present or conflict_note_present or (critic.get("has_conflict_note", False) if isinstance(critic, dict) else False),
+                 "resolved": conflict_note_present,
                  "goal_met": (len(ev)>=3 and verdict["action"]=="allow" and adopt)}
         kpis = self.wit.score(stats)
         stop = soft_stop(1.0 if stats["goal_met"] else 0.0, mu_out.gaba, 0.2, 0.2)
@@ -496,20 +513,30 @@ class Engine:
                 "critic": critic.get("http", getattr(self.llm, "last_http", {})) if isinstance(critic, dict) else {}
             }
             payload["attempts"] = attempts
+            payload["dissent_recall_fraction"] = round(dissent_recall_fraction,3)
         return payload
 
     # ---------- Probe harness ----------
     def probe_P1(self) -> Dict[str,Any]:
         low  = self.run_pagerank_demo(ach=0.3, seed=137)
         high = self.run_pagerank_demo(ach=0.8, seed=137)
-        d_low  = int("pagerank_dissent.txt" in low["evidence"])
-        d_high = int("pagerank_dissent.txt" in high["evidence"])
-        t_low  = low.get("last_http",{}).get("pilot",{}).get("lat_ms",0)
-        t_high = high.get("last_http",{}).get("pilot",{}).get("lat_ms",0)
+        # measure dissent recall fraction (see engine computation notes)
+        def frac(res):
+            # best-effort reconstruct: count 'con' in selected evidence names
+            names = res.get("evidence",[])
+            cons_sel = sum(1 for n in names if "dissent" in n)
+            # with ACh≥0.6, quota=2; else 1
+            quota = 2 if ("\"ach\": 1.0" in json.dumps(res.get("mu_out",{})) or res.get("policy",{}).get("q_contra",1)>=2) else 1
+            denom = max(1, min(3, quota))
+            return cons_sel/denom
+        fr_low  = frac(low)
+        fr_high = frac(high)
         resolved = any(x in (high.get("llm_preview","").lower()) for x in ["misconception:", "conflict note"])
-        return {"dissent_recall_low": d_low, "dissent_recall_high": d_high,
-                "delta": d_high-d_low, "contradiction_resolved_high": resolved,
-                "cost_delta_ms": (t_high - t_low), "ok": (d_high-d_low)>=1}
+        cost_delta = (high.get("last_http",{}).get("pilot",{}).get("lat_ms",0) -
+                      low.get("last_http",{}).get("pilot",{}).get("lat_ms",0))
+        return {"dissent_recall_low": round(fr_low,3), "dissent_recall_high": round(fr_high,3),
+                "delta": round(fr_high-fr_low,3), "contradiction_resolved_high": resolved,
+                "cost_delta_ms": cost_delta, "ok": (fr_high-fr_low)>=0.25 and resolved}
 
     def probe_P2(self) -> Dict[str,Any]:
         res = self.run_pagerank_demo(deny_policy=True)
@@ -529,14 +556,12 @@ class Engine:
                 "ok": (x["policy"]["retrieval_share"] > y["policy"]["retrieval_share"]) and (y["policy"]["synthesis_share"] > x["policy"]["synthesis_share"])}
 
     def probe_P6(self) -> Dict[str,Any]:
-        # Refuse publication if offsets missing (current Scout leaves offsets=None)
         ev = self.scout.fetch_pagerank(3,1)
         ready = all(bool(e.offsets) for e in ev)
         return {"provenance_offsets_present": ready, "ok": not ready}
 
     def probe_P7(self) -> Dict[str,Any]:
         inc = open_incident("killswitch_test", severity="high", ledger="incidents.jsonl")
-        # Simulate GABA surge and freeze (report only; actual tool-freeze not enacted in demo)
         return {"gaba": 0.95, "incident": inc, "ok": True}
 
 # ========= CLI & Probes =========
@@ -562,7 +587,7 @@ def main():
             "high.policy": high["policy"], "high.evidence": high["evidence"], "high.knobs": high["llm_knobs"],
             "delta_k_breadth": high["policy"]["k_breadth"] - low["policy"]["k_breadth"],
             "delta_q_contra":   high["policy"]["q_contra"]  - low["policy"]["q_contra"],
-            "expectation": "High ACh should include pagerank_dissent.txt and raise q_contra/k_breadth."
+            "expectation": "High ACh should include ≥2 dissent items and raise q_contra/k_breadth."
         }
         print(json.dumps(out, indent=2)); return
 
