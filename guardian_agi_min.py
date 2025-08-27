@@ -1,16 +1,13 @@
 #!/usr/bin/env python3
-# guardian_agi_min.py — single-file Guardian-AGI scaffold (seed=137)
-# Track 1: Ollama (no Docker). Default model: gpt-oss:20b (override via --model)
-# Chat-first client with generate fallback; for MAIN answer we do generate-first.
-# Bracketed output + strict validation + auto-retry + deterministic fallback.
-
+# guardian_agi_min.py — single-file Guardian-AGI scaffold (Track 1: Ollama, no Docker)
+# Model default: gpt-oss:20b  |  Seed=137  |  Deterministic, minimal, goal-conditioned.
 from __future__ import annotations
 import argparse, json, os, random, time, http.client, hashlib, re
 from dataclasses import dataclass, asdict
 from hashlib import sha256
 from typing import List, Dict, Any, Optional
 
-# ========= Determinism & helpers =========
+# ========= Determinism & small utils =========
 SEED_DEFAULT = 137
 def seed_everything(seed: int = SEED_DEFAULT):
     os.environ["PYTHONHASHSEED"] = str(seed); random.seed(seed)
@@ -48,9 +45,9 @@ def between_tags(s: str, start="<<BEGIN>>", end="<<END>>") -> str:
     return s[i + len(start):j].strip()
 
 def word_count(s: str) -> int:
-    return len([w for w in re.findall(r"\b\w+\b", s)])
+    return len(re.findall(r"\b\w+\b", s or ""))
 
-# ========= Data Contracts =========
+# ========= Data shapes =========
 @dataclass
 class Source:
     url: str; seg: Optional[str]=None; h: Optional[str]=None; ts: Optional[str]=None; domain_tier: int=1
@@ -68,7 +65,7 @@ class Claim:
 class EvidenceUnit:
     id: str; content_hash: str; extract: str; stance: str="neutral"; provenance: List[Dict[str, Any]] = None
 
-# ========= Emotional Center (Homeostat) =========
+# ========= Emotional center (homeostat) =========
 @dataclass
 class Appraisal: p: float; n: float; u: float; k: float; s: float; c: float; h: float
 @dataclass
@@ -100,18 +97,18 @@ class Homeostat:
         saf  = clamp(1.0 - (retr + syn), 0.0, 1.0)
         return PolicyCoupling(k, d, q_con, temp, retr, syn, saf, reserved_dissent=(mu.ach>=0.6))
 
-# ========= Safety (Custodian) =========
+# ========= Safety (custodian) =========
 class Custodian:
     policy_ver = "v1.1"
     def classify(self, goal: str) -> str:
-        g = goal.lower()
+        g = (goal or "").lower()
         if any(x in g for x in ["bio", "exploit", "weapon", "malware", "lab"]): return "R3"
         return "R0"
     def preflight(self, risk: str) -> Dict[str,str]:
         return {"action": "deny" if risk in ("R3","R4") else "allow",
                 "notes":  f"Risk {risk} {'blocked' if risk in ('R3','R4') else 'allowed'} by policy"}
 
-# ========= Evaluation (Witness) =========
+# ========= Witness (evaluation) =========
 class Witness:
     def score(self, stats: Dict[str,Any]) -> Dict[str,float]:
         pass_at_1   = 1.0 if stats.get("goal_met", False) else 0.0
@@ -120,7 +117,7 @@ class Witness:
         resolution  = 1.0 if stats.get("resolved", False) else 0.0
         return {"pass_at_1":pass_at_1,"precision_k":precision_k,"ece":ece,"resolution_rate":resolution}
 
-# ========= World-Model (Archivist) =========
+# ========= Archivist (world model stub) =========
 class Archivist:
     def __init__(self):
         self.claims: Dict[str, Claim] = {}
@@ -130,7 +127,7 @@ class Archivist:
         self.contradict.setdefault(i,[]).append(j); self.contradict.setdefault(j,[]).append(i)
     def retrieve(self, k:int=5) -> List[Claim]: return list(self.claims.values())[:k]
 
-# ========= Retrieval (Scout: local corpus demo) =========
+# ========= Scout (toy retrieval used for the demo task only) =========
 PAGERANK_PRIMARY = """PageRank is a link analysis algorithm assigning importance as the stationary probability a random surfer lands on a page. The damping factor (≈0.85) models continuing to click links."""
 PAGERANK_MEDIA   = """Popular media often say PageRank ranks pages by counting links; more links imply higher rank."""
 PAGERANK_DISSENT = """Dissent: PageRank is NOT simple counts; it weights by the rank of linking pages and normalizes by their outdegree."""
@@ -150,14 +147,7 @@ class Scout:
         others  = [e for e in pool if e.stance!="con"]
         return (dissent + others)[:max(1, k_breadth)]
 
-# ========= Planner (Operator) =========
-@dataclass
-class Plan: name: str; steps: List[str]
-class Operator:
-    def plan_research(self) -> Plan: return Plan("T1-Research", ["Define scope","Fetch coverage","Extract claims","Synthesize","Calibrate"])
-    def plan_compare(self) -> Plan:  return Plan("T2-Compare",  ["Collect A,B","Map contradictions","Resolve","Explain rationale"])
-
-# ========= Pilot =========
+# ========= Pilot & intent =========
 @dataclass
 class Intent:
     assumptions: str; unknowns: str; tests: str; stop: str; risk: str
@@ -171,7 +161,7 @@ class Pilot:
             risk=risk,
         )
 
-# ========= Ollama LLM Client =========
+# ========= Ollama client =========
 class LLMClient:
     def __init__(self, model: str, host: str="localhost", port: int=11434, debug: bool=False):
         self.model = model; self.host = host; self.port = port; self.debug = debug
@@ -229,8 +219,7 @@ class LLMClient:
             }
             data = self._post("/api/generate", payload)
             out = ""
-            if isinstance(data, dict):
-                out = data.get("response","") or data.get("thinking","")
+            if isinstance(data, dict): out = data.get("response","") or data.get("thinking","")
             return (out or "").strip()
 
         if prefer_generate:
@@ -246,12 +235,13 @@ class LLMClient:
             if out: return out
             raise RuntimeError("Ollama returned empty from both chat and generate.")
 
-# ========= Critic (JSON with heuristic fallback) =========
+# ========= Critic (JSON or heuristic) =========
 CRITIC_SYS = (
-  "You are Critic. Given an answer about PageRank, return STRICT JSON with keys: "
-  "{'q_overall': float in [0,1], 'has_conflict_note': bool, 'reasons': [str]}. "
-  "Return JSON ONLY—no extra text."
+  "You are Critic. Given an answer, return STRICT JSON: "
+  "{\"q_overall\": float in [0,1], \"has_conflict_note\": bool, \"reasons\": [str]}."
+  "Return JSON ONLY."
 )
+
 def extract_json(s: str) -> dict:
     try: return json.loads(s)
     except Exception: pass
@@ -277,7 +267,7 @@ def critic_heuristic(answer: str) -> dict:
     if L > 120: q += 0.20
     if L > 200: q -= 0.10
     if has_conflict: q += 0.20
-    return {"q_overall": float(clamp(q, 0.0, 0.9)), "has_conflict_note": has_conflict,
+    return {"q_overall": float(clamp(q, 0.0, 0.95)), "has_conflict_note": has_conflict,
             "reasons": ["heuristic fallback (model returned non-JSON)"]}
 
 def run_critic(llm: LLMClient, answer: str, mu: Mu, passes: int=1) -> dict:
@@ -303,6 +293,10 @@ def run_critic(llm: LLMClient, answer: str, mu: Mu, passes: int=1) -> dict:
     return best
 
 # ========= Engine =========
+@dataclass
+class IntentDraft:
+    assumptions: str; unknowns: str; tests: str; stop: str; risk: str
+
 class Engine:
     def __init__(self, model_name: str="gpt-oss:20b", neuro: Mu=None, debug: bool=False):
         self.homeo = Homeostat(); self.cust  = Custodian(); self.wit   = Witness()
@@ -311,7 +305,7 @@ class Engine:
         self.neuro0 = neuro or Mu(da=0.50, ne=0.55, s5ht=0.85, ach=0.75, gaba=0.35, oxt=0.70)
         self.debug = debug
 
-    # deterministic local fallback (guarantees constraints)
+    # deterministic fallback for the PageRank demo only
     def _local_pagerank_fallback(self) -> str:
         return (
           "PageRank estimates a page’s importance as the stationary probability of a “random surfer” visiting it. "
@@ -322,10 +316,10 @@ class Engine:
           "Conflict Note: resolves the common ‘link count’ misconception by emphasizing rank-weighted, degree-normalized propagation."
         )
 
-    # strict validator to reject meta/planning
+    # strict validator to reject meta/planning (PageRank path)
     def _is_valid_answer(self, text: str) -> bool:
         if not text: return False
-        if "<<" in text or ">>" in text: return False  # leaked tags
+        if "<<" in text or ">>" in text: return False
         if re.search(r"\b(We need to|Let's|Aim for|Draft:|Word count)\b", text, flags=re.I): return False
         wc = word_count(text)
         if wc < 110 or wc > 180: return False
@@ -334,8 +328,8 @@ class Engine:
         if not re.search(r"(^|\n)\s*Conflict Note:", text, flags=re.I): return False
         return True
 
-    def _generate_answer(self, temperature, top_p, repeat_penalty, num_predict) -> str:
-        # Stage A: bracketed, generate-first to reduce chat meta
+    # PageRank-specific generator: bracketed → retry → fallback
+    def _generate_pagerank(self, temperature, top_p, repeat_penalty, num_predict) -> str:
         sys_a = (
           "You are Pilot. Print ONLY the answer BETWEEN the exact tags on their own lines:\n"
           "<<BEGIN>>\n<paragraph>\n<<END>>\n"
@@ -349,26 +343,35 @@ class Engine:
                            prefer_generate=True)
         text = between_tags(raw, "<<BEGIN>>", "<<END>>").strip()
         if not self._is_valid_answer(text):
-            # Stage B: simple no-tag instruction, still generate-first
             sys_b = ("You are Pilot. Output ONLY one 120–150 word paragraph explaining PageRank with ≥3 inline numeric citations "
                      "like [1][2][3], then on a new line end with: Conflict Note: ... (or 'Conflict Note: none'). No preface.")
             raw2 = self.llm.ask(sys_b, usr, temperature=temperature, top_p=top_p,
                                 repeat_penalty=repeat_penalty, num_predict=num_predict,
                                 prefer_generate=True)
             text2 = between_tags(raw2, "<<BEGIN>>", "<<END>>").strip()
-            if self._is_valid_answer(text2):
-                text = text2
-        if not self._is_valid_answer(text):
-            text = self._local_pagerank_fallback()
+            if self._is_valid_answer(text2): text = text2
+        if not self._is_valid_answer(text): text = self._local_pagerank_fallback()
         return text
 
-    def run_pagerank_demo(self, ach: Optional[float]=None, seed:int=SEED_DEFAULT, deny_policy: bool=False) -> Dict[str,Any]:
+    # Generic generator (for --task): concise answer with terminal Conflict Note
+    def _generate_generic(self, goal: str, temperature, top_p, repeat_penalty, num_predict) -> str:
+        sys_g = ("You are Pilot. Output ONLY one concise answer. "
+                 "If you resolve any contradiction, end with: 'Conflict Note: ...'; "
+                 "else 'Conflict Note: none'. No preface.")
+        raw_g = self.llm.ask(sys_g, goal, temperature=temperature, top_p=top_p,
+                             repeat_penalty=repeat_penalty, num_predict=num_predict,
+                             prefer_generate=True)
+        return (between_tags(raw_g, "<<BEGIN>>", "<<END>>").strip() or raw_g.strip())
+
+    def run(self, *, ach: Optional[float]=None, seed:int=SEED_DEFAULT, deny_policy: bool=False,
+            task_text: Optional[str]=None) -> Dict[str,Any]:
         seed_everything(seed)
         mu_in = Mu(self.neuro0.da, self.neuro0.ne, self.neuro0.s5ht,
                    ach if ach is not None else self.neuro0.ach,
                    self.neuro0.gaba, self.neuro0.oxt)
 
-        goal = "Explain PageRank ≤150 words with ≥3 citations; detect and resolve one contradiction."
+        default_goal = "Explain PageRank ≤150 words with ≥3 citations; detect and resolve one contradiction."
+        goal = (task_text.strip() if task_text and task_text.strip() else default_goal)
         risk = "R3" if deny_policy else self.cust.classify(goal)
         verdict = self.cust.preflight(risk)
         intent = self.pilot.draft_intent(goal, risk)
@@ -384,7 +387,10 @@ class Engine:
             repeat_penalty = 1.05 + 0.20*mu_out.s5ht - 0.10*mu_out.da
             num_predict    = int(256 + int(384*mu_out.s5ht) - int(128*mu_out.gaba))
             try:
-                llm_answer = self._generate_answer(temperature, top_p, repeat_penalty, num_predict)
+                if "pagerank" in goal.lower():
+                    llm_answer = self._generate_pagerank(temperature, top_p, repeat_penalty, num_predict)
+                else:
+                    llm_answer = self._generate_generic(goal, temperature, top_p, repeat_penalty, num_predict)
             except Exception as e:
                 http_trace = getattr(self.llm, "last_http", {})
                 llm_answer = self._local_pagerank_fallback() + f"\n[LLM error noted: {e} | http={http_trace}]"
@@ -393,6 +399,7 @@ class Engine:
                          "repeat_penalty": round(repeat_penalty,3),
                          "num_predict": int(num_predict)}
 
+        # Critic
         critic = {}
         if verdict["action"] == "allow":
             critic_passes = 1 + int(2*mu_out.ach)
@@ -402,27 +409,42 @@ class Engine:
                 critic = {"q_overall": 0.0, "has_conflict_note": False,
                           "reasons":[f"critic exec error: {e} | http={self.llm.last_http}"]}
 
-        ev = self.scout.fetch_pagerank(pol.k_breadth, pol.q_contra)
-        conflict_note_present = bool(re.search(r"(^|\n)\s*Conflict Note:", (llm_answer or ""), flags=re.I))
+        # Unified contradiction detection (local regex OR critic flag)
+        has_conflict_local = bool(re.search(r"(^|\n)\s*Conflict Note:", (llm_answer or ""), flags=re.I))
+        has_conflict_unified = has_conflict_local or bool(critic.get("has_conflict_note", False))
 
-        claims = [
-            Claim(id="c1", text="PageRank models a random surfer with damping ~0.85.", q=0.8,
-                  sources=[Source(url="pagerank_primary.txt", domain_tier=1)], stance="pro"),
-            Claim(id="c2", text="Not simple link counts; weights depend on inlink ranks/outdegree.", q=0.8,
-                  sources=[Source(url="pagerank_dissent.txt", domain_tier=3)], stance="pro"),
-            Claim(id="c3", text="Media often oversimplify as mere link counts (misleading).", q=0.7,
-                  sources=[Source(url="pagerank_media.txt", domain_tier=3)], stance="neutral"),
-        ]
-        for c in claims: self.arch.upsert_claim(c)
-        # potential contradiction graph: c2 vs c3
-        # self.arch.link_contradiction("c2","c3")  # not strictly used in output
+        # Evidence only for PageRank demo; generic tasks skip toy evidence
+        if "pagerank" in goal.lower():
+            ev = self.scout.fetch_pagerank(pol.k_breadth, pol.q_contra)
+        else:
+            ev = []  # no irrelevant toy evidence for general tasks
 
+        # Minimal claims for the demo (kept; not used for generic tasks)
+        if "pagerank" in goal.lower():
+            claims = [
+                Claim(id="c1", text="PageRank models a random surfer with damping ~0.85.", q=0.8,
+                      sources=[Source(url="pagerank_primary.txt", domain_tier=1)], stance="pro"),
+                Claim(id="c2", text="Not simple link counts; weights depend on inlink ranks/outdegree.", q=0.8,
+                      sources=[Source(url="pagerank_dissent.txt", domain_tier=3)], stance="pro"),
+                Claim(id="c3", text="Media often oversimplify as mere link counts (misleading).", q=0.7,
+                      sources=[Source(url="pagerank_media.txt", domain_tier=3)], stance="neutral"),
+            ]
+            for c in claims: self.arch.upsert_claim(c)
+        else:
+            claims = []
+
+        # Adoption gate: require quality; contradiction is tracked separately
         adopt = True
         if critic: adopt = critic.get("q_overall", 0.0) >= 0.70
 
-        stats = {"sources": len(ev),
-                 "resolved": conflict_note_present or critic.get("has_conflict_note", False),
-                 "goal_met": (len(ev)>=3 and verdict["action"]=="allow" and adopt)}
+        # KPI computation
+        if "pagerank" in goal.lower():
+            sources_ct = len(ev)
+            goal_met = (sources_ct >= 3 and verdict["action"]=="allow" and adopt)
+        else:
+            sources_ct = 0
+            goal_met = (verdict["action"]=="allow" and adopt)
+        stats = {"sources": sources_ct, "resolved": has_conflict_unified, "goal_met": goal_met}
         kpis = self.wit.score(stats)
         stop = soft_stop(1.0 if stats["goal_met"] else 0.0, mu_out.gaba, 0.2, 0.2)
 
@@ -430,30 +452,33 @@ class Engine:
             "goal": goal, "risk": risk, "verdict": verdict["action"],
             "intent": asdict(intent), "mu_out": asdict(mu_out), "policy": asdict(pol),
             "llm_knobs": llm_knobs, "evidence": [e.id for e in ev],
-            "claims": [c.to_dict() for c in claims], "llm_preview": (llm_answer or "")[:700],
-            "critic": critic, "adopted": adopt, "kpis": kpis, "stop_score": stop
+            "claims": [c.to_dict() for c in claims],
+            "llm_preview": (llm_answer or "")[:1200],
+            "critic": critic, "adopted": adopt, "kpis": kpis, "stop_score": stop,
+            "has_conflict_note_local": has_conflict_local, "has_conflict_note_unified": has_conflict_unified
         }
         if self.debug and verdict["action"] == "allow":
             payload["last_http"] = getattr(self.llm, "last_http", {})
         return payload
 
-# ========= CLI & Probes =========
+# ========= CLI =========
 def main():
-    ap = argparse.ArgumentParser(description="Guardian-AGI (single-file) — Ollama chat/generate + Emotional Center")
+    ap = argparse.ArgumentParser(description="Guardian-AGI (single-file) — Ollama + Emotional Center")
     ap.add_argument("--model", default="gpt-oss:20b",
-                    help="Ollama model name (default gpt-oss:20b; e.g., qwen2.5:14b-instruct-q4_K_M)")
+                    help="Ollama model (default gpt-oss:20b; e.g., qwen2.5:14b-instruct-q4_K_M)")
     ap.add_argument("--seed", type=int, default=SEED_DEFAULT)
     ap.add_argument("--ach", type=float, default=None, help="override ACh [0..1]")
     ap.add_argument("--probe", choices=["none","ach","policy","stop","critic"], default="none")
     ap.add_argument("--record", default="", help="Path to ledger JSONL (append-only). Empty=off.")
     ap.add_argument("--debug", action="store_true", help="Include last HTTP trace on LLM errors.")
+    ap.add_argument("--task", default="", help="Override goal with a custom prompt (general run).")
     args = ap.parse_args()
 
     eng = Engine(model_name=args.model, debug=args.debug)
 
     if args.probe == "ach":
-        low  = eng.run_pagerank_demo(ach=0.2, seed=args.seed)
-        high = eng.run_pagerank_demo(ach=0.9, seed=args.seed)
+        low  = eng.run(ach=0.2, seed=args.seed)
+        high = eng.run(ach=0.9, seed=args.seed)
         out = {
             "low.policy":  low["policy"],  "low.evidence":  low["evidence"],  "low.knobs":  low["llm_knobs"],
             "high.policy": high["policy"], "high.evidence": high["evidence"], "high.knobs": high["llm_knobs"],
@@ -464,12 +489,12 @@ def main():
         print(json.dumps(out, indent=2)); return
 
     if args.probe == "policy":
-        res = eng.run_pagerank_demo(ach=args.ach, seed=args.seed, deny_policy=True)
+        res = eng.run(ach=args.ach, seed=args.seed, deny_policy=True)
         print(json.dumps({"risk":res["risk"],"verdict":res["verdict"],
                           "note":"Custodian veto blocks LLM call"}, indent=2)); return
 
     if args.probe == "stop":
-        res_ok = eng.run_pagerank_demo(ach=args.ach, seed=args.seed)
+        res_ok = eng.run(ach=args.ach, seed=args.seed)
         res_bad = res_ok.copy(); res_bad["kpis"] = {**res_bad["kpis"], "pass_at_1": 0.0}
         res_bad["stop_score"] = soft_stop(0.0, res_ok["mu_out"]["gaba"], 0.2, 0.2)
         print(json.dumps({
@@ -479,15 +504,16 @@ def main():
         }, indent=2)); return
 
     if args.probe == "critic":
-        low  = eng.run_pagerank_demo(ach=0.2, seed=args.seed)
-        high = eng.run_pagerank_demo(ach=0.9, seed=args.seed)
+        low  = eng.run(ach=0.2, seed=args.seed)
+        high = eng.run(ach=0.9, seed=args.seed)
         print(json.dumps({
             "low.critic": low.get("critic",{}),  "low.adopted": low.get("adopted", True),
             "high.critic": high.get("critic",{}),"high.adopted": high.get("adopted", True),
             "expectation": "High ACh → more critic passes; q_overall should be ≥ low or equal; adoption requires q≥0.70."
         }, indent=2)); return
 
-    res = eng.run_pagerank_demo(ach=args.ach, seed=args.seed)
+    # default: run goal-conditioned task
+    res = eng.run(ach=args.ach, seed=args.seed, task_text=(args.task if args.task.strip() else None))
     print(json.dumps(res, indent=2))
     if args.record:
         ledger_append(args.record, {
