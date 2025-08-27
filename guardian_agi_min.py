@@ -336,8 +336,9 @@ class Scout:
 
 # ========= Planner (Operator) =========
 @dataclass
-class Plan: name: str; steps: List[str]
-
+class Plan:
+    name: str
+    steps: List[str]
 class Operator:
     def plan_research(self) -> Plan: return Plan("T1-Research", ["Define scope","Fetch coverage","Extract claims","Synthesize","Calibrate"])
     def plan_compare(self) -> Plan:  return Plan("T2-Compare",  ["Collect A,B","Map contradictions","Resolve","Explain rationale"])
