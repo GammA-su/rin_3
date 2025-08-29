@@ -32,4 +32,7 @@ e2e:
 
 suite-full:
 	$(PY) $(SCRIPT) --mock-llm --suite full --strict > artifacts/suite_full.json
-	@echo "[PASS] full suite"  # shell exit code enforces pass/fail
+	jq '.P1.ok,.P2.ok,.P3.ok,.P4.ok,.P5.ok,.P6.ok,.P7.ok,.E2E.kpis.ece,.E2E.adopted' artifacts/suite_full.json
+suite-full-tee:
+	set -o pipefail; \
+	$(PY) $(SCRIPT) --mock-llm --suite full --strict | tee artifacts/suite_full.json
