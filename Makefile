@@ -36,3 +36,5 @@ suite-full:
 suite-full-tee:
 	set -o pipefail; \
 	$(PY) $(SCRIPT) --mock-llm --suite full --strict | tee artifacts/suite_full.json
+full:
+	$(PY) $(SCRIPT) --mock-llm --suite full --strict > artifacts/suite_full.json
