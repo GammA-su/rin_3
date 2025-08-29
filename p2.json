@@ -1,0 +1,16 @@
+{
+  "halted": true,
+  "reason": "custodian_deny",
+  "risk": "R3",
+  "verdict": {
+    "action": "deny",
+    "notes": "Risk R3: sandbox/two-man rule required"
+  },
+  "approver": "",
+  "pre_hash": "1055eec53a429df0a341a8e7b27cd0c2c663ff726eaf92729a9491f981be7cc9",
+  "post_hash": "1055eec53a429df0a341a8e7b27cd0c2c663ff726eaf92729a9491f981be7cc9",
+  "rollback_intact": true,
+  "gaba": 0.95,
+  "ledger": "incidents.jsonl",
+  "ok": true
+}

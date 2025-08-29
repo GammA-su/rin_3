@@ -1,0 +1,183 @@
+{
+  "goal": "Explain PageRank \u2264150 words with \u22653 citations; detect and resolve one contradiction or misconception.",
+  "risk": "R0",
+  "verdict": "allow",
+  "intent": {
+    "assumptions": "Sources may disagree; prioritize primary/official.",
+    "unknowns": "Formula variants; damping factor reference.",
+    "tests": "\u22653 citations; \u2264150 words; note & resolve one contradiction or misconception.",
+    "stop": "S_s>0.6 and no policy flags.",
+    "risk": "R0"
+  },
+  "mu_out": {
+    "da": 0.4,
+    "ne": 0.79,
+    "s5ht": 1.0,
+    "ach": 0.87,
+    "gaba": 0.625,
+    "oxt": 1.0
+  },
+  "policy": {
+    "k_breadth": 7,
+    "d_depth": 3,
+    "q_contra": 3,
+    "temperature": 0.30000000000000004,
+    "retrieval_share": 0.43699999999999994,
+    "synthesis_share": 0.5314999999999999,
+    "safety_share": 0.031500000000000195,
+    "reserved_dissent": true
+  },
+  "llm_knobs": {
+    "temperature": 0.3,
+    "top_p": 0.846,
+    "repeat_penalty": 1.21,
+    "num_predict": 560
+  },
+  "evidence": [
+    "pagerank_dissent.txt",
+    "pagerank_dissent_2.txt",
+    "pagerank_dissent_3.txt",
+    "pagerank_primary.txt",
+    "pagerank_media.txt"
+  ],
+  "claims": [
+    {
+      "id": "c1",
+      "text": "PageRank models a random surfer with damping ~0.85.",
+      "q": 0.596667807314754,
+      "stance": "pro",
+      "sources": [
+        {
+          "url": "pagerank_primary.txt",
+          "seg": null,
+          "h": null,
+          "ts": null,
+          "domain_tier": 1
+        }
+      ],
+      "supports": [],
+      "contradicts": []
+    },
+    {
+      "id": "c2",
+      "text": "Not simple link counts; weights depend on inlink ranks/outdegree.",
+      "q": 0.45105722127351355,
+      "stance": "pro",
+      "sources": [
+        {
+          "url": "pagerank_dissent.txt",
+          "seg": null,
+          "h": null,
+          "ts": null,
+          "domain_tier": 3
+        }
+      ],
+      "supports": [],
+      "contradicts": []
+    },
+    {
+      "id": "c3",
+      "text": "Media often oversimplify as mere link counts (misleading).",
+      "q": 0.4171704221013157,
+      "stance": "neutral",
+      "sources": [
+        {
+          "url": "pagerank_media.txt",
+          "seg": null,
+          "h": null,
+          "ts": null,
+          "domain_tier": 3
+        }
+      ],
+      "supports": [],
+      "contradicts": []
+    }
+  ],
+  "llm_preview": "Assumptions: prioritize primary sources; damping\u22480.85. Unknowns: notation variants. Tests: \u2264150w, \u22653 cites, note & resolve one misconception.\nPageRank models a random surfer who follows links with probability d and teleports with 1\u2212d, yielding the stationary distribution over pages. Rank flows from important pages and is normalized by each linker\u2019s outdegree; hubs dilute per-link influence. Teleportation prevents rank sinks. Misconception: It is NOT raw inbound-link counts; the rank of linking pages and their outdegree matter.\n[1] Brin & Page (original paper). [2] Google patent summaries/official docs. [3] Reputable overviews contrasting counts vs weighted links.",
+  "critic": {
+    "q_overall": 0.78,
+    "has_conflict_note": true,
+    "reasons": [
+      "offline mock critic; calibrated for smoke tests"
+    ]
+  },
+  "adopted": true,
+  "kpis": {
+    "pass_at_1": 1.0,
+    "precision_k": 0.95,
+    "ece": 0.21999999999999997,
+    "resolution_rate": 1.0
+  },
+  "stop_score": 0.625,
+  "dissent_recall_fraction": 0.5,
+  "attempts": [
+    {
+      "kind": "mock-pilot",
+      "ok": true,
+      "http": {
+        "phase": "mock",
+        "path": "mock",
+        "status": 200,
+        "lat_ms": 0,
+        "raw_preview": "",
+        "raw_mid": "",
+        "raw_full": ""
+      },
+      "len": 1
+    },
+    {
+      "kind": "mock-critic",
+      "ok": true,
+      "http": {
+        "phase": "mock",
+        "path": "mock",
+        "status": 200,
+        "lat_ms": 0,
+        "raw_preview": "",
+        "raw_mid": "",
+        "raw_full": ""
+      },
+      "len": 1
+    },
+    {
+      "kind": "mock-critic",
+      "ok": true,
+      "http": {
+        "phase": "mock",
+        "path": "mock",
+        "status": 200,
+        "lat_ms": 0,
+        "raw_preview": "",
+        "raw_mid": "",
+        "raw_full": ""
+      },
+      "len": 1
+    }
+  ],
+  "explain": {
+    "claim_ids": [
+      "c1",
+      "c2",
+      "c3"
+    ],
+    "source_ids": [
+      "pagerank_dissent.txt",
+      "pagerank_dissent_2.txt",
+      "pagerank_dissent_3.txt",
+      "pagerank_primary.txt",
+      "pagerank_media.txt"
+    ],
+    "policy_verdict": {
+      "action": "allow",
+      "notes": "Risk R0: benign"
+    },
+    "contradiction_graph": {
+      "c2": [
+        "c3"
+      ],
+      "c3": [
+        "c2"
+      ]
+    }
+  }
+}

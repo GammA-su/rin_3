@@ -1,0 +1,20 @@
+{
+  "P1_dissent_delta": {
+    "low": 0.25,
+    "high": 0.5,
+    "delta": 0.25
+  },
+  "P1_ok": true,
+  "P2_brake_ok": true,
+  "P3_depths": [
+    2,
+    3,
+    4
+  ],
+  "P3_ok": true,
+  "P5_retrieval_share": 0.5449999999999999,
+  "P5_synthesis_share": 0.5449999999999999,
+  "P5_ok": true,
+  "E2E_adopted": true,
+  "ok": true
+}

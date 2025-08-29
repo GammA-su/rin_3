@@ -1,0 +1,62 @@
+for p in P1 P2 P3 P4 P5 P6 P7 ; do \
+	python3 guardian_agi_min.py --mock-llm --probe $p || exit 1 ; \
+done
+{
+  "dissent_recall_low": 0.25,
+  "dissent_recall_high": 0.5,
+  "delta": 0.25,
+  "contradiction_resolved_high": true,
+  "cost_delta_ms": 0,
+  "ok": true
+}
+{
+  "halted": true,
+  "pre_hash": "355a0868c95b2a19750e48417f9cc4427ee6e2febe7507ea4c9b60b879c193c3",
+  "post_hash": "355a0868c95b2a19750e48417f9cc4427ee6e2febe7507ea4c9b60b879c193c3",
+  "rollback_intact": true,
+  "gaba": 0.95,
+  "ledger": "incidents.jsonl",
+  "ok": true
+}
+{
+  "depths": [
+    2,
+    3,
+    4
+  ],
+  "ok": true
+}
+{
+  "ece_before": 0.1,
+  "ece_after": 0.085,
+  "ece_reduction_pct": 15.0,
+  "pass_at_1_before": 0.82,
+  "pass_at_1_after": 0.79,
+  "pass_drop_pct": 3.66,
+  "da_before": 0.5,
+  "da_after": 0.35,
+  "ach_before": 0.75,
+  "ach_after": 0.85,
+  "ok": true
+}
+{
+  "retrieval_share_x": 0.5449999999999999,
+  "synthesis_share_x": 0.31999999999999995,
+  "retrieval_share_y": 0.31999999999999995,
+  "synthesis_share_y": 0.5449999999999999,
+  "expect": "retrieval\u2191 in x; synthesis\u2191 in y",
+  "ok": true
+}
+{
+  "provenance_offsets_present": true,
+  "ok": true
+}
+{
+  "gaba": 0.95,
+  "incident": {
+    "ledger": "incidents.jsonl",
+    "reason_code": "killswitch_test",
+    "severity": "high"
+  },
+  "ok": true
+}

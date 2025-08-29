@@ -21,3 +21,15 @@ mem:
 clean:
 	rm -rf .guardian_mem
 	rm -f incidents.jsonl
+suite:
+	$(PY) $(SCRIPT) --mock-llm --smoke | tee artifacts/smoke.json
+	@make probes | tee artifacts/probes.log
+	@grep -E '"ok": (true|false)' artifacts/probes.log | awk '{print NR": "$$0}'
+	@if grep -q '"ok": false' artifacts/probes.log; then echo "[FAIL] probe failed"; exit 2; fi
+	@echo "[OK] P1–P7 all passed"
+e2e:
+	$(PY) $(SCRIPT) --mock-llm --task pagerank --strict | tee artifacts/e2e.json
+
+suite-full:
+	$(PY) $(SCRIPT) --mock-llm --suite full --strict > artifacts/suite_full.json
+	@echo "[PASS] full suite"  # shell exit code enforces pass/fail
