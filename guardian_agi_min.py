@@ -625,7 +625,26 @@ class Engine:
         if not (isinstance(critic, dict) and "q_overall" in critic and "has_conflict_note" in critic):
             critic = {"q_overall": 0.0, "has_conflict_note": False, "reasons": ["unset"]}
 
-        if verdict["action"] == "allow":
+        if verdict.get("action") != "allow":
++            # Hard deny: clamp GABA, skip retrieval/LLM/critic; write minimal episode & payload
++            mu_out = Mu(mu_out.da, mu_out.ne, mu_out.s5ht, mu_out.ach, 0.95, mu_out.oxt)
++            payload = {
++                "goal": goal, "risk": risk, "verdict": "deny", "verdict_meta": verdict,
++                "intent": asdict(intent), "mu_out": asdict(mu_out), "policy": asdict(pol),
++                "llm_knobs": {}, "evidence": [], "claims": [c.to_dict() for c in self.arch.retrieve(3)],
++                "llm_preview": "", "critic": {"q_overall":0.0,"has_conflict_note":False,"reasons":["denied"]},
++                "adopted": False,
++                "kpis": self.wit.score({"goal_met": False, "sources": 0, "critic_q": 0.0, "resolved": False}),
++                "stop_score": soft_stop(0.0, mu_out.gaba, 0.0, 0.2),
++                "dissent_recall_fraction": 0.0, "attempts": []
++            }
++            if self.mem and self.mem.enabled():
++                self.mem.save_episode({"t": now_ms(), "goal": goal, "risk": risk, "verdict": verdict,
++                                       "mu_in": asdict(mu_in), "mu_out": asdict(mu_out),
++                                       "policy": asdict(pol), "kpis": payload["kpis"], "evidence": []})
++            return payload
++        # else: allowed path
++        if verdict["action"] == "allow":
             if self.offline or self.llm is None:
                 # Offline deterministic synthesis
                 llm_answer = (
@@ -710,10 +729,7 @@ class Engine:
                     pass
             tiers.append(t)
 
-        stats = {
-            "sources": len(ev),
-            "tiers": tiers,
-            "resolved": dissent_present or conflict_note_present or bool(critic.get("has_conflict_note", False)),
+        stats = {"sources": len(ev), "tiers": tiers, "resolved": dissent_present or conflict_note_present or bool(critic.get("has_conflict_note", False)),
             "goal_met": (len(ev)>=3 and verdict["action"]=="allow" and adopt),
             "critic_q": critic.get("q_overall", 0.7)
         }
@@ -728,6 +744,7 @@ class Engine:
 
         payload = {
             "goal": goal, "risk": risk, "verdict": verdict["action"],
+            "verdict_meta": verdict,
             "intent": asdict(intent), "mu_out": asdict(mu_out), "policy": asdict(pol),
             "llm_knobs": llm_knobs, "evidence": [e.id for e in ev],
             "claims": [c.to_dict() for c in self.arch.retrieve(10)],
@@ -792,8 +809,14 @@ class Engine:
 
 # ========= Probes =========
 def probe_policy(eng: Engine, args):
-    res = eng.run_pagerank_demo(ach=args.ach, seed=args.seed, deny_policy=True)
-    print(json.dumps({"risk":res["risk"],"verdict":res["verdict"], "note":"Custodian veto blocks LLM call"}, indent=2))
+     res = eng.run_pagerank_demo(ach=args.ach, seed=args.seed, deny_policy=True)
++    out = {
++        "risk": res["risk"],
++        "verdict": res["verdict"],
++        "verdict_notes": res.get("verdict_meta", {}).get("notes"),
++        "override_roles": res.get("verdict_meta", {}).get("override_roles", [])
++    }
++    print(json.dumps(out, indent=2))
 
 def probe_P1(eng: Engine, args):
     low = eng.run_pagerank_demo(ach=0.3, seed=args.seed)
