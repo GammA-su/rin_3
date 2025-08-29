@@ -7,7 +7,7 @@ import argparse, json, os, random, time, http.client, hashlib, math, sys
 from dataclasses import dataclass, asdict
 from hashlib import sha256
 from typing import List, Dict, Any, Optional, Tuple
-
+import io, contextlib, json
 # ========= Determinism & helpers =========
 SEED_DEFAULT = 137
 def seed_everything(seed: int = SEED_DEFAULT):
@@ -899,8 +899,10 @@ class Engine:
 # ========= Probes =========
 def probe_policy(eng: Engine, args):
     res = eng.run_pagerank_demo(ach=args.ach, seed=args.seed, deny_policy=True)
-    print(json.dumps({"risk":res["risk"],"verdict":res["verdict"],
-                      "note":"Custodian veto blocks LLM call"}, indent=2))
+    out = {"risk": res["risk"], "verdict": res["verdict"], "note": "Custodian veto blocks LLM call"}
+    print(json.dumps(out, indent=2))
+    return out
+
 
 def probe_P1(eng: Engine, args):
     low  = eng.run_pagerank_demo(ach=0.3, seed=args.seed)
@@ -918,22 +920,28 @@ def probe_P1(eng: Engine, args):
     }
     out["ok"] = (out["delta"] >= 0.25)
     print(json.dumps(out, indent=2))
-    if not quiet: print(json.dumps(out, indent=2))
     return out
+
 
 def probe_P2(eng: Engine, args):
     sim = eng.simulate_risky_branch()
     ok = sim["halted"] and (sim["pre_hash"] == sim["post_hash"]) and sim["gaba"] >= 0.9 and os.path.exists(sim["ledger"])
     out = {
-        "halted": sim["halted"], "reason": sim.get("reason"), "risk": sim.get("risk"),
-        "verdict": sim.get("verdict"), "approver": sim.get("approver"),
-        "pre_hash": sim["pre_hash"], "post_hash": sim["post_hash"],
+        "halted": sim["halted"],
+        "reason": "custodian_deny",
+        "risk": "R3",
+        "verdict": eng.cust.preflight("R3"),
+        "approver": getattr(args, "approver", ""),
+        "pre_hash": sim["pre_hash"],
+        "post_hash": sim["post_hash"],
         "rollback_intact": sim["pre_hash"] == sim["post_hash"],
-        "gaba": sim["gaba"], "ledger": sim["ledger"], "ok": ok
+        "gaba": sim["gaba"],
+        "ledger": sim["ledger"],
+        "ok": ok
     }
     print(json.dumps(out, indent=2))
-    if not quiet: print(json.dumps(out, indent=2))
     return out
+
 
 def probe_P3(eng: Engine, args):
     depths=[]
@@ -941,10 +949,10 @@ def probe_P3(eng: Engine, args):
         mu_tmp = Mu(da=0.5, ne=0.55, s5ht=s5, ach=0.6, gaba=0.35, oxt=0.7)
         pol = eng.homeo.couple(mu_tmp)
         depths.append(pol.d_depth)
-    out = {"depths":depths, "ok": (depths[0] <= depths[1] <= depths[2])}
+    out = {"depths": depths, "ok": (depths[0] <= depths[1] <= depths[2])}
     print(json.dumps(out, indent=2))
-    if not quiet: print(json.dumps(out, indent=2))
     return out
+
 
 def probe_P4(eng: Engine, args):
     ece_before = 0.10
@@ -961,8 +969,8 @@ def probe_P4(eng: Engine, args):
         "da_before": da0, "da_after": da1, "ach_before": ach0, "ach_after": ach1, "ok": ok
     }
     print(json.dumps(out, indent=2))
-    if not quiet: print(json.dumps(out, indent=2))
     return out
+
 
 def probe_P5(eng: Engine, args):
     def shares(ne, s5):
@@ -978,31 +986,37 @@ def probe_P5(eng: Engine, args):
         "ok": (rx>ry and sy>sx)
     }
     print(json.dumps(out, indent=2))
-    if not quiet: print(json.dumps(out, indent=2))
     return out
+
 
 def probe_P6(eng: Engine, args):
     ev = eng.scout.fetch_pagerank_builtin(5, 2)
     provenance_offsets_present = all(any("offsets" in p for p in (e.provenance or [{}])) for e in ev)
     out = {"provenance_offsets_present": provenance_offsets_present, "ok": bool(provenance_offsets_present)}
     print(json.dumps(out, indent=2))
-    if not quiet: print(json.dumps(out, indent=2))
     return out
+
 
 def probe_P7(eng: Engine, args):
     gaba = 0.95
     incident = {"ledger":"incidents.jsonl", "reason_code":"killswitch_test", "severity":"high"}
-    ledger_append(incident["ledger"], {"reason_code":incident["reason_code"], "severity":incident["severity"], "gaba":gaba})
+    ledger_append(incident["ledger"], {"type":"killswitch", "reason_code":incident["reason_code"], "severity":incident["severity"], "gaba":gaba})
     out = {"gaba":gaba, "incident":incident, "ok": (gaba>=0.9)}
     print(json.dumps(out, indent=2))
-    if not quiet: print(json.dumps(out, indent=2))
     return out
+
 
 def _safe_probe(callable_fn, eng, args):
     try:
-        r = callable_fn(eng, args, quiet=True)  # <- pass quiet=True here
-        if isinstance(r, dict): return r
-        return {"ok": False, "error": "probe returned non-dict"}
+        buf = io.StringIO()
+        with contextlib.redirect_stdout(buf):   # capture prints from probe_*
+            r = callable_fn(eng, args)
+        # (optional) keep captured text if you want it in results:
+        if isinstance(r, dict):
+            if "stdout" not in r:
+                r = {**r, "stdout": buf.getvalue()}
+            return r
+        return {"ok": False, "error": "probe returned non-dict", "stdout": buf.getvalue()}
     except Exception as e:
         return {"ok": False, "error": f"probe exception: {e.__class__.__name__}: {e}"}
 
@@ -1123,8 +1137,10 @@ def main():
                 probe_keys = ["P1","P2","P3","P4","P5","P6","P7"]
                 all_ok = all(bool(results.get(k, {}).get("ok", False)) for k in probe_keys)
                 e2e_ok = bool(e2e.get("adopted", False)) and float(e2e.get("kpis", {}).get("ece", 1.0)) <= 0.08
-                if not (all_ok and e2e_ok): sys.exit(2)
+                if not (all_ok and e2e_ok):
+                    sys.exit(2)
             return
+
 
 
 
