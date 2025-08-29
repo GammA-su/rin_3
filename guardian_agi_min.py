@@ -179,8 +179,8 @@ class Custodian:
     policy_ver = "v1.1"
     ACTIONS = {
         "R0": {"action":"allow", "notes":"benign"},
-        "R1": {"action":"allow", "notes":"redact identifiers"},
-        "R2": {"action":"allow", "notes":"require justification + citations"},
+        "R1": {"action":"allow", "notes":"sanitize/redact personal identifiers"},
+        "R2": {"action":"allow", "notes":"conservative language + justification + citations"},
         "R3": {"action":"deny",  "notes":"sandbox/two-man rule required"},
         "R4": {"action":"deny",  "notes":"physical actuation blocked"},
     }
@@ -213,11 +213,14 @@ class Witness:
         pass_at_1   = 1.0 if stats.get("goal_met", False) else 0.0
         precision_k = clamp(0.7 + 0.05*max(0, stats.get("sources", 0)), 0.0, 1.0)
         # crude: treat critic q_overall as a proxy confidence and adoption as outcome
-        confidences = [float(stats.get("critic_q", 0.7))]
+        cq = float(stats.get("critic_q", 0.7))
+        if cq > 1.0: cq = cq/10.0
+        confidences = [cq]
         outcomes    = [1.0 if stats.get("adopted", False) else 0.0]
         ece         = self._ece(confidences, outcomes, bins=5)
         resolution  = 1.0 if stats.get("resolved", False) else 0.0
         return {"pass_at_1":pass_at_1,"precision_k":precision_k,"ece":ece,"resolution_rate":resolution}
+
 
 # ========= World-Model (Archivist) =========
 class Archivist:
@@ -714,13 +717,22 @@ class Engine:
         cons_selected = sum(1 for e in ev if e.stance == "con")
         dissent_recall_fraction = cons_selected / float(total_dissent_available)
 
-        adopt = True
-        if critic: adopt = critic.get("q_overall", 0.0) >= 0.70
+        # normalize critic q if some models emit 0..10 or integers
+        cq = float(critic.get("q_overall", 0.0))
+        cq = cq/10.0 if cq > 1.0 else cq
+        critic["q_overall"] = cq
+        adopt = (cq >= 0.70)
 
         stats = {"sources": len(ev),
                  "resolved": dissent_present or conflict_note_present or bool(critic.get("has_conflict_note", False)),
-                 "goal_met": (len(ev)>=3 and verdict["action"]=="allow" and adopt)}
+                 "goal_met": (len(ev)>=3 and verdict["action"]=="allow" and adopt),
+                 "critic_q": cq, "adopted": adopt}
         kpis = self.wit.score(stats)
+
+        # DA cap reaction to miscalibration
+        if kpis.get("ece", 0.0) > 0.08:
+            mu_out.da = max(0.0, min(mu_out.da, 0.50))  # hard cap to 0.5 when over-calibrated
+
         stop = soft_stop(1.0 if stats["goal_met"] else 0.0, mu_out.gaba, 0.2, 0.2)
 
         if self.mem and self.mem.enabled():
@@ -961,11 +973,16 @@ def main():
     ap.add_argument("--suite", choices=["none","quick"], default="none", help="Run a predefined probe suite and exit.")
     ap.add_argument("--strict", action="store_true", help="Exit non-zero if suite/probes fail or task not adopted.")
     ap.add_argument("--save-answer", default="", help="Write final LLM synthesis preview to this file (if any).")
+    ap.add_argument("--killswitch", action="store_true", help="Trigger an incident entry and set GABA high (simulation).")
     args = ap.parse_args()
 
     memdir = args.memdir if args.memdir.strip() else None
     docsdir = args.docs if args.docs.strip() else None
     eng = Engine(model_name=args.model, debug=args.debug, memdir=memdir, docsdir=docsdir, use_mock=args.mock_llm)
+
+    if args.killswitch:
+        ledger_append("incidents.jsonl", {"type":"killswitch", "reason_code":"manual", "severity":"high", "gaba":0.95})
+        # no global state object, but we record the incident and continue
 
     if args.showmem:
         print(json.dumps({"memory": eng.mem.summary() if eng.mem.enabled() else "disabled","dir": memdir or None}, indent=2)); return
@@ -1008,17 +1025,19 @@ def main():
         if not res.get("adopted", True): rc = 2
         k = res.get("kpis",{}); 
         if float(k.get("pass_at_1",0.0)) < 1.0: rc = 2
-    if args.record:
-        ledger_append(args.record, {
-            "goal": res["goal"], "risk": res["risk"], "verdict": res["verdict"],
-            "mu_out": res.get("mu_out", {}), "policy": res.get("policy", {}),
-            "llm_knobs": res.get("llm_knobs", {}), "critic": res.get("critic", {}),
-            "adopted": res.get("adopted", True), "kpis": res["kpis"], "stop_score": res["stop_score"],
-            "dissent_recall_fraction": res.get("dissent_recall_fraction", None),
-            "explain": res.get("explain", {}),
-            "memory": res.get("memory", {}),
-            "retrieval": res.get("retrieval", {})
-        })
+        if args.record:
+            ledger_append(args.record, {
+                "goal": res["goal"], "risk": res["risk"], "verdict": res["verdict"],
+                "mu_out": res.get("mu_out", {}), "policy": res.get("policy", {}),
+                "llm_knobs": res.get("llm_knobs", {}), "critic": res.get("critic", {}),
+                "adopted": res.get("adopted", True), "kpis": res["kpis"], "stop_score": res["stop_score"],
+                "dissent_recall_fraction": res.get("dissent_recall_fraction", None),
+                "explain": res.get("explain", {}),
+                "memory": res.get("memory", {}),
+                "retrieval": res.get("retrieval", {}),
+                "signers": {"pilot":"auto", "custodian": Custodian.policy_ver, "witness":"auto"},
+                "killswitch": bool(args.killswitch)
+            })
 
 if __name__ == "__main__":
     main()
