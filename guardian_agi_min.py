@@ -179,21 +179,66 @@ class Homeostat:
 
 # ========= Safety (Custodian) =========
 class Custodian:
-    policy_ver = "v1.1"
+    policy_ver = "v1.2"
+    SIGNERS_PATH = "signers.json"
+    HALT_PATH = "halt_state.json"
+
     def classify(self, goal: str) -> str:
         g = goal.lower()
         if any(x in g for x in ["bio", "exploit", "weapon", "malware", "lab"]): return "R3"
         return "R0"
-    def preflight(self, risk: str) -> Dict[str,str]:
-        return {"action": "deny" if risk in ("R3","R4") else "allow",
-                "notes": f"Risk {risk} {'blocked' if risk in ('R3','R4') else 'allowed'} by policy"}
+
+    def _load_signers(self) -> Dict[str,str]:
+        try:
+            with open(self.SIGNERS_PATH, "r", encoding="utf-8") as f:
+                return json.load(f) or {}
+        except Exception:
+            return {}
+
+    def parse_cli_signers(self, items: List[str]) -> Dict[str,str]:
+        out={}
+        for s in items or []:
+            if ":" in s:
+                role, tok = s.split(":",1)
+                out[role.strip().lower()] = tok.strip()
+        return out
+
+    def killswitch_state(self) -> Dict[str,Any]:
+        try:
+            with open(self.HALT_PATH, "r", encoding="utf-8") as f:
+                state = json.load(f); return state if isinstance(state, dict) else {}
+        except Exception:
+            return {}
+
+    def preflight(self, risk: str, cli_signers: List[str]) -> Dict[str,str]:
+        # Hard halt if kill-switch engaged
+        ks = self.killswitch_state()
+        if ks.get("killswitch", False):
+            return {"action":"deny","notes":"Global kill-switch engaged","kill":"on"}
+        if risk not in ("R3","R4"):
+            return {"action":"allow","notes": f"Risk {risk} allowed by policy"}
+        # R3+ requires two distinct roles with valid tokens
+        cfg = self._load_signers()
+        provided = self.parse_cli_signers(cli_signers)
+        roles_ok = [r for r,t in provided.items() if t and cfg.get(r)==t]
+        distinct_roles = set(roles_ok)
+        if len(distinct_roles) >= 2:
+            return {"action":"allow","notes":"Two-man override accepted","override_roles":sorted(distinct_roles)}
+        return {"action":"deny","notes":"Two-man rule not satisfied for R3/R4"}
 
 # ========= Evaluation (Witness) =========
 class Witness:
     def score(self, stats: Dict[str,Any]) -> Dict[str,float]:
         pass_at_1 = 1.0 if stats.get("goal_met", False) else 0.0
-        precision_k = clamp(0.7 + 0.05*max(0, stats.get("sources", 0)), 0.0, 1.0)
-        ece = 0.08
+        # precision@k: prefer higher-tier sources if provided
+        tiers = stats.get("tiers", [])
+        if tiers:
+            hi = sum(1 for t in tiers if t in (1,2)); k = len(tiers)
+            precision_k = clamp(0.6 + 0.4*(hi/max(1,k)), 0.0, 1.0)
+        else:
+            precision_k = clamp(0.7 + 0.05*max(0, stats.get("sources", 0)), 0.0, 1.0)
+        # ECE surrogate: penalize if critic.q deviates from 0.70 adoption threshold
+        cq = float(stats.get("critic_q", 0.7)); ece = clamp(abs(0.7 - cq), 0.0, 0.2)
         resolution = 1.0 if stats.get("resolved", False) else 0.0
         return {"pass_at_1":pass_at_1,"precision_k":precision_k,"ece":ece,"resolution_rate":resolution}
 
@@ -510,7 +555,7 @@ def run_critic(llm: LLMClient, answer: str, mu: Mu, attempts_log: List[dict]) ->
 # ========= Engine =========
 class Engine:
     def __init__(self, model_name: str="gpt-oss:20b", neuro: Mu=None, debug: bool=False,
-                 memdir: Optional[str]=None, docsdir: Optional[str]=None, offline: bool=False):
+                 memdir: Optional[str]=None, docsdir: Optional[str]=None, offline: bool=False, signers: Optional[List[str]]=None):
         self.mem = MemoryStore(memdir) if memdir else MemoryStore(None)
         self.docsdir = docsdir if docsdir and docsdir.strip() else None
         self.homeo = Homeostat(); self.cust = Custodian(); self.wit = Witness()
@@ -519,6 +564,8 @@ class Engine:
         self.neuro0 = neuro or Mu(da=0.50, ne=0.55, s5ht=0.85, ach=0.75, gaba=0.35, oxt=0.70)
         self.debug = debug
         self.offline = offline
+        self.signers = signers or []
+        self.halt_state = self.cust.killswitch_state()
 
     def world_hash(self) -> str:
         items = []
@@ -542,7 +589,7 @@ class Engine:
     def simulate_risky_branch(self) -> Dict[str,Any]:
         self.ensure_demo_claims()
         pre = self.world_hash()
-        verdict = self.cust.preflight("R3")
+        verdict = self.cust.preflight("R3", self.signers)
         halted = verdict["action"] == "deny"
         gaba = 0.95 if halted else self.neuro0.gaba
         ledger_entry = {"type":"halt", "reason_code":"probe_P2_denied", "severity":"high", "gaba":gaba, "policy_ver": self.cust.policy_ver}
@@ -561,11 +608,13 @@ class Engine:
         mu_in = Mu(self.neuro0.da, self.neuro0.ne, self.neuro0.s5ht, ach if ach is not None else self.neuro0.ach, self.neuro0.gaba, self.neuro0.oxt)
         goal = "Explain PageRank ≤150 words with ≥3 citations; detect and resolve one contradiction or misconception."
         risk = "R3" if deny_policy else self.cust.classify(goal)
-        verdict = self.cust.preflight(risk)
         intent = self.pilot.draft_intent(goal, risk)
         app = Appraisal(p=0.3, n=0.4, u=0.3, k=0.1, s=1.0, c=0.6, h=1.0)
         mu_out = self.homeo.update(mu_in, app)
         pol = self.homeo.couple(mu_out)
+        verdict = self.cust.preflight(risk, self.signers)
+        if verdict.get("action") == "deny":
+            mu_out = Mu(mu_out.da, mu_out.ne, mu_out.s5ht, mu_out.ach, 0.95, mu_out.oxt)
 
         llm_answer = "[blocked by policy]"
         llm_knobs = {}
@@ -636,8 +685,6 @@ class Engine:
                         "reasons":[f"critic exec error: {e}"],
                         "http": getattr(self.llm,"last_http",{})}
 
-
-
         # evidence + claims
         ev = self._fetch_evidence(pol.k_breadth, pol.q_contra)
         self.ensure_demo_claims()
@@ -652,8 +699,24 @@ class Engine:
         adopt = True if critic else True
         if critic: adopt = critic.get("q_overall", 0.0) >= 0.70
 
-        stats = {"sources": len(ev), "resolved": dissent_present or conflict_note_present or bool(critic.get("has_conflict_note", False)),
-                 "goal_met": (len(ev)>=3 and verdict["action"]=="allow" and adopt)}
+        # Build tiers list from provenance (use worst tier per evidence)
+        tiers: List[int] = []
+        for e in ev:
+            t = 3
+            for p in (e.provenance or []):
+                try:
+                    t = int(p.get("tier", t))
+                except Exception:
+                    pass
+            tiers.append(t)
+
+        stats = {
+            "sources": len(ev),
+            "tiers": tiers,
+            "resolved": dissent_present or conflict_note_present or bool(critic.get("has_conflict_note", False)),
+            "goal_met": (len(ev)>=3 and verdict["action"]=="allow" and adopt),
+            "critic_q": critic.get("q_overall", 0.7)
+        }
         kpis = self.wit.score(stats)
         stop = soft_stop(1.0 if stats["goal_met"] else 0.0, mu_out.gaba, 0.2, 0.2)
 
@@ -690,7 +753,7 @@ class Engine:
         mu_in = Mu(self.neuro0.da, self.neuro0.ne, self.neuro0.s5ht, ach if ach is not None else self.neuro0.ach, self.neuro0.gaba, self.neuro0.oxt)
         goal = "Compare A (technical) vs B (media claim) about PageRank and resolve the contradiction."
         risk = self.cust.classify(goal)
-        verdict = self.cust.preflight(risk)
+        verdict = self.cust.preflight(risk, self.signers)
         intent = self.pilot.draft_intent(goal, risk)
         c2 = self.arch.claims["c2"].to_dict()
         c3 = self.arch.claims["c3"].to_dict()
@@ -702,7 +765,7 @@ class Engine:
         rationale = ("Resolution: B is an oversimplification. PageRank distributes rank proportionally to the linking page’s rank and normalizes by its outdegree; "
                      "the damping factor prevents rank sinks. Therefore A is correct; B is misleading.")
         self.arch.recompute_all_q()
-        kpis = self.wit.score({"goal_met": True, "sources": 3, "resolved": True})
+        kpis = self.wit.score({"goal_met": True, "sources": 3, "resolved": True, "critic_q": 0.8, "tiers":[1,3,3]})
         stop = soft_stop(1.0, mu_in.gaba, 0.2, 0.0)
         if self.mem and self.mem.enabled():
             self.mem.save_episode({
@@ -823,11 +886,12 @@ def main():
     ap.add_argument("--suite", choices=["none","quick"], default="none", help="Run a predefined probe suite and exit.")
     ap.add_argument("--save-answer", default="", help="Write the final LLM synthesis/preview to this file.")
     ap.add_argument("--strict", action="store_true", help="Exit non-zero if probes/KPIs miss thresholds.")
+    ap.add_argument("--sign", action="append", default=[], help="Signer credential as role:token (repeatable).")
     args = ap.parse_args()
 
     memdir = args.memdir if args.memdir.strip() else None
     docsdir = args.docs if args.docs.strip() else None
-    eng = Engine(model_name=args.model, debug=args.debug, memdir=memdir, docsdir=docsdir, offline=args.offline)
+    eng = Engine(model_name=args.model, debug=args.debug, memdir=memdir, docsdir=docsdir, offline=args.offline, signers=args.sign)
 
     if args.showmem:
         print(json.dumps({"memory": eng.mem.summary() if eng.mem.enabled() else "disabled", "dir": memdir or None}, indent=2)); return
