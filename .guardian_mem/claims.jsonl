@@ -3,3 +3,4 @@
 {"id": "c3", "text": "Media often oversimplify as mere link counts (misleading).", "q": 0.7, "stance": "neutral", "sources": [{"url": "pagerank_media.txt", "seg": null, "h": null, "ts": null, "domain_tier": 3}, {"url": "pagerank_dissent_3.txt", "seg": null, "h": null, "ts": null, "domain_tier": 2}], "supports": [], "contradicts": []}
 {"id": "acl-001", "text": "Open-set generalization in PageRank", "q": 0.6, "stance": "neutral", "sources": [], "supports": [], "contradicts": []}
 {"id": "acl-1756470516486", "text": "Entropy-regularized PageRank with state-dependent teleportation for adversarial graphs", "q": 0.6, "stance": "neutral", "sources": [], "supports": [], "contradicts": []}
+{"id": "acl-1756534158776", "text": "Teleport-damped PR with anti-sink restart on adversarial cliques", "q": 0.6, "stance": "neutral", "sources": [], "supports": [], "contradicts": []}
