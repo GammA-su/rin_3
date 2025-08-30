@@ -1,0 +1,1 @@
+{"env": "browser", "goal": "Explain PageRank ≤150 words with ≥3 citations; detect and resolve one contradiction or misconception.", "kpis": {"pass_at_1": 1.0, "precision_k": 0.95, "ece": 0.0, "resolution_rate": 1.0}, "ts": 1756469637, "prev_hash": "", "this_hash": "dd275e867298be88855f590105f972f7ce5a92b4d9bd503ef5994f31f9a7ab9d"}
