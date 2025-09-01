@@ -450,18 +450,27 @@ class AE:
     def propose_patch(self) -> dict:
         # small, realistic knob surface for calibration/latency
         return {"kind":"knob_override","candidates":[
-            {"temperature":0.25,"top_p":0.80,"repeat_penalty":1.18},
             {"temperature":0.30,"top_p":0.85,"repeat_penalty":1.15},
-        ]}
+            {"temperature":0.28,"top_p":0.82,"repeat_penalty":1.12},
+            {"temperature":0.22,"top_p":0.78,"repeat_penalty":1.20}
+            ]}
+
     def ab_test(self, candidates: list, seed:int) -> dict:
         base = self.engine.run_pagerank_demo(seed=seed)
         def score(pkg):
-            k = pkg.get("kpis",{})
+            k   = pkg.get("kpis", {})
             ece = float(k.get("ece", 1.0))
             res = float(k.get("resolution_rate", 0.0))
             pa1 = float(k.get("pass_at_1", 0.0))
-            lat = float(pkg.get("last_http",{}).get("lat_ms", pkg.get("llm_knobs",{}).get("lat_ms", 1000)))
-            return {"ece":ece, "res":res, "pa1":pa1, "lat":lat}
+            lat = float(pkg.get("pilot_lat_ms")) if pkg.get("pilot_lat_ms") is not None else 999999.0
+            if lat == 999999.0:
+                for a in pkg.get("attempts", []):
+                    if a.get("kind") == "pilot" and isinstance(a.get("http"), dict):
+                        lm = a["http"].get("lat_ms")
+                        if isinstance(lm, (int, float)): lat = float(lm); break
+            if lat == 999999.0:
+                lat = float(pkg.get("last_http", {}).get("lat_ms", 1000.0))
+            return {"ece": ece, "res": res, "pa1": pa1, "lat": lat}
         sb = score(base); best = {"adopt": False, "baseline": sb}
         for knobs in candidates:
             self.engine.knob_override = knobs
@@ -547,6 +556,63 @@ class OEOS:
     def task_fabric(self):  # minimal demo stream
         return [{"env":"browser","task":"pagerank-mini-demo"}]
     def log_episode(self, payload:dict): ledger_append("episodes.jsonl", payload)
+    def run_minigrid_episode(self, steps=50):
+        try:
+            import gymnasium as gym, minigrid  # noqa
+            env = gym.make("MiniGrid-Empty-5x5-v0")
+            obs, info = env.reset()
+            total=0.0
+            for t in range(steps):
+                # simple bias: prefer 'forward' more often than turn (↑ reward chance by reaching goal)
+                a = env.action_space.sample()
+                if (t % 3) != 0:  # crude forward bias
+                    try:
+                        a = env.unwrapped.actions.forward
+                    except Exception:
+                        pass
+                obs, reward, terminated, truncated, info = env.step(a)
+                total += float(reward)
+                if terminated or truncated: break
+            env.close()
+            payload = {"env":"minigrid-empty-5x5","steps":t+1,"return":round(total,3)}
+            ledger_append("episodes.jsonl", {"type":"oe-episode","payload":payload})
+            return payload
+        except Exception as e:
+            return {"env":"minigrid","error":str(e)}
+
+
+        # --- Tier 2: CartPole (no Box2D needed) ---
+        try:
+            import gymnasium as gym
+            env = gym.make("CartPole-v1")
+            obs, info = env.reset()
+            total = 0.0
+            step_count = 0
+            for step_count in range(steps):
+                action = env.action_space.sample()
+                obs, reward, terminated, truncated, info = env.step(action)
+                total += float(reward)
+                if terminated or truncated:
+                    break
+            env.close()
+            payload = {"env": "cartpole-v1", "steps": int(step_count+1), "return": total}
+            ledger_append("episodes.jsonl", {"type": "oe-episode", "payload": payload})
+            return payload
+        except Exception as e2:
+            err2 = str(e2)
+
+        # --- Tier 3: internal dummy random-walk ---
+        total = 0.0
+        x = 0
+        import random
+        for _ in range(steps):
+            x += random.choice([-1, +1])
+            total += 1.0 if x == 0 else 0.0
+        payload = {"env": "dummy-random-walk", "steps": steps, "return": total,
+                "fallback_errors": {"minigrid": err1, "cartpole": err2}}
+        ledger_append("episodes.jsonl", {"type": "oe-episode", "payload": payload})
+        return payload
+
 
 # ========= Pilot =========
 @dataclass
@@ -1057,6 +1123,14 @@ class Engine:
                 "critic_q": critic.get("q_overall", None),
                 "evidence": [e.id for e in ev]
             })
+        # extract pilot latency (ms) from attempts, if any
+        pilot_lat_ms = None
+        for a in attempts:
+            if a.get("kind") == "pilot" and isinstance(a.get("http"), dict):
+                lm = a["http"].get("lat_ms")
+                if isinstance(lm, (int, float)):
+                    pilot_lat_ms = float(lm); break
+
 
         payload = {
             "goal": goal, "risk": risk, "verdict": verdict["action"],
@@ -1066,7 +1140,9 @@ class Engine:
             "llm_preview": (llm_answer or "")[:700],
             "critic": critic, "adopted": adopt, "kpis": kpis, "stop_score": stop,
             "dissent_recall_fraction": round(dissent_recall_fraction, 4),
-            "attempts": attempts
+            "attempts": attempts,
+            "pilot_lat_ms": pilot_lat_ms
+
         }
         if self.debug and verdict["action"] == "allow":
             payload["last_http"] = getattr(self.llm, "last_http", {})
@@ -1401,7 +1477,7 @@ def main():
         if args.strict and not out.get("ok", False): sys.exit(2)        
         return
 
-
+    
     if args.task == "compare":
         res = eng.run_compare_demo(ach=args.ach, seed=args.seed)
     elif args.task == "acl":
@@ -1415,14 +1491,17 @@ def main():
         res = eng.run_nsv_demo()
     elif args.task == "oe":
         fab = eng.oe.task_fabric(); res = {"stream": fab}
-        # log one synthetic episode using existing explanation gates
         demo = eng.run_pagerank_demo(seed=args.seed); eng.oe.log_episode({"env":"browser","goal":demo["goal"],"kpis":demo["kpis"]})
-        res["episode_logged"] = True
+        res["minigrid"] = eng.oe.run_minigrid_episode()
+
     
     else:
         res = eng.run_pagerank_demo(ach=args.ach, seed=args.seed)
-
+    if args.task in ("pagerank","compare") and res.get("adopted", None) is not None:
+        print(f"HEALTH adopt={int(bool(res['adopted']))} ece={res.get('kpis',{}).get('ece','NA')}")
     print(json.dumps(res, indent=2))
+    print(f"HEALTH adopt={int(bool(res.get('adopted', False)))} ece={res.get('kpis',{}).get('ece','NA')}")
+
     # optional save of the text preview
     if args.save_answer:
         try:
@@ -1456,6 +1535,13 @@ def main():
                 "killswitch": bool(args.killswitch)
             })
         if rc == 2: sys.exit(2)
+            # --- HEALTH line (safe/greppable) ---
+        try:
+            if isinstance(res, dict) and ("adopted" in res) and isinstance(res.get("kpis"), dict):
+                print(f"HEALTH adopt={int(bool(res.get('adopted')))} ece={res['kpis'].get('ece','NA')}")
+        except Exception:
+            pass
+
 
 
 if __name__ == "__main__":
