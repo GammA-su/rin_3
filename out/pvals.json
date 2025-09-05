@@ -1,0 +1,8 @@
+{
+  "method": "paired_t",
+  "alpha": 0.05,
+  "suites": [
+    {"name": "demo-suite", "per_seed": [{"seed": 7, "p": 1.0}]}
+  ]
+}
+

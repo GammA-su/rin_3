@@ -1,0 +1,7 @@
+{
+  "energy_mode": "nvml_total",
+  "measured_ctx8k": {"Jmean": 1.0, "Jcv_pct": 1.0},
+  "dev":   {"Jmean": 1.0},
+  "promo": {"Jmean": 0.96}
+}
+

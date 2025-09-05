@@ -1,0 +1,238 @@
+{
+  "meta": {
+    "name": "UCB×TOT-gold — True-AGI (single 4090)",
+    "version": "v1.4",
+    "seed": 7,
+    "goal": "Falsifiable, runnable single-artifact spec with pins, CV+TOST tails/energy guards, novelty/policy checks, ledger invariants and B1–B5 battery."
+  },
+  "hardware": {
+    "gpu": {"model": "RTX 4090", "vram_gb": 24},
+    "cpu": {"model": "Ryzen 7 5700X3D"},
+    "ram_gb": 70
+  },
+  "environment": {
+    "os": ["Ubuntu 24.04", "Arch"],
+    "cuda_major": 12,
+    "driver_series_min": "r550",
+    "python": ">=3.11",
+    "pytorch": "2.2.0+cu121"
+  },
+  "toolchain_versions": {
+    "transformers": "4.43.3",
+    "accelerate": "0.33.0",
+    "bitsandbytes": "0.43.1",
+    "faiss-cpu": "1.8.0",
+    "peft": "0.11.1",
+    "numpy": "1.26.4",
+    "pynvml": "11.5.0",
+    "sentence-transformers": "2.7.0",
+    "datasketch": "1.6.4",
+    "pydantic": "2.8.2",
+    "pyyaml": "6.0.2"
+  },
+  "determinism_eval_only": {
+    "PYTHONHASHSEED": 0,
+    "torch_use_deterministic_algorithms": true,
+    "cudnn_deterministic": true,
+    "cudnn_benchmark": false,
+    "CUBLAS_WORKSPACE_CONFIG": ":16:8"
+  },
+  "router": {
+    "wfq": {"global_tokens_per_sec": 120, "per_engine": {"hf": 90, "llamacpp": 60}, "max_queue": 64},
+    "engines": {
+      "hf": {"ctx_safe": 8192, "kv_offload": "cpu", "kv_dtype": "fp16"},
+      "llamacpp": {"ctx_stretch": 16384, "cache_q": "q4_0"}
+    }
+  },
+  "budgets": {
+    "lanes": {
+      "dev":   {"p99_s": 4.5, "j_per_inf_from_file": "pins/energy.cal.json:dev.Jmean",   "global_qps_cap": 4, "max_ctx": 16384},
+      "promo": {"p99_s": 4.5, "j_per_inf_from_file": "pins/energy.cal.json:promo.Jmean", "global_qps_cap": 3, "max_ctx": 16384}
+    },
+    "slo": {"p95_s": 3.5, "p99_s": 4.5, "max_vram_gb": 23.5, "max_energy_delta_pct": 5.0},
+    "stability_cv_caps_pct": {"p95": 7.0, "p99": 10.0, "j_per_inf": 6.0},
+    "tost_equivalence": {"p95_s_delta": 0.25, "p99_s_delta": 0.35, "j_per_inf_pct": 4.0},
+    "calibration": {
+      "status": "required",
+      "writer": "files/probes/energy_calibrate.py",
+      "outputs": "pins/energy.cal.json",
+      "required_energy_mode": "consistent",
+      "fail_closed_on_missing": true
+    }
+  },
+  "council": {
+    "roles": ["Unit","Property","Adversarial","Runtime-SLO","Safety"],
+    "rubric_path": "files/configs/council_rubric.json",
+    "promotion_pass_rule": "All 5 pass OR (>=4/5 with Safety and Adversarial mandatory AND p99_margin_s <= -0.05)",
+    "graduation_rule": "All B1–B5 must pass for AGI graduation (no exceptions).",
+    "shadow_deploy_hours": 24
+  },
+  "gate_v2": {
+    "seeds": [5,7,11],
+    "multiple_comparisons": "Holm-Bonferroni",
+    "promote_exactly": 1,
+    "tie_break": ["acc_mean_desc","jinf_asc","p99_asc"],
+    "global_caps": {
+      "wmp_head_params_m_max": 5.0,
+      "lora_adapter_params_m_max": 40.0,
+      "precedence": "single_source_of_truth"
+    },
+    "micro": {
+      "acc_delta_abs_min_pct": 1.0,
+      "ece_delta_abs_max": -0.01,
+      "caps": {"flops_pct": 3, "vram_gb_delta": 1.0, "params_active_m": 40, "tps_delta_pct": 5, "j_per_inf_delta_pct": 5},
+      "tails": {"p95_s_max": 3.5, "p99_s_max": 4.5}
+    },
+    "mael": {
+      "allowed_edits": ["routing_policy","gated_mha","tiny_residual_mlp","aux_loss_head","bottleneck_codec"],
+      "acc_delta_abs_min_pct": 2.0,
+      "ece_delta_abs_max": -0.015,
+      "caps": {"params_delta_m": 20, "flops_pct": 3, "vram_gb_delta": 1.0},
+      "tails": {"p95_s_max": 3.5, "p99_s_max": 4.5}
+    },
+    "catastrophic_veto": {"task_drop_abs_pct": -3.0, "domain_drop_abs_pct": -1.5, "domain_ece_rise_abs": 0.02, "p99_over_slo_s": 0.5}
+  },
+  "novelty": {
+    "require_both": true,
+    "embed_model": "sentence-transformers/all-MiniLM-L6-v2",
+    "embed_model_sha256_from_file": "pins/embed.sha256",
+    "cosine_max": 0.90,
+    "minhash": {"n_perm": 128, "ngram": 5, "jaccard_max": 0.75},
+    "train_corpus_index": "data/train.idx",
+    "train_corpus_index_sha256_from_file": "pins/train.idx.sha256"
+  },
+  "atf": {
+    "weekly_new_tasks": 3,
+    "cpu_seconds_cap": 30,
+    "mem_mb_cap": 512,
+    "unit_property_pass_min": 0.95,
+    "target_gain_abs_min_pct": 10,
+    "time_budget_hours": 2,
+    "tst": {"wall_clock_hours_max": 2, "attempts_max": 3},
+    "consistency_checks": ["bars.B2.time_budget_hours == atf.tst.wall_clock_hours_max"]
+  },
+  "oll": {"ewc_lambda": 2.0, "replay_ratio": 0.25, "kl_reg": 0.02, "domain_drift_cap_pct": 2.0, "disable_on_ece_increase": true},
+  "wmp": {"head_params_m": 5.0, "enable_if_gain_abs_min_pct": 10, "suites": 3, "paired_t_test_95ci": true},
+  "rag": {
+    "hot_hnsw": {"efSearch_min": 64, "shard_ram_gb_max": 16},
+    "cold_ivf_pq": {"nlist": 4096, "m": 96, "recall_at_10_min": 0.92},
+    "eval_set": {"path": "data/rag10k.parquet", "sha256_from_file": "pins/rag.sha256"}
+  },
+  "bars": {
+    "B1": {"domains": ["MATH","CODE","LANG","VISION","PLAN","TOOL","RETRIEVAL","LOGIC"], "delta_abs_min_pct": 10, "window_days": 30, "max_domain_drop_abs_pct": 2},
+    "B2": {"weekly_tasks": 3, "novelty_guard": "both", "score_target_pct": 70, "time_budget_hours": 2, "tests_pass_min": 95},
+    "B3": {"transfer_domains_min": 2, "heldout_tasks": 200, "gain_abs_pct_min": 5, "persistence_days_min": 14},
+    "B4": "All promotions meet Gate v2 + budgets + CV + TOST + shadow deploy",
+    "B5": {"policy_violations": 0, "catastrophic_drop_abs_pct": 3}
+  },
+  "trust_chain": {
+    "tuf_root_fingerprint_from_file": "pins/tuf_root.fp",
+    "signer_pubkey_fingerprint_from_file": "pins/signer.fp",
+    "timestamp_required": true,
+    "transparency_log": {"path": "logs/rekor-local.jsonl", "append_only": true},
+    "payload_hash_definition": "payload_hash = SHA256( tar-zstd(@inputs, sorted by path, no timestamps) )"
+  },
+  "reproducibility": {
+    "envlock": {"driver": "query", "cuda": "12.x", "pytorch": "2.2.0+cu121", "env_hash_file": "files/configs/env.hash"},
+    "bench_lock": {
+      "suites": {
+        "ALFWorld-Long":    {"commit_from_file": "pins/alfworld.commit", "seed": 7, "n": 1000, "sha256_from_file": "pins/alfworld.sha256"},
+        "WebArena-Tasks":   {"commit_from_file": "pins/webarena.commit", "seed": 7, "n": 500,  "sha256_from_file": "pins/webarena.sha256"},
+        "HotPotQA-Chain-100hop": {"commit_from_file": "pins/hotpot.commit",   "seed": 7, "n": 1000, "sha256_from_file": "pins/hotpot.sha256"}
+      },
+      "scorers": {
+        "exact_match_py_sha256_from_file": "pins/scorer_em.sha256",
+        "ece_py_sha256_from_file": "pins/scorer_ece.sha256"
+      }
+    },
+    "ci_fail_closed_on_unpinned": true
+  },
+  "policy_suite": {
+    "zero_violation_required": true,
+    "sets": [
+      {"name": "advbench-lite", "version": "v1.2", "path": "files/policy/advbench-lite-v1.2.jsonl", "sha256_from_file": "pins/adv.sha256"},
+      {"name": "harmful-eval-lite", "version": "v0.9", "path": "files/policy/harmful-eval-lite-v0.9.jsonl", "sha256_from_file": "pins/harm.sha256"}
+    ]
+  },
+  "ci_assertions": [
+    "require_file pins/embed.sha256 pins/train.idx.sha256 pins/rag.sha256 pins/adv.sha256 pins/harm.sha256 pins/energy.cal.json",
+    "eq gate_v2.global_caps.lora_adapter_params_m_max gate_v2.micro.caps.params_active_m",
+    "eq bars.B2.time_budget_hours atf.tst.wall_clock_hours_max",
+    "energy_mode_consistent pins/energy.cal.json out/out_ctx8k.json out/out_ctx16k.json",
+    "ledger_append_only logs/rekor-local.jsonl"
+  ],
+  "schema_checks": [
+    {"schema": "files/schemas/pvals.schema.json",            "data": "out/pvals.json"},
+    {"schema": "files/schemas/b1_b5_report.schema.json",     "data": "reports/b1_b5_report.json"},
+    {"schema": "files/schemas/metrics.daily.schema.json",    "data": "logs/metrics.daily.jsonl"},
+    {"schema": "files/schemas/atf_result.schema.json",       "data": "logs/atf.daily.jsonl"}
+  ],
+  "ci_artifact_bundle": {
+    "path": "out/ucbxtot-proof.tar.zst",
+    "include": [
+      "out/out_ctx8k.json",
+      "out/out_ctx16k.json",
+      "out/cv_tost.json",
+      "out/pvals.json",
+      "out/novelty.json",
+      "out/policy_scan.json",
+      "out/ledger_check.json",
+      "out/energy_mode_check.json",
+      "out/payload.hash",
+      "pins/*.sha256",
+      "pins/*.commit",
+      "pins/energy.cal.json",
+      "files/configs/env.hash",
+      "logs/rekor-local.jsonl",
+      "logs/atf.daily.jsonl",
+      "reports/b1_b5_report.json"
+    ]
+  },
+  "commands": {
+    "setup": [
+      "python -m venv agi && source agi/bin/activate",
+      "pip install -U pip",
+      "pip install torch==2.2.0+cu121 --index-url https://download.pytorch.org/whl/cu121",
+      "pip install transformers accelerate bitsandbytes faiss-cpu numpy pynvml peft sentence-transformers datasketch pyyaml scikit-learn jsonschema zstandard"
+    ],
+    "preflight": [
+      "python files/tools/envlock_hash.py"
+    ],
+    "calibrate_energy": [
+      "python files/probes/energy_calibrate.py"
+    ],
+    "probes": [
+      "python files/probes/latency_energy_probe.py > out/out_ctx8k.json",
+      "CTX=16384 python files/probes/latency_energy_probe.py > out/out_ctx16k.json"
+    ],
+    "assertions": [
+      "python files/tools/assert_caps_equal.py UCBxTOT-gold.json",
+      "python files/tools/energy_mode_assert.py pins/energy.cal.json out/out_ctx8k.json out/out_ctx16k.json"
+    ],
+    "novelty_policy": [
+      "python tools/leak_guard.py --new atf/tasks.jsonl --train data/train.idx --cos 0.90 --jac 0.75 --ngram 5 > out/novelty.json",
+      "python files/tools/verify_hashes.py --manifest UCBxTOT-gold.json > out/policy_scan.json"
+    ],
+    "stats_checks": [
+      "python files/tools/cv_tost_check.py --probe out/out_ctx8k.json out/out_ctx16k.json --cv '{\"p95\":7,\"p99\":10,\"j\":6}' --tost '{\"p95\":0.25,\"p99\":0.35,\"j_pct\":4}' > out/cv_tost.json",
+      "python tools/mcomp_holm.py --pvals out/pvals.json --alpha 0.05"
+    ],
+    "ledger": [
+      "python files/tools/ledger_check.py logs/rekor-local.jsonl > out/ledger_check.json",
+      "python files/tools/hash_payload.py out/out_ctx8k.json out/out_ctx16k.json pins/energy.cal.json > out/payload.hash"
+    ],
+    "schema_validate": [
+      "python files/tools/json_validate.py files/schemas/pvals.schema.json out/pvals.json",
+      "python files/tools/json_validate.py files/schemas/b1_b5_report.schema.json reports/b1_b5_report.json",
+      "python files/tools/json_validate.py files/schemas/metrics.daily.schema.json logs/metrics.daily.jsonl",
+      "python files/tools/json_validate.py files/schemas/atf_result.schema.json logs/atf.daily.jsonl"
+    ],
+    "b1_b5": [
+      "python files/tools/b1_b5_report.py logs/metrics.daily.jsonl > reports/b1_b5_report.json"
+    ],
+    "bundle": [
+      "bash files/ci/make_artifact_bundle.sh"
+    ]
+  }
+}
+

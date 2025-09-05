@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Daily metrics line",
+  "type": "object",
+  "required": ["day", "domain_acc"],
+  "properties": {
+    "day": { "type": "integer", "minimum": 1 },
+    "domain_acc": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "MATH": { "type": "number", "minimum": 0, "maximum": 1 },
+        "CODE": { "type": "number", "minimum": 0, "maximum": 1 },
+        "LANG": { "type": "number", "minimum": 0, "maximum": 1 },
+        "VISION": { "type": "number", "minimum": 0, "maximum": 1 },
+        "PLAN": { "type": "number", "minimum": 0, "maximum": 1 },
+        "TOOL": { "type": "number", "minimum": 0, "maximum": 1 },
+        "RETRIEVAL": { "type": "number", "minimum": 0, "maximum": 1 },
+        "LOGIC": { "type": "number", "minimum": 0, "maximum": 1 }
+      },
+      "required": ["MATH","CODE","LANG","VISION","PLAN","TOOL","RETRIEVAL","LOGIC"]
+    }
+  }
+}
+

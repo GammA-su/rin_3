@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ATF tool admission record",
+  "type": "object",
+  "required": ["ts","tool_id","attempts","wall_clock_hours","unit_pass_rate","property_pass_rate","p95_s","p99_s","accepted","novelty"],
+  "properties": {
+    "ts": { "type": "integer", "minimum": 0 },
+    "tool_id": { "type": "string" },
+    "attempts": { "type": "integer", "minimum": 1, "maximum": 3 },
+    "wall_clock_hours": { "type": "number", "minimum": 0, "maximum": 2 },
+    "unit_pass_rate": { "type": "number", "minimum": 0, "maximum": 1 },
+    "property_pass_rate": { "type": "number", "minimum": 0, "maximum": 1 },
+    "p95_s": { "type": "number", "minimum": 0 },
+    "p99_s": { "type": "number", "minimum": 0 },
+    "accepted": { "type": "boolean" },
+    "novelty": {
+      "type": "object",
+      "required": ["cosine_ok","minhash_ok"],
+      "properties": {
+        "cosine_ok": { "type": "boolean" },
+        "minhash_ok": { "type": "boolean" }
+      }
+    },
+    "reason": { "type": "string" }
+  }
+}
+

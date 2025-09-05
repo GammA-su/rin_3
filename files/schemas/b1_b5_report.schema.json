@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "B1–B5 report",
+  "type": "object",
+  "required": ["oecg_gain_abs_pct", "drops_abs_pct_max", "per_domain"],
+  "properties": {
+    "oecg_gain_abs_pct": { "type": "number" },
+    "drops_abs_pct_max": { "type": "number" },
+    "per_domain": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "MATH": { "$ref": "#/definitions/dom" },
+        "CODE": { "$ref": "#/definitions/dom" },
+        "LANG": { "$ref": "#/definitions/dom" },
+        "VISION": { "$ref": "#/definitions/dom" },
+        "PLAN": { "$ref": "#/definitions/dom" },
+        "TOOL": { "$ref": "#/definitions/dom" },
+        "RETRIEVAL": { "$ref": "#/definitions/dom" },
+        "LOGIC": { "$ref": "#/definitions/dom" }
+      },
+      "required": ["MATH","CODE","LANG","VISION","PLAN","TOOL","RETRIEVAL","LOGIC"]
+    }
+  },
+  "definitions": {
+    "dom": {
+      "type": "object",
+      "required": ["gain_abs_pct", "max_drop_abs_pct"],
+      "properties": {
+        "gain_abs_pct": { "type": "number" },
+        "max_drop_abs_pct": { "type": "number" }
+      }
+    }
+  }
+}
+

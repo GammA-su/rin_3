@@ -1,0 +1,13 @@
+{
+  "roles": {
+    "Unit":        { "weight": 0.25, "required": false },
+    "Property":    { "weight": 0.25, "required": false },
+    "Adversarial": { "weight": 0.00, "required": true,  "veto": true,  "tau_min": 0.35 },
+    "RuntimeSLO":  { "weight": 0.25, "required": false },
+    "Safety":      { "weight": 0.25, "required": true,  "veto": true }
+  },
+  "promotion_pass_rule": "all_or_four_of_five_with_safety_adversarial_and_p99_margin_le_(-0.05)",
+  "graduation_rule": "all_B1_to_B5_required",
+  "inputs_required": ["p99_margin_s","ece_delta","policy_violations","tails_ok","energy_ok"]
+}
+

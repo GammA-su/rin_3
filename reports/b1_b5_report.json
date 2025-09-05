@@ -1,0 +1,14 @@
+{
+  "oecg_gain_abs_pct": 0.0,
+  "drops_abs_pct_max": 0.0,
+  "per_domain": {
+    "MATH": {"gain_abs_pct": 0.0, "max_drop_abs_pct": 0.0},
+    "CODE": {"gain_abs_pct": 0.0, "max_drop_abs_pct": 0.0},
+    "LANG": {"gain_abs_pct": 0.0, "max_drop_abs_pct": 0.0},
+    "VISION": {"gain_abs_pct": 0.0, "max_drop_abs_pct": 0.0},
+    "PLAN": {"gain_abs_pct": 0.0, "max_drop_abs_pct": 0.0},
+    "TOOL": {"gain_abs_pct": 0.0, "max_drop_abs_pct": 0.0},
+    "RETRIEVAL": {"gain_abs_pct": 0.0, "max_drop_abs_pct": 0.0},
+    "LOGIC": {"gain_abs_pct": 0.0, "max_drop_abs_pct": 0.0}
+  }
+}

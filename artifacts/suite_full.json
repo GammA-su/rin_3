@@ -207,7 +207,7 @@
     "dissent_recall_fraction": 0.5,
     "attempts": [
       {
-        "kind": "mock-pilot",
+        "kind": "pilot",
         "ok": true,
         "http": {
           "phase": "mock",
@@ -221,7 +221,7 @@
         "len": 1
       },
       {
-        "kind": "mock-critic",
+        "kind": "critic",
         "ok": true,
         "http": {
           "phase": "mock",
@@ -235,7 +235,7 @@
         "len": 1
       },
       {
-        "kind": "mock-critic",
+        "kind": "critic",
         "ok": true,
         "http": {
           "phase": "mock",
@@ -249,6 +249,8 @@
         "len": 1
       }
     ],
+    "pilot_lat_ms": 0.0,
+    "pilot_energy_j": null,
     "explain": {
       "claim_ids": [
         "c1",
