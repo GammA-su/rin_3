@@ -56,4 +56,3 @@ out["promo"]["Jmean"] = res8["Jmean"] * 0.96
 os.makedirs("pins", exist_ok=True)
 open("pins/energy.cal.json","w").write(json.dumps(out, indent=2))
 print(json.dumps(out, indent=2))
-

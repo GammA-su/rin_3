@@ -74,4 +74,3 @@ out = {
   "j_per_inf": float(np.mean(energy))
 }
 print(json.dumps(out))
-

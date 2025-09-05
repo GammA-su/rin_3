@@ -38,11 +38,19 @@
     "CUBLAS_WORKSPACE_CONFIG": ":16:8"
   },
   "router": {
-    "wfq": {"global_tokens_per_sec": 120, "per_engine": {"hf": 90, "llamacpp": 60}, "max_queue": 64},
+    "wfq": {"global_tokens_per_sec": 120, "per_engine": {"hf": 90, "llamacpp": 60, "jan_api": 90}, "max_queue": 64},
     "engines": {
       "hf": {"ctx_safe": 8192, "kv_offload": "cpu", "kv_dtype": "fp16"},
-      "llamacpp": {"ctx_stretch": 16384, "cache_q": "q4_0"}
+      "llamacpp": {"ctx_stretch": 16384, "cache_q": "q4_0"},
+      "jan_api": {"type": "openai", "base_url": "http://127.0.0.1:1337/v1", "model": "janhq/Jan-v1-4B-GGUF:Q4_K_M", "ctx_safe": 8192}
     }
+  },
+  "routes": {
+    "PLAN": "jan_api",
+    "TOOL": "jan_api",
+    "LOGIC": "jan_api",
+    "LANG": "hf",
+    "RETRIEVAL": "hf"
   },
   "budgets": {
     "lanes": {
@@ -235,4 +243,3 @@
     ]
   }
 }
-

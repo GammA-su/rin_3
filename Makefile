@@ -8,3 +8,7 @@ nsv:        ## Run NSV batch proof
 	python3 guardian_agi_min.py --task nsv
 oe:         ## Log one episode
 	python3 guardian_agi_min.py --task oe
+
+.PHONY: smoke-energy
+smoke-energy: ## OOM-safe energy smoke (BACKEND=hf|ollama|vllm)
+	bash scripts/smoke_energy.sh

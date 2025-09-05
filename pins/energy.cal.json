@@ -1,7 +1,13 @@
 {
   "energy_mode": "nvml_total",
-  "measured_ctx8k": {"Jmean": 1.0, "Jcv_pct": 1.0},
-  "dev":   {"Jmean": 1.0},
-  "promo": {"Jmean": 0.96}
+  "measured_ctx8k": {
+    "Jmean": 42.631333333343115,
+    "Jcv_pct": 83.87226267082681
+  },
+  "dev": {
+    "Jmean": 42.631333333343115
+  },
+  "promo": {
+    "Jmean": 40.926080000009385
+  }
 }
-

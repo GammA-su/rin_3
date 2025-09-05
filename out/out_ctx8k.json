@@ -1,1 +1,1 @@
-{"ctx":8192,"energy_mode":"nvml_total","samples":0,"p95_s":0.0,"p99_s":0.0,"vram_gb":0.0,"j_per_inf":0.0}
+{"ctx": 2048, "energy_mode": "nvml_total", "samples": 3, "sample_period_ms": 0.0, "p50_s": 0.061391353607177734, "p95_s": 0.06804823875427246, "p99_s": 0.06804823875427246, "vram_gb": 17.10030848, "j_per_inf": 13.112999999992704}
