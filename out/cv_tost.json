@@ -1,1 +1,16 @@
-{"cv": {"p95_ok": true, "p99_ok": true, "j_ok": true}, "tost": {"p95_ok": true, "p99_ok": true, "j_ok": true}, "pass": true}
+{
+  "cv": {
+    "p95_cv_pct": 0.0,
+    "p99_cv_pct": 0.0,
+    "j_cv_pct": 0.0,
+    "p95_ok": true,
+    "p99_ok": true,
+    "j_ok": true
+  },
+  "tost": {
+    "p95_ok": true,
+    "p99_ok": true,
+    "j_ok": true
+  },
+  "pass": true
+}

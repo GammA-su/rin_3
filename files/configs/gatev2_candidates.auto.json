@@ -1,0 +1,50 @@
+{
+  "stage": "micro",
+  "candidates": [
+    {
+      "name": "auto-micro",
+      "acc_mean": 0.025,
+      "caps": {
+        "flops_pct": 2.0,
+        "vram_gb_delta": 0.6,
+        "params_active_m": 40.0,
+        "tps_delta_pct": 2.0,
+        "j_per_inf_delta_pct": 3.0
+      },
+      "tails": {
+        "p95_s": 0.0,
+        "p99_s": 0.0
+      },
+      "per_seed": {
+        "5": {
+          "acc_delta_abs_pct": 1.5,
+          "ece_delta_abs": -0.012,
+          "p95_s": 0.0,
+          "p99_s": 0.0,
+          "catastrophic_veto": false
+        },
+        "7": {
+          "acc_delta_abs_pct": 1.6,
+          "ece_delta_abs": -0.013,
+          "p95_s": 0.0,
+          "p99_s": 0.0,
+          "catastrophic_veto": false
+        },
+        "11": {
+          "acc_delta_abs_pct": 1.7,
+          "ece_delta_abs": -0.016,
+          "p95_s": 0.0,
+          "p99_s": 0.0,
+          "catastrophic_veto": false
+        }
+      },
+      "pvals": {
+        "demo-suite": {
+          "5": 0.04,
+          "7": 0.035,
+          "11": 0.025
+        }
+      }
+    }
+  ]
+}

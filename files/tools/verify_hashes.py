@@ -22,6 +22,7 @@ def main():
     args = ap.parse_args()
 
     spec = json.load(open(args.manifest))
+    fail_closed = bool(spec.get('reproducibility', {}).get('ci_fail_closed_on_unpinned', False))
     results = {"policy": [], "bench_pins_present": []}
     ok_all = True
 
@@ -64,11 +65,10 @@ def main():
         results["bench_pins_present"].append(pres)
         ok_all = ok_all and pres["sha256_pin_present"] and pres["commit_pin_present"]
 
-    print(json.dumps({"ok": ok_all, **results}))
-    if not ok_all:
-        # Non-fatal: exit 0 so your pipeline can still gather outputs; adjust to 1 to fail hard.
-        sys.exit(0)
+    out = {"ok": ok_all, **results}
+    print(json.dumps(out))
+    if not ok_all and fail_closed:
+        sys.exit(1)
 
 if __name__ == '__main__':
     main()
-

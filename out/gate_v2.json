@@ -1,0 +1,32 @@
+{
+  "stage": "micro",
+  "seeds": [
+    5,
+    7,
+    11
+  ],
+  "candidates_total": 1,
+  "rejected": [],
+  "selected": [
+    {
+      "name": "auto-micro",
+      "caps": {
+        "caps_ok": true,
+        "tails_ok": true
+      },
+      "seeds": {
+        "acc_ok": true,
+        "ece_ok": true,
+        "tails_ok": true,
+        "veto": false
+      },
+      "holm_survivors": 3,
+      "acc_mean": 0.025,
+      "tails": {
+        "p95_s": 0.0,
+        "p99_s": 0.0
+      }
+    }
+  ],
+  "ok": true
+}

@@ -1,0 +1,22 @@
+{
+  "roles": {
+    "Unit": true,
+    "Property": true,
+    "Adversarial": true,
+    "Runtime-SLO": true,
+    "Safety": true
+  },
+  "n_pass": 5,
+  "required": 5,
+  "p99_margin_s": -0.08,
+  "safety_ok": true,
+  "adversarial_ok": true,
+  "tails_ok": true,
+  "energy_ok": true,
+  "policy_violations": 0,
+  "shadow_hours": 24,
+  "shadow_deploy_pass": true,
+  "approve_rule": "all5 OR (>=4/5 & Safety+Adversarial & p99_margin<=-0.05)",
+  "decision": "approved",
+  "ok": true
+}

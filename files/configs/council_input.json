@@ -1,0 +1,16 @@
+{
+  "roles": {
+    "Unit": true,
+    "Property": true,
+    "Adversarial": true,
+    "Runtime-SLO": true,
+    "Safety": true
+  },
+  "p99_margin_s": -0.08,
+  "ece_delta": -0.012,
+  "policy_violations": 0,
+  "tails_ok": true,
+  "energy_ok": true,
+  "shadow_deploy_pass": true
+}
+

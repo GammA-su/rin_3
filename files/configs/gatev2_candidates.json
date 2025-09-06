@@ -1,0 +1,30 @@
+{
+  "stage": "micro",
+  "candidates": [
+    {
+      "name": "micro-A",
+      "acc_mean": 0.025,
+      "caps": {"flops_pct": 2.0, "vram_gb_delta": 0.6, "params_active_m": 40, "tps_delta_pct": 2.0, "j_per_inf_delta_pct": 3.0},
+      "tails": {"p95_s": 3.2, "p99_s": 4.2},
+      "per_seed": {
+        "5":  {"acc_delta_abs_pct": 1.6, "ece_delta_abs": -0.012, "p95_s": 3.1, "p99_s": 4.1, "catastrophic_veto": false},
+        "7":  {"acc_delta_abs_pct": 1.4, "ece_delta_abs": -0.013, "p95_s": 3.2, "p99_s": 4.2, "catastrophic_veto": false},
+        "11": {"acc_delta_abs_pct": 1.8, "ece_delta_abs": -0.016, "p95_s": 3.2, "p99_s": 4.2, "catastrophic_veto": false}
+      },
+      "pvals": {"demo-suite": {"5": 0.040, "7": 0.035, "11": 0.025}}
+    },
+    {
+      "name": "micro-B",
+      "acc_mean": 0.021,
+      "caps": {"flops_pct": 3.5, "vram_gb_delta": 1.3, "params_active_m": 44, "tps_delta_pct": 6.0, "j_per_inf_delta_pct": 6.0},
+      "tails": {"p95_s": 3.6, "p99_s": 4.7},
+      "per_seed": {
+        "5":  {"acc_delta_abs_pct": 0.8, "ece_delta_abs": -0.009, "p95_s": 3.6, "p99_s": 4.7, "catastrophic_veto": false},
+        "7":  {"acc_delta_abs_pct": 0.7, "ece_delta_abs": -0.008, "p95_s": 3.5, "p99_s": 4.6, "catastrophic_veto": true},
+        "11": {"acc_delta_abs_pct": 0.9, "ece_delta_abs": -0.010, "p95_s": 3.6, "p99_s": 4.6, "catastrophic_veto": false}
+      },
+      "pvals": {"demo-suite": {"5": 0.20, "7": 0.30, "11": 0.40}}
+    }
+  ]
+}
+
