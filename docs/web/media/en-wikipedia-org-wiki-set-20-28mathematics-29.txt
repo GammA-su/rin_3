@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Set%20%28mathematics%29
+
+In mathematics, a set is a collection of different things; the things are elements or members of the set and are typically mathematical objects: numbers, symbols, points in space, lines, other geometric shapes, variables, or other sets. A set may be finite or infinite. There is a unique set with no elements, called the empty set; a set with a single element is a singleton.

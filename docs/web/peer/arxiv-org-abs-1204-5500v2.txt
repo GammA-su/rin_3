@@ -1,0 +1,16 @@
+http://arxiv.org/abs/1204.5500v2
+
+This note extends the analysis of incremental PageRank in [B. Bahmani, A.
+Chowdhury, and A. Goel. Fast Incremental and Personalized PageRank. VLDB 2011].
+In that work, the authors prove a running time of $O(\frac{nR}{\epsilon^2}
+\ln(m))$ to keep PageRank updated over $m$ edge arrivals in a graph with $n$
+nodes when the algorithm stores $R$ random walks per node and the PageRank
+teleport probability is $\epsilon$. To prove this running time, they assume
+that edges arrive in a random order, and leave it to future work to extend
+their running time guarantees to adversarial edge arrival. In this note, we
+show that the random edge order assumption is necessary by exhibiting a graph
+and adversarial edge arrival order in which the running time is $\Omega \left(R
+n m^{\lg{\frac{3}{2}(1-\epsilon)}}\right)$. More generally, for any integer $d
+\geq 2$, we construct a graph and adversarial edge order in which the running
+time is $\Omega \left(R n m^{\log_d(H_d (1-\epsilon))}\right)$, where $H_d$ is
+the $d$th harmonic number.

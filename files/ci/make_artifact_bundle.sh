@@ -18,7 +18,7 @@ MANDATORY=(
   logs/atf.daily.jsonl
   reports/b1_b5_report.json
 )
-OPTIONAL=( out/gate_v2.json out/council.json out/promotion.hash )
+OPTIONAL=( out/gate_v2.json out/council.json out/promotion.hash out/proof_status.json out/latency_samples_ctx*.json )
 
 ARGS=()
 for f in "${MANDATORY[@]}"; do

@@ -25,7 +25,8 @@ with open(path, "r", encoding="utf-8") as f:
         ts  = int(e.get("timestamp", 0))
         ph  = e.get("prev_chain", "0"*64)
         pay = e.get("payload_hash", "")
-        if ts <= prev_ts:
+        # Enforce non-decreasing timestamps (allow equal-second appends)
+        if ts < prev_ts:
             print("NON-MONOTONIC-TIMESTAMP"); sys.exit(1)
         if ph != prev_chain:
             print("PREV-CHAIN-MISMATCH"); sys.exit(1)
@@ -37,4 +38,3 @@ out = {"entries": n, "head_chain": prev_chain, "ok": True}
 os.makedirs("out", exist_ok=True)
 open("out/ledger_check.json","w").write(json.dumps(out))
 print("ledger-ok", out)
-

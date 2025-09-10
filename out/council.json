@@ -8,7 +8,7 @@
   },
   "n_pass": 5,
   "required": 5,
-  "p99_margin_s": -0.08,
+  "p99_margin_s": -4.360140800476074,
   "safety_ok": true,
   "adversarial_ok": true,
   "tails_ok": true,

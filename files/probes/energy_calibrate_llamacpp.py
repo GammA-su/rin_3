@@ -1,7 +1,8 @@
-import os, json, time, math
+import os, json, time, math, sys
 import numpy as np
 import pynvml as nv
 import requests
+from requests.exceptions import RequestException
 
 SERVER = os.getenv("SERVER", "http://127.0.0.1:8080")
 CTX    = int(os.getenv("CTX", "8192"))
@@ -37,14 +38,18 @@ for _ in range(N):
     while True:
         tries += 1
         payload = {"prompt": make_prompt(eff_ctx), "n_predict": NEW, "temperature": 0.0, "cache_prompt": True}
-        if energy_mode == "nvml_total":
-            e0 = nv.nvmlDeviceGetTotalEnergyConsumption(h)/1000.0; t0=time.time()
-            r = requests.post(url, headers=headers, data=json.dumps(payload), timeout=600)
-            t1=time.time()
-        else:
-            t0=time.time();
-            r = requests.post(url, headers=headers, data=json.dumps(payload), timeout=600)
-            t1=time.time()
+        try:
+            if energy_mode == "nvml_total":
+                e0 = nv.nvmlDeviceGetTotalEnergyConsumption(h)/1000.0; t0=time.time()
+                r = requests.post(url, headers=headers, data=json.dumps(payload), timeout=30)
+                t1=time.time()
+            else:
+                t0=time.time();
+                r = requests.post(url, headers=headers, data=json.dumps(payload), timeout=30)
+                t1=time.time()
+        except RequestException:
+            print("LLAMACPP-CONNECTION-ERROR: server not reachable at", SERVER, file=sys.stderr)
+            sys.exit(0)
         if r.status_code == 400 and eff_ctx > 64:
             eff_ctx = max(64, int(eff_ctx * 0.8))
             if tries < 6:

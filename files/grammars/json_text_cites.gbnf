@@ -1,0 +1,14 @@
+# Minimal JSON grammar for an object with keys: text (string) and cites (array of strings)
+
+root   ::= object
+
+object ::= '{' ws '"text"' ws ':' ws string ws ',' ws '"cites"' ws ':' ws array ws '}'
+
+array  ::= '[' ws [ string ( ws ',' ws string )* ] ws ']'
+
+string ::= '"' chars '"'
+chars  ::= { char }*
+char   ::= [^"\\] | '\\' ["\\/bfnrt] | '\\u' hex hex hex hex
+hex    ::= [0-9a-fA-F]
+ws     ::= [ \t\n\r]*
+

@@ -29,10 +29,10 @@ def last_chain(path: str) -> tuple[int, str]:
             if last:
                 e = json.loads(last)
                 ts = int(e.get("timestamp", -1))
-                chain = e.get("prev_chain", "0" * 64)
+                prev = e.get("prev_chain", "0" * 64)
                 # recompute head from last entry for safety
                 pay = e.get("payload_hash", "")
-                h = hashlib.sha256((chain + pay + str(ts)).encode()).hexdigest()
+                h = hashlib.sha256((prev + pay + str(ts)).encode()).hexdigest()
                 chain = h
     except Exception:
         pass
@@ -52,8 +52,10 @@ def main():
         sys.exit(2)
     log_path = sys.argv[1]
     payload_hash = load_payload_hash(sys.argv[2])
-    _, prev_head = last_chain(log_path)
-    ts = int(time.time())
+    last_ts, prev_head = last_chain(log_path)
+    now = int(time.time())
+    # Enforce strictly monotonic timestamps to satisfy ledger check
+    ts = now if now > last_ts else (last_ts + 1)
     entry = {"timestamp": ts, "prev_chain": prev_head, "payload_hash": payload_hash}
     with open(log_path, "a", encoding="utf-8") as f:
         f.write(json.dumps(entry) + "\n")
@@ -62,4 +64,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

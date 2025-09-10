@@ -7,14 +7,16 @@ Inputs (defaults):
   --probe8 out/out_ctx8k.json
   --probe16 out/out_ctx16k.json
   --energy pins/energy.cal.json
+  --pvals-in files/configs/pvals.input.json   (optional: pvals.schema.json format)
   --out files/configs/gatev2_candidates.auto.json
 
 Notes:
   - This constructs a single 'micro' candidate ('auto-micro') whose tails
     are derived from the worse of the two probe contexts.
   - Caps are set conservatively under spec limits so Gate cap checks pass.
-  - Per-seed metrics and p-values are placeholders sized to pass Gate v2.
-    Replace with your real eval deltas and p-values as they become available.
+  - If --pvals-in is provided, its suites/seeds are embedded into the candidate
+    'pvals' mapping. Otherwise, a demo mapping is used as placeholder.
+  - Replace placeholder per-seed deltas and p-values with your real eval data.
 """
 
 from __future__ import annotations
@@ -32,6 +34,7 @@ def main():
     ap.add_argument("--probe16", default="out/out_ctx16k.json")
     ap.add_argument("--energy", default="pins/energy.cal.json")
     ap.add_argument("--out", default="files/configs/gatev2_candidates.auto.json")
+    ap.add_argument("--pvals-in", default="", help="Optional pvals.json (schema) to embed into candidate")
     args = ap.parse_args()
 
     spec = _load(args.spec)
@@ -59,8 +62,26 @@ def main():
         "11": {"acc_delta_abs_pct": 1.7, "ece_delta_abs": -0.016, "p95_s": p95, "p99_s": p99, "catastrophic_veto": False},
     }
 
-    # Placeholder p-values (replace with real evaluation)
+    # P-values (optional real input)
     pdoc = {"demo-suite": {"5": 0.040, "7": 0.035, "11": 0.025}}
+    if args.pvals_in:
+        try:
+            pv = _load(args.pvals_in)
+            # pv conforms to files/schemas/pvals.schema.json
+            suites = pv.get("suites", [])
+            real = {}
+            for s in suites:
+                name = s.get("name")
+                seed_rows = s.get("per_seed", [])
+                if not name:
+                    continue
+                real[name] = {}
+                for row in seed_rows:
+                    real[name][str(int(row.get("seed")))] = float(row.get("p"))
+            if real:
+                pdoc = real
+        except Exception:
+            pass
 
     manifest = {
         "stage": "micro",
@@ -83,4 +104,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

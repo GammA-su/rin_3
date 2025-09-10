@@ -1,0 +1,28 @@
+http://arxiv.org/abs/1708.00779v3
+
+Since the earliest electroencephalography experiments, large scale
+oscillations have been observed in the mammalian brain. More recently, episodes
+of oscillation and bursting have been identified not only in the cerebral
+cortex and thalamus, but pervasively in the healthy basal ganglia. The basal
+ganglia mediated synchronization model, introduced here, implicates these
+episodes in the integration of stimulus-response and reinforcement mechanisms
+in the basal ganglia with cortical association mechanisms. In so doing, the
+model helps explain how oscillations and synchrony are functionally central,
+and in particular, how they organize neural activity to exploit the selectivity
+of coincidence detectors in cortex and beyond. In the core mechanism of the
+model, salient spatiotemporal activity patterns in cortex are selectively
+focused by and routed through the basal ganglia to the thalamus. Coherent
+thalamocortical activity patterns then project back to widely separated areas
+of cortex, where they establish and facilitate contextually appropriate
+functional connections, while disconnecting and inhibiting competing ones.
+Corticostriatal, striatopallidal, and striatonigral conduction delays are
+crucial to this mechanism. These delays are unusually long, and unusually
+varied, in arrangements that facilitate learning of useful time alignments and
+associated resonant frequencies. Other structural arrangements in the basal
+ganglia show further specialization for this role, with convergence in the
+inputs from cortex, and divergence in many of the return paths to cortex, that
+systematically reflect corticocortical anatomical connectivity. The basal
+ganglia also target the dopaminergic, cholinergic, and serotonergic centers of
+the brainstem and basal forebrain, and the intralaminar and reticular nuclei of
+the thalamus, structures broadly implicated in the modulation of network
+activity and [...]

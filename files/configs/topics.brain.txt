@@ -1,0 +1,61 @@
+Predictive coding in cortex
+Global Workspace Theory and broadcast
+Biased competition model of attention
+Thalamocortical loops and gating
+Cortical microcircuits (canonical column)
+Recurrent computation in cortex
+Dendritic computation and nonlinear integration
+Synaptic plasticity: Hebbian, STDP, BCM
+Homeostatic plasticity and metaplasticity
+Neuromodulators: dopamine, acetylcholine, norepinephrine, serotonin
+Dopamine reward prediction error signaling
+Basal ganglia action selection circuits
+Cerebellum predictive control and timing
+Hippocampus indexing theory
+Systems memory consolidation (hippocampus→neocortex)
+Working memory in prefrontal cortex
+Executive control and task set maintenance
+Place cells and grid cells (cognitive maps)
+Theta–gamma coupling and phase coding
+Communication through coherence (CTC)
+Sparse coding in sensory cortex
+Invariant object recognition (ventral stream)
+Active inference and free-energy principle
+Bayesian brain hypothesis
+Credit assignment in multilayer cortex
+Neuromodulatory control of plasticity
+Sleep stages and memory consolidation
+Synaptic tagging and capture
+LTP and LTD mechanisms and rules
+Spike timing–dependent plasticity variants
+Predictive timing in cerebellar circuits
+Top-down vs bottom-up attention
+Decision making and drift-diffusion models
+Energy efficiency and metabolic constraints in brain
+Connectomics and wiring constraints
+Dorsal vs ventral processing streams
+Predictive coding vs redundancy reduction
+Hierarchical temporal memory (biological inspirations)
+Language networks (Broca/Wernicke pathways)
+
+# Dopamine system (focused module)
+Midbrain dopamine nuclei (VTA, SNc) and projections
+Nigrostriatal, mesolimbic, mesocortical, tuberoinfundibular pathways
+Dopamine receptor families: D1-like vs D2-like (affinity, coupling)
+Phasic vs tonic dopamine firing and behavioral significance
+Temporal-difference learning and reward prediction errors in DA neurons
+D1 (direct) vs D2 (indirect) basal ganglia pathways and gating
+Hyperdirect pathway and rapid stopping (STN–GPi)
+Striosome vs matrix compartments in striatum
+Dopamine–acetylcholine interactions in striatum (cholinergic interneurons)
+Dopamine modulation of STDP and eligibility traces
+Motivation, vigor, and effort-based decision making (dopamine)
+Exploration–exploitation tradeoff and tonic DA
+Working memory gating in prefrontal cortex (dopamine D1/D2 balance)
+Incentive salience vs hedonic impact (wanting vs liking)
+Addiction and sensitization (dopamine system dysregulation)
+Parkinson’s disease: DA loss, L-DOPA, DBS mechanisms
+Schizophrenia and dopamine hypotheses
+DAT/VMAT2 transporters and dopamine reuptake/packaging
+Tyrosine hydroxylase, synthesis, and autoreceptors
+Circadian and sleep influences on dopamine signaling

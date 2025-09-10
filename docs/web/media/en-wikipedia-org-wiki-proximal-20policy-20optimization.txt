@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Proximal%20policy%20optimization
+
+Proximal policy optimization (PPO) is a reinforcement learning (RL) algorithm for training an intelligent agent. Specifically, it is a policy gradient method, often used for deep RL when the policy network is very large.

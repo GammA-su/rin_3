@@ -1,0 +1,23 @@
+http://arxiv.org/abs/2203.11022v6
+
+This study proposes voltage-dependent-synaptic plasticity (VDSP), a novel
+brain-inspired unsupervised local learning rule for the online implementation
+of Hebb's plasticity mechanism on neuromorphic hardware. The proposed VDSP
+learning rule updates the synaptic conductance on the spike of the postsynaptic
+neuron only, which reduces by a factor of two the number of updates with
+respect to standard spike-timing-dependent plasticity (STDP). This update is
+dependent on the membrane potential of the presynaptic neuron, which is readily
+available as part of neuron implementation and hence does not require
+additional memory for storage. Moreover, the update is also regularized on
+synaptic weight and prevents explosion or vanishing of weights on repeated
+stimulation. Rigorous mathematical analysis is performed to draw an equivalence
+between VDSP and STDP. To validate the system-level performance of VDSP, we
+train a single-layer spiking neural network (SNN) for the recognition of
+handwritten digits. We report 85.01 $ \pm $ 0.76% (Mean $ \pm $ S.D.) accuracy
+for a network of 100 output neurons on the MNIST dataset. The performance
+improves when scaling the network size (89.93 $ \pm $ 0.41% for 400 output
+neurons, 90.56 $ \pm $ 0.27 for 500 neurons), which validates the applicability
+of the proposed learning rule for spatial pattern recognition tasks. Future
+work will consider more complicated tasks. Interestingly, the learning rule
+better adapts than STDP to the frequency of input signal and does not require
+hand-tuning of hyperparameters

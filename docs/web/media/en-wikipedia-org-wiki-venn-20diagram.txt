@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Venn%20diagram
+
+A Venn diagram is a widely used diagram style that shows the logical relation between sets, popularized by John Venn (1834–1923) in the 1880s. The diagrams are used to teach elementary set theory, and to illustrate simple set relationships in probability, logic, statistics, linguistics and computer science. A Venn diagram uses simple closed curves on a plane to represent sets. The curves are often circles or ellipses.

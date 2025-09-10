@@ -1,0 +1,20 @@
+http://arxiv.org/abs/2509.03731v1
+
+Expressions of dissent against authority are an important feature of most
+societies, and efforts to suppress such expressions are common. Modern digital
+communications, social media, and Internet surveillance and censorship
+technologies are changing the landscape of public speech and dissent.
+Especially in authoritarian settings, individuals must assess the risk of
+voicing their true opinions or choose self-censorship, voluntarily moderating
+their behavior to comply with authority. We present a model in which
+individuals strategically manage the tradeoff between expressing dissent and
+avoiding punishment through self-censorship while an authority adapts its
+policies to minimize both total expressed dissent and punishment costs. We
+study the model analytically and in simulation to derive conditions separating
+defiant individuals who express their desired dissent in spite of punishment
+from self-censoring individuals who fully or partially limit their expression.
+We find that for any population, there exists an authority policy that leads to
+total self-censorship. However, the probability and time for an initially
+moderate, locally-adaptive authority to suppress dissent depend critically on
+the population's willingness to withstand punishment early on, which can deter
+the authority from adopting more extreme policies.

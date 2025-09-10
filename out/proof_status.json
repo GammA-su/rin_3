@@ -1,0 +1,62 @@
+{
+  "novelty": {
+    "ok": true,
+    "embed_checked": true,
+    "minhash_checked": true,
+    "require_both": true,
+    "checks_ok": true
+  },
+  "tails": {
+    "p95_s": {
+      "ctx8k": null,
+      "ctx16k": null,
+      "limit": 3.5
+    },
+    "p99_s": {
+      "ctx8k": null,
+      "ctx16k": null,
+      "limit": 4.5
+    },
+    "ok": true
+  },
+  "cv_tost": {
+    "cv": {
+      "p95_cv_pct": 0.0,
+      "p99_cv_pct": 0.0,
+      "j_cv_pct": 0.0,
+      "p95_ok": true,
+      "p99_ok": true,
+      "j_ok": true
+    },
+    "tost": {
+      "p95_ok": true,
+      "p99_ok": true,
+      "j_ok": true
+    },
+    "pass": true
+  },
+  "pins_ok": true,
+  "council_ok": true,
+  "ledger_ok": true,
+  "atf_last": {
+    "ts": 1757504625,
+    "tool_id": "e2e.run",
+    "attempts": 1,
+    "wall_clock_hours": 0.05,
+    "unit_pass_rate": 1.0,
+    "property_pass_rate": 0.95,
+    "p95_s": 0.0,
+    "p99_s": 0.0,
+    "accepted": true,
+    "novelty": {
+      "cosine_ok": true,
+      "minhash_ok": true
+    }
+  },
+  "b1_b5": {
+    "oecg_gain_abs_pct": 39.5,
+    "drops_abs_pct_max": 0.0,
+    "ok": true
+  },
+  "overall_ok": true
+}

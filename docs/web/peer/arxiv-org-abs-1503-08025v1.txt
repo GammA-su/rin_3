@@ -1,0 +1,5 @@
+http://arxiv.org/abs/1503.08025v1
+
+We construct uniform gauge D1-brane action in general background. We also
+discuss how this action transforms under double Wick rotation and determine
+transformation properties of background fields.

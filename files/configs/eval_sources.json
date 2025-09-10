@@ -1,0 +1,20 @@
+{
+  "csvs": [
+    "evals_seed5.csv",
+    "evals_seed7.csv",
+    "evals_seed11.csv"
+  ],
+  "pvals": [
+    "out/pvals.json"
+  ],
+  "artifact_to_csv": [
+    {
+      "artifact": "artifacts/suite_full.json",
+      "suite": "my-suite",
+      "seed": 7,
+      "base_col": "E2E.kpis.pass_at_1",
+      "cand_col": "E2E.kpis.pass_at_1",
+      "out": "evals_artifact_seed7.csv"
+    }
+  ]
+}

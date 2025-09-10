@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Comparison%20of%20open-source%20wireless%20drivers
+
+Wireless network cards for computers require control software to make them function. This is a list of the status of some open-source drivers for 802.11 wireless network cards.

@@ -1,0 +1,64 @@
+name: nightly-proof
+
+on:
+  schedule:
+    - cron: '0 3 * * *'
+  workflow_dispatch: {}
+
+jobs:
+  nightly:
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Prepare novelty deps and cache embed model
+        run: make novelty-setup || true
+      - name: Append daily metrics from artifact (if present)
+        run: |
+          if [ -s artifacts/suite_full.json ]; then
+            make metrics-from-artifact IN=artifacts/suite_full.json || true
+            make atf-from-artifact IN=artifacts/suite_full.json || true
+          fi
+      - name: Commit logs and reports
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add logs/metrics.daily.jsonl logs/atf.daily.jsonl reports/b1_b5_report.json || true
+          git commit -m "chore: nightly proof logs $(date -u +'%Y-%m-%d')" || echo "no changes"
+          git push || true
+      - name: Bundle proof
+        run: make bundle || true
+      - name: Proof status snapshot
+        run: |
+          make status || true
+          echo "## Nightly Proof Status" >> $GITHUB_STEP_SUMMARY
+          python - << 'PY' || true
+import json, pathlib, os
+p = pathlib.Path('out/proof_status.json')
+if p.exists():
+    s = json.loads(p.read_text())
+    def b(x):
+        return '✅' if x else '❌'
+    lines = [
+        f"overall_ok: {b(s.get('overall_ok', False))}",
+        f"novelty: {b(s.get('novelty',{}).get('checks_ok', False))}",
+        f"tails_ok: {b(s.get('tails',{}).get('ok', False))}",
+        f"cv_tost.pass: {b(s.get('cv_tost',{}).get('pass', False))}",
+        f"pins_ok: {b(s.get('pins_ok', False))}",
+        f"council_ok: {b(s.get('council_ok', False))}",
+        f"ledger_ok: {b(s.get('ledger_ok', True))}",
+        f"atf.accepted: {b(s.get('atf_last',{}).get('accepted', False))}",
+        f"B1–B5 ok: {b(s.get('b1_b5',{}).get('ok', False))} (gain={s.get('b1_b5',{}).get('oecg_gain_abs_pct',0)}%, drop={s.get('b1_b5',{}).get('drops_abs_pct_max',0)}%)",
+    ]
+    with open(os.environ.get('GITHUB_STEP_SUMMARY','/dev/null'), 'a', encoding='utf-8') as f:
+        f.write("\n".join(['```'] + lines + ['```']))
+PY
+      - name: Upload proof bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightly-proof
+          path: out/ucbxtot-proof.tar.zst

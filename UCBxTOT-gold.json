@@ -103,6 +103,7 @@
   "novelty": {
     "require_both": true,
     "embed_model": "sentence-transformers/all-MiniLM-L6-v2",
+    "fail_closed": true,
     "embed_model_sha256_from_file": "pins/embed.sha256",
     "cosine_max": 0.90,
     "minhash": {"n_perm": 128, "ngram": 5, "jaccard_max": 0.75},
@@ -167,7 +168,10 @@
     "eq gate_v2.global_caps.lora_adapter_params_m_max gate_v2.micro.caps.params_active_m",
     "eq bars.B2.time_budget_hours atf.tst.wall_clock_hours_max",
     "energy_mode_consistent pins/energy.cal.json out/out_ctx8k.json out/out_ctx16k.json",
-    "ledger_append_only logs/rekor-local.jsonl"
+    "ledger_append_only logs/rekor-local.jsonl",
+    "novelty_ok out/novelty.json UCBxTOT-gold.json",
+    "atf_ok logs/atf.daily.jsonl",
+    "b1_b5_ok reports/b1_b5_report.json UCBxTOT-gold.json"
   ],
   "schema_checks": [
     {"schema": "files/schemas/pvals.schema.json",            "data": "out/pvals.json"},
@@ -186,6 +190,7 @@
       "out/policy_scan.json",
       "out/ledger_check.json",
       "out/energy_mode_check.json",
+      "out/proof_status.json",
       "out/payload.hash",
       "pins/*.sha256",
       "pins/*.commit",
@@ -193,7 +198,8 @@
       "files/configs/env.hash",
       "logs/rekor-local.jsonl",
       "logs/atf.daily.jsonl",
-      "reports/b1_b5_report.json"
+      "reports/b1_b5_report.json",
+      "out/latency_samples_ctx*.json"
     ]
   },
   "commands": {

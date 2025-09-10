@@ -7,7 +7,7 @@ set -euo pipefail
 #   BACKEND=ollama OLLAMA_MODEL=gpt-oss-20b:Q4_K_M ./scripts/smoke_energy.sh
 #   BACKEND=hf HF_MODEL=TinyLlama/TinyLlama-1.1B-Chat-v1.0 LOAD_IN_4BIT=1 ./scripts/smoke_energy.sh
 
-BACKEND=${BACKEND:-hf}         # hf | ollama | vllm | jan | llamacpp
+BACKEND=${BACKEND:-llamacpp}   # llamacpp | hf | ollama | vllm | jan
 OUTDIR=out
 mkdir -p "$OUTDIR" pins
 

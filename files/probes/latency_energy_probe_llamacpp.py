@@ -1,7 +1,8 @@
-import os, time, math, json
+import os, time, math, json, sys
 import numpy as np
 import pynvml as nv
 import requests
+from requests.exceptions import RequestException
 
 # llama.cpp server defaults
 SERVER = os.getenv("SERVER", "http://127.0.0.1:8080")
@@ -26,6 +27,7 @@ def read_power_w():
     except nv.NVMLError: return 0.0
 
 lat, vram, energy = [], [], []
+dump_samples = os.getenv("DUMP_SAMPLES", "").lower() not in ("", "0", "false", "no")
 sample_period_ms = 0.0
 
 url = f"{SERVER.rstrip('/')}/completion"
@@ -42,14 +44,18 @@ for _ in range(N):
     while True:
         tries += 1
         payload = {"prompt": make_prompt(eff_ctx), "n_predict": NEW, "temperature": 0.0, "cache_prompt": True}
-        if use_total:
-            e0 = nv.nvmlDeviceGetTotalEnergyConsumption(h)/1000.0; t0=time.time()
-            r = requests.post(url, headers=headers, data=json.dumps(payload), timeout=600)
-            t1=time.time()
-        else:
-            t0=time.time();
-            r = requests.post(url, headers=headers, data=json.dumps(payload), timeout=600)
-            t1=time.time()
+        try:
+            if use_total:
+                e0 = nv.nvmlDeviceGetTotalEnergyConsumption(h)/1000.0; t0=time.time()
+                r = requests.post(url, headers=headers, data=json.dumps(payload), timeout=30)
+                t1=time.time()
+            else:
+                t0=time.time();
+                r = requests.post(url, headers=headers, data=json.dumps(payload), timeout=30)
+                t1=time.time()
+        except RequestException:
+            print("LLAMACPP-CONNECTION-ERROR: server not reachable at", SERVER, file=sys.stderr)
+            sys.exit(0)
         if r.status_code == 400 and eff_ctx > 64:
             # back off prompt length and retry quickly
             eff_ctx = max(64, int(eff_ctx * 0.8))
@@ -88,4 +94,16 @@ out = {
   "vram_gb": float(np.mean(vram)),
   "j_per_inf": float(np.mean(energy))
 }
+if dump_samples:
+    # write alongside output file if we can detect it, else to a default path
+    samples = {"ctx": eff_ctx, "lat_s": lat, "j": energy}
+    # Try to infer output path from cwd and ctx
+    path = os.getenv("SAMPLES_OUT", f"out/latency_samples_ctx{eff_ctx}.json")
+    try:
+        os.makedirs(os.path.dirname(path) or "out", exist_ok=True)
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(samples, f)
+        out["samples_file"] = path
+    except Exception:
+        pass
 print(json.dumps(out))

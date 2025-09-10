@@ -1,0 +1,27 @@
+http://arxiv.org/abs/2506.21738v2
+
+Motor cortex (M1) is a crucial brain area for controlling voluntary
+movements, such as reaching and grasping for a cup of coffee. M1 is organized
+in a somatotopic manner, such that M1 output driving movement to different
+parts of the body is organized along the cortical surface. In primates, the arm
+and hand are represented in M1 as separate but overlapping territories. Unit
+activity recorded from the M1 forelimb representation comodulates with
+parameters related to reaching and/or grasping. The overall aim of this
+dissertation is to understand the spatiotemporal dynamics of M1 activity that
+produces reach-to-grasp movements. To address this goal, intracortical
+microstimulation (ICMS) is delivered along the precentral gyrus of two macaque
+monkeys to define the M1 motor map. Subsequently, cortical activity is recorded
+from the M1 forelimb representation using intrinsic signal optical imaging
+(ISOI) while macaques execute an instructed reach-to-grasp task. Results from
+imaging experiments produce spatial maps that define cortical territories with
+increased activity during reach-to-grasp movements. Next, unit activity was
+recorded from the M1 forelimb representation with a laminar multielectrode
+while macaques completed the same reach-to-grasp task. Recording site locations
+differed between sessions to comprehensively sample unit responses throughout
+the M1 forelimb representation. Imaging experiments reveal that activity
+supporting reach-to-grasp movements was concentrated in patches that comprise
+less than half of the M1 forelimb representation. Electrophysiology recordings
+reveal that activity related to reaching is spatially organized within M1
+distinctly from activity related to grasping. The results support the idea that
+spatial organizing principles are inherent in M1 activity that supports
+reach-to-grasp movements.

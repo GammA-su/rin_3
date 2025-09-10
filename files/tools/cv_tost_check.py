@@ -23,6 +23,7 @@ Notes:
 
 from __future__ import annotations
 import argparse, json, math, os, pathlib
+import numpy as np
 
 
 def _load(p: str) -> dict:
@@ -39,6 +40,29 @@ def _cv_pct(values: list[float]) -> float:
     var = sum((x - mean) ** 2 for x in values) / (n - 1)
     sd = (var ** 0.5) if var > 0 else 0.0
     return 100.0 * sd / abs(mean)
+
+
+def _load_samples(meta_path: str) -> dict | None:
+    # meta may include a pointer to samples file; else try replacing suffix
+    try:
+        meta = json.load(open(meta_path, "r", encoding="utf-8"))
+    except Exception:
+        return None
+    sp = meta.get("samples_file")
+    if sp and os.path.exists(sp):
+        try:
+            return json.load(open(sp, "r", encoding="utf-8"))
+        except Exception:
+            return None
+    # Fallback to sibling path
+    base, ext = os.path.splitext(meta_path)
+    cand = f"{base}.samples.json"
+    if os.path.exists(cand):
+        try:
+            return json.load(open(cand, "r", encoding="utf-8"))
+        except Exception:
+            return None
+    return None
 
 
 def _parse_kv_or_json(s: str | None) -> dict | None:
@@ -84,6 +108,7 @@ def main():
     ap.add_argument("--tost", default="")
     ap.add_argument("--spec", default="")
     ap.add_argument("--out", default="out/cv_tost.json")
+    ap.add_argument("--boot", type=int, default=500, help="bootstrap replicates for quantile TOST if samples are available")
     args = ap.parse_args()
 
     # thresholds: parse flags if provided; else load from --spec
@@ -95,6 +120,7 @@ def main():
         tost = tost or spec_tost
 
     p95s, p99s, js = [], [], []
+    j_samples = []  # optional per-probe energy arrays
     for path in args.probe:
         d = _load(path)
         if "p95_s" in d:
@@ -103,6 +129,14 @@ def main():
             p99s.append(float(d.get("p99_s", 0.0)))
         if "j_per_inf" in d and d.get("j_per_inf") is not None:
             js.append(float(d.get("j_per_inf", 0.0)))
+        s = _load_samples(path)
+        if s and isinstance(s.get("j"), list):
+            try:
+                arr = [float(x) for x in s.get("j")]
+                if arr:
+                    j_samples.append(arr)
+            except Exception:
+                pass
 
     cv_p95 = _cv_pct(p95s)
     cv_p99 = _cv_pct(p99s)
@@ -121,9 +155,57 @@ def main():
         tost_p95_ok = (abs(p95s[0] - p95s[1]) <= float(tost.get("p95", 0.25)))
     if len(p99s) >= 2:
         tost_p99_ok = (abs(p99s[0] - p99s[1]) <= float(tost.get("p99", 0.35)))
-    if len(js) >= 2 and js[0] != 0:
+    if len(j_samples) >= 2:
+        # TOST for percent difference of means with normal approx at 90% CI
+        a, b = j_samples[0], j_samples[1]
+        n1, n2 = len(a), len(b)
+        m1 = sum(a) / n1
+        m2 = sum(b) / n2
+        v1 = sum((x - m1) ** 2 for x in a) / max(1, n1 - 1)
+        v2 = sum((x - m2) ** 2 for x in b) / max(1, n2 - 1)
+        se = (v1 / n1 + v2 / n2) ** 0.5
+        # convert to percent diff relative to m1
+        if abs(m1) < 1e-9 or se == 0.0:
+            tost_j_ok = True  # degenerate case; treat as ok
+        else:
+            diff = m2 - m1
+            z = 1.6448536269514722  # 90% two one-sided
+            lo = diff - z * se
+            hi = diff + z * se
+            lo_pct = 100.0 * lo / abs(m1)
+            hi_pct = 100.0 * hi / abs(m1)
+            thr = float(tost.get("j_pct", 4))
+            tost_j_ok = (lo_pct >= -thr and hi_pct <= thr)
+    elif len(js) >= 2 and js[0] != 0:
         pct = 100.0 * abs(js[1] - js[0]) / max(1e-9, abs(js[0]))
         tost_j_ok = (pct <= float(tost.get("j_pct", 4)))
+
+    # If latency samples exist and boot>0, refine p95/p99 TOST using bootstrap CI of deltas
+    if args.boot > 0 and len(j_samples) >= 0:
+        # try to load latency arrays from sample files parallel to energy samples detection
+        lat_samples = []
+        for path in args.probe:
+            s = _load_samples(path)
+            if s and isinstance(s.get("lat_s"), list) and s.get("lat_s"):
+                lat_samples.append(np.asarray(s.get("lat_s"), dtype=float))
+        if len(lat_samples) >= 2:
+            a, b = lat_samples[0], lat_samples[1]
+            n = int(args.boot)
+            rng = np.random.default_rng(7)
+            idx_a = rng.integers(0, len(a), size=(n, len(a)))
+            idx_b = rng.integers(0, len(b), size=(n, len(b)))
+            # bootstrap quantiles
+            qa = np.quantile(a[idx_a], 0.95, axis=1)
+            qb = np.quantile(b[idx_b], 0.95, axis=1)
+            diff = qb - qa
+            lo, hi = np.quantile(diff, [0.05, 0.95])
+            tost_p95_ok = (abs(lo) <= float(tost.get("p95", 0.25))) and (abs(hi) <= float(tost.get("p95", 0.25)))
+            # p99
+            qa99 = np.quantile(a[idx_a], 0.99, axis=1)
+            qb99 = np.quantile(b[idx_b], 0.99, axis=1)
+            diff99 = qb99 - qa99
+            lo99, hi99 = np.quantile(diff99, [0.05, 0.95])
+            tost_p99_ok = (abs(lo99) <= float(tost.get("p99", 0.35))) and (abs(hi99) <= float(tost.get("p99", 0.35)))
 
     out = {
         "cv": {

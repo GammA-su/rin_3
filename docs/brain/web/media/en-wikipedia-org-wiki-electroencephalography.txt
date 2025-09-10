@@ -1,0 +1,4 @@
+https://en.wikipedia.org/wiki/Electroencephalography
+
+Electroencephalography (EEG)
+is a method to record an electrogram of the spontaneous electrical activity of the brain. The bio signals detected by EEG have been shown to represent the postsynaptic potentials of pyramidal neurons in the neocortex and allocortex. It is typically non-invasive, with the EEG electrodes placed along the scalp using the International 10–20 system, or variations of it. Electrocorticography, involving surgical placement of electrodes, is sometimes called "intracranial EEG". Clinical interpretation of EEG recordings is most often performed by visual inspection of the tracing or quantitative EEG analysis.

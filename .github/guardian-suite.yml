@@ -11,4 +11,33 @@ jobs:
         with:
           python-version: '3.11'
       - run: pip install -r requirements.txt || true
-      - run: make suite-full
+      - name: Prepare novelty deps and cache embed model
+        run: make novelty-setup || true
+      - name: Run UCB×TOT CI (strict pins)
+        run: make suite-full
+      - name: Proof status snapshot
+        run: |
+          make status || true
+          echo "## Proof Status" >> $GITHUB_STEP_SUMMARY
+          echo "\n\n" >> $GITHUB_STEP_SUMMARY
+          python - << 'PY' || true
+import json, pathlib, os
+p = pathlib.Path('out/proof_status.json')
+if p.exists():
+    s = json.loads(p.read_text())
+    def b(x):
+        return '✅' if x else '❌'
+    lines = [
+        f"overall_ok: {b(s.get('overall_ok', False))}",
+        f"novelty: {b(s.get('novelty',{}).get('checks_ok', False))}",
+        f"tails_ok: {b(s.get('tails',{}).get('ok', False))}",
+        f"cv_tost.pass: {b(s.get('cv_tost',{}).get('pass', False))}",
+        f"pins_ok: {b(s.get('pins_ok', False))}",
+        f"council_ok: {b(s.get('council_ok', False))}",
+        f"ledger_ok: {b(s.get('ledger_ok', True))}",
+        f"atf.accepted: {b(s.get('atf_last',{}).get('accepted', False))}",
+        f"B1–B5 ok: {b(s.get('b1_b5',{}).get('ok', False))} (gain={s.get('b1_b5',{}).get('oecg_gain_abs_pct',0)}%, drop={s.get('b1_b5',{}).get('drops_abs_pct_max',0)}%)",
+    ]
+    with open(os.environ.get('GITHUB_STEP_SUMMARY','/dev/null'), 'a', encoding='utf-8') as f:
+        f.write("\n".join(['```'] + lines + ['```']))
+PY

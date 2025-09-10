@@ -1,0 +1,17 @@
+http://arxiv.org/abs/2004.12258v2
+
+In the well known planted clique problem, a clique (or alternatively, an
+independent set) of size $k$ is planted at random in an Erdos-Renyi random
+$G(n, p)$ graph, and the goal is to design an algorithm that finds the maximum
+clique (or independent set) in the resulting graph. We introduce a variation on
+this problem, where instead of planting the clique at random, the clique is
+planted by an adversary who attempts to make it difficult to find the maximum
+clique in the resulting graph. We show that for the standard setting of the
+parameters of the problem, namely, a clique of size $k = \sqrt{n}$ planted in a
+random $G(n, \frac{1}{2})$ graph, the known polynomial time algorithms can be
+extended (in a non-trivial way) to work also in the adversarial setting. In
+contrast, we show that for other natural settings of the parameters, such as
+planting an independent set of size $k=\frac{n}{2}$ in a $G(n, p)$ graph with
+$p = n^{-\frac{1}{2}}$, there is no polynomial time algorithm that finds an
+independent set of size $k$, unless NP has randomized polynomial time
+algorithms.

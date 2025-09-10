@@ -20,11 +20,11 @@
         "tails_ok": true,
         "veto": false
       },
-      "holm_survivors": 3,
+      "holm_survivors": 4,
       "acc_mean": 0.025,
       "tails": {
-        "p95_s": 0.0,
-        "p99_s": 0.0
+        "p95_s": 0.1395399570465088,
+        "p99_s": 0.13985919952392578
       }
     }
   ],
