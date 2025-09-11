@@ -1,0 +1,20 @@
+http://arxiv.org/abs/1711.09186v1
+
+Adversarial decision making is a particular type of decision making problem
+where the gain a decision maker obtains as a result of his decisions is
+affected by the actions taken by others. Representation of alternatives'
+evaluations and methods to find the optimal alternative are two important
+aspects in the adversarial decision making. The aim of this study is to develop
+a general framework for solving the adversarial decision making issue under
+uncertain environment. By combining fuzzy set theory, game theory and D numbers
+theory (DNT), a DNT based game-theoretic framework for adversarial decision
+making under fuzzy environment is presented. Within the proposed framework or
+model, fuzzy set theory is used to model the uncertain evaluations of decision
+makers to alternatives, the non-exclusiveness among fuzzy evaluations are taken
+into consideration by using DNT, and the conflict of interests among decision
+makers is considered in a two-person non-constant sum game theory perspective.
+An illustrative application is given to demonstrate the effectiveness of the
+proposed model. This work, on one hand, has developed an effective framework
+for adversarial decision making under fuzzy environment; One the other hand, it
+has further improved the basis of DNT as a generalization of Dempster-Shafer
+theory for uncertainty reasoning.

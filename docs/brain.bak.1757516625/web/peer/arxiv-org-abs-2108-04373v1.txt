@@ -1,0 +1,18 @@
+http://arxiv.org/abs/2108.04373v1
+
+Although the amino acid tyrosine is among the main building blocks of life,
+its photochemistry is not fully understood. Traditional theoretical simulations
+are neither accurate enough, nor computationally efficient to provide the
+missing puzzle pieces to the experimentally observed signatures obtained via
+time-resolved pump-probe spectroscopy or mass spectroscopy. In this work, we go
+beyond the realms of possibility with conventional quantum chemical methods and
+develop as well as apply a new technique to shed light on the photochemistry of
+tyrosine. By doing so, we discover roaming atoms in tyrosine, which is the
+first time such a reaction is discovered in biology. Our findings suggest that
+roaming atoms are radicals that could play a fundamental role in the
+photochemistry of peptides and proteins, offering a new perspective. Our novel
+method is based on deep learning, leverages the physics underlying the data,
+and combines different levels of theory. This combination of methods to obtain
+an accurate picture of excited molecules could shape how we study photochemical
+systems in the future and how we can overcome the current limitations that we
+face when applying quantum chemical methods.

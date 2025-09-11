@@ -1,0 +1,20 @@
+http://arxiv.org/abs/2210.15790v1
+
+Visual attention is a fundamental mechanism in the human brain, and it
+inspires the design of attention mechanisms in deep neural networks. However,
+most of the visual attention studies adopted eye-tracking data rather than the
+direct measurement of brain activity to characterize human visual attention. In
+addition, the adversarial relationship between the attention-related objects
+and attention-neglected background in the human visual system was not fully
+exploited. To bridge these gaps, we propose a novel brain-inspired adversarial
+visual attention network (BI-AVAN) to characterize human visual attention
+directly from functional brain activity. Our BI-AVAN model imitates the biased
+competition process between attention-related/neglected objects to identify and
+locate the visual objects in a movie frame the human brain focuses on in an
+unsupervised manner. We use independent eye-tracking data as ground truth for
+validation and experimental results show that our model achieves robust and
+promising results when inferring meaningful human visual attention and mapping
+the relationship between brain activities and visual stimuli. Our BI-AVAN model
+contributes to the emerging field of leveraging the brain's functional
+architecture to inspire and guide the model design in artificial intelligence
+(AI), e.g., deep neural networks.

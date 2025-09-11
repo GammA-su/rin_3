@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Place%20cell
+
+A place cell is a kind of pyramidal neuron in the hippocampus that becomes active when an animal enters a particular place in its environment, which is known as the place field. Place cells are thought to act collectively as a cognitive representation of a specific location in space, known as a cognitive map. Place cells work with other types of neurons in the hippocampus and surrounding regions to perform this kind of spatial processing. They have been found in a variety of animals, including rodents, bats, monkeys and humans.

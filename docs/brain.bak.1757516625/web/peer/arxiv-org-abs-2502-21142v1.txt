@@ -1,0 +1,22 @@
+http://arxiv.org/abs/2502.21142v1
+
+Humans leverage rich internal models of the world to reason about the future,
+imagine counterfactuals, and adapt flexibly to new situations. In Reinforcement
+Learning (RL), world models aim to capture how the environment evolves in
+response to the agent's actions, facilitating planning and generalization.
+However, typical world models directly operate on the environment variables
+(e.g. pixels, physical attributes), which can make their training slow and
+cumbersome; instead, it may be advantageous to rely on high-level latent
+dimensions that capture relevant multimodal variables. Global Workspace (GW)
+Theory offers a cognitive framework for multimodal integration and information
+broadcasting in the brain, and recent studies have begun to introduce efficient
+deep learning implementations of GW. Here, we evaluate the capabilities of an
+RL system combining GW with a world model. We compare our GW-Dreamer with
+various versions of the standard PPO and the original Dreamer algorithms. We
+show that performing the dreaming process (i.e., mental simulation) inside the
+GW latent space allows for training with fewer environment steps. As an
+additional emergent property, the resulting model (but not its comparison
+baselines) displays strong robustness to the absence of one of its observation
+modalities (images or simulation attributes). We conclude that the combination
+of GW with World Models holds great potential for improving decision-making in
+RL agents.

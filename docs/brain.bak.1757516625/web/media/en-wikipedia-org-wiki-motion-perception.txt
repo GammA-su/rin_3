@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Motion%20perception
+
+Motion perception is the process of inferring the speed and direction of elements in a scene based on visual, vestibular and proprioceptive inputs. Although this process appears straightforward to most observers, it has proven to be a difficult problem from a computational perspective, and difficult to explain in terms of neural processing.

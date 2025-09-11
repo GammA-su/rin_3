@@ -1,0 +1,19 @@
+http://arxiv.org/abs/2112.05935v5
+
+This paper considers the problem of maintaining global connectivity of a
+multi-robot system while executing a desired coordination task. Our approach
+builds on optimization-based feedback design formulations, where the nominal
+cost function and constraints encode desirable control objectives for the
+resulting input. Our solution uses the algebraic connectivity of the
+multi-robot interconnection topology as a control barrier function and
+critically embraces its nonsmooth nature. We take advantage of the
+understanding of how Laplacian eigenvalues behave as their multiplicities
+change, in combination with the flexibility provided by the concept of control
+barrier function, to carefully design additional constraints that guarantee the
+resulting optimization-based controller is continuous and maintains network
+connectivity. The technical treatment combines elements from set-valued theory,
+nonsmooth analysis, and algebraic graph theory to imbue the proposed
+constraints with regularity properties so that they can be smoothly combined
+with other control constraints. We provide simulations and experimental results
+illustrating the effectiveness and continuity of the proposed approach in a
+resource gathering problem.

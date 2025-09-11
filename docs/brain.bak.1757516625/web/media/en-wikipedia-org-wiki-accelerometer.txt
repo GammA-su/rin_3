@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Accelerometer
+
+An accelerometer is a device that measures the proper acceleration of an object. Proper acceleration is the acceleration of the object relative to an observer who is in free fall. Proper acceleration is different from coordinate acceleration, which is acceleration with respect to a given coordinate system, which may or may not be accelerating. For example, an accelerometer at rest on the surface of the Earth will measure an acceleration due to Earth's gravity straight upwards of about g ≈ 9.81 m/s2. By contrast, an accelerometer that is in free fall will measure zero acceleration.

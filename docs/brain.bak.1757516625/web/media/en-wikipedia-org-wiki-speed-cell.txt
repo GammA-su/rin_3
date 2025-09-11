@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Speed%20cell
+
+Speed cells are neurons whose firing rates depend on an animal's speed through its environment. Together with place cells, grid cells, boundary cells, and head direction cells, they form a part of a larger set of neurons that are involved in cognitive mapping of the surrounding environment. Speed cells are found in the entorhinal cortex.

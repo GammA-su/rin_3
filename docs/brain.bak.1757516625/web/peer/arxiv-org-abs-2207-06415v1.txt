@@ -1,0 +1,20 @@
+http://arxiv.org/abs/2207.06415v1
+
+The free energy principle, and its corollary active inference, constitute a
+bio-inspired theory that assumes biological agents act to remain in a
+restricted set of preferred states of the world, i.e., they minimize their free
+energy. Under this principle, biological agents learn a generative model of the
+world and plan actions in the future that will maintain the agent in an
+homeostatic state that satisfies its preferences. This framework lends itself
+to being realized in silico, as it comprehends important aspects that make it
+computationally affordable, such as variational inference and amortized
+planning. In this work, we investigate the tool of deep learning to design and
+realize artificial agents based on active inference, presenting a deep-learning
+oriented presentation of the free energy principle, surveying works that are
+relevant in both machine learning and active inference areas, and discussing
+the design choices that are involved in the implementation process. This
+manuscript probes newer perspectives for the active inference framework,
+grounding its theoretical aspects into more pragmatic affairs, offering a
+practical guide to active inference newcomers and a starting point for deep
+learning practitioners that would like to investigate implementations of the
+free energy principle.

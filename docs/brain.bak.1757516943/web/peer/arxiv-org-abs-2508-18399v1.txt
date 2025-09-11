@@ -1,0 +1,12 @@
+http://arxiv.org/abs/2508.18399v1
+
+Automating complex tasks using robotic systems requires skills for planning,
+control and execution. This paper proposes a complete robotic system for
+maintenance automation, which can automate disassembly and assembly operations
+under environmental uncertainties (e.g. deviations between prior plan
+information). The cognition of the robotic system is based on a planning
+approach (using CAD and RGBD data) and includes a method to interpret a
+symbolic plan and transform it to a set of executable robot instructions. The
+complete system is experimentally evaluated using real-world applications. This
+work shows the first step to transfer these theoretical results into a
+practical robotic solution.

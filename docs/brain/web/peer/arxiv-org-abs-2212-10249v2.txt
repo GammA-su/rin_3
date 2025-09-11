@@ -1,0 +1,20 @@
+http://arxiv.org/abs/2212.10249v2
+
+Models of sensory processing and learning in the cortex need to efficiently
+assign credit to synapses in all areas. In deep learning, a known solution is
+error backpropagation, which however requires biologically implausible weight
+transport from feed-forward to feedback paths.
+  We introduce Phaseless Alignment Learning (PAL), a bio-plausible method to
+learn efficient feedback weights in layered cortical hierarchies. This is
+achieved by exploiting the noise naturally found in biophysical systems as an
+additional carrier of information. In our dynamical system, all weights are
+learned simultaneously with always-on plasticity and using only information
+locally available to the synapses. Our method is completely phase-free (no
+forward and backward passes or phased learning) and allows for efficient error
+propagation across multi-layer cortical hierarchies, while maintaining
+biologically plausible signal transport and learning.
+  Our method is applicable to a wide class of models and improves on previously
+known biologically plausible ways of credit assignment: compared to random
+synaptic feedback, it can solve complex tasks with less neurons and learn more
+useful latent representations. We demonstrate this on various classification
+tasks using a cortical microcircuit model with prospective coding.

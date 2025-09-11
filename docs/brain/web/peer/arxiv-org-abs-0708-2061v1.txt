@@ -1,0 +1,20 @@
+http://arxiv.org/abs/0708.2061v1
+
+Some markers of oxidative injury were measured in different rat brain areas
+(hippocampus, cerebral cortex, striatum, hypothalamus, amygdala/piriform cortex
+and cerebellum) after the systemic administration of an excitotoxic dose of
+kainic acid (KA, 9 mg kg(-1) i.p.) at two different sampling times (24 and 48
+h). Kainic acid was able to lower markedly (P < 0.05) the glutathione (GSH)
+levels in hippocampus, cerebellum and amygdala/piriform cortex (maximal
+reduction at 24 h). In a similar way, lipid peroxidation, as assessed by
+malonaldehyde and 4-hydroxyalkenal levels, significantly increased (P < 0.05)
+in hippocampus, cerebellum and amygdala/piriform cortex mainly at 24 h after
+KA. In addition, hippocampal superoxide dismutase (SOD) activity decreased
+significantly (P < 0.05) with respect to basal levels by 24 h after KA
+application. On the other hand, brain areas such as hypothalamus, striatum and
+cerebral cortex seem to be less susceptible to KA excitotoxicity. According to
+these findings, the pattern of oxidative injury induced by systemically
+administered KA seems to be highly region-specific. Further, our results have
+shown that a lower antioxidant status (GSH and SOD) seems not to play an
+important role in the selective vulnerability of certain brain regions because
+it correlates poorly with increases in markers of oxidative damage.

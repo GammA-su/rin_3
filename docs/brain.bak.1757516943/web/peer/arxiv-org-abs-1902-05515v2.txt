@@ -1,0 +1,14 @@
+http://arxiv.org/abs/1902.05515v2
+
+We previously developed a neurocomputational model called the
+reward-attention circuit, which has been used to investigate the separate
+effects of nicotine and alcohol on attention focus. The model is based on known
+circuits linking midbrain dopaminergic neurons to the thalamocortical loop and
+is sufficiently versatile to capture diverse phenomena. In this work, we used
+the model to study the influence of both nicotine and alcohol on sleep latency
+(time to fall asleep). In line with findings from other studies, our
+simulations suggest that nicotine can have a stimulating effect that increases
+sleep latency, promoting wakefulness, and, in contrast, alcohol can have a
+sedating effect that induces sleep. Together, our results suggest insights into
+alterations in mesothalamic dopamine activity and sleep. Also, they raise
+speculations about aspects of insomnia and low mesothalamic dopamine.

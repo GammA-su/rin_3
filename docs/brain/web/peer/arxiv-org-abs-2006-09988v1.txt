@@ -1,0 +1,16 @@
+http://arxiv.org/abs/2006.09988v1
+
+Recent research in the field of spiking neural networks (SNNs) has shown that
+recurrent variants of SNNs, namely long short-term SNNs (LSNNs), can be trained
+via error gradients just as effective as LSTMs. The underlying learning method
+(e-prop) is based on a formalization of eligibility traces applied to leaky
+integrate and fire (LIF) neurons. Here, we show that the proposed approach
+cannot fully unfold spike timing dependent plasticity (STDP). As a consequence,
+this limits in principle the inherent advantage of SNNs, that is, the potential
+to develop codes that rely on precise relative spike timings. We show that
+STDP-aware synaptic gradients naturally emerge within the eligibility equations
+of e-prop when derived for a slightly more complex spiking neuron model, here
+at the example of the Izhikevich model. We also present a simple extension of
+the LIF model that provides similar gradients. In a simple experiment we
+demonstrate that the STDP-aware LIF neurons can learn precise spike timings
+from an e-prop-based gradient signal.

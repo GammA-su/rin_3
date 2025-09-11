@@ -1,0 +1,19 @@
+http://arxiv.org/abs/2311.07315v3
+
+Reinforcement learning (RL) has a rich history in neuroscience, from early
+work on dopamine as a reward prediction error signal (Schultz et al., 1997) to
+recent work proposing that the brain could implement a form of 'distributional
+reinforcement learning' popularized in machine learning (Dabney et al., 2020).
+There has been a close link between theoretical advances in reinforcement
+learning and neuroscience experiments throughout this literature, and the
+theories describing the experimental data have therefore become increasingly
+complex. Here, we provide an introduction and mathematical background to many
+of the methods that have been used in systems neroscience. We start with an
+overview of the RL problem and classical temporal difference algorithms,
+followed by a discussion of 'model-free', 'model-based', and intermediate RL
+algorithms. We then introduce deep reinforcement learning and discuss how this
+framework has led to new insights in neuroscience. This includes a particular
+focus on meta-reinforcement learning (Wang et al., 2018) and distributional RL
+(Dabney et al., 2020). Finally, we discuss potential shortcomings of the RL
+formalism for neuroscience and highlight open questions in the field. Code that
+implements the methods discussed and generates the figures is also provided.

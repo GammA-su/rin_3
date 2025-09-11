@@ -1,0 +1,22 @@
+http://arxiv.org/abs/2509.01987v1
+
+Complementary Learning Systems theory holds that intelligent agents need two
+learning systems. Semantic memory is encoded in the neocortex with dense,
+overlapping representations and acquires structured knowledge. Episodic memory
+is encoded in the hippocampus with sparse, pattern-separated representations
+and quickly learns the specifics of individual experiences. Recently, this
+duality between semantic and episodic memories has been challenged by
+predictive coding, a biologically plausible neural network model of the
+neocortex which was shown to have hippocampus-like abilities on
+auto-associative memory tasks. These results raise the question of the episodic
+capabilities of the neocortex and their relation to semantic memory. In this
+paper, we present such a predictive coding model of the neocortex and explore
+its episodic capabilities. We show that this kind of model can indeed recall
+the specifics of individual examples but only if it is trained on a small
+number of examples. The model is overfitted to these exemples and does not
+generalize well, suggesting that episodic memory can arise from semantic
+learning. Indeed, a model trained with many more examples loses its recall
+capabilities. This work suggests that individual examples can be encoded
+gradually in the neocortex using dense, overlapping representations but only in
+a limited number, motivating the need for sparse, pattern-separated
+representations as found in the hippocampus.

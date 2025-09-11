@@ -1,0 +1,13 @@
+http://arxiv.org/abs/cond-mat/0409617v1
+
+We present a numerical study of sidebranching of a solidifying dendrite by
+means of a phase--field model. Special attention is paid to the regions far
+from the tip of the dendrite, where linear theories are no longer valid. Two
+regions have been distinguished outside the linear region: a first one in which
+sidebranching is in a competition process and a second one further down where
+branches behave as independent of each other. The shape of the dendrite and
+integral parameters characterizing the whole dendrite (contour length and area
+of the dendrite) have been computed and related to the characteristic tip
+radius for both surface tension and kinetic dominated dendrites. Conclusions
+about the different behaviors observed and comparison with available
+experiments and theoretical predictions are presented.

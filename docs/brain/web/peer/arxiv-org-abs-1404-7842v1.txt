@@ -1,0 +1,21 @@
+http://arxiv.org/abs/1404.7842v1
+
+As part of a program to develop compounds with potential to treat cocaine
+abuse, eleven (+/-)-threo-methylphenidate (TMP; Ritalin) derivatives were
+synthesized and tested in rat striatal tissue preparations for inhibitory
+potency against [3H]WIN 35,428 binding (WIN) to the dopamine (DA) transporter,
+[3H]citalopram binding (CIT) to the serotonin transporter, and [3H]DA uptake.
+The ester function was replaced by other functional groups in all of the
+compounds; some also contained substituents on the phenyl ring and/or the
+piperidine nitrogen. Potencies against WIN, measured as IC50, ranged from 27 nM
+to 7,000 nM, compared to an IC50 of 83 nM for TMP itself. Potency against
+[3H]DA uptake was approximately two-fold less than that against WIN, but
+generally exhibited the same rank order. With one exception, the compounds were
+significantly less potent against CIT than WIN. The one exception, which has a
+rigid planar conformation at the altered ester position, is unique in that it
+also is much less potent against [3H]DA uptake relative to WIN, compared to the
+other derivatives. The three compounds with dichloro groups on the phenyl ring
+did not exhibit positive cooperativity, as has been observed with several
+previously synthesized halogenated TMP derivatives. Taken together, these
+compounds should help to further our understanding of the stimulant binding
+sites on both the dopamine and serotonin transporters.

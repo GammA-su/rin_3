@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Metalearning%20%28neuroscience%29
+
+Metalearning is a neuroscientific term proposed by Kenji Doya, as a theory for how neurotransmitters facilitate distributed learning mechanisms in the Basal Ganglia. The theory primarily involves the role of neurotransmitters in dynamically adjusting the way computational learning algorithms interact to produce the kinds of robust learning behaviour currently unique to biological life forms. 'Metalearning' has previously been applied to the fields of Social Psychology and Computer Science but in this context exists as an entirely new concept.

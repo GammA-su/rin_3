@@ -1,0 +1,11 @@
+http://arxiv.org/abs/1302.3560v1
+
+We develop a qualitative model of decision making with two aims: to describe
+how people make simple decisions and to enable computer programs to do the
+same. Current approaches based on Planning or Decisions Theory either ignore
+uncertainty and tradeoffs, or provide languages and algorithms that are too
+complex for this task. The proposed model provides a language based on rules, a
+semantics based on high probabilities and lexicographical preferences, and a
+transparent decision procedure where reasons for and against decisions
+interact. The model is no substitude for Decision Theory, yet for decisions
+that people find easy to explain it may provide an appealing alternative.

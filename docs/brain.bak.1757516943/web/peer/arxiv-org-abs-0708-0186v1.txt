@@ -1,0 +1,20 @@
+http://arxiv.org/abs/0708.0186v1
+
+Prostaglandin E2 (PGE2), is a major prostanoid produced by the activity of
+cyclooxygenases (COX) in response to various physiological and pathological
+stimuli. PGE2 exerts its effects by activating four specific E-type prostanoid
+receptors (EP1, EP2, EP3, and EP4). In the present study, we analyzed the
+expression of the PGE2 receptor EP1 (mRNA and protein) in different regions of
+the adult rat brain (hippocampus, hypothalamus, striatum, prefrontal cerebral
+cortex, parietal cortex, brain stem, and cerebellum) using reverse
+transcription- polymerase chain reaction, Western blotting, and
+immunohistochemical methods. On a regional basis, levels of EP1 mRNA were the
+highest in parietal cortex and cerebellum. At the protein level, we found very
+strong expression of EP1 in cerebellum, as revealed by Western blotting
+experiments. Furthermore, the present study provides for the first time
+evidence that the EP1 receptor is highly expressed in the cerebellum, where the
+Purkinje cells displayed very high immunolabeling of their perikaryon and
+dendrites, as observed in the immunohistochemical analysis. Results from the
+present study indicate that the EP1 prostanoid receptor is expressed in
+specific neuronal populations, which possibly determine the region-specific
+response to PGE2.

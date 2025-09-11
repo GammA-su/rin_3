@@ -1,0 +1,25 @@
+http://arxiv.org/abs/2210.17115v1
+
+Transformers have demonstrated a competitive performance across a wide range
+of vision tasks, while it is very expensive to compute the global
+self-attention. Many methods limit the range of attention within a local window
+to reduce computation complexity. However, their approaches cannot save the
+number of parameters; meanwhile, the self-attention and inner position bias
+(inside the softmax function) cause each query to focus on similar and close
+patches. Consequently, this paper presents a light self-limited-attention
+(LSLA) consisting of a light self-attention mechanism (LSA) to save the
+computation cost and the number of parameters, and a self-limited-attention
+mechanism (SLA) to improve the performance. Firstly, the LSA replaces the K
+(Key) and V (Value) of self-attention with the X(origin input). Applying it in
+vision Transformers which have encoder architecture and self-attention
+mechanism, can simplify the computation. Secondly, the SLA has a positional
+information module and a limited-attention module. The former contains a
+dynamic scale and an inner position bias to adjust the distribution of the
+self-attention scores and enhance the positional information. The latter uses
+an outer position bias after the softmax function to limit some large values of
+attention weights. Finally, a hierarchical Vision Transformer with Light
+self-Limited-attention (ViT-LSLA) is presented. The experiments show that
+ViT-LSLA achieves 71.6% top-1 accuracy on IP102 (2.4% absolute improvement of
+Swin-T); 87.2% top-1 accuracy on Mini-ImageNet (3.7% absolute improvement of
+Swin-T). Furthermore, it greatly reduces FLOPs (3.5GFLOPs vs. 4.5GFLOPs of
+Swin-T) and parameters (18.9M vs. 27.6M of Swin-T).

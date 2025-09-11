@@ -1,0 +1,14 @@
+http://arxiv.org/abs/2410.15367v1
+
+Identification of causal genes and pathways is a critical step for
+understanding the genetic underpinnings of rare diseases. We propose novel
+approaches to gene prioritization and pathway identification using DNA language
+model, graph neural networks, and genetic algorithm. Using HyenaDNA, a
+long-range genomic foundation model, we generated dynamic gene embeddings that
+reflect changes caused by deleterious variants. These gene embeddings were then
+utilized to identify candidate genes and pathways. We validated our method on a
+cohort of rare disease patients with partially known genetic diagnosis,
+demonstrating the re-identification of known causal genes and pathways and the
+detection of novel candidates. These findings have implications for the
+prevention and treatment of rare diseases by enabling targeted identification
+of new drug targets and therapeutic pathways.

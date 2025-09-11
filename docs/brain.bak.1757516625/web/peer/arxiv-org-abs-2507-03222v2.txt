@@ -1,0 +1,27 @@
+http://arxiv.org/abs/2507.03222v2
+
+Biological and artificial learning systems alike confront the
+plasticity-stability dilemma. In the brain, neuromodulators such as
+acetylcholine and noradrenaline relieve this tension by tuning neuronal gain
+and inhibitory gating, balancing segregation and integration of circuits. Fed
+by dense cholinergic and noradrenergic projections from the ascending arousal
+system, layer-5 pyramidal neurons in the cerebral cortex offer a relevant
+substrate for understanding these dynamics. When distal dendritic signals
+coincide with back-propagating action potentials, calcium plateaus turn a
+single somatic spike into a high-gain burst, and interneuron inhibition sculpts
+the output. These properties make layer-5 cells gain-tunable amplifiers that
+translate neuromodulatory cues into flexible cortical activity. To capture this
+mechanism we developed a two-compartment Izhikevich model for pyramidal neurons
+and single-compartment somatostatin (SOM) and parvalbumin (PV) interneurons,
+linked by Gaussian connectivity and spike-timing-dependent plasticity (STDP).
+The soma and apical dendrite are so coupled that somatic spikes back-propagate,
+while dendritic plateaus can switch the soma from regular firing to bursting by
+shifting reset and adaptation variables. We show that stronger dendritic drive
+or tighter coupling raise gain by increasing the likelihood of
+calcium-triggered somatic bursts. In contrast, dendritic-targeted inhibition
+suppresses gain, while somatic-targeted inhibition raises the firing threshold
+of neighboring neurons, thus gating neurons output. Notably, bursting
+accelerates STDP, supporting rapid synaptic reconfiguration and flexibility.
+This suggests that brief gain pulses driven by neuromodulators could serve as
+an adaptive two-timescale optimization mechanism, effectively modulating the
+synaptic weight updates.

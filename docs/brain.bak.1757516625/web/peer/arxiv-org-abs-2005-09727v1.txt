@@ -1,0 +1,23 @@
+http://arxiv.org/abs/2005.09727v1
+
+Deep Convolutional Neural Networks (CNNs) have been repeatedly proven to
+perform well on image classification tasks. Object detection methods, however,
+are still in need of significant improvements. In this paper, we propose a new
+framework called Ventral-Dorsal Networks (VDNets) which is inspired by the
+structure of the human visual system. Roughly, the visual input signal is
+analyzed along two separate neural streams, one in the temporal lobe and the
+other in the parietal lobe. The coarse functional distinction between these
+streams is between object recognition -- the "what" of the signal -- and
+extracting location related information -- the "where" of the signal. The
+ventral pathway from primary visual cortex, entering the temporal lobe, is
+dominated by "what" information, while the dorsal pathway, into the parietal
+lobe, is dominated by "where" information. Inspired by this structure, we
+propose the integration of a "Ventral Network" and a "Dorsal Network", which
+are complementary. Information about object identity can guide localization,
+and location information can guide attention to relevant image regions,
+improving object recognition. This new dual network framework sharpens the
+focus of object detection. Our experimental results reveal that the proposed
+method outperforms state-of-the-art object detection approaches on PASCAL VOC
+2007 by 8% (mAP) and PASCAL VOC 2012 by 3% (mAP). Moreover, a comparison of
+techniques on Yearbook images displays substantial qualitative and quantitative
+benefits of VDNet.

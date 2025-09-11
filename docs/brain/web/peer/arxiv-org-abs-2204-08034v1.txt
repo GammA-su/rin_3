@@ -1,0 +1,22 @@
+http://arxiv.org/abs/2204.08034v1
+
+Recent experimental and theoretical studies have indicated that the putative
+criticality of cortical dynamics may corresponds to a synchronization phase
+transition. The critical dynamics near such a critical point needs further
+investigation specifically when compared to the critical behavior near the
+standard absorbing state phase transition. Since the phenomena of learning and
+self-organized criticality (SOC) at the edge of synchronization transition can
+emerge jointly in spiking neural networks due to the presence of spike-timing
+dependent plasticity (STDP), it is tempting to ask: What is the relationship
+between synchronization and learning in neural networks? Further, does learning
+benefit from SOC at the edge of synchronization transition? In this paper, we
+intend to address these important issues. Accordingly, we construct a
+biologically inspired model of an autonomous cognitive system which learns to
+perform stimulus-response tasks. We train this system using a reinforcement
+learning rule implemented through dopamine-modulated STDP. We find that the
+system exhibits a continuous transition from synchronous to asynchronous neural
+oscillations upon increasing the average axonal time delay. We characterize the
+learning performance of the system and observe that it is optimized near the
+synchronization transition. We also study neuronal avalanches in the system and
+provide evidence that optimized learning is achieved in a slightly
+supercritical state.

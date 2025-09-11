@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Biological%20neuron%20model
+
+Biological neuron models, also known as spiking neuron models, are mathematical descriptions of the conduction of electrical signals in neurons. Neurons are electrically excitable cells within the nervous system, able to fire electric signals, called action potentials, across a neural network. These mathematical models describe the role of the biophysical and geometrical characteristics of neurons on the conduction of electrical activity.

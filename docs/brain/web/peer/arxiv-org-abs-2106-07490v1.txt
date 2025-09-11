@@ -1,0 +1,12 @@
+http://arxiv.org/abs/2106.07490v1
+
+This article highlights specific features of biological neurons and their
+dendritic trees, whose adoption may help advance artificial neural networks
+used in various machine learning applications. Advancements could take the form
+of increased computational capabilities and/or reduced power consumption.
+Proposed features include dendritic anatomy, dendritic nonlinearities, and
+compartmentalized plasticity rules, all of which shape learning and information
+processing in biological networks. We discuss the computational benefits
+provided by these features in biological neurons and suggest ways to adopt them
+in artificial neurons in order to exploit the respective benefits in machine
+learning.

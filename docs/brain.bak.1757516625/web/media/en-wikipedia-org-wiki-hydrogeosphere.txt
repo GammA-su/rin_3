@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/HydroGeoSphere
+
+HydroGeoSphere (HGS) is a 3D control-volume finite element groundwater model, and is based on a rigorous conceptualization of the hydrologic system consisting of surface and subsurface flow regimes. The model is designed to take into account all key components of the hydrologic cycle. For each time step, the model solves surface and subsurface flow, solute and energy transport equations simultaneously, and provides a complete water and solute balance.

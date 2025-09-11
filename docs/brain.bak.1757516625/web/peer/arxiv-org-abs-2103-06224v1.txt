@@ -1,0 +1,13 @@
+http://arxiv.org/abs/2103.06224v1
+
+How do we formalize the challenge of credit assignment in reinforcement
+learning? Common intuition would draw attention to reward sparsity as a key
+contributor to difficult credit assignment and traditional heuristics would
+look to temporal recency for the solution, calling upon the classic eligibility
+trace. We posit that it is not the sparsity of the reward itself that causes
+difficulty in credit assignment, but rather the \emph{information sparsity}. We
+propose to use information theory to define this notion, which we then use to
+characterize when credit assignment is an obstacle to efficient learning. With
+this perspective, we outline several information-theoretic mechanisms for
+measuring credit under a fixed behavior policy, highlighting the potential of
+information theory as a key tool towards provably-efficient credit assignment.

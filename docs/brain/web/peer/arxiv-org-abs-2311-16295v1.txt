@@ -1,0 +1,20 @@
+http://arxiv.org/abs/2311.16295v1
+
+Representing and reasoning about physical space is fundamental to animal
+survival, and the mammalian lineage expresses a wealth of specialized neural
+representations that encode space. Grid cells, whose discovery earned a Nobel
+prize, are a striking example: a grid cell is a neuron that fires if and only
+if the animal is spatially located at the vertices of a regular triangular
+lattice that tiles all explored two-dimensional environments. Significant
+theoretical work has gone into understanding why mammals have learned these
+particular representations, and recent work has proposed a ``unified theory for
+the computational and mechanistic origin of grid cells," claiming to answer why
+the mammalian lineage has learned grid cells. However, the Unified Theory makes
+a series of highly specific assumptions about the target readouts of grid cells
+- putatively place cells. In this work, we explicitly identify what these
+mathematical assumptions are, then test two of the critical assumptions using
+biological place cell data. At both the population and single-cell levels, we
+find evidence suggesting that neither of the assumptions are likely true in
+biological neural representations. These results call the Unified Theory into
+question, suggesting that biological grid cells likely have a different origin
+than those obtained in trained artificial neural networks.

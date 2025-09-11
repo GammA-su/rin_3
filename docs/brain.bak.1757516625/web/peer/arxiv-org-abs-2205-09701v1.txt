@@ -1,0 +1,19 @@
+http://arxiv.org/abs/2205.09701v1
+
+As algorithmic tools increasingly aid experts in making consequential
+decisions, the need to understand the precise factors that mediate their
+influence has grown commensurately. In this paper, we present a crowdsourcing
+vignette study designed to assess the impacts of two plausible factors on
+AI-informed decision-making. First, we examine homophily -- do people defer
+more to models that tend to agree with them? -- by manipulating the agreement
+during training between participants and the algorithmic tool. Second, we
+considered incentives -- how do people incorporate a (known) cost structure in
+the hybrid decision-making setting? -- by varying rewards associated with true
+positives vs. true negatives. Surprisingly, we found limited influence of
+either homophily and no evidence of incentive effects, despite participants
+performing similarly to previous studies. Higher levels of agreement between
+the participant and the AI tool yielded more confident predictions, but only
+when outcome feedback was absent. These results highlight the complexity of
+characterizing human-algorithm interactions, and suggest that findings from
+social psychology may require re-examination when humans interact with
+algorithms.

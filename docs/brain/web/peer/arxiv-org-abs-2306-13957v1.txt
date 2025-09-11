@@ -1,0 +1,22 @@
+http://arxiv.org/abs/2306.13957v1
+
+Advances in deep generative models shed light on de novo molecule generation
+with desired properties. However, molecule generation targeted for dual protein
+targets still faces formidable challenges including protein 3D structure data
+requisition for model training, auto-regressive sampling, and model
+generalization for unseen targets. Here, we proposed DiffDTM, a novel
+conditional structure-free deep generative model based on a diffusion model for
+dual targets based molecule generation to address the above issues.
+Specifically, DiffDTM receives protein sequences and molecular graphs as inputs
+instead of protein and molecular conformations and incorporates an information
+fusion module to achieve conditional generation in a one-shot manner. We have
+conducted comprehensive multi-view experiments to demonstrate that DiffDTM can
+generate drug-like, synthesis-accessible, novel, and high-binding affinity
+molecules targeting specific dual proteins, outperforming the state-of-the-art
+(SOTA) models in terms of multiple evaluation metrics. Furthermore, we utilized
+DiffDTM to generate molecules towards dopamine receptor D2 and
+5-hydroxytryptamine receptor 1A as new antipsychotics. The experimental results
+indicate that DiffDTM can be easily plugged into unseen dual targets to
+generate bioactive molecules, addressing the issues of requiring insufficient
+active molecule data for training as well as the need to retrain when
+encountering new targets.

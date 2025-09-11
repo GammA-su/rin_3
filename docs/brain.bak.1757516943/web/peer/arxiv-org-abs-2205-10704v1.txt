@@ -1,0 +1,20 @@
+http://arxiv.org/abs/2205.10704v1
+
+Substances of abuse are known to activate and disrupt neuronal circuits in
+the brain reward system. We propose a simple and easily interpretable dynamical
+systems model to describe the neurobiology of drug addiction that incorporates
+the psychiatric concepts of reward prediction error (RPE), drug-induced
+incentive salience (IST), and opponent process theory (OPT). Drug-induced
+dopamine releases activate a biphasic reward response with pleasurable,
+positive "a-processes" (euphoria, rush) followed by unpleasant, negative
+"b-processes" (cravings, withdrawal). Neuroadaptive processes triggered by
+successive intakes enhance the negative component of the reward response, which
+the user compensates for by increasing drug dose and/or intake frequency. This
+positive feedback between physiological changes and drug self-administration
+leads to habituation, tolerance and eventually to full addiction. Our model
+gives rise to qualitatively different pathways to addiction that can represent
+a diverse set of user profiles (genetics, age) and drug potencies. We find that
+users who have, or neuroadaptively develop, a strong b-process response to drug
+consumption are most at risk for addiction. Finally, we include possible
+mechanisms to mitigate withdrawal symptoms, such as through the use of
+methadone or other auxiliary drugs used in detoxification.

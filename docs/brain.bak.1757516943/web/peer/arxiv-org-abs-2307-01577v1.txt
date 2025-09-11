@@ -1,0 +1,20 @@
+http://arxiv.org/abs/2307.01577v1
+
+The human brain possesses the extraordinary capability to contextualize the
+information it receives from our environment. The entorhinal-hippocampal plays
+a critical role in this function, as it is deeply engaged in memory processing
+and constructing cognitive maps using place and grid cells. Comprehending and
+leveraging this ability could significantly augment the field of artificial
+intelligence. The multi-scale successor representation serves as a good model
+for the functionality of place and grid cells and has already shown promise in
+this role. Here, we introduce a model that employs successor representations
+and neural networks, along with word embedding vectors, to construct a
+cognitive map of three separate concepts. The network adeptly learns two
+different scaled maps and situates new information in proximity to related
+pre-existing representations. The dispersion of information across the
+cognitive map varies according to its scale - either being heavily
+concentrated, resulting in the formation of the three concepts, or spread
+evenly throughout the map. We suggest that our model could potentially improve
+current AI models by providing multi-modal context information to any input,
+based on a similarity metric for the input and pre-existing knowledge
+representations.

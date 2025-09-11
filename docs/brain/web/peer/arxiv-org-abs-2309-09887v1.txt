@@ -1,0 +1,17 @@
+http://arxiv.org/abs/2309.09887v1
+
+Neural pathways as model explanations consist of a sparse set of neurons that
+provide the same level of prediction performance as the whole model. Existing
+methods primarily focus on accuracy and sparsity but the generated pathways may
+offer limited interpretability thus fall short in explaining the model
+behavior. In this paper, we suggest two interpretability criteria of neural
+pathways: (i) same-class neural pathways should primarily consist of
+class-relevant neurons; (ii) each instance's neural pathway sparsity should be
+optimally determined. To this end, we propose a Generative Class-relevant
+Neural Pathway (GEN-CNP) model that learns to predict the neural pathways from
+the target model's feature maps. We propose to learn class-relevant information
+from features of deep and shallow layers such that same-class neural pathways
+exhibit high similarity. We further impose a faithfulness criterion for GEN-CNP
+to generate pathways with instance-specific sparsity. We propose to transfer
+the class-relevant neural pathways to explain samples of the same class and
+show experimentally and qualitatively their faithfulness and interpretability.

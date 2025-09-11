@@ -1,0 +1,27 @@
+http://arxiv.org/abs/2504.18599v1
+
+Data Drift is the phenomenon where the generating model behind the data
+changes over time. Due to data drift, any model built on the past training data
+becomes less relevant and inaccurate over time. Thus, detecting and controlling
+for data drift is critical in machine learning models. Hierarchical Temporal
+Memory (HTM) is a machine learning model developed by Jeff Hawkins, inspired by
+how the human brain processes information. It is a biologically inspired model
+of memory that is similar in structure to the neocortex, and whose performance
+is claimed to be comparable to state of the art models in detecting anomalies
+in time series data. Another unique benefit of HTMs is its independence from
+training and testing cycle; all the learning takes place online with streaming
+data and no separate training and testing cycle is required. In sequential
+learning paradigm, Sequential Probability Ratio Test (SPRT) offers some unique
+benefit for online learning and inference. This paper proposes a novel hybrid
+framework combining HTM and SPRT for real-time data drift detection and anomaly
+identification. Unlike existing data drift methods, our approach eliminates
+frequent retraining and ensures low false positive rates. HTMs currently work
+with one dimensional or univariate data. In a second study, we also propose an
+application of HTM in multidimensional supervised scenario for anomaly
+detection by combining the outputs of multiple HTM columns, one for each
+dimension of the data, through a neural network. Experimental evaluations
+demonstrate that the proposed method outperforms conventional drift detection
+techniques like the Kolmogorov-Smirnov (KS) test, Wasserstein distance, and
+Population Stability Index (PSI) in terms of accuracy, adaptability, and
+computational efficiency. Our experiments also provide insights into optimizing
+hyperparameters for real-time deployment in domains such as Telecom.

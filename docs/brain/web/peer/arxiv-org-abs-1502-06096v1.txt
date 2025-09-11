@@ -1,0 +1,24 @@
+http://arxiv.org/abs/1502.06096v1
+
+Recent work has shown that dopamine-modulated STDP can solve many of the
+issues associated with reinforcement learning, such as the distal reward
+problem. Spiking neural networks provide a useful technique in implementing
+reinforcement learning in an embodied context as they can deal with continuous
+parameter spaces and as such are better at generalizing the correct behaviour
+to perform in a given context.
+  In this project we implement a version of DA-modulated STDP in an embodied
+robot on a food foraging task. Through simulated dopaminergic neurons we show
+how the robot is able to learn a sequence of behaviours in order to achieve a
+food reward. In tests the robot was able to learn food-attraction behaviour,
+and subsequently unlearn this behaviour when the environment changed, in all 50
+trials. Moreover we show that the robot is able to operate in an environment
+whereby the optimal behaviour changes rapidly and so the agent must constantly
+relearn. In a more complex environment, consisting of food-containers, the
+robot was able to learn food-container attraction in 95% of trials, despite the
+large temporal distance between the correct behaviour and the reward. This is
+achieved by shifting the dopamine response from the primary stimulus (food) to
+the secondary stimulus (food-container).
+  Our work provides insights into the reasons behind some observed biological
+phenomena, such as the bursting behaviour observed in dopaminergic neurons. As
+well as demonstrating how spiking neural network controlled robots are able to
+solve a range of reinforcement learning tasks.

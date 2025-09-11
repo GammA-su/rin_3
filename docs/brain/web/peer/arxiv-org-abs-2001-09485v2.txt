@@ -1,0 +1,15 @@
+http://arxiv.org/abs/2001.09485v2
+
+We propose a novel neural network architecture, named the Global Workspace
+Network (GWN), which addresses the challenge of dynamic and unspecified
+uncertainties in multimodal data fusion. Our GWN is a model of attention across
+modalities and evolving through time, and is inspired by the well-established
+Global Workspace Theory from the field of cognitive science. The GWN achieved
+average F1 score of 0.92 for discrimination between pain patients and healthy
+participants and average F1 score = 0.75 for further classification of three
+pain levels for a patient, both based on the multimodal EmoPain dataset
+captured from people with chronic pain and healthy people performing different
+types of exercise movements in unconstrained settings. In these tasks, the GWN
+significantly outperforms the typical fusion approach of merging by
+concatenation. We further provide extensive analysis of the behaviour of the
+GWN and its ability to address uncertainties (hidden noise) in multimodal data.

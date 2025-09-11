@@ -1,0 +1,16 @@
+http://arxiv.org/abs/1903.06070v1
+
+Catastrophic forgetting/interference is a critical problem for lifelong
+learning machines, which impedes the agents from maintaining their previously
+learned knowledge while learning new tasks. Neural networks, in particular,
+suffer plenty from the catastrophic forgetting phenomenon. Recently there has
+been several efforts towards overcoming catastrophic forgetting in neural
+networks. Here, we propose a biologically inspired method toward overcoming
+catastrophic forgetting. Specifically, we define an attention-based selective
+plasticity of synapses based on the cholinergic neuromodulatory system in the
+brain. We define synaptic importance parameters in addition to synaptic weights
+and then use Hebbian learning in parallel with backpropagation algorithm to
+learn synaptic importances in an online and seamless manner. We test our
+proposed method on benchmark tasks including the Permuted MNIST and the Split
+MNIST problems and show competitive performance compared to the
+state-of-the-art methods.

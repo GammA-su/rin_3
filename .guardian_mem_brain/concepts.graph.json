@@ -1,0 +1,158 @@
+{
+  "nodes": [
+    "Purkinje cells",
+    "cerebellum",
+    "cognitive functions",
+    "exploration-exploitation tradeoff",
+    "forward model",
+    "internal models",
+    "memory consolidation",
+    "modafinil",
+    "motor coordination",
+    "motor learning",
+    "predictive control",
+    "prefrontal cortex",
+    "sensorimotor feedback",
+    "sharp wave-ripples",
+    "sharp waves and ripples",
+    "spike-timing-dependent plasticity",
+    "striatal circuits",
+    "temporal prediction",
+    "tonic dopamine"
+  ],
+  "edges": [
+    {
+      "src": "cerebellum",
+      "rel": "part_of",
+      "dst": "hindbrain",
+      "topic": "Cerebellum predictive control and timing"
+    },
+    {
+      "src": "cerebellum",
+      "rel": "implements",
+      "dst": "predictive control",
+      "topic": "Cerebellum predictive control and timing"
+    },
+    {
+      "src": "predictive control",
+      "rel": "projects_to",
+      "dst": "forward model",
+      "topic": "Cerebellum predictive control and timing"
+    },
+    {
+      "src": "forward model",
+      "rel": "modulates",
+      "dst": "internal models",
+      "topic": "Cerebellum predictive control and timing"
+    },
+    {
+      "src": "spike-timing-dependent plasticity",
+      "rel": "supports",
+      "dst": "motor learning",
+      "topic": "Cerebellum predictive control and timing"
+    },
+    {
+      "src": "Purkinje cells",
+      "rel": "located_in",
+      "dst": "cerebellum",
+      "topic": "Cerebellum predictive control and timing"
+    },
+    {
+      "src": "Purkinje cells",
+      "rel": "implements",
+      "dst": "forward model",
+      "topic": "Cerebellum predictive control and timing"
+    },
+    {
+      "src": "sharp waves and ripples",
+      "rel": "associated_with",
+      "dst": "memory consolidation",
+      "topic": "Cerebellum predictive control and timing"
+    },
+    {
+      "src": "internal models",
+      "rel": "causes",
+      "dst": "temporal prediction",
+      "topic": "Cerebellum predictive control and timing"
+    },
+    {
+      "src": "cerebellum",
+      "rel": "supports",
+      "dst": "motor coordination",
+      "topic": "Cerebellum predictive control and timing"
+    },
+    {
+      "src": "cerebellum",
+      "rel": "modulates",
+      "dst": "cognitive functions",
+      "topic": "Cerebellum predictive control and timing"
+    },
+    {
+      "src": "sensorimotor feedback",
+      "rel": "projects_to",
+      "dst": "forward model",
+      "topic": "Cerebellum predictive control and timing"
+    },
+    {
+      "src": "exploration-exploitation tradeoff",
+      "rel": "modulates",
+      "dst": "tonic dopamine",
+      "topic": "Exploration–exploitation tradeoff and tonic DA"
+    },
+    {
+      "src": "tonic dopamine",
+      "rel": "projects_to",
+      "dst": "prefrontal cortex",
+      "topic": "Exploration–exploitation tradeoff and tonic DA"
+    },
+    {
+      "src": "tonic dopamine",
+      "rel": "projects_to",
+      "dst": "striatal circuits",
+      "topic": "Exploration–exploitation tradeoff and tonic DA"
+    },
+    {
+      "src": "tonic dopamine",
+      "rel": "excites",
+      "dst": "prefrontal cortex",
+      "topic": "Exploration–exploitation tradeoff and tonic DA"
+    },
+    {
+      "src": "tonic dopamine",
+      "rel": "inhibits",
+      "dst": "dorsal striatum",
+      "topic": "Exploration–exploitation tradeoff and tonic DA"
+    },
+    {
+      "src": "sharp wave-ripples",
+      "rel": "associated_with",
+      "dst": "memory consolidation",
+      "topic": "Exploration–exploitation tradeoff and tonic DA"
+    },
+    {
+      "src": "tonic dopamine",
+      "rel": "modulates",
+      "dst": "sharp wave-ripples",
+      "topic": "Exploration–exploitation tradeoff and tonic DA"
+    },
+    {
+      "src": "sharp wave-ripples",
+      "rel": "supports",
+      "dst": "adaptive learning",
+      "topic": "Exploration–exploitation tradeoff and tonic DA"
+    }
+  ],
+  "relations": [
+    "part_of",
+    "located_in",
+    "projects_to",
+    "modulates",
+    "excites",
+    "inhibits",
+    "associated_with",
+    "causes",
+    "implements",
+    "supports",
+    "contradicts"
+  ]
+}

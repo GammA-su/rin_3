@@ -1,0 +1,24 @@
+http://arxiv.org/abs/2012.07307v4
+
+Wind power is one of the most important sources of renewable energy. A large
+part of the wind energy cost is due to the cost of maintaining the wind power
+equipment. To further reduce the maintenance cost, one can improve the design
+of the wind turbine components. One can also reduce the maintenance costs by
+optimal scheduling of the component replacements. The latter task is the main
+motivation for this paper.
+  When a wind turbine component fails to function, it might need to be replaced
+under less than ideal circumstances. This is known as corrective maintenance.
+To minimize the unnecessary costs, a more active maintenance policy based on
+the life expectancy of the key components is preferred. Optimal scheduling of
+preventive maintenance activities requires advanced mathematical modeling.
+  In this paper, an optimization model is developed using the renewal-reward
+theorem. In the multi-component setting, our approach involves a new idea of
+virtual maintenance which allows us to treat each replacement event as a
+renewal event even if some components are not replaced by new ones.
+  The proposed optimization algorithm is applied to a four-component model of a
+wind turbine and the optimal maintenance plans are computed for various initial
+conditions. The modeling results showed clearly the benefit of PM planning
+compared to pure CM strategy (about 8.5% lower maintenance cost). When we
+compare it with another state-of-art optimization model, it shows similar
+scheduling with a much faster CPU time. The comparison demonstrated that our
+model is both fast and accurate.

@@ -1,0 +1,16 @@
+http://arxiv.org/abs/1608.07232v1
+
+L-DOPA has been the gold standard treatment for Parkinson's disease since 50
+years. Being the direct biochemical precursor of dopamine, L-DOPA is
+effectively converted in the brain, but two major phenomena reduce its
+therapeutic action: i) competition with amino acids in the gut wall and in the
+blood brain barrier and ii) its fast kinetics (absorption, distribution,
+metabolism, and elimination). Continuous administration of L-DOPA, such as
+jejunal pumps, have addressed the issue of fast absorption. Considering a
+subcutaneous delivery of L-DOPA allows to bypass the gastrointestinal tract and
+avoid competition with dietary amino acids. Remains the competition at the
+blood barrier between amino acids and L-DOPA, which we address by proposing a
+closed-loop controlled, continuous subcutaneous delivery pump. In the
+proof-of-concept format, the delivery strategy evaluated on comprehensive model
+of L-DOPA kinetics, holds the promise of improving the treatment of late-stage
+Parkinson's disease patients.

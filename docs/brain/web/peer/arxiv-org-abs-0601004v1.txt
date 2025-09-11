@@ -1,0 +1,16 @@
+http://arxiv.org/abs/cs/0601004v1
+
+This article describes a biomimetic control architecture affording an animat
+both action selection and navigation functionalities. It satisfies the survival
+constraint of an artificial metabolism and supports several complementary
+navigation strategies. It builds upon an action selection model based on the
+basal ganglia of the vertebrate brain, using two interconnected cortico-basal
+ganglia-thalamo-cortical loops: a ventral one concerned with appetitive actions
+and a dorsal one dedicated to consummatory actions. The performances of the
+resulting model are evaluated in simulation. The experiments assess the
+prolonged survival permitted by the use of high level navigation strategies and
+the complementarity of navigation strategies in dynamic environments. The
+correctness of the behavioral choices in situations of antagonistic or
+synergetic internal states are also tested. Finally, the modelling choices are
+discussed with regard to their biomimetic plausibility, while the experimental
+results are estimated in terms of animat adaptivity.

@@ -1,0 +1,12 @@
+http://arxiv.org/abs/1909.09847v1
+
+Deep convolutional neural networks are biologically driven models that
+resemble the hierarchical structure of primate visual cortex and are the
+current best predictors of the neural responses measured along the ventral
+stream. However, the networks lack topographic properties that are present in
+the visual cortex, such as orientation maps in primary visual cortex and
+category-selective maps in inferior temporal (IT) cortex. In this work, the
+minimum wiring cost constraint was approximated as an additional learning rule
+in order to generate topographic maps of the networks. We found that our
+topographic deep artificial neural networks (ANNs) can reproduce the category
+selectivity maps of the primate IT cortex.

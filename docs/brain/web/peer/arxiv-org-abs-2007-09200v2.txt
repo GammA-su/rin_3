@@ -1,0 +1,17 @@
+http://arxiv.org/abs/2007.09200v2
+
+Neural networks are vulnerable to input perturbations such as additive noise
+and adversarial attacks. In contrast, human perception is much more robust to
+such perturbations. The Bayesian brain hypothesis states that human brains use
+an internal generative model to update the posterior beliefs of the sensory
+input. This mechanism can be interpreted as a form of self-consistency between
+the maximum a posteriori (MAP) estimation of an internal generative model and
+the external environment. Inspired by such hypothesis, we enforce
+self-consistency in neural networks by incorporating generative recurrent
+feedback. We instantiate this design on convolutional neural networks (CNNs).
+The proposed framework, termed Convolutional Neural Networks with Feedback
+(CNN-F), introduces a generative feedback with latent variables to existing CNN
+architectures, where consistent predictions are made through alternating MAP
+inference under a Bayesian framework. In the experiments, CNN-F shows
+considerably improved adversarial robustness over conventional feedforward CNNs
+on standard benchmarks.

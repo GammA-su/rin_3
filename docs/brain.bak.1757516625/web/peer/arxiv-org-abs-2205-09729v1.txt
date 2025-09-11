@@ -1,0 +1,17 @@
+http://arxiv.org/abs/2205.09729v1
+
+Developments in reinforcement learning (RL) have allowed algorithms to
+achieve impressive performance in highly complex, but largely static problems.
+In contrast, biological learning seems to value efficiency of adaptation to a
+constantly-changing world. Here we build on a recently-proposed neuronal
+learning rule that assumes each neuron can optimize its energy balance by
+predicting its own future activity. That assumption leads to a neuronal
+learning rule that uses presynaptic input to modulate prediction error. We
+argue that an analogous RL rule would use action probability to modulate reward
+prediction error. This modulation makes the agent more sensitive to negative
+experiences, and more careful in forming preferences. We embed the proposed
+rule in both tabular and deep-Q-network RL algorithms, and find that it
+outperforms conventional algorithms in simple, but highly-dynamic tasks. We
+suggest that the new rule encapsulates a core principle of biological
+intelligence; an important component for allowing algorithms to adapt to change
+in a human-like way.

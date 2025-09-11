@@ -1,0 +1,20 @@
+http://arxiv.org/abs/2003.06584v2
+
+Melanoma is one of the most dangerous skin malignancies due to its high
+metastatic tendency and high mortality. Activation of key signaling pathways
+enforcing melanoma progression depends on phosphorylation of tyrosine kinases,
+and oxidative stress. We here investigated the effect of the new bis-coumarin
+derivative (3,5-DCPBC) on human melanoma cell survival, growth, proliferation,
+migration, and intracellular redox state, and deciphered associated signal
+pathways. This novel derivative was found to be toxic for melanoma cells, and
+non-toxic for their benign counterparts, melanocytes and fibroblasts. 3,5-DCPBC
+inhibited cell survival, migration and proliferation of different metastatic,
+and non-metastatic melanoma cell lines through the profound suppression of
+phosphorylation of the Epidermal Growth Factor receptor, and related downstream
+pathways. Suppression of phosphorylation of key downstream transcription
+factors and different tyrosine kinases comprise JAK/STAT, SRC kinases, ERK and
+MAP kinases (p38alpha), all involved in melanoma progression. Simultaneous and
+specific targeting of multiple tyrosine kinases and corresponding key genes in
+melanoma cells makes 3,5-DCPBC a highly interesting anti-melanoma, and
+anti-metastatic drug candidate which may in the long term hold promise in the
+therapy of advanced melanoma.

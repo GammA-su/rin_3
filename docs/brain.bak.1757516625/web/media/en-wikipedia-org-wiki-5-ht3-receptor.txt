@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/5-HT3%20receptor
+
+The 5-HT3 receptors are a subclass of serotonin receptors. They belong to the Cys-loop superfamily of ligand-gated ion channels (LGICs) and differ structurally and functionally from all other 5-HT receptors (5-hydroxytryptamine = serotonin) which are G protein-coupled receptors. 5-HT3 receptors are cation channels, that is, they are permeable to sodium (Na), potassium (K), and calcium (Ca) ions and mediate neuronal depolarization and excitation within the central and peripheral nervous systems.

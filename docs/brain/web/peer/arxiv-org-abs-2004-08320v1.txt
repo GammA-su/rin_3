@@ -1,0 +1,26 @@
+http://arxiv.org/abs/2004.08320v1
+
+Parkinson's disease (PD) is caused by the progressive loss of dopaminergic
+cells in substantia nigra pars compacta (SNc). The root cause of this cell loss
+in PD is still not decisively elucidated. A recent line of thinking traces the
+cause of PD neurodegeneration to metabolic deficiency. Due to exceptionally
+high energy demand, SNc neurons exhibit a higher basal metabolic rate and
+higher oxygen consumption rate, which results in oxidative stress. Recently, we
+have suggested that the excitotoxic loss of SNc cells might be due to energy
+deficiency occurring at different levels of neural hierarchy. Levodopa (LDOPA),
+a precursor of dopamine, which is used as a symptom-relieving treatment for PD,
+leads to outcomes that are both positive and negative. Several researchers
+suggested that LDOPA might be harmful to SNc cells due to oxidative stress. The
+role of LDOPA in the course of PD pathogenesis is still debatable. We
+hypothesize that energy deficiency can lead to LDOPA-induced toxicity (LIT) in
+two ways: by promoting dopamine-induced oxidative stress and by exacerbating
+excitotoxicity in SNc. We present a multiscale computational model of
+SNc-striatum system, which will help us in understanding the mechanism behind
+neurodegeneration postulated above and provides insights for developing
+disease-modifying therapeutics. It was observed that SNc terminals are more
+vulnerable to energy deficiency than SNc somas. During LDOPA therapy, it was
+observed that higher LDOPA dosage results in increased loss of somas and
+terminals in SNc. It was also observed that co-administration of LDOPA and
+glutathione (antioxidant) evades LDOPA-induced toxicity in SNc neurons. We show
+that our proposed model was able to capture LDOPA-induced toxicity in SNc,
+caused by energy deficiency.

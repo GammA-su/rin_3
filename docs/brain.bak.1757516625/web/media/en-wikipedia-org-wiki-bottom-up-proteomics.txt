@@ -1,0 +1,5 @@
+https://en.wikipedia.org/wiki/Bottom-up%20proteomics
+
+Bottom-up proteomics is a common method to identify proteins and characterize their amino acid sequences and post-translational modifications by proteolytic digestion of proteins prior to analysis by mass spectrometry. 
+BUP techniques can be an alternative to Maldi-Tof MS approaches, as they allow the identification of bacterial strains and the characterization of potential resistance and virulence factors in a single run.
+The major alternative workflow used in proteomics is called top-down proteomics where intact proteins are purified prior to digestion and/or fragmentation either within the mass spectrometer or by 2D electrophoresis. Essentially, bottom-up proteomics is a relatively simple and reliable means of determining the protein make-up of a given sample of cells, tissues, etc.

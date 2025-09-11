@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Lagrangian%20mechanics
+
+In physics, Lagrangian mechanics is an alternate formulation of classical mechanics founded on the d'Alembert principle of virtual work. It was introduced by the Italian-French mathematician and astronomer Joseph-Louis Lagrange in his presentation to the Turin Academy of Science in 1760 culminating in his 1788 grand opus, Mécanique analytique. Lagrange’s approach greatly simplifies the analysis of many problems in mechanics, and it had crucial influence on other branches of physics, including relativity and quantum field theory.

@@ -1,0 +1,13 @@
+http://arxiv.org/abs/1710.03684v1
+
+When a chromophore interacts with titrable molecular sites, the modeling of
+its photophysical properties requires to take into account all their possible
+protonation states. We have developed a multi-scale protocol, based on
+constant-pH molecular dynamics simulations coupled to QM/MM excitation energy
+calculations, aimed at sampling both the phase space and protonation state
+space of a short polypeptide featuring a tyrosine--tryptophan dyad interacting
+with two aspartic acid residues. We show that such a protocol is accurate
+enough to reproduce the tyrosine UV absorption spectrum at both acidic and
+basic pH. Moreover, it is confirmed that UV-induced radical tryptophan is
+reduced thanks to an electron transfer from tyrosine, ultimately explaining the
+complex pH-dependent behavior of the peptide spectrum.

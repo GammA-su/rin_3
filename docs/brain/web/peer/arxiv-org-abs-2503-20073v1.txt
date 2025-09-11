@@ -1,0 +1,28 @@
+http://arxiv.org/abs/2503.20073v1
+
+Background & Aims: Patients with type C hepatic encephalopathy (HE) present
+diverse symptoms indicating that various brain regions are affected.
+Understanding the distinct metabolic and cellular changes across these regions
+could help explain the clinical variability of HE. We analyzed, for the first
+time, the longitudinal in-vivo neurometabolic and morphological changes in
+astrocytes, neurons and microglia in the hippocampus, striatum and cerebellum
+during the progression of CLD-induced type C HE in the bile duct ligated (BDL)
+rat model. Methods: Wistar rats underwent BDL and their brains were studied
+before BDL and at post-operative weeks-2, 4, 6 and 8 using in-vivo 1H-MRS
+(9.4T) of the hippocampus, striatum and cerebellum along with histological
+assessment (astrocytes, microglia, and neurons) and blood biochemistry.
+Results: Across all brain regions, glutamine (Gln) was the first metabolite to
+increase, followed by a decrease in osmolytes and neurotransmitters. The
+cerebellum was characterized by the highest Gln burden (+134%), elevated
+Lactate (+84%) and decreased GABA (-23%), suggesting its increased
+vulnerability. This coincided with pronounced alterations in astrocyte
+morphology, possibly related to the high Gln load. In contrast, the striatum
+displayed the lowest Gln increase (+48%) but the strongest osmolyte decrease,
+with milder astrocytic changes. We also showed mutual and distinct regional
+morphological changes in microglia (activation) and neurons (decreased
+dendritic spine density, soma size alterations). Conclusions: Our findings
+highlight both common and differential metabolic and cellular responses to CLD
+across the brain regions, with cerebellum and striatum showing differential
+responses. We also hypothesized that glutamine is one of the initial brain
+metabolic markers of type C HE, impacting astrocytes and inevitably neurons
+contributing to cognitive decline.

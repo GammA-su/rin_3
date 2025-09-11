@@ -1,0 +1,25 @@
+http://arxiv.org/abs/2405.20142v2
+
+Monitoring sleep states is essential for evaluating sleep quality and
+diagnosing sleep disorders. Traditional manual staging is time-consuming and
+prone to subjective bias, often resulting in inconsistent outcomes. Here, we
+developed an automated model for sleep staging and disorder classification to
+enhance diagnostic accuracy and efficiency. Considering the characteristics of
+polysomnography (PSG) multi-lead sleep monitoring, we designed a multimodal
+sleep state classification model, MSSC-BiMamba, that combines an Efficient
+Channel Attention (ECA) mechanism with a Bidirectional State Space Model
+(BSSM). The ECA module allows for weighting data from different sensor
+channels, thereby amplifying the influence of diverse sensor inputs.
+Additionally, the implementation of bidirectional Mamba (BiMamba) enables the
+model to effectively capture the multidimensional features and long-range
+dependencies of PSG data. The developed model demonstrated impressive
+performance on sleep stage classification tasks on both the ISRUC-S3 and
+ISRUC-S1 datasets, respectively containing data with healthy and unhealthy
+sleep patterns. Also, the model exhibited a high accuracy for sleep health
+prediction when evaluated on a combined dataset consisting of ISRUC and
+Sleep-EDF. Our model, which can effectively handle diverse sleep conditions, is
+the first to apply BiMamba to sleep staging with multimodal PSG data, showing
+substantial gains in computational and memory efficiency over traditional
+Transformer-style models. This method enhances sleep health management by
+making monitoring more accessible and extending advanced healthcare through
+innovative technology.

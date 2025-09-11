@@ -1,0 +1,26 @@
+http://arxiv.org/abs/2507.02064v1
+
+Grid cells in the medial entorhinal cortex (MEC) are believed to path
+integrate speed and direction signals to activate at triangular grids of
+locations in an environment, thus implementing a population code for position.
+In parallel, place cells in the hippocampus (HC) fire at spatially confined
+locations, with selectivity tuned not only to allocentric position but also to
+environmental contexts, such as sensory cues. Although grid and place cells
+both encode spatial information and support memory for multiple locations, why
+animals maintain two such representations remains unclear. Noting that place
+representations seem to have other functional roles in intrinsically motivated
+tasks such as recalling locations from sensory cues, we propose that animals
+maintain grid and place representations together to support planning.
+Specifically, we posit that place cells auto-associate not only sensory
+information relayed from the MEC but also grid cell patterns, enabling recall
+of goal location grid patterns from sensory and motivational cues, permitting
+subsequent planning with only grid representations. We extend a previous
+theoretical framework for grid-cell-based planning and show that local
+transition rules can generalize to long-distance path forecasting. We further
+show that a planning network can sequentially update grid cell states toward
+the goal. During this process, intermediate grid activity can trigger place
+cell pattern completion, reconstructing experiences along the planned path. We
+demonstrate all these effects using a single-layer RNN that simultaneously
+models the HC-MEC loop and the planning subnetwork. We show that such recurrent
+mechanisms for grid cell-based planning, with goal recall driven by the place
+system, make several characteristic, testable predictions.

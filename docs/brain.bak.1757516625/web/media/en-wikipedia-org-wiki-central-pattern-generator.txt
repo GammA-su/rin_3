@@ -1,0 +1,4 @@
+https://en.wikipedia.org/wiki/Central%20pattern%20generator
+
+Central pattern generators (CPGs) are self-organizing biological neural circuits that produce rhythmic outputs in the absence of rhythmic input. They are the source of the tightly-coupled patterns of neural activity that drive rhythmic and stereotyped motor behaviors like walking, swimming, breathing, or chewing. The ability to function without input from higher brain areas still requires modulatory inputs, and their outputs are not fixed. Flexibility in response to sensory input is a fundamental quality of CPG-driven behavior. To be classified as a rhythmic generator, a CPG requires:"two or more processes that interact such that each process sequentially increases and decreases, and
+that, as a result of this interaction, the system repeatedly returns to its starting condition."

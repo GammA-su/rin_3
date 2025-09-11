@@ -1,0 +1,20 @@
+http://arxiv.org/abs/2409.12495v1
+
+Virtual screening plays a pivotal role in early drug discovery, traditionally
+dominated by physics-based methods. While these approaches offer detailed
+insights, they are often hindered by high computational costs, limited
+sampling, and forcefield inaccuracies. Advances in Machine Learning (Ml)and
+Deep Learning (DL) present resource-efficient alternatives, with approaches
+like predictive geometric ML (EQUIBIND) and generative geometric ML
+(DIFFDOCK)showing promise in enhancing both efficiency and predictive
+capability. Here, we compare these two strategies, retrospectively and
+prospectively, for identifying novel agonists targeting the dopamine D2
+receptor. To complement DIFFDOCK's dual functionality in protein-ligand
+conformer generation and confidence estimation, we adopted a complementary
+atom-type-based confidence model for EQUIBIND. This pipeline, termed the
+discriminative model, integrates a featurization step and an XGBoost classifier
+to differentiate between active and inactive ligands. The top-ranked compounds
+from both models were evaluated using an ultrafast dopaminergic biosensor
+assay, dLight. Our results demonstrate that the generative model achieved a
+higher hit rate, notably leading to the discovery of Compound 1, a nanomolar
+dopamine D2 receptor agonist with a novel scaffold.

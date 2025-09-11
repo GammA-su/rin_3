@@ -1,0 +1,8 @@
+https://en.wikipedia.org/wiki/Bias%20in%20the%20introduction%20of%20variation
+
+Bias in the introduction of variation is a theory in the domain of evolutionary biology that asserts biases in the introduction of heritable variation are reflected in the outcome of evolution. It is relevant to topics in molecular evolution, evo-devo, and self-organization. In the context of this theory, "introduction" ("origination") is a technical term for events that shift an allele frequency upward from zero. 
+Formal models demonstrate that when an evolutionary process depends on introduction events, mutational and developmental biases in the generation of variation may influence the course of evolution by a first come, first served effect, so that evolution reflects the arrival of the likelier, not just the survival of the fitter.
+Whereas mutational explanations for evolutionary patterns are typically assumed to imply or require neutral evolution, the theory of arrival biases distinctively predicts the possibility of mutation-biased adaptation. 
+Direct evidence for the theory comes from laboratory studies showing that adaptive changes are systematically enriched for mutationally likely types of changes.
+Retrospective analyses of natural cases of adaptation also provide support for the theory.
+This theory is notable as an example of contemporary structuralist thinking, contrasting with a classical functionalist view in which the course of evolution is determined by natural selection.

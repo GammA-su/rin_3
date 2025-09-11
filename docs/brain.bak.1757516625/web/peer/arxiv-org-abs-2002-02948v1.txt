@@ -1,0 +1,16 @@
+http://arxiv.org/abs/2002.02948v1
+
+Drug discovery projects entail cycles of design, synthesis, and testing that
+yield a series of chemically related small molecules whose properties, such as
+binding affinity to a given target protein, are progressively tailored to a
+particular drug discovery goal. The use of deep learning technologies could
+augment the typical practice of using human intuition in the design cycle, and
+thereby expedite drug discovery projects. Here we present DESMILES, a deep
+neural network model that advances the state of the art in machine learning
+approaches to molecular design. We applied DESMILES to a previously published
+benchmark that assesses the ability of a method to modify input molecules to
+inhibit the dopamine receptor D2, and DESMILES yielded a 77% lower failure rate
+compared to state-of-the-art models. To explain the ability of DESMILES to hone
+molecular properties, we visualize a layer of the DESMILES network, and further
+demonstrate this ability by using DESMILES to tailor the same molecules used in
+the D2 benchmark test to dock more potently against seven different receptors.

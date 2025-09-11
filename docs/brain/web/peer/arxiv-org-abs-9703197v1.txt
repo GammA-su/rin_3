@@ -1,0 +1,9 @@
+http://arxiv.org/abs/cond-mat/9703197v1
+
+We theoretically investigate long-term potentiation (LTP) in the hippocampus
+using a simple model of a neuron stimulated by three different time-structured
+input signals (regular, Markov, and chaotic). The synaptic efficacy change is
+described taking into account both N-methyl-D-aspartate (NMDA) and non-NMDA
+receptors. The experimental results are successfully explained by our neuron
+model, and the remarkable fact that the chaotic stimuli in the nonstationary
+regime produce the largest LTP is discussed.

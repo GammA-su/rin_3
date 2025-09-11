@@ -1,0 +1,13 @@
+http://arxiv.org/abs/2201.07602v1
+
+Spiking neural networks (SNNs) in neuromorphic systems are more energy
+efficient compared to deep learning-based methods, but there is no clear
+competitive learning algorithm for training such SNNs. Eligibility propagation
+(e-prop) offers an efficient and biologically plausible way to train
+competitive recurrent SNNs in low-power neuromorphic hardware. In this report,
+previous performance of e-prop on a speech classification task is reproduced,
+and the effects of including STDP-like behavior are analyzed. Including STDP to
+the ALIF neuron model improves the classification performance, but this is not
+the case for the Izhikevich e-prop neuron. Finally, it was found that e-prop
+implemented in a single-layer recurrent SNN consistently outperforms a
+multi-layer variant.

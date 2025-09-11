@@ -1,0 +1,24 @@
+http://arxiv.org/abs/2301.10002v2
+
+Growing evidence indicates that only a sparse subset from a pool of sensory
+neurons is active for the encoding of visual stimuli at any instant in time.
+Traditionally, to replicate such biological sparsity, generative models have
+been using the $\ell_1$ norm as a penalty due to its convexity, which makes it
+amenable to fast and simple algorithmic solvers. In this work, we use
+biological vision as a test-bed and show that the soft thresholding operation
+associated to the use of the $\ell_1$ norm is highly suboptimal compared to
+other functions suited to approximating $\ell_q$ with $0 \leq q < 1 $
+(including recently proposed Continuous Exact relaxations), both in terms of
+performance and in the production of features that are akin to signatures of
+the primary visual cortex. We show that $\ell_1$ sparsity produces a denser
+code or employs a pool with more neurons, i.e. has a higher degree of
+overcompleteness, in order to maintain the same reconstruction error as the
+other methods considered. For all the penalty functions tested, a subset of the
+neurons develop orientation selectivity similarly to V1 neurons. When their
+code is sparse enough, the methods also develop receptive fields with varying
+functionalities, another signature of V1. Compared to other methods, soft
+thresholding achieves this level of sparsity at the expense of much degraded
+reconstruction performance, that more likely than not is not acceptable in
+biological vision. Our results indicate that V1 uses a sparsity inducing
+regularization that is closer to the $\ell_0$ pseudo-norm rather than to the
+$\ell_1$ norm.

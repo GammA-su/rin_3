@@ -1,0 +1,20 @@
+http://arxiv.org/abs/1610.00234v1
+
+Neurons transmit active potentials through axons, which are essential for the
+brain to function. In this study, the axonal networks of the murine brain were
+visualized with X-ray tomographic microscopy, also known as X-ray
+microtomography or micro-CT. Murine brain samples were freeze-dried to
+reconstitute the intrinsic contrast of tissue constituents and subjected to
+X-ray visualization. A whole brain hemisphere visualized by absorption contrast
+illustrated three-dimensional structures including those of the striatum,
+corpus callosum, and anterior commissure. Axonal tracts observed in the
+striatum start from the basal surface of the cerebral cortex and end at various
+positions in the basal ganglia. The distribution of X-ray attenuation
+coefficients indicated that differences in water and phospholipid content
+between the myelin sheath and surrounding tissue constituents account for the
+observed contrast. A rod-shaped cutout of brain tissue was also analyzed with a
+phase retrieval method, wherein tissue microstructures could be resolved with
+up to 2.7 {\mu}m resolution. Structures of axonal networks of the striatum were
+reconstructed by tracing axonal tracts. Such an analysis should be able to
+delineate the functional relationships of the brain regions involved in the
+observed network.

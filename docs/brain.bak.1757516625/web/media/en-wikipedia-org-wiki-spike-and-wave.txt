@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Spike-and-wave
+
+Spike-and-wave is a pattern of the electroencephalogram (EEG) typically observed during epileptic seizures. A spike-and-wave discharge is a regular, symmetrical, generalized EEG pattern seen particularly during absence epilepsy, also known as ‘petit mal’ epilepsy. The basic mechanisms underlying these patterns are complex and involve part of the cerebral cortex, the thalamocortical network, and intrinsic neuronal mechanisms.

@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Synaptic%20plasticity
+
+In neuroscience, synaptic plasticity is the ability of synapses to strengthen or weaken over time, in response to increases or decreases in their activity. Since memories are postulated to be represented by vastly interconnected neural circuits in the brain, synaptic plasticity is one of the important neurochemical foundations of learning and memory.

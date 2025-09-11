@@ -1,0 +1,20 @@
+http://arxiv.org/abs/2009.06118v1
+
+Cortical circuits are characterized by exquisitely complex connectivity
+patterns that emerge during development from undifferentiated networks. The
+development of these circuits is governed by a combination of precise molecular
+cues that dictate neuronal identity and location along with activity dependent
+mechanisms that help establish, refine, and maintain neuronal connectivity.
+Here we ask whether simple plasticity mechanisms can lead to assembling a
+cortical microcircuit with canonical inter-laminar connectivity, starting from
+a network with all-to-all connectivity. The target canonical microcircuit is
+based on the pattern of connections between cortical layers typically found in
+multiple cortical areas in rodents, cats and monkeys. We use a computational
+model as a proof-of-principle to demonstrate that classical and reverse
+spike-timing dependent plasticity rules lead to a formation of networks that
+resemble canonical microcircuits. The model converges to biologically
+reasonable solutions provided that there is a balance between potentiation and
+depression and enhanced inputs to layer 4, only for a small combination of
+plasticity rules. The model makes specific testable predictions about the
+learning computations operant across cortical layers and their dynamic
+deployment during development.

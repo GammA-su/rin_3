@@ -1,0 +1,18 @@
+http://arxiv.org/abs/2305.14394v1
+
+In this study, we build a computational model of Prefrontal Cortex (PFC)
+using Spiking Neural Networks (SNN) to understand how neurons adapt and respond
+to tasks switched under short and longer duration of stimulus changes. We also
+explore behavioral deficits arising out of the PFC lesions by simulating
+lesioned states in our Spiking architecture model. Although there are some
+computational models of the PFC, SNN's have not been used to model them. In
+this study, we use SNN's having parameters close to biologically plausible
+values and train the model using unsupervised Spike Timing Dependent Plasticity
+(STDP) learning rule. Our model is based on connectionist architectures and
+exhibits neural phenomena like sustained activity which helps in generating
+short-term or working memory. We use these features to simulate lesions by
+deactivating synaptic pathways and record the weight adjustments of learned
+patterns and capture the accuracy of learning tasks in such conditions. All our
+experiments are trained and recorded using a real-world Fashion MNIST (FMNIST)
+dataset and through this work, we bridge the gap between bio-realistic models
+and those that perform well in pattern recognition tasks

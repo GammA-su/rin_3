@@ -1,0 +1,14 @@
+http://arxiv.org/abs/2001.11627v1
+
+Detecting dopamine is of great biological importance because the molecule
+plays many roles in the human body. For instance, the lack of dopamine release
+is the cause of Parkinson's disease. Although many researchers have carried out
+experiments on dopamine detection using carbon nanotubes (CNTs), there are only
+a few theoretical studies on this topic. We study the adsorption properties of
+dopamine and its derivatives, L-DOPA and dopamine o-quinone, adsorbed on a
+semiconducting (10, 0) CNT, using density functional theory calculations. Our
+computational simulations reveal that localized states originating from
+dopamine o-quinone appear in the bandgap of the (10, 0) CNT, but those
+originating from dopamine and L-DOPA do not appear in the gap. Therefore,
+dopamine o-quinone is expected to be detectable using an external electric
+field but dopamine and L-DOPA should be difficult to detect.

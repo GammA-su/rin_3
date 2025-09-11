@@ -1,0 +1,12 @@
+http://arxiv.org/abs/2006.06862v2
+
+Decoding neurons to extract information from transmission and employ them
+into other use is the goal of neuroscientists' study. Due to that the field of
+neuroscience is utilizing the traditional methods presently, we hence combine
+the state-of-the-art deep learning techniques with the theory of neuron
+decoding to discuss its potential of accomplishment. Besides, the stress level
+that is related to neuron activity in hippocampus is statistically examined as
+well. The experiments suggest that our state-of-the-art deep learning-based
+stress determinator provides good performance with respect to its model
+prediction accuracy and additionally, there is strong evidence against
+equivalence of mouse stress level under diverse environments.

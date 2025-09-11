@@ -1,0 +1,8 @@
+http://arxiv.org/abs/2204.08711v1
+
+Neuromodulation is central to the adaptation and robustness of animal nervous
+systems. This paper explores the classical paradigm of indirect adaptive
+control to design neuromodulatory controllers in conductance-based neuronal
+models. The adaptive control of maximal conductance parameters is shown to
+provide a methodology aligned with the central concepts of neuromodulation in
+physiology and of impedance control in robotics.

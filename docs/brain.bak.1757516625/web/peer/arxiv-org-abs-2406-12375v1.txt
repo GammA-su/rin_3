@@ -1,0 +1,16 @@
+http://arxiv.org/abs/2406.12375v1
+
+Mixture-of-Experts (MoE) has been demonstrated as an efficient method to
+scale up models. By dynamically and sparsely selecting activated experts, MoE
+can effectively reduce computational costs. Despite the success, we observe
+that many tokens in the MoE models have uncertain routing results. These tokens
+have nearly equal scores for choosing each expert, and we demonstrate that this
+uncertainty can lead to incorrect selections. Inspired by the Global Workspace
+Theory (GWT), we propose a new fine-tuning method, GW-MoE, to address this
+issue. The core idea is to broadcast the uncertain tokens across experts during
+fine-tuning. Therefore, these tokens can acquire the necessary knowledge from
+any expert during inference and become less sensitive to the choice. GW-MoE
+does not introduce additional inference overhead. We validate that GW can
+mitigate the uncertain problem and consistently improve in different tasks
+(text classification, question answering, summarization, code generation, and
+mathematical problem solving) and model sizes (650M and 8B parameters).

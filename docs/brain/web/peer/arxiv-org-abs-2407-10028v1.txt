@@ -1,0 +1,27 @@
+http://arxiv.org/abs/2407.10028v1
+
+In this work, we propose time-integrated spike-timing-dependent plasticity
+(TI-STDP), a mathematical model of synaptic plasticity that allows spiking
+neural networks to continuously adapt to sensory input streams in an
+unsupervised fashion. Notably, we theoretically establish and formally prove
+key properties related to the synaptic adjustment mechanics that underwrite
+TI-STDP. Empirically, we demonstrate the efficacy of TI-STDP in simulations of
+jointly learning deeper spiking neural networks that process input digit pixel
+patterns, at both full image and patch-levels, comparing to two powerful
+historical instantations of STDP; trace-based STDP (TR-STDP) and event-based
+post-synaptic STDP (EV-STDP). Usefully, we demonstrate that not only are all
+forms of STDP capable of meaningfully adapting the synaptic efficacies of a
+multi-layer biophysical architecture, but that TI-STDP is notably able to do so
+without requiring the tracking of a large window of pre- and post-synaptic
+spike timings, the maintenance of additional parameterized traces, or the
+restriction of synaptic plasticity changes to occur within very narrow windows
+of time. This means that our findings show that TI-STDP can efficiently embody
+the benefits of models such as canonical STDP, TR-STDP, and EV-STDP without
+their costs or drawbacks. Usefully, our results further demonstrate the promise
+of using a spike-correlation scheme such as TI-STDP in conducting credit
+assignment in discrete pulse-based neuromorphic models, particularly those than
+acquire a lower-level distributed representation jointly with an upper-level,
+more abstract representation that self-organizes to cluster based on inherent
+cross-pattern similarities. We further demonstrate TI-STDP's effectiveness in
+adapting a simple neuronal circuit that learns a simple bi-level, part-whole
+hierarchy from sensory input patterns.

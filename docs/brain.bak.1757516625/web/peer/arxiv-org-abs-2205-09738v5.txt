@@ -1,0 +1,26 @@
+http://arxiv.org/abs/2205.09738v5
+
+Inspired by cognitive theories of creativity, this paper introduces a
+computational model (AIGenC) that lays down the necessary components to enable
+artificial agents to learn, use and generate transferable representations.
+Unlike machine representation learning, which relies exclusively on raw sensory
+data, biological representations incorporate relational and associative
+information that embeds rich and structured concept spaces. The AIGenC model
+poses a hierarchical graph architecture with various levels and types of
+representations procured by different components. The first component, Concept
+Processing, extracts objects and affordances from sensory input and encodes
+them into a concept space. The resulting representations are stored in a dual
+memory system and enriched with goal-directed and temporal information acquired
+through reinforcement learning, creating a higher-level of abstraction. Two
+additional components work in parallel to detect and recover relevant concepts
+and create new ones, respectively, in a process akin to cognitive Reflective
+Reasoning and Blending. The Reflective Reasoning unit detects and recovers from
+memory concepts relevant to the task by means of a matching process that
+calculates a similarity value between the current state and memory graph
+structures. Once the matching interaction ends, rewards and temporal
+information are added to the graph, building further abstractions. If the
+reflective reasoning processing fails to offer a suitable solution, a blending
+operation comes into place, creating new concepts by combining past
+information. We discuss the model's capability to yield better
+out-of-distribution generalisation in artificial agents, thus advancing toward
+Artificial General Intelligence.

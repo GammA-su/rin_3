@@ -1,0 +1,26 @@
+http://arxiv.org/abs/2106.07865v3
+
+In order to remain adaptable to a dynamic environment, neural activity must
+be simultaneously both sensitive and stable. To solve this problem, the brain
+has been hypothesised to sit near a critical boundary. Yet, precisely how
+criticality and these opposing information processing modes are implemented in
+the brain remains elusive. A potential solution to this problem involves
+modulating intrinsically nonlinear neurons within the cerebral cortex with
+neuromodulatory neurotransmitters such as noradrenaline, a highly-conserved
+chemical released from the pontine locus coeruleus. Here we confirm that
+neuronal spiking in mice is poised close to the critical point of a branching
+process and that time-varying signatures of criticality fluctuate with
+neuromodulatory tone, as assessed by dynamic alterations in pupil diameter. We
+explore these results theoretically by creating a dual-compartment model of
+non-linear pyramidal neurons - capable of both regular spike and bursting modes
+- that replicates our main empirical findings of slightly subcritical dynamics.
+We then probe our model at a resolution impossible in vivo to demonstrate that
+noradrenaline differentially alters spiking- and bursting-criticality to
+facilitate sensitive and stable dynamics following an inverted-U profile that
+peaks at intermediate noradrenergic tone. Finally, we demonstrate that this
+intermediate noradrenergic regime displays burst avalanches with power-law size
+and duration distributions and scaling relationship belonging to the
+universality class of self-organized criticality. Our results confirm that the
+noradrenergic ascending arousal system acts as a control parameter for emergent
+critical dynamics in the brain. This methodology could be extended to explore
+other neuromodulators as control parameters of the brain.

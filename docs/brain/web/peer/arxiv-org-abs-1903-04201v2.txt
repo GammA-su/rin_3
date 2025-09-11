@@ -1,0 +1,16 @@
+http://arxiv.org/abs/1903.04201v2
+
+Despite a rise in the use of "learning by doing" pedagogical methods in
+praxis, little is known as to how these methods improve learning outcomes. Here
+we show that visual association cortex causally contributes to performance
+benefits of a learning by doing method. This finding derives from transcranial
+magnetic stimulation (TMS) and a gesture-enriched foreign language (L2)
+vocabulary learning paradigm performed by 22 young adults. Inhibitory TMS of
+visual motion cortex reduced learning outcomes for abstract and concrete
+gesture-enriched words in comparison to sham stimulation. There were no TMS
+effects on words learned with pictures. These results adjudicate between
+opposing predictions of two neuroscientific learning theories: While
+reactivation-based theories predict no functional role of visual motion cortex
+in vocabulary learning outcomes, the current study supports the predictive
+coding theory view that specialized sensory cortices precipitate
+sensorimotor-based learning benefits.

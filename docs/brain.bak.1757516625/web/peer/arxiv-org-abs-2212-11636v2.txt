@@ -1,0 +1,20 @@
+http://arxiv.org/abs/2212.11636v2
+
+Adequately assigning credit to actions for future outcomes based on their
+contributions is a long-standing open challenge in Reinforcement Learning. The
+assumptions of the most commonly used credit assignment method are
+disadvantageous in tasks where the effects of decisions are not immediately
+evident. Furthermore, this method can only evaluate actions that have been
+selected by the agent, making it highly inefficient. Still, no alternative
+methods have been widely adopted in the field. Hindsight Credit Assignment is a
+promising, but still unexplored candidate, which aims to solve the problems of
+both long-term and counterfactual credit assignment. In this thesis, we
+empirically investigate Hindsight Credit Assignment to identify its main
+benefits, and key points to improve. Then, we apply it to factored state
+representations, and in particular to state representations based on the causal
+structure of the environment. In this setting, we propose a variant of
+Hindsight Credit Assignment that effectively exploits a given causal structure.
+We show that our modification greatly decreases the workload of Hindsight
+Credit Assignment, making it more efficient and enabling it to outperform the
+baseline credit assignment method on various tasks. This opens the way to other
+methods based on given or learned causal structures.

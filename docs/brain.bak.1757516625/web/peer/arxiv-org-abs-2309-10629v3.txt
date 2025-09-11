@@ -1,0 +1,17 @@
+http://arxiv.org/abs/2309.10629v3
+
+The exploration of pathways and alternative pathways that have a specific
+function is of interest in numerous chemical contexts. A framework for
+specifying and searching for pathways has previously been developed, but a
+focus on which of the many pathway solutions are realisable, or can be made
+realisable, is missing. Realisable here means that there actually exists some
+sequencing of the reactions of the pathway that will execute the pathway. We
+present a method for analysing the realisability of pathways based on the
+reachability question in Petri nets. For realisable pathways, our method also
+provides a certificate encoding an order of the reactions which realises the
+pathway. We present two extended notions of realisability of pathways, one of
+which is related to the concept of network catalysts. We exemplify our findings
+on the pentose phosphate pathway. Furthermore, we discuss the relevance of our
+concepts for elucidating the choices often implicitly made when depicting
+pathways. Lastly, we lay the foundation for the mathematical theory of
+realisability.

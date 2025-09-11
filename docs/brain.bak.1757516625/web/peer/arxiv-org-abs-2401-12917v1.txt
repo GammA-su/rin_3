@@ -1,0 +1,22 @@
+http://arxiv.org/abs/2401.12917v1
+
+Is there a canonical way to think of agency beyond reward maximisation? In
+this paper, we show that any type of behaviour complying with physically sound
+assumptions about how macroscopic biological agents interact with the world
+canonically integrates exploration and exploitation in the sense of minimising
+risk and ambiguity about states of the world. This description, known as active
+inference, refines the free energy principle, a popular descriptive framework
+for action and perception originating in neuroscience. Active inference
+provides a normative Bayesian framework to simulate and model agency that is
+widely used in behavioural neuroscience, reinforcement learning (RL) and
+robotics. The usefulness of active inference for RL is three-fold. \emph{a})
+Active inference provides a principled solution to the exploration-exploitation
+dilemma that usefully simulates biological agency. \emph{b}) It provides an
+explainable recipe to simulate behaviour, whence behaviour follows as an
+explainable mixture of exploration and exploitation under a generative world
+model, and all differences in behaviour are explicit in differences in world
+model. \emph{c}) This framework is universal in the sense that it is
+theoretically possible to rewrite any RL algorithm conforming to the
+descriptive assumptions of active inference as an active inference algorithm.
+Thus, active inference can be used as a tool to uncover and compare the
+commitments and assumptions of more specific models of agency.

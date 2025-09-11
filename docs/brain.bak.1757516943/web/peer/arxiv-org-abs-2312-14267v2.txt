@@ -1,0 +1,17 @@
+http://arxiv.org/abs/2312.14267v2
+
+For decades the external globus pallidus (GPe) has been viewed as a passive
+way-station in the indirect pathway of the cortico-basal ganglia-thalamic
+(CBGT) circuit, sandwiched between striatal inputs and basal ganglia outputs.
+According to this model, one-way descending striatal signals in the indirect
+pathway amplify the suppression of downstream thalamic nuclei by inhibiting GPe
+activity. Here we revisit this assumption, in light of new and emerging work on
+the cellular complexity, connectivity, and functional role of the GPe in
+behavior. We show how, according to this new circuit-level logic, the GPe is
+ideally positioned for relaying ascending and descending control signals within
+the basal ganglia. Focusing on the problem of inhibitory control, we illustrate
+how this bidirectional flow of information allows for the integration of
+reactive and proactive control mechanisms during action selection. Taken
+together, this new evidence points to the GPe as being a central hub in the
+CBGT circuit, participating in bidirectional information flow and linking
+multifaceted control signals to regulate behavior.

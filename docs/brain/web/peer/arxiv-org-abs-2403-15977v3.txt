@@ -1,0 +1,24 @@
+http://arxiv.org/abs/2403.15977v3
+
+Deep neural network (DNN) based machine perception frameworks process the
+entire input in a one-shot manner to provide answers to both "what object is
+being observed" and "where it is located". In contrast, the "two-stream
+hypothesis" from neuroscience explains the neural processing in the human
+visual cortex as an active vision system that utilizes two separate regions of
+the brain to answer the what and the where questions. In this work, we propose
+a machine learning framework inspired by the "two-stream hypothesis" and
+explore the potential benefits that it offers. Specifically, the proposed
+framework models the following mechanisms: 1) ventral (what) stream focusing on
+the input regions perceived by the fovea part of an eye (foveation), 2) dorsal
+(where) stream providing visual guidance, and 3) iterative processing of the
+two streams to calibrate visual focus and process the sequence of focused image
+patches. The training of the proposed framework is accomplished by label-based
+DNN training for the ventral stream model and reinforcement learning for the
+dorsal stream model. We show that the two-stream foveation-based learning is
+applicable to the challenging task of weakly-supervised object localization
+(WSOL), where the training data is limited to the object class or its
+attributes. The framework is capable of both predicting the properties of an
+object and successfully localizing it by predicting its bounding box. We also
+show that, due to the independent nature of the two streams, the dorsal model
+can be applied on its own to unseen images to localize objects from different
+datasets.

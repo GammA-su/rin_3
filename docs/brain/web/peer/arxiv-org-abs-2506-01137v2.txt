@@ -1,0 +1,24 @@
+http://arxiv.org/abs/2506.01137v2
+
+The study expands the application of scikit-learn-based machine learning (ML)
+to the prediction of small biomolecule functionalities based on Carbon 13
+isotope (13C) NMR spectroscopy data derived from Simplified Molecular Input
+Line Entry System (SMILES) notations. The methodology previously demonstrated
+by predicting dopamine D1 receptor antagonists was upgraded with the addition
+of new molecular features derived from the PubChem database. The enhanced ML
+model obtained 75.8% Accuracy, 84.2% Precision, 63.6% Recall, 72.5% F1-score
+and 75.8 % ROC, when is trained on 25,532 samples and tested on 5,466 samples.
+To evaluate the applicability of the methodology for a variety of case studies,
+a comparison was conducted between the prediction capabilities of the ML models
+based on the human dopamine D1 receptor antagonists and on the neuronal
+Transthyretin (TTR) transcription activators. Since the TTR bioassay did not
+contain the required number of samples for comparison, the results were
+obtained hypothetically. Gradient Boosting classifier was the optimal model for
+TTR transcription activators, achieving hypothetical 67.4% Accuracy, 74.0%
+Precision, 53.5% Recall, 62.1% F1-score, 67.4 % ROC, if it could be trained
+with 25,532 samples and tested with 5,466 samples. In addition to the main
+study, to the attention of those interested in neuronal TTR, the CID_SID ML
+model has been developed to predict whether a compound, initially designed for
+another purpose, possesses TTR transcription activation capabilities. This ML
+model was based solely on its PubChem CID and SID and achieved 81.5% Accuracy,
+94.6% Precision, 66.8% Recall, 78.3% F1-score, 81.5 % ROC.

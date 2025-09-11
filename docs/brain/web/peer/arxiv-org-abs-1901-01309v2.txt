@@ -1,0 +1,10 @@
+http://arxiv.org/abs/1901.01309v2
+
+We propose a new model of the oculomotor system, particularly the
+vestibulo-ocular reflex, gaze fixation, and smooth pursuit. Our key insight is
+to exploit recent developments on adaptive internal models. The outcome is a
+simple model that includes the interactions between the brainstem and the
+cerebellum and that recovers behaviors from more than 15 oculomotor
+experiments. In addition, we put forward a thesis that the cerebellum embodies
+internal models of all persistent, exogenous reference and disturbance signals
+acting on the body and observable through the error signals it receives.

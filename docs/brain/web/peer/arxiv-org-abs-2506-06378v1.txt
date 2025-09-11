@@ -1,0 +1,18 @@
+http://arxiv.org/abs/2506.06378v1
+
+Decomposing Electrodermal Activity (EDA) into phasic (short-term,
+stimulus-linked responses) and tonic (longer-term baseline) components is
+essential for extracting meaningful emotional and physiological biomarkers.
+This study presents a comparative analysis of knowledge-driven, statistical,
+and deep learning-based methods for EDA signal decomposition, with a focus on
+in-the-wild data collected from wearable devices. In particular, the authors
+introduce the Feel Transformer, a novel Transformer-based model adapted from
+the Autoformer architecture, designed to separate phasic and tonic components
+without explicit supervision. The model leverages pooling and trend-removal
+mechanisms to enforce physiologically meaningful decompositions. Comparative
+experiments against methods such as Ledalab, cvxEDA, and conventional
+detrending show that the Feel Transformer achieves a balance between feature
+fidelity (SCR frequency, amplitude, and tonic slope) and robustness to noisy,
+real-world data. The model demonstrates potential for real-time biosignal
+analysis and future applications in stress prediction, digital mental health
+interventions, and physiological forecasting.

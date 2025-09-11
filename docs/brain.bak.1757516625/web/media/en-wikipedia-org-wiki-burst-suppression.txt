@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Burst%20suppression
+
+Burst suppression is an electroencephalography (EEG) pattern that is characterized by periods of high-voltage electrical activity alternating with periods of no activity in the brain. The pattern is found in patients with inactivated brain states, such as from general anesthesia, coma, or hypothermia. This pattern can be physiological, as during early development, or pathological, as in diseases such as Ohtahara syndrome.

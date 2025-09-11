@@ -1,0 +1,18 @@
+http://arxiv.org/abs/2010.00525v4
+
+Cortical pyramidal neurons receive inputs from multiple distinct neural
+populations and integrate these inputs in separate dendritic compartments. We
+explore the possibility that cortical microcircuits implement Canonical
+Correlation Analysis (CCA), an unsupervised learning method that projects the
+inputs onto a common subspace so as to maximize the correlations between the
+projections. To this end, we seek a multi-channel CCA algorithm that can be
+implemented in a biologically plausible neural network. For biological
+plausibility, we require that the network operates in the online setting and
+its synaptic update rules are local. Starting from a novel CCA objective
+function, we derive an online optimization algorithm whose optimization steps
+can be implemented in a single-layer neural network with multi-compartmental
+neurons and local non-Hebbian learning rules. We also derive an extension of
+our online CCA algorithm with adaptive output rank and output whitening.
+Interestingly, the extension maps onto a neural network whose neural
+architecture and synaptic updates resemble neural circuitry and synaptic
+plasticity observed experimentally in cortical pyramidal neurons.

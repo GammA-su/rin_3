@@ -1,0 +1,59 @@
+{"id": "c1", "text": "PageRank models a random surfer with damping ~0.85.", "q": 0.8, "stance": "pro", "sources": [{"url": "pagerank_primary.txt", "seg": null, "h": null, "ts": null, "domain_tier": 1}, {"url": "pagerank_dissent_2.txt", "seg": null, "h": null, "ts": null, "domain_tier": 2}], "supports": [], "contradicts": []}
+{"id": "c2", "text": "Not simple link counts; weights depend on inlink ranks/outdegree.", "q": 0.8, "stance": "pro", "sources": [{"url": "pagerank_dissent.txt", "seg": null, "h": null, "ts": null, "domain_tier": 2}, {"url": "pagerank_primary.txt", "seg": null, "h": null, "ts": null, "domain_tier": 1}], "supports": [], "contradicts": []}
+{"id": "c3", "text": "Media often oversimplify as mere link counts (misleading).", "q": 0.7, "stance": "neutral", "sources": [{"url": "pagerank_media.txt", "seg": null, "h": null, "ts": null, "domain_tier": 3}, {"url": "pagerank_dissent_3.txt", "seg": null, "h": null, "ts": null, "domain_tier": 2}], "supports": [], "contradicts": []}
+{"id": "acl-1757580205379", "text": "# Dopamine system (focused module)", "q": 0.6, "stance": "neutral", "sources": [], "supports": [], "contradicts": []}
+{"id": "acl-1757580205585", "text": "Active inference and free-energy principle", "q": 0.6, "stance": "neutral", "sources": [], "supports": [], "contradicts": []}
+{"id": "acl-1757580205788", "text": "Addiction and sensitization (dopamine system dysregulation)", "q": 0.6, "stance": "neutral", "sources": [], "supports": [], "contradicts": []}
+{"id": "acl-1757580205989", "text": "Basal ganglia action selection circuits", "q": 0.6, "stance": "neutral", "sources": [], "supports": [], "contradicts": []}
+{"id": "acl-1757580206193", "text": "Bayesian brain hypothesis", "q": 0.6, "stance": "neutral", "sources": [], "supports": [], "contradicts": []}
+{"id": "acl-1757580206392", "text": "Biased competition model of attention", "q": 0.6, "stance": "neutral", "sources": [], "supports": [], "contradicts": []}
+{"id": "acl-1757580206593", "text": "Cerebellum predictive control and timing", "q": 0.6, "stance": "neutral", "sources": [], "supports": [], "contradicts": []}
+{"id": "acl-1757580206796", "text": "Circadian and sleep influences on dopamine signaling", "q": 0.6, "stance": "neutral", "sources": [], "supports": [], "contradicts": []}
+{"id": "acl-1757580207004", "text": "Communication through coherence (CTC)", "q": 0.6, "stance": "neutral", "sources": [], "supports": [], "contradicts": []}
+{"id": "acl-1757580207208", "text": "Connectomics and wiring constraints", "q": 0.6, "stance": "neutral", "sources": [], "supports": [], "contradicts": []}
+{"id": "acl-1757580207412", "text": "Cortical microcircuits (canonical column)", "q": 0.6, "stance": "neutral", "sources": [], "supports": [], "contradicts": []}
+{"id": "acl-1757580207616", "text": "Credit assignment in multilayer cortex", "q": 0.6, "stance": "neutral", "sources": [], "supports": [], "contradicts": []}
+{"id": "acl-1757580207817", "text": "D1 (direct) vs D2 (indirect) basal ganglia pathways and gating", "q": 0.6, "stance": "neutral", "sources": [], "supports": [], "contradicts": []}
+{"id": "acl-1757580208017", "text": "DAT/VMAT2 transporters and dopamine reuptake/packaging", "q": 0.6, "stance": "neutral", "sources": [], "supports": [], "contradicts": []}
+{"id": "acl-1757580208220", "text": "Decision making and drift-diffusion models", "q": 0.6, "stance": "neutral", "sources": [], "supports": [], "contradicts": []}
+{"id": "acl-1757580208424", "text": "Dendritic computation and nonlinear integration", "q": 0.6, "stance": "neutral", "sources": [], "supports": [], "contradicts": []}
+{"id": "acl-1757580208626", "text": "Dopamine modulation of STDP and eligibility traces", "q": 0.6, "stance": "neutral", "sources": [], "supports": [], "contradicts": []}
+{"id": "acl-1757580208829", "text": "Dopamine receptor families: D1-like vs D2-like (affinity, coupling)", "q": 0.6, "stance": "neutral", "sources": [], "supports": [], "contradicts": []}
+{"id": "acl-1757580209030", "text": "Dopamine reward prediction error signaling", "q": 0.6, "stance": "neutral", "sources": [], "supports": [], "contradicts": []}
+{"id": "acl-1757580209234", "text": "Dopamine–acetylcholine interactions in striatum (cholinergic interneurons)", "q": 0.6, "stance": "neutral", "sources": [], "supports": [], "contradicts": []}
+{"id": "acl-1757580209434", "text": "Dorsal vs ventral processing streams", "q": 0.6, "stance": "neutral", "sources": [], "supports": [], "contradicts": []}
+{"id": "acl-1757580209637", "text": "Energy efficiency and metabolic constraints in brain", "q": 0.6, "stance": "neutral", "sources": [], "supports": [], "contradicts": []}
+{"id": "acl-1757580209841", "text": "Executive control and task set maintenance", "q": 0.6, "stance": "neutral", "sources": [], "supports": [], "contradicts": []}
+{"id": "acl-1757580210040", "text": "Exploration–exploitation tradeoff and tonic DA", "q": 0.6, "stance": "neutral", "sources": [], "supports": [], "contradicts": []}
+{"id": "acl-1757580210238", "text": "Global Workspace Theory and broadcast", "q": 0.6, "stance": "neutral", "sources": [], "supports": [], "contradicts": []}
+{"id": "acl-1757580210442", "text": "Hierarchical temporal memory (biological inspirations)", "q": 0.6, "stance": "neutral", "sources": [], "supports": [], "contradicts": []}
+{"id": "acl-1757580210643", "text": "Hippocampus indexing theory", "q": 0.6, "stance": "neutral", "sources": [], "supports": [], "contradicts": []}
+{"id": "acl-1757580210844", "text": "Homeostatic plasticity and metaplasticity", "q": 0.6, "stance": "neutral", "sources": [], "supports": [], "contradicts": []}
+{"id": "acl-1757580211050", "text": "Hyperdirect pathway and rapid stopping (STN–GPi)", "q": 0.6, "stance": "neutral", "sources": [], "supports": [], "contradicts": []}
+{"id": "acl-1757580211250", "text": "Incentive salience vs hedonic impact (wanting vs liking)", "q": 0.6, "stance": "neutral", "sources": [], "supports": [], "contradicts": []}
+{"id": "acl-1757580211449", "text": "Invariant object recognition (ventral stream)", "q": 0.6, "stance": "neutral", "sources": [], "supports": [], "contradicts": []}
+{"id": "acl-1757580211649", "text": "LTP and LTD mechanisms and rules", "q": 0.6, "stance": "neutral", "sources": [], "supports": [], "contradicts": []}
+{"id": "acl-1757580211848", "text": "Language networks (Broca/Wernicke pathways)", "q": 0.6, "stance": "neutral", "sources": [], "supports": [], "contradicts": []}
+{"id": "acl-1757580212052", "text": "Midbrain dopamine nuclei (VTA, SNc) and projections", "q": 0.6, "stance": "neutral", "sources": [], "supports": [], "contradicts": []}
+{"id": "acl-1757580212454", "text": "Neuromodulators: dopamine, acetylcholine, norepinephrine, serotonin", "q": 0.6, "stance": "neutral", "sources": [], "supports": [], "contradicts": []}
+{"id": "acl-1757580212652", "text": "Neuromodulatory control of plasticity", "q": 0.6, "stance": "neutral", "sources": [], "supports": [], "contradicts": []}
+{"id": "acl-1757580212856", "text": "Nigrostriatal, mesolimbic, mesocortical, tuberoinfundibular pathways", "q": 0.6, "stance": "neutral", "sources": [], "supports": [], "contradicts": []}
+{"id": "acl-1757580213061", "text": "Parkinson’s disease: DA loss, L-DOPA, DBS mechanisms", "q": 0.6, "stance": "neutral", "sources": [], "supports": [], "contradicts": []}
+{"id": "acl-1757580213266", "text": "Phasic vs tonic dopamine firing and behavioral significance", "q": 0.6, "stance": "neutral", "sources": [], "supports": [], "contradicts": []}
+{"id": "acl-1757580213470", "text": "Place cells and grid cells (cognitive maps)", "q": 0.6, "stance": "neutral", "sources": [], "supports": [], "contradicts": []}
+{"id": "acl-1757580213672", "text": "Predictive coding in cortex", "q": 0.6, "stance": "neutral", "sources": [], "supports": [], "contradicts": []}
+{"id": "acl-1757580213885", "text": "Predictive coding vs redundancy reduction", "q": 0.6, "stance": "neutral", "sources": [], "supports": [], "contradicts": []}
+{"id": "acl-1757580214094", "text": "Predictive timing in cerebellar circuits", "q": 0.6, "stance": "neutral", "sources": [], "supports": [], "contradicts": []}
+{"id": "acl-1757580214494", "text": "Schizophrenia and dopamine hypotheses", "q": 0.6, "stance": "neutral", "sources": [], "supports": [], "contradicts": []}
+{"id": "acl-1757580214699", "text": "Sleep stages and memory consolidation", "q": 0.6, "stance": "neutral", "sources": [], "supports": [], "contradicts": []}
+{"id": "acl-1757580215107", "text": "Spike timing–dependent plasticity variants", "q": 0.6, "stance": "neutral", "sources": [], "supports": [], "contradicts": []}
+{"id": "acl-1757580215314", "text": "Striosome vs matrix compartments in striatum", "q": 0.6, "stance": "neutral", "sources": [], "supports": [], "contradicts": []}
+{"id": "acl-1757580215519", "text": "Synaptic plasticity: Hebbian, STDP, BCM", "q": 0.6, "stance": "neutral", "sources": [], "supports": [], "contradicts": []}
+{"id": "acl-1757580215718", "text": "Synaptic tagging and capture", "q": 0.6, "stance": "neutral", "sources": [], "supports": [], "contradicts": []}
+{"id": "acl-1757580215921", "text": "Systems memory consolidation (hippocampus→neocortex)", "q": 0.6, "stance": "neutral", "sources": [], "supports": [], "contradicts": []}
+{"id": "acl-1757580216126", "text": "Temporal-difference learning and reward prediction errors in DA neurons", "q": 0.6, "stance": "neutral", "sources": [], "supports": [], "contradicts": []}
+{"id": "acl-1757580216325", "text": "Thalamocortical loops and gating", "q": 0.6, "stance": "neutral", "sources": [], "supports": [], "contradicts": []}
+{"id": "acl-1757580216528", "text": "Theta–gamma coupling and phase coding", "q": 0.6, "stance": "neutral", "sources": [], "supports": [], "contradicts": []}
+{"id": "acl-1757580216730", "text": "Top-down vs bottom-up attention", "q": 0.6, "stance": "neutral", "sources": [], "supports": [], "contradicts": []}
+{"id": "acl-1757580216930", "text": "Tyrosine hydroxylase, synthesis, and autoreceptors", "q": 0.6, "stance": "neutral", "sources": [], "supports": [], "contradicts": []}
+{"id": "acl-1757580217131", "text": "Working memory gating in prefrontal cortex (dopamine D1/D2 balance)", "q": 0.6, "stance": "neutral", "sources": [], "supports": [], "contradicts": []}

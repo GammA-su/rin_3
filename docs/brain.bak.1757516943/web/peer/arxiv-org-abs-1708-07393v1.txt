@@ -1,0 +1,16 @@
+http://arxiv.org/abs/1708.07393v1
+
+Since decade understanding of programs has become a compulsory task for the
+students as well as for others who are involved in the process of developing
+software and providing solutions to open problems. In that aspect showing the
+problem in a pictorial presentation in a best manner is a key advantage to
+better understand it. We provide model and structure for Java programs to
+understand the control and data flow analysis of execution. Especially it helps
+to understand the static analysis of Java programs, which is an uttermost
+important phase for software maintenance. We provided information and model for
+visualization of Java programs that may help better understanding of programs
+for a learning and analysis purpose. The idea provided for building
+visualization tool is extracting data and control analysis from execution of
+Java programs. We presented case studies to prove that our idea is most
+important for better understanding of Java programs which may help towards
+static analysis, software debugging and software maintenance.

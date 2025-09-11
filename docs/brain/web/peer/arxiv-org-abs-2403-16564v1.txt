@@ -1,0 +1,25 @@
+http://arxiv.org/abs/2403.16564v1
+
+Parkinson's disease (PD) is a progressive neurodegenerative disease, and it
+is caused by the loss of dopaminergic neurons in the basal ganglia (BG).
+Currently, there is no definite cure for PD, and available treatments mainly
+aim to alleviate its symptoms. Due to impaired neurotransmitter-based
+information transmission in PD, molecular communication-based approaches can be
+employed as potential solutions to address this issue. Molecular Communications
+(MC) is a bio-inspired communication method utilizing molecules for carrying
+information. This mode of communication stands out for developing
+bio-compatible nanomachines for diagnosing and treating, particularly in
+addressing neurodegenerative diseases like PD, due to its compatibility with
+biological systems. This study presents a novel treatment method that
+introduces an Intelligent Dopamine Rate Modulator (IDRM), which is located in
+the synaptic gap between the substantia nigra pars compacta (SNc) and striatum
+to compensate for insufficiency dopamine release in BG caused by PD. For
+storing dopamine in the IDRM, dopamine compound (DAC) is swallowed and crossed
+through the digestive system, blood circulatory system, blood-brain barrier
+(BBB), and brain extracellular matrix uptakes with IDRMs. Here, the DAC
+concentration is calculated in these regions, revealing that the required
+exogenous dopamine consistently reaches IDRM. Therefore, the perpetual dopamine
+insufficiency in BG associated with PD can be compensated. This method reduces
+drug side effects because dopamine is not released in other brain regions.
+Unlike other treatments, this approach targets the root cause of PD rather than
+just reducing symptoms.

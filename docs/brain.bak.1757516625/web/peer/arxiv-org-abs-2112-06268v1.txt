@@ -1,0 +1,9 @@
+http://arxiv.org/abs/2112.06268v1
+
+The known results on compartment system's identification requires
+observations and measures on some compartments. However, in many situations
+some compartments can not be measured, so the minimization of the compartment's
+number to be measured is a very important problem to solve. In this work, this
+problem had been solved for a class of compartmental systems. It is proved that
+all reversible catenary system is identifiable by the measure of one
+compartment, the principal compartment.

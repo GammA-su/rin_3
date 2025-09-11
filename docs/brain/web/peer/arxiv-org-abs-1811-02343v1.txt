@@ -1,0 +1,23 @@
+http://arxiv.org/abs/1811.02343v1
+
+In this work, we propose a `1-transistor 1-nanotrack' (1T1N) synapse based on
+movement of magnetic skyrmions using spin polarised current pulses. The
+proposed synaptic bit-cell has 4 terminals and fully decoupled spike
+transmission- and programming- paths. With careful tuning of programming
+parameters we ensure multi-level non-volatile conductance evolution in the
+proposed skyrmionic synapse. Through micromagnetic simulations, we studied in
+detail the impact of programming conditions (current density, pulse width) on
+synaptic performance parameters such as number of conductance levels and energy
+per transition. The programming parameters chosen used all further analysis
+gave rise to a synapse with 7 distinct conductance states and 1.2 fJ per
+conductance state transition event. Exploiting bidirectional conductance
+modulation the 1T1N synapse is able to undergo long-term potentiation (LTP) &
+depression (LTD) according to a simplified variant of biological spike timing
+dependent plasticity (STDP) rule. We present subthreshold CMOS spike generator
+circuit which when coupled with well known subthreshold integrator circuit,
+produces custom pre and post-neuronal spike shapes, responsible for
+implementing unsupervised learning with the proposed 1T1N synaptic bit-cell and
+consuming ~ 0.25 pJ/event. A spiking neural network (SNN) incorporating the
+characteristics of the 1T1N synapse was simulated for two seperate
+applications: pattern extraction from noisy video streams and MNIST
+classification.

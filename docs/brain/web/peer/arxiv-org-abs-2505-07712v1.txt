@@ -1,0 +1,16 @@
+http://arxiv.org/abs/2505.07712v1
+
+Alignment between subjective sense of time and chronological time can become
+skewed as a result of pharmacological interventions, neurodegenerative diseases
+(such as Parkinson's disease), or even in the moments preceding brain death.
+Despite increased understanding of mechanisms governing time perception and the
+activity of the "internal clock" (such as the functionality of the dopamine
+system in the basal ganglia of the midbrain), there currently exist no
+mathematical models that allow investigation of changes in time perception
+through formalizing the decoupling of "internal" and "external" time. Here we
+propose such a model using a parametrically heterogeneous power equation, and
+use it to investigate the critical case of indefinite increase in internal time
+following cardiac arrest and preceding brain death. We identify three critical
+parameters that determine time to brain death and provide an analysis of the
+relevant quantities. We hope that our model can lay foundation for further
+mathematical and theoretical exploration of this complex topic.

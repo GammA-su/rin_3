@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Dissipative%20system
+
+A dissipative system is a thermodynamically open system which is operating out of, and often far from, thermodynamic equilibrium in an environment with which it exchanges energy and matter. A tornado may be thought of as a dissipative system. Dissipative systems stand in contrast to conservative systems.

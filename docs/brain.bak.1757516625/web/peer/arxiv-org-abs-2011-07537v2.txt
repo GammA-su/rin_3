@@ -1,0 +1,18 @@
+http://arxiv.org/abs/2011.07537v2
+
+Deep reinforcement learning has been one of the fastest growing fields of
+machine learning over the past years and numerous libraries have been open
+sourced to support research. However, most codebases have a steep learning
+curve or limited flexibility that do not satisfy a need for fast prototyping in
+fundamental research. This paper introduces Tonic, a Python library allowing
+researchers to quickly implement new ideas and measure their importance by
+providing: 1) general-purpose configurable modules 2) several baseline agents:
+A2C, TRPO, PPO, MPO, DDPG, D4PG, TD3 and SAC built with these modules 3)
+support for TensorFlow 2 and PyTorch 4) support for continuous-control
+environments from OpenAI Gym, DeepMind Control Suite and PyBullet 5) scripts to
+experiment in a reproducible way, plot results, and play with trained agents 6)
+a benchmark of the provided agents on 70 continuous-control tasks. Evaluation
+is performed in fair conditions with identical seeds, training and testing
+loops, while sharing general improvements such as non-terminal timeouts and
+observation normalization. Finally, to demonstrate how Tonic simplifies
+experimentation, a novel agent called TD4 is implemented and evaluated.

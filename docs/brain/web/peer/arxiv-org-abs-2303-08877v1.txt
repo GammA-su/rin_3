@@ -1,0 +1,28 @@
+http://arxiv.org/abs/2303.08877v1
+
+A comprehensive model of natural language processing in the brain must
+accommodate four components: representations, operations, structures and
+encoding. It further requires a principled account of how these components
+mechanistically, and causally, relate to each another. While previous models
+have isolated regions of interest for structure-building and lexical access,
+many gaps remain with respect to bridging distinct scales of neural complexity.
+By expanding existing accounts of how neural oscillations can index various
+linguistic processes, this article proposes a neurocomputational architecture
+for syntax, termed the ROSE model (Representation, Operation, Structure,
+Encoding). Under ROSE, the basic data structures of syntax are atomic features,
+types of mental representations (R), and are coded at the single-unit and
+ensemble level. Elementary computations (O) that transform these units into
+manipulable objects accessible to subsequent structure-building levels are
+coded via high frequency gamma activity. Low frequency synchronization and
+cross-frequency coupling code for recursive categorial inferences (S). Distinct
+forms of low frequency coupling and phase-amplitude coupling (delta-theta
+coupling via pSTS-IFG; theta-gamma coupling via IFG to conceptual hubs) then
+encode these structures onto distinct workspaces (E). Causally connecting R to
+O is spike-phase/LFP coupling; connecting O to S is phase-amplitude coupling;
+connecting S to E is a system of frontotemporal traveling oscillations;
+connecting E to lower levels is low-frequency phase resetting of spike-LFP
+coupling. ROSE is reliant on neurophysiologically plausible mechanisms, is
+supported at all four levels by a range of recent empirical research, and
+provides an anatomically precise and falsifiable grounding for the basic
+property of natural language syntax: hierarchical, recursive
+structure-building.

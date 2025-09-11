@@ -1,0 +1,20 @@
+http://arxiv.org/abs/cond-mat/0110189v4
+
+The Human Genome Project (HGP) provides researchers with the data of nearly
+all human genes and the challenge to use this information for elucidating the
+etiology of common disorders. A secondary Darwinian method was applied to HGP
+and other research data to approximate and possibly unravel the etiology of
+schizophrenia. The results indicate that genetic and epigenetic variants of
+genes involved in signal transduction, transcription and translation -
+converging at the protein-synthesis rate (PSR) as common final pathway - might
+be responsible for the genetic susceptibility to schizophrenia. Environmental
+(e.g. viruses)and/or genetic factors can lead to cerebral PSR (CPSR)
+deficiency. The CPSR hypothesis of schizophrenia and antipsychotic mechanism
+explains 96% of the major facts of schizophrenia, reveals links between
+previously unrelated facts, integrates many hypotheses, and implies that
+schizophrenia should be easily preventable and treatable, partly by
+immunization against neurotrophic viruses and partly by the development of new
+drugs which selectively increase CPSR. Part of the manuscript has been
+published in a modified form as "The glial growth factors deficiency and
+synaptic destabilization hypothesis of schizophrenia" in BMC Psychiatry
+available online at http://www.biomedcentral.com/1471-244X/2/8/

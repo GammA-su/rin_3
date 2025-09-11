@@ -1,0 +1,12 @@
+http://arxiv.org/abs/1903.10239v1
+
+The circadian clock is the molecular mechanism responsible for the adaptation
+to daily rhythms in living organisms. Oscillations and fluctuations in
+environmental conditions regulate the circadian clock through signaling
+pathways. We study the response to continuous photic perturbations in a minimal
+molecular network model of the circadian clock, composed of 5 nonlinear delay
+differential equations with multiple feedbacks. We model the perturbation as a
+stationary stochastic process, and we consider the resulting irreversibility of
+trajectories as a key effect of the interaction. In particular we adopt a
+measure of mutual mapping irreversibility in the time series thermodynamics
+framework, and we find 12 hours harmonics.

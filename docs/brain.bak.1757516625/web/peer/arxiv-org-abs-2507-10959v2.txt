@@ -1,0 +1,24 @@
+http://arxiv.org/abs/2507.10959v2
+
+Are you, with your perceptions, memories and observational data, a Boltzmann
+brain, i.e., a statistical fluctuation out of the thermal equilibrium of the
+universe? Arguments are given in the literature for and against taking this
+hypothesis seriously. Complicating these analyses have been the many subtle -
+and very often implicit - entanglements between related arguments that have
+been given for the past hypothesis, the second law, and even Bayesian inference
+of the reliability of experimental data. These entanglements can easily lead to
+circular reasoning. To help disentangle those arguments, since almost all of
+them involve Boltzmann's H theorem, we begin by formalizing the H theorem as a
+time-symmetric, time-translation invariant Markov process over the entropy
+values of the universe. Crucially, this process does not specify the time(s) on
+which we should condition it in order to infer the stochastic dynamics of our
+universe's entropy. Any such choice of conditioning events must be introduced
+as an independent assumption. This observation allows us to disentangle the
+standard Boltzmann brain hypothesis, its "1000CE" variant, the past hypothesis,
+the second law, and the reliability of our experimental data, all in a fully
+formal manner. In particular, we show that they all adopt the H theorem's
+stipulation that the universe's entropy evolves as a Markov processes, and all
+make an arbitrary assumption that the process should be conditioned on a single
+moment in time. Their only difference is what single time to condition on. In
+this aspect, the Boltzmann brain hypothesis and the second law are equally
+legitimate (or not).

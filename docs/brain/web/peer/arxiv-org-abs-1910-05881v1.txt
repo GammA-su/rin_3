@@ -1,0 +1,27 @@
+http://arxiv.org/abs/1910.05881v1
+
+Fourier-like summation of several grid cell modules with different spatial
+frequencies in the medial entorhinal cortex (MEC) has long been proposed to
+form the contours of place firing fields. Recent experiments largely, but not
+completely, support this theory. Place fields are obviously expanded by
+inactivation of dorsal MEC, which fits the hypothesis. However, contrary to the
+prediction, inactivation of ventral MEC is also weakly broaden the spatial
+place firing patterns. In this study, we derive the model from grid spatial
+frequencies represented by Gaussian profiles to a 1D place field by Bayesian
+inference, and further provide completely theoretical explanations for
+expansion of place fields and predictions for alignments of grid components. To
+understand the information transform across between neocortex, entorhinal
+cortex, and hippocampus, we propose spatial memory indexing theory from
+hippocampal indexing theory to investigate how neural dynamics work in the
+entorhinal-hippocampal circuit. The inputs of place cells in CA3 are converged
+from three grid modules with different grid spacings layer II of MEC by
+Bayesian mechanism. We resort to the robot system to test Fourier hypothesis
+and spatial memory indexing theory, and validate our proposed
+entorhinal-hippocampal model. And then we demonstrate its cognitive mapping
+capability on the KITTI odometry benchmark dataset. Results suggest that our
+model provides a rational theoretical explanation for the biological
+experimental results. Results also show that the proposed model is robust for
+simultaneous localization and mapping (SLAM) in the large-scale environment.
+Our proposed model theoretically supports for Fourier hypothesis in a general
+Bayesian mechanism, which may pertain to other neural systems in addition to
+spatial cognition.

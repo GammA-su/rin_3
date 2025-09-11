@@ -1,0 +1,23 @@
+http://arxiv.org/abs/2503.03784v1
+
+Understanding cognitive flexibility and task-switching mechanisms in neural
+systems requires biologically plausible computational models. This tutorial
+presents a step-by-step approach to constructing a spiking neural network (SNN)
+that simulates task-switching dynamics within the cognitive control network.
+The model incorporates biologically realistic features, including lateral
+inhibition, adaptive synaptic weights through unsupervised Spike
+Timing-Dependent Plasticity (STDP), and precise neuronal parameterization
+within physiologically relevant ranges. The SNN is implemented using Leaky
+Integrate-and-Fire (LIF) neurons, which represent excitatory (glutamatergic)
+and inhibitory (GABAergic) populations. We utilize two real-world datasets as
+tasks, demonstrating how the network learns and dynamically switches between
+them. Experimental design follows cognitive psychology paradigms to analyze
+neural adaptation, synaptic weight modifications, and emergent behaviors such
+as Long-Term Potentiation (LTP), Long-Term Depression (LTD), and Task-Set
+Reconfiguration (TSR). Through a series of structured experiments, this
+tutorial illustrates how variations in task-switching intervals affect
+performance and multitasking efficiency. The results align with empirically
+observed neuronal responses, offering insights into the computational
+underpinnings of executive function. By following this tutorial, researchers
+can develop and extend biologically inspired SNN models for studying cognitive
+processes and neural adaptation.

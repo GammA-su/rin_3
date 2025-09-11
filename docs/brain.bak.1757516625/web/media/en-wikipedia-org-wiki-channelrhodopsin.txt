@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Channelrhodopsin
+
+Channelrhodopsins are a subfamily of retinylidene proteins (rhodopsins) that function as light-gated ion channels. They serve as sensory photoreceptors in unicellular green algae, controlling phototaxis: movement in response to light. Expressed in cells of other organisms, they enable light to control electrical excitability, intracellular acidity, calcium influx, and other cellular processes. Channelrhodopsin-1 (ChR1) and Channelrhodopsin-2 (ChR2) from the model organism Chlamydomonas reinhardtii are the first discovered channelrhodopsins. Variants that are sensitive to different colors of light or selective for specific ions have been cloned from other species of algae and protists.

@@ -1,0 +1,20 @@
+http://arxiv.org/abs/2202.11190v1
+
+How does the mind organize thoughts? The hippocampal-entorhinal complex is
+thought to support domain-general representation and processing of structural
+knowledge of arbitrary state, feature and concept spaces. In particular, it
+enables the formation of cognitive maps, and navigation on these maps, thereby
+broadly contributing to cognition. It has been proposed that the concept of
+multi-scale successor representations provides an explanation of the underlying
+computations performed by place and grid cells. Here, we present a neural
+network based approach to learn such representations, and its application to
+different scenarios: a spatial exploration task based on supervised learning, a
+spatial navigation task based on reinforcement learning, and a non-spatial task
+where linguistic constructions have to be inferred by observing sample
+sentences. In all scenarios, the neural network correctly learns and
+approximates the underlying structure by building successor representations.
+Furthermore, the resulting neural firing patterns are strikingly similar to
+experimentally observed place and grid cell firing patterns. We conclude that
+cognitive maps and neural network-based successor representations of structured
+knowledge provide a promising way to overcome some of the short comings of deep
+learning towards artificial general intelligence.

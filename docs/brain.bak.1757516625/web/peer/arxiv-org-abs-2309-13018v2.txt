@@ -1,0 +1,15 @@
+http://arxiv.org/abs/2309.13018v2
+
+Neural network pruning offers an effective method for compressing a
+multilingual automatic speech recognition (ASR) model with minimal performance
+loss. However, it entails several rounds of pruning and re-training needed to
+be run for each language. In this work, we propose the use of an adaptive
+masking approach in two scenarios for pruning a multilingual ASR model
+efficiently, each resulting in sparse monolingual models or a sparse
+multilingual model (named as Dynamic ASR Pathways). Our approach dynamically
+adapts the sub-network, avoiding premature decisions about a fixed sub-network
+structure. We show that our approach outperforms existing pruning methods when
+targeting sparse monolingual models. Further, we illustrate that Dynamic ASR
+Pathways jointly discovers and trains better sub-networks (pathways) of a
+single multilingual model by adapting from different sub-network
+initializations, thereby reducing the need for language-specific pruning.

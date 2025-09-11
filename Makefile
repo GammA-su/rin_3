@@ -168,8 +168,55 @@ claims-similarities: ## Find cross-domain similarities between brain and AGI cla
 	python3 files/tools/claims_similarity.py $${MEMDIR:+--memdir $${MEMDIR}} $${INCB:+--include-brain $${INCB}} $${INCA:+--include-agi $${INCA}} $${K:+--k $${K}} $${MIN_SIM:+--min-sim $${MIN_SIM}}
 
 .PHONY: memory-prune
-memory-prune: ## Prune memory: dedupe by text, drop slugs, require sources+tier (env: IN=.guardian_mem/claims.jsonl, OUT=.guardian_mem/claims.pruned.jsonl, MAX=100000, MIN_SOURCES=1, TIER_MAX=3, DROP=^(en-wikipedia-org|arxiv-org-abs), DOMAINS="BRAIN,AGI")
-	python3 files/tools/memory_prune.py $${IN:+--in $${IN}} $${OUT:+--out $${OUT}} $${MAX:+--max $${MAX}} $${MIN_SOURCES:+--min-sources $${MIN_SOURCES}} $${TIER_MAX:+--tier-max $${TIER_MAX}} $${DROP:+--drop-slugs $${DROP}} $${DOMAINS:+--domains $${DOMAINS}}
+memory-prune: ## Prune memory: dedupe by text, drop slugs, require sources+tier (env: IN, OUT, MAX=100000, MIN_SOURCES=1, TIER_MAX=3, DROP=^(en-wikipedia-org|arxiv-org-abs), DOMAINS, INCLUDE)
+	python3 files/tools/memory_prune.py $${IN:+--in $${IN}} $${OUT:+--out $${OUT}} $${MAX:+--max $${MAX}} $${MIN_SOURCES:+--min-sources $${MIN_SOURCES}} $${TIER_MAX:+--tier-max $${TIER_MAX}} $${DROP:+--drop-slugs $${DROP}} $${DOMAINS:+--domains $${DOMAINS}} $${INCLUDE:+--include $${INCLUDE}}
+
+.PHONY: harvest-topics
+harvest-topics: ## Fetch many wiki/arXiv intros per topic (env: TOPICS=files/configs/topics.brain.txt, DOCS=docs/brain, WIKI_K=12, RELATED_K=6, ARXIV_K=6, ALLOW_NET=1)
+	python3 files/tools/harvest_topics.py $${TOPICS:+--topics $${TOPICS}} $${DOCS:+--docs $${DOCS}} $${WIKI_K:+--wiki-k $${WIKI_K}} $${RELATED_K:+--related-k $${RELATED_K}} $${ARXIV_K:+--arxiv-k $${ARXIV_K}}
+
+.PHONY: build-cards
+build-cards: ## Create knowledge cards (3–5 sentences + cites) (env: TOPICS, DOCS, MEMDIR, LLAMA, K=8, MAX_EACH=600)
+	python3 files/tools/build_cards.py $${TOPICS:+--topics $${TOPICS}} $${DOCS:+--docs $${DOCS}} $${MEMDIR:+--memdir $${MEMDIR}} $${LLAMA:+--llama $${LLAMA}} $${K:+--k $${K}} $${MAX_EACH:+--max_each $${MAX_EACH}}
+
+.PHONY: build-notes-tests
+build-notes-tests: ## Build 400–800 word notes + 10 Q/A per topic (env: TOPICS, DOCS, MEMDIR, LLAMA, K=12, MAX_EACH=1200)
+	python3 files/tools/build_notes_tests.py $${TOPICS:+--topics $${TOPICS}} $${DOCS:+--docs $${DOCS}} $${MEMDIR:+--memdir $${MEMDIR}} $${LLAMA:+--llama $${LLAMA}} $${K:+--k $${K}} $${MAX_EACH:+--max_each $${MAX_EACH}}
+
+.PHONY: build-graph
+build-graph: ## Build concept graph from cards/notes (env: CARDS, NOTES, LLAMA, OUT)
+	python3 files/tools/build_concept_graph.py $${CARDS:+--cards $${CARDS}} $${NOTES:+--notes $${NOTES}} $${LLAMA:+--llama $${LLAMA}} $${OUT:+--out $${OUT}}
+
+.PHONY: learn-brain
+learn-brain: ## One-shot brain loop: harvest -> (review keep.txt) -> prune -> cards -> notes/tests -> graph -> prune memory -> autopilot (set CONFIRM=1 to proceed past review)
+	# Defaults (shell variables)
+	BRAIN_TOPICS=$${TOPICS:-files/configs/topics.brain.txt}; \
+	BRAIN_DOCS=$${DOCS:-docs/brain}; \
+	BRAIN_MEM=$${MEMDIR:-.guardian_mem_brain}; \
+	LLAMA_SRV=$${LLAMA:-http://127.0.0.1:11435}; \
+	SRV=$${SERVER:-http://127.0.0.1:8090}; \
+	mkdir -p "$$BRAIN_DOCS"; \
+	# 1) Harvest many brain-specific sources (wiki search + related + arXiv)
+	ALLOW_NET=1 UA=$${UA:-Triforce-Prophet/1.0 (+local)} $(MAKE) harvest-topics TOPICS="$$BRAIN_TOPICS" DOCS="$$BRAIN_DOCS" $${WIKI_K:+WIKI_K=$${WIKI_K}} $${RELATED_K:+RELATED_K=$${RELATED_K}} $${ARXIV_K:+ARXIV_K=$${ARXIV_K}}; \
+	# 2) Propose keep list (review before deletion)
+	find "$$BRAIN_DOCS" -type f | LC_ALL=C grep -E -i -f files/configs/brain_keep.patterns > keep.txt || true; \
+	if [ -z "$$CONFIRM" ]; then \
+	  echo; echo 'Review keep.txt (brain-only files). When ready, rerun with CONFIRM=1 to prune and continue:'; \
+	  echo '    make learn-brain CONFIRM=1 [TOPICS=… DOCS=… MEMDIR=… LLAMA=… SERVER=…]'; echo; exit 0; \
+	fi; \
+	# 3) Prune non-brain files based on keep.txt
+	comm -23 <(find "$$BRAIN_DOCS" -type f | sort) <(sort keep.txt) | xargs -r rm -f; \
+	# 4) Build knowledge cards (3–5 sentences + cites)
+	$(MAKE) build-cards TOPICS="$$BRAIN_TOPICS" DOCS="$$BRAIN_DOCS" MEMDIR="$$BRAIN_MEM" LLAMA="$$LLAMA_SRV" $${K:+K=$${K}} $${MAX_EACH:+MAX_EACH=$${MAX_EACH}}; \
+	# 5) Build notes (400–800 words) + 10 Q/A per topic
+	$(MAKE) build-notes-tests TOPICS="$$BRAIN_TOPICS" DOCS="$$BRAIN_DOCS" MEMDIR="$$BRAIN_MEM" LLAMA="$$LLAMA_SRV" $${K:+K=$${K}} $${MAX_EACH:+MAX_EACH=$${MAX_EACH}}; \
+	# 6) Build concept graph from cards/notes
+	$(MAKE) build-graph CARDS="$$BRAIN_MEM/knowledge.cards.jsonl" NOTES="$$BRAIN_MEM/knowledge.notes.jsonl" LLAMA="$$LLAMA_SRV" OUT="$$BRAIN_MEM/concepts.graph.json"; \
+	# 7) Prune memory to compact brain-only, deduped claims
+	$(MAKE) memory-prune IN="$$BRAIN_MEM/claims.jsonl" OUT="$$BRAIN_MEM/claims.brain.clean.jsonl" MAX=$${MAX_CLAIMS:-5000} MIN_SOURCES=1 TIER_MAX=2 DOMAINS='BRAIN' INCLUDE='(cortex|hippocamp|synaps|dopamin|basal|prefrontal|thalam|cerebell|neuron|neuromodul|predictive|workspace|oscillat|grid|place|vta|snc)'; \
+	mv "$$BRAIN_MEM/claims.jsonl" "$$BRAIN_MEM/claims.jsonl.bak" 2>/dev/null || true; mv "$$BRAIN_MEM/claims.brain.clean.jsonl" "$$BRAIN_MEM/claims.jsonl"; \
+	# 8) Lean autopilot (no web in-loop)
+	SERVER="$$SRV" MEMDIR="$$BRAIN_MEM" NOVEL_THETA=$${NOVEL_THETA:-0.85} TOPICS_ONLY=1 TOPICS="$$BRAIN_TOPICS" DOCS="$$BRAIN_DOCS" $(MAKE) autopilot INTERVAL=$${INTERVAL:-0}
 
 .PHONY: probes-hf
 probes-hf: ## Run HF probes with safe defaults (TinyLlama 4-bit)

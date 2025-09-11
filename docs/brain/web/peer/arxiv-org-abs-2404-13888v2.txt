@@ -1,0 +1,24 @@
+http://arxiv.org/abs/2404.13888v2
+
+We are concerned about action selection in the basal ganglia (BG). We
+quantitatively analyze functions of direct pathway (DP) and indirect pathway
+(IP) for action selection in a spiking neural network with 3 competing
+channels. For such quantitative analysis, in each channel, we obtain the
+competition degree ${\cal C}_d$, given by the ratio of strength of DP (${\cal
+S}_{DP}$) to strength of IP (${\cal S}_{IP}$) (i.e., ${\cal C}_d = {\cal
+S}_{DP} / {\cal S}_{IP}$). Then, a desired action is selected in the channel
+with the largest ${\cal C}_d$. Desired action selection is made mainly due to
+strong focused inhibitory projection to the output nucleus, SNr (substantia
+nigra pars reticulata) via the DP in the corresponding channel. Unlike the case
+of DP, there are two types of IPs; intra-channel IP and inter-channel IP, due
+to widespread diffusive excitation from the STN (subthalamic nucleus). The
+intra-channel IP serves a function of brake to suppress the desired action
+selection. In contrast, the inter-channel IP to the SNr in the neighboring
+channels suppresses competing actions, leading to highlight the desired action
+selection. In this way, function of the inter-channel IP is opposite to that of
+the intra-channel IP. However, to the best of our knowledge, no quantitative
+analysis for such functions of the DP and the two IPs was made. Here, through
+direct calculations of the DP and the intra- and the inter-channel IP
+presynaptic currents into the SNr in each channel, we obtain the competition
+degree of each channel to determine a desired action, and then functions of the
+DP and the intra- and inter-channel IPs are quantitatively made clear.

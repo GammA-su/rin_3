@@ -1,0 +1,15 @@
+http://arxiv.org/abs/1610.04656v1
+
+Thermodynamic scaling theory, previously applied mainly to small proteins,
+here analyzes quantitative evolution of the titled functional network giant hub
+enzymes. The broad domain structure identified homologically is confirmed
+hydropathically using amino acid sequences only. The most surprising results
+concern the evolution of the tyrosine kinase globular surface roughness from
+avian to mammals, which is first order, compared to the evolution within
+mammals from rodents to humans, which is second order. The mystery of the
+unique amide terminal region of proto oncogene tyrosine protein kinase is
+resolved by the discovery there of a septad targeting cluster, which is
+paralleled by an octad catalytic cluster in tyrosine kinase in humans and a few
+other species. These results, which go far towards explaining why these
+proteins are among the largest giant hubs in protein interaction networks, use
+no adjustable parameters.

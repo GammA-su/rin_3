@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Two-alternative%20forced%20choice
+
+Two-alternative forced choice (2AFC) is a method for measuring the sensitivity of a person or animal to some particular sensory input, stimulus, through that observer's pattern of choices and response times to two versions of the sensory input. For example, to determine a person's sensitivity to dim light, the observer would be presented with a series of trials in which a dim light was randomly either in the top or bottom of the display. After each trial, the observer responds "top" or "bottom". The observer is not allowed to say "I do not know", or "I am not sure", or "I did not see anything". In that sense the observer's choice is forced between the two alternatives.

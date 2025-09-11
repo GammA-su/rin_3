@@ -1,0 +1,17 @@
+http://arxiv.org/abs/2405.16922v2
+
+Humans and animals learn throughout life. Such continual learning is crucial
+for intelligence. In this chapter, we examine the pivotal role plasticity
+mechanisms with complex internal synaptic dynamics could play in enabling this
+ability in neural networks. By surveying theoretical research, we highlight two
+fundamental enablers for continual learning. First, synaptic plasticity
+mechanisms must maintain and evolve an internal state over several behaviorally
+relevant timescales. Second, plasticity algorithms must leverage the internal
+state to intelligently regulate plasticity at individual synapses to facilitate
+the seamless integration of new memories while avoiding detrimental
+interference with existing ones. Our chapter covers successful applications of
+these principles to deep neural networks and underscores the significance of
+synaptic metaplasticity in sustaining continual learning capabilities. Finally,
+we outline avenues for further research to understand the brain's superb
+continual learning abilities and harness similar mechanisms for artificial
+intelligence systems.

@@ -1,0 +1,17 @@
+http://arxiv.org/abs/2306.11950v2
+
+Our understanding of biological neuronal networks has profoundly influenced
+the development of artificial neural networks (ANNs). However, neurons utilized
+in ANNs differ considerably from their biological counterparts, primarily due
+to the absence of complex dendritic trees with local nonlinearities. Early
+studies have suggested that dendritic nonlinearities could substantially
+improve the learning capabilities of neural network models. In this study, we
+systematically examined the role of nonlinear dendrites within neural networks.
+Utilizing machine-learning methodologies, we assessed how dendritic
+nonlinearities influence neural network performance. Our findings demonstrate
+that dendritic nonlinearities do not substantially affect learning capacity;
+rather, their primary benefit lies in enabling network capacity expansion while
+minimizing communication costs through effective localized feature aggregation.
+This research provides critical insights with significant implications for
+designing future neural network accelerators aimed at reducing communication
+overhead during neural network training and inference.

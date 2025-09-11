@@ -1,0 +1,20 @@
+http://arxiv.org/abs/2402.01605v2
+
+The nervous system reorganizes memories from an early site to a late site, a
+commonly observed feature of learning and memory systems known as systems
+consolidation. Previous work has suggested learning rules by which
+consolidation may occur. Here, we provide conditions under which such rules are
+guaranteed to lead to stable convergence of learning and consolidation. We use
+the theory of Lyapunov functions, which enforces stability by requiring
+learning rules to decrease an energy-like (Lyapunov) function. We present the
+theory in the context of a simple circuit architecture motivated by classic
+models of learning in systems consolidation mediated by the cerebellum.
+Stability is only guaranteed if the learning rate in the late stage is not
+faster than the learning rate in the early stage. Further, the slower the
+learning rate at the late stage, the larger the perturbation the system can
+tolerate with a guarantee of stability. We provide intuition for this result by
+mapping the consolidation model to a damped driven oscillator system, and
+showing that the ratio of early- to late-stage learning rates in the
+consolidation model can be directly identified with the (square of the)
+oscillator's damping ratio. This work suggests the power of the Lyapunov
+approach to provide constraints on nervous system function.

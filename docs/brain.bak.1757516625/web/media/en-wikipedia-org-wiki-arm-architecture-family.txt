@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/ARM%20architecture%20family
+
+ARM is a family of RISC instruction set architectures for computer processors. Arm Holdings develops the instruction set architecture and licenses them to other companies, who build the physical devices that use the instruction set. It also designs and licenses cores that implement these instruction set architectures.

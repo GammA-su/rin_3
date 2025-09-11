@@ -1,0 +1,28 @@
+http://arxiv.org/abs/2009.12696v1
+
+How can memories be maintained from days to a lifetime, given turnover of
+proteins that underlie expression of long-term synaptic potentiation (LTP)? One
+likely solution relies on synaptic positive feedback loops, prominently
+including persistent activation of CaM kinase II (CaMKII) and self-activated
+synthesis of protein kinase M zeta (PKM). Recent studies also suggest positive
+feedback based on recurrent synaptic reactivation within neuron assemblies, or
+engrams, is necessary to maintain memories. The relative importance of these
+feedback mechanisms is controversial. To explore the likelihood that each
+mechanism is necessary or sufficient, we simulated LTP maintenance with a
+simplified model incorporating persistent kinase activation, synaptic tagging,
+and preferential reactivation of strong synapses, and analyzed implications of
+recent data. We simulated three model variants, each maintaining LTP with one
+feedback loop: self-activated PKM synthesis (variant I); self-activated CamKII
+(variant II); and recurrent reactivation of strengthened synapses (variant
+III). Variant I requires and predicts that PKM must contribute to synaptic
+tagging. Variant II maintains LTP and suggests persistent CaMKII activation
+could maintain PKM activity, a feedforward interaction not previously
+considered. However we note data challenging this feedback loop. In variant III
+synaptic reactivation drives, and thus predicts, recurrent or persistent
+activity elevations of CamKII and other necessary kinases, plausibly
+contributing to empirically persistent elevation of PKM levels. Reactivation is
+thus predicted to sustain recurrent rounds of synaptic tagging and
+incorporation of plasticity-related proteins. We also suggest (model variant
+IV) that synaptic reactivation and autonomous kinase activation could
+synergistically maintain LTP. We propose experiments that could discriminate
+these maintenance mechanisms.

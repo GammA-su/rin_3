@@ -1,0 +1,19 @@
+http://arxiv.org/abs/1509.02587v2
+
+Computational neuroscience studies that have examined human visual system
+through functional magnetic resonance imaging (fMRI) have identified a model
+where the mammalian brain pursues two distinct pathways (for recognition of
+biological movement tasks). In the brain, dorsal stream analyzes the
+information of motion (optical flow), which is the fast features, and ventral
+stream (form pathway) analyzes form information (through active basis model
+based incremental slow feature analysis ) as slow features. The proposed
+approach suggests the motion perception of the human visual system composes of
+fast and slow feature interactions that identifies biological movements. Form
+features in the visual system biologically follows the application of active
+basis model with incremental slow feature analysis for the extraction of the
+slowest form features of human objects movements in the ventral stream.
+Applying incremental slow feature analysis provides an opportunity to use the
+action prototypes. To extract the slowest features episodic observation is
+required but the fast features updates the processing of motion information in
+every frames. Experimental results have shown promising accuracy for the
+proposed model and good performance with two datasets (KTH and Weizmann).

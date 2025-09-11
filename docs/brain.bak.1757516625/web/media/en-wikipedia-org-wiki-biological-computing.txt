@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Biological%20computing
+
+Biological computers use biologically derived molecules — such as DNA and/or proteins — to perform digital or real computations.

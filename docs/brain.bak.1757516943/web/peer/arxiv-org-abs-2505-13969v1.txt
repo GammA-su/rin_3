@@ -1,0 +1,16 @@
+http://arxiv.org/abs/2505.13969v1
+
+This paper discusses the functional advantages of the Selection-Broadcast
+Cycle structure proposed by Global Workspace Theory (GWT), inspired by human
+consciousness, particularly focusing on its applicability to artificial
+intelligence and robotics in dynamic, real-time scenarios. While previous
+studies often examined the Selection and Broadcast processes independently,
+this research emphasizes their combined cyclic structure and the resulting
+benefits for real-time cognitive systems. Specifically, the paper identifies
+three primary benefits: Dynamic Thinking Adaptation, Experience-Based
+Adaptation, and Immediate Real-Time Adaptation. This work highlights GWT's
+potential as a cognitive architecture suitable for sophisticated
+decision-making and adaptive performance in unsupervised, dynamic environments.
+It suggests new directions for the development and implementation of robust,
+general-purpose AI and robotics systems capable of managing complex, real-world
+tasks.

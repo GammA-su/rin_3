@@ -1,0 +1,20 @@
+http://arxiv.org/abs/2506.20746v1
+
+When an LLM learns a relation during finetuning (e.g., new movie releases,
+corporate mergers, etc.), where does this information go? Is it extracted when
+the model processes an entity, recalled just-in-time before a prediction, or
+are there multiple separate heuristics? Existing localization approaches (e.g.
+activation patching) are ill-suited for this analysis because they tend to
+replace parts of the residual stream, potentially deleting information. To fill
+this gap, we propose dynamic weight-grafting between fine-tuned and pre-trained
+language models to show that fine-tuned language models both (1) extract
+relation information learned during finetuning while processing entities and
+(2) ``recall" this information in later layers while generating predictions. In
+some cases, models need both of these pathways to correctly generate finetuned
+information while, in other cases, a single ``enrichment" or ``recall" pathway
+alone is sufficient. We examine the necessity and sufficiency of these
+information pathways, examining what layers they occur at, how much redundancy
+they exhibit, and which model components are involved -- finding that the
+``recall" pathway occurs via both task-specific attention mechanisms and a
+relation extraction step in the output of the attention and the feedforward
+networks at the final layers before next token prediction.

@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Grid%20cell
+
+A grid cell is a type of neuron within the entorhinal cortex that fires at regular intervals as an animal navigates an open area, allowing it to understand its position in space by storing and integrating information about location, distance, and direction. Grid cells have been found in many animals, including rats, mice, bats, monkeys, and humans.

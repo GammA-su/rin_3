@@ -1,0 +1,9 @@
+http://arxiv.org/abs/quant-ph/0204064v3
+
+We demonstrate that secure quantum key distribution systems based on
+continuous variables implementations can operate beyond the apparent 3 dB loss
+limit that is implied by the beam splitting attack . The loss limit was
+established for standard minimum uncertainty states such as coherent states. We
+show that by an appropriate postselection mechanism we can enter a region where
+Eve's knowledge falls behind the information shared between Alice and Bob even
+in the presence of substantial losses.

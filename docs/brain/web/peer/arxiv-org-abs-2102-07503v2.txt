@@ -1,0 +1,16 @@
+http://arxiv.org/abs/2102.07503v2
+
+Standard few-shot experiments involve learning to efficiently match
+previously unseen samples by class. We claim that few-shot learning should be
+long term, assimilating knowledge for the future, without forgetting previous
+concepts. In the mammalian brain, the hippocampus is understood to play a
+significant role in this process, by learning rapidly and consolidating
+knowledge to the neocortex incrementally over a short period. In this research
+we tested whether an artificial hippocampal algorithm (AHA), could be used with
+a conventional Machine Learning (ML) model that learns incrementally analogous
+to the neocortex, to achieve one-shot learning both short and long term. The
+results demonstrated that with the addition of AHA, the system could learn in
+one-shot and consolidate the knowledge for the long term without catastrophic
+forgetting. This study is one of the first examples of using a CLS model of
+hippocampus to consolidate memories, and it constitutes a step toward few-shot
+continual learning.

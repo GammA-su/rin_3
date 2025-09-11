@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/History%20of%20artificial%20neural%20networks
+
+Artificial neural networks (ANNs) are models created using machine learning to perform a number of tasks. Their creation was inspired by biological neural circuitry. While some of the computational implementations ANNs relate to earlier discoveries in mathematics, the first implementation of ANNs was by psychologist Frank Rosenblatt, who developed the perceptron. Little research was conducted on ANNs in the 1970s and 1980s, with the AAAI calling this period an "AI winter".

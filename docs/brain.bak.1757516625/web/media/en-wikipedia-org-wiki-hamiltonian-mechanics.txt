@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Hamiltonian%20mechanics
+
+In physics, Hamiltonian mechanics is a reformulation of Lagrangian mechanics that emerged in 1833. Introduced by the Irish mathematician Sir William Rowan Hamilton, Hamiltonian mechanics replaces (generalized) velocities  used in Lagrangian mechanics with (generalized) momenta. Both theories provide interpretations of classical mechanics and describe the same physical phenomena.

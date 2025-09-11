@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Computational%20neuroscience
+
+Computational neuroscience is a branch of neuroscience which employs mathematics, computer science, theoretical analysis and abstractions of the brain to understand the principles that govern the development, structure, physiology and cognitive abilities of the nervous system.

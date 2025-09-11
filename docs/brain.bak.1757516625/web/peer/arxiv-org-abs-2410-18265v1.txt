@@ -1,0 +1,21 @@
+http://arxiv.org/abs/2410.18265v1
+
+We propose a novel construction of the Floquet 3D toric code and Floquet
+$X$-cube code through the coupling of spin chains. This approach not only
+recovers the coupling layer construction on foliated lattices in three
+dimensions but also avoids the complexity of coupling layers in higher
+dimensions, offering a more localized and easily generalizable framework. Our
+method extends the Floquet 3D toric code to a broader class of lattices,
+aligning with its topological phase properties. Furthermore, we generalize the
+Floquet $X$-cube model to arbitrary manifolds, provided the lattice is locally
+cubic, consistent with its Fractonic phases. We also introduce a unified
+error-correction paradigm for Floquet codes by defining a subgroup, the Steady
+Stabilizer Group (SSG), of the Instantaneous Stabilizer Group (ISG),
+emphasizing that not all terms in the ISG contribute to error correction, but
+only those terms that can be referred to at least twice before being removed
+from the ISG. We show that correctable Floquet codes naturally require the SSG
+to form a classical error-correcting code, and we present a simple 2-step
+Bacon-Shor Floquet code as an example, where SSG forms instantaneous repetition
+codes. Finally, our construction intrinsically supports the extension to
+$n$-dimensional Floquet $(n,1)$ toric codes and generalized $n$-dimensional
+Floquet $X$-cube codes.

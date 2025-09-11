@@ -1,0 +1,25 @@
+http://arxiv.org/abs/2106.03688v1
+
+A common view on the brain learning processes proposes that the three classic
+learning paradigms -- unsupervised, reinforcement, and supervised -- take place
+in respectively the cortex, the basal-ganglia, and the cerebellum. However,
+dopamine outbursts, usually assumed to encode reward, are not limited to the
+basal ganglia but also reach prefrontal, motor, and higher sensory cortices. We
+propose that in the cortex the same reward-based trial-and-error processes
+might support not only the acquisition of motor representations but also of
+sensory representations. In particular, reward signals might guide
+trial-and-error processes that mix with associative learning processes to
+support the acquisition of representations better serving downstream action
+selection. We tested the soundness of this hypothesis with a computational
+model that integrates unsupervised learning (Contrastive Divergence) and
+reinforcement learning (REINFORCE). The model was tested with a task requiring
+different responses to different visual images grouped in categories involving
+either colour, shape, or size. Results show that a balanced mix of unsupervised
+and reinforcement learning processes leads to the best performance. Indeed,
+excessive unsupervised learning tends to under-represent task-relevant features
+while excessive reinforcement learning tends to initially learn slowly and then
+to incur in local minima. These results stimulate future empirical studies on
+category learning directed to investigate similar effects in the extrastriate
+visual cortices. Moreover, they prompt further computational investigations
+directed to study the possible advantages of integrating unsupervised and
+reinforcement learning processes.

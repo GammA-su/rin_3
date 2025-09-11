@@ -1,0 +1,25 @@
+http://arxiv.org/abs/2503.02303v3
+
+Many tasks require flexibly modifying perception and behavior based on
+current goals. Humans can retrieve episodic memories from days to years ago,
+using them to contextualize and generalize behaviors across novel but
+structurally related situations. The brain's ability to control episodic
+memories based on task demands is often attributed to interactions between the
+prefrontal cortex (PFC) and hippocampus (HPC). We propose a reinforcement
+learning model that incorporates a PFC-HPC interaction mechanism for
+goal-directed generalization. In our model, the PFC learns to generate
+query-key representations to encode and retrieve goal-relevant episodic
+memories, modulating HPC memories top-down based on current task demands.
+Moreover, the PFC adapts its encoding and retrieval strategies dynamically when
+faced with multiple goals presented in a blocked, rather than interleaved,
+manner. Our results show that: (1) combining working memory with selectively
+retrieved episodic memory allows transfer of decisions among similar
+environments or situations, (2) top-down control from PFC over HPC improves
+learning of arbitrary structural associations between events for generalization
+to novel environments compared to a bottom-up sensory-driven approach, and (3)
+the PFC encodes generalizable representations during both encoding and
+retrieval of goal-relevant memories, whereas the HPC exhibits event-specific
+representations. Together, these findings highlight the importance of
+goal-directed prefrontal control over hippocampal episodic memory for
+decision-making in novel situations and suggest a computational mechanism by
+which PFC-HPC interactions enable flexible behavior.

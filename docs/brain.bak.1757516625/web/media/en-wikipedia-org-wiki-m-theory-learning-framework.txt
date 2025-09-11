@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/M-theory%20%28learning%20framework%29
+
+In machine learning and computer vision, M-theory is a learning framework inspired by feed-forward processing in the ventral stream of visual cortex and originally developed for recognition and classification of objects in visual scenes. M-theory was later applied to other areas, such as speech recognition. On certain image recognition tasks, algorithms based on a specific instantiation of M-theory, HMAX, achieved human-level performance.

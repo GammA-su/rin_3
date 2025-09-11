@@ -1,0 +1,19 @@
+http://arxiv.org/abs/2101.09453v1
+
+Learning a generative model of visual information with sparse and
+compositional features has been a challenge for both theoretical neuroscience
+and machine learning communities. Sparse coding models have achieved great
+success in explaining the receptive fields of mammalian primary visual cortex
+with sparsely activated latent representation. In this paper, we focus on a
+recently proposed model, sparse coding variational autoencoder (SVAE) (Barello
+et al., 2018), and show that the end-to-end training scheme of SVAE leads to a
+large group of decoding filters not fully optimized with noise-like receptive
+fields. We propose a few heuristics to improve the training of SVAE and show
+that a unit $L_2$ norm constraint on the decoder is critical to produce sparse
+coding filters. Such normalization can be considered as local lateral
+inhibition in the cortex. We verify this claim empirically on both natural
+image patches and MNIST dataset and show that projection of the filters onto
+unit norm drastically increases the number of active filters. Our results
+highlight the importance of weight normalization for learning sparse
+representation from data and suggest a new way of reducing the number of
+inactive latent components in VAE learning.

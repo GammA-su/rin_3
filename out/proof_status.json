@@ -39,7 +39,7 @@
   "council_ok": true,
   "ledger_ok": true,
   "atf_last": {
-    "ts": 1757504625,
+    "ts": 1757580260,
     "tool_id": "e2e.run",
     "attempts": 1,
     "wall_clock_hours": 0.05,

@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Intrinsic%20motivation%20%28artificial%20intelligence%29
+
+Intrinsic motivation, in the study of artificial intelligence and robotics, is a mechanism for enabling artificial agents to exhibit inherently rewarding behaviours such as exploration and curiosity, grouped under the same term in the study of psychology. Psychologists consider intrinsic motivation in humans to be the drive to perform an activity for inherent satisfaction – just for the fun or challenge of it.

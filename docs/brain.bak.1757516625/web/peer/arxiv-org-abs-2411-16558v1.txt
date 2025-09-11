@@ -1,0 +1,21 @@
+http://arxiv.org/abs/2411.16558v1
+
+Working memory plays a crucial role in various aspects of human life.
+Therefore, it has been an area of interest in different research studies,
+especially neuroscience. The neuroscientists investigating working memory have
+primarily emphasized the brain's functional modularity. At the same time, a
+holistic perspective is still required to investigate the brain as an
+integrated and unified system. We hypothesized that the brain should shift
+towards a more stable state during working memory than the resting state.
+Therefore, based on the Structural Balance Theory (SBT), we aimed to address
+this process. To achieve this, we examined triadic associations in signed fMRI
+networks in healthy individuals using the N-back as the working memory task. We
+demonstrated that the number of balanced triads increased during the working
+memory task compared to the resting state, while the opposite is true for
+imbalanced triads. The increase of balanced triads forced the network to a more
+stable state with a lower balance energy level. The increase of balanced triads
+was crucially related to changes in anti-synchrony to synchronous activities
+between the Temporal Cortex, the Prefrontal Cortex, and the Parietal Cortex,
+which are known to be involved in various aspects of working memory, during the
+working memory process. We hope these findings pave the way to a better
+understanding the working memory process.

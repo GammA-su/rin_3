@@ -1,0 +1,11 @@
+http://arxiv.org/abs/1904.01330v1
+
+Lecture Notes for Les Houches 2018 Summer School on Active Matter and
+Nonequilibrium Statistical Physics. These notes give an introduction to
+statistical field theories of active matter. After showing an example of how
+such theories can be created bottom-up by explicit coarse graining of active
+particle models, the main approach taken here is top-down: minimal terms are
+added to well-studied stochastic field theories of passive systems that break
+time-reversibility and thereby cause nonzero steady-state entropy production.
+These theories are, so far, rather poorly understood compared to their passive
+counterparts.

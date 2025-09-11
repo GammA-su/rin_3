@@ -1,0 +1,8 @@
+http://arxiv.org/abs/2005.08134v2
+
+Incidence vs Cumulative Cases (ICC) curves are introduced and shown to
+provide a simple framework for parameter identification in the case of the most
+elementary epidemiological model, consisting of susceptible, infected, and
+removed compartments. This novel methodology is used to estimate the basic
+reproduction ratio of recent outbreaks, including the ongoing COVID-19
+epidemic.

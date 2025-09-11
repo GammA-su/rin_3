@@ -1,0 +1,4 @@
+https://en.wikipedia.org/wiki/BCM%20theory
+
+Bienenstock–Cooper–Munro (BCM) theory, BCM synaptic modification, or the BCM rule, named after Elie Bienenstock, Leon Cooper, and Paul Munro, is a physical theory of learning in the visual cortex developed in 1981. 
+The BCM model proposes a sliding threshold for long-term potentiation (LTP) or long-term depression (LTD) induction, and states that synaptic plasticity is stabilized by a dynamic adaptation of the time-averaged postsynaptic activity. According to the BCM model, when a pre-synaptic neuron fires, the post-synaptic neurons will tend to undergo LTP if it is in a high-activity state, or LTD if it is in a lower-activity state. This theory is often used to explain how cortical neurons can undergo both LTP or LTD depending on different conditioning stimulus protocols applied to pre-synaptic neurons.

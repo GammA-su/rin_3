@@ -1,0 +1,27 @@
+http://arxiv.org/abs/2210.15207v1
+
+Changes in genetic and/or environmental factors to developing neural circuits
+and subsequent synaptic functions are known to be a causative underlying the
+varied socio-emotional behavioural patterns associated with autism spectrum
+disorders (ASD). Seven transmembrane G protein-coupled receptors (GPCRs)
+comprising the largest family of cell-surface receptors, mediate the transfer
+of extracellular signals to downstream cellular responses. Disruption of GPCR
+and their signalling have been implicated as a convergent pathologic mechanism
+of ASD. Here, we aim to review the literature about the 23 GPCRs that are
+genetically associated to ASD pathology according to Simons Foundation Autism
+Research Initiative (SFARI) database such as oxytocin (OXTR) and vasopressin
+(V1A, V1B) receptors, metabotropic glutamate (mGlu5, mGlu7) and
+gamma-aminobutyric acid (GABAB) receptors, dopamine (D1, D2), serotoninergic
+(5-HT1B and additionally included the 5-HT2A, 5-HT7 receptors for their strong
+relevance to ASD), adrenergic ($\beta$2) and cholinergic (M3) receptors,
+adenosine (A2A, A3) receptors, angiotensin (AT2) receptors, cannabinoid (CB1)
+receptors, chemokine (CX3CR1) receptors, orphan (GPR37, GPR85) and olfactory
+(OR1C1, OR2M4, OR2T10, OR52M1) receptors. We discussed the genetic variants,
+relation to core ASD behavioural deficits and update on pharmacological
+compounds targeting these 23 GPCRs. Of these OTR, V1A, mGlu5, D2, 5-HT2A, CB1,
+and GPR37 serve as the best therapeutic targets and have potential towards core
+domains of ASD pathology. With a functional crosstalk between different GPCRs
+and converging pharmacological responses, there is an urge to develop novel
+therapeutic strategies based on multiple GPCRs to reduce the socioeconomic
+burden associated with ASD and we strongly emphasize the need to prioritize the
+increased clinical trials targeting the multiple GPCRs.

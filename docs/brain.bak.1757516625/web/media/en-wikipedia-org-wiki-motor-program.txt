@@ -1,0 +1,4 @@
+https://en.wikipedia.org/wiki/Motor%20program
+
+A motor program is an abstract metaphor of the central organization of movement and control of the many degrees of freedom involved in performing an action. Biologically realistic alternatives to the metaphor of the "motor program" are represented by central pattern generators.p. 182 Signals transmitted through efferent and afferent pathways allow the central nervous system to anticipate, plan or guide movement. Evidence for the concept of motor programs include the following:p. 182Processing of afferent information (feedback) is too slow for on-going regulation of rapid movements.
+Reaction time increases with movement complexity, suggesting that movements are planned in advance.

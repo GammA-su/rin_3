@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Medium%20spiny%20neuron
+
+Medium spiny neurons (MSNs), also known as spiny projection neurons (SPNs), are a special type of inhibitory GABAergic neuron representing approximately 90% of neurons within the human striatum, a basal ganglia structure. Medium spiny neurons have two primary phenotypes : D1-type MSNs of the direct pathway and D2-type MSNs of the indirect pathway. Most striatal MSNs contain only D1-type or D2-type dopamine receptors, but a subpopulation of MSNs exhibit both phenotypes.

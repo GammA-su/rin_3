@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Advanced%20Audio%20Coding
+
+Advanced Audio Coding (AAC) is an audio coding standard for lossy digital audio compression. It was developed by Dolby, AT&T, Fraunhofer and Sony, originally as part of the MPEG-2 specification but later improved under MPEG-4. AAC was designed to be the successor of the MP3 format and generally achieves higher sound quality than MP3 at the same bit rate. AAC encoded audio files are typically packaged in an MP4 container most commonly using the filename extension .m4a.

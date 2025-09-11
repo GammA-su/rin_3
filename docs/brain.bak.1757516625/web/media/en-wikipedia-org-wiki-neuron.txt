@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Neuron
+
+A neuron, neurone, or nerve cell, is an excitable cell that fires electric signals called action potentials across a neural network in the nervous system. They are located in the nervous system and help to receive and conduct impulses. Neurons communicate with other cells via synapses, which are specialized connections that commonly use minute amounts of chemical neurotransmitters to pass the electric signal from the presynaptic neuron to the target cell through the synaptic gap.

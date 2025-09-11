@@ -1,0 +1,19 @@
+http://arxiv.org/abs/2507.02614v1
+
+This work presents a comprehensive theory of consciousness grounded in
+mathematical formalism and supported by clinical data analysis. The framework
+developed herein demonstrates that consciousness exists as a continuous,
+non-monotonic function across a high-dimensional neurochemical space, with
+dopamine serving as the primary intensity regulator and serotonin (5-HT2A) as
+the complexity modulator. This work offers mechanistic explanations for the
+full spectrum of conscious states, from deep sleep and psychosis to the
+ultimate collapse in neural death. The theory explains paradoxical phenomena
+such as prefrontal cortex hypoactivity during seizures, the evolutionary
+persistence of psychosis-prone individuals, and why controlled administration
+of classical 5-HT2A agonists shows a comparatively low incidence of serious
+medical events (< 0.01 % in modern clinical trials), while dopaminergic excess
+proves rapidly lethal. The framework is tested using 70,290 sleep nights from
+242 Parkinson's disease patients, using disease severity (UPDRS) as a proxy for
+system integrity and medication (LEDD) as a proxy for dopaminergic input. The
+analysis reveals a significant LEDD x UPDRS interaction (beta=-1.7, p<.0001),
+confirming the model's prediction of state-dependent, non-linear dynamics.

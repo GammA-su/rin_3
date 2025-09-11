@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Object%20recognition%20%28cognitive%20science%29
+
+Visual object recognition refers to the ability to identify the objects in view based on visual input. One important signature of visual object recognition is "object invariance", or the ability to identify objects across changes in the detailed context in which objects are viewed, including changes in illumination, object pose, and background context.

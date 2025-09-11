@@ -1,0 +1,18 @@
+http://arxiv.org/abs/2405.02560v1
+
+Demographic shifts have led to an increase in mild cognitive impairment
+(MCI), and this study investigates the effects of cognitive training (CT) and
+reminiscence therapy (RT) conducted by humans or socially assistive robots
+(SARs) on prefrontal cortex activation in elderly individuals with MCI, aiming
+to determine the most effective therapy-modality combination for promoting
+cognitive function. This pilot study employs a randomized control trial (RCT)
+design. Additionally, the study explores the efficacy of Reminiscence Therapy
+(RT) in comparison to Cognitive Training (CT). Eight MCI subjects, with a mean
+age of 70.125 years, were randomly assigned to ``human-led'' or ``SAR-led''
+groups. Utilizing Functional Near-infrared Spectroscopy (fNIRS) to measure
+oxy-hemoglobin concentration changes in the dorsolateral prefrontal cortex
+(DLPFC), the study found no significant differences in the effects of human-led
+and SAR-led cognitive training on DLPFC activation. However, distinct patterns
+emerged in memory encoding and retrieval phases between RT and CT, shedding
+light on the impacts of these interventions on brain activation in the context
+of MCI.

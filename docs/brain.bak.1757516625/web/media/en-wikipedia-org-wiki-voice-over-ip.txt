@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Voice%20over%20IP
+
+Voice over Internet Protocol (VoIP), also known as IP telephony, is a set of technologies used primarily for voice communication sessions over Internet Protocol (IP) networks, such as the Internet. VoIP enables voice calls to be transmitted as data packets, facilitating various methods of voice communication, including traditional applications like Skype, Microsoft Teams, Google Voice, and VoIP phones. Regular telephones can also be used for VoIP by connecting them to the Internet via analog telephone adapters (ATAs), which convert traditional telephone signals into digital data packets that can be transmitted over IP networks.

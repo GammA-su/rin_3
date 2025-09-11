@@ -1,0 +1,11 @@
+http://arxiv.org/abs/2209.02387v1
+
+We present Deep Control - new ML architecture of cortico-striatal brain
+circuits, which use whole cortical column as a structural element, instead of a
+singe neuron. Based on this architecture, we present MARTI - new model of human
+brain, considering neocortex and basal ganglia. This model is de-signed to
+implement expedient behavior and is capable to learn and achieve goals in
+unknown environments. We introduce a novel surprise feeling mechanism, that
+significantly improves reinforcement learning process through inner rewards. We
+use OpenAI Gym environment to demonstrate MARTI learning on a single CPU just
+in several hours.

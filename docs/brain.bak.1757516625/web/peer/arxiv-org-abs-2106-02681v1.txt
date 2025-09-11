@@ -1,0 +1,20 @@
+http://arxiv.org/abs/2106.02681v1
+
+The adaptive changes in synaptic efficacy that occur between spiking neurons
+have been demonstrated to play a critical role in learning for biological
+neural networks. Despite this source of inspiration, many learning focused
+applications using Spiking Neural Networks (SNNs) retain static synaptic
+connections, preventing additional learning after the initial training period.
+Here, we introduce a framework for simultaneously learning the underlying
+fixed-weights and the rules governing the dynamics of synaptic plasticity and
+neuromodulated synaptic plasticity in SNNs through gradient descent. We further
+demonstrate the capabilities of this framework on a series of challenging
+benchmarks, learning the parameters of several plasticity rules including BCM,
+Oja's, and their respective set of neuromodulatory variants. The experimental
+results display that SNNs augmented with differentiable plasticity are
+sufficient for solving a set of challenging temporal learning tasks that a
+traditional SNN fails to solve, even in the presence of significant noise.
+These networks are also shown to be capable of producing locomotion on a
+high-dimensional robotic learning task, where near-minimal degradation in
+performance is observed in the presence of novel conditions not seen during the
+initial training period.

@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Spike-timing-dependent%20plasticity
+
+Spike-timing-dependent plasticity (STDP) is a biological process that adjusts the strength of synaptic connections between neurons based on the relative timing of their action potentials. It is a temporally sensitive form of synaptic plasticity, meaning that the efficiency of synaptic transmission is modified by the timing of neural activity. When a presynaptic neuron consistently fires just before a postsynaptic neuron, the connection is typically strengthened—a process known as long-term potentiation (LTP). If the timing is reversed and the presynaptic neuron fires after the postsynaptic neuron, the connection is weakened through long-term depression (LTD).

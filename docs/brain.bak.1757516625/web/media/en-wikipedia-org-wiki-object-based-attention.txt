@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Object-based%20attention
+
+Object-based attention refers to the relationship between an ‘object’ representation and a person’s visually stimulated, selective attention, as opposed to a relationship involving either a spatial or a feature representation; although these types of selective attention are not necessarily mutually exclusive. Research into object-based attention suggests that attention improves the quality of the sensory representation of a selected object, and results in the enhanced processing of that object’s features.

@@ -1,0 +1,26 @@
+http://arxiv.org/abs/2311.18537v2
+
+Video segmentation requires consistently segmenting and tracking objects over
+time. Due to the quadratic dependency on input size, directly applying
+self-attention to video segmentation with high-resolution input features poses
+significant challenges, often leading to insufficient GPU memory capacity.
+Consequently, modern video segmenters either extend an image segmenter without
+incorporating any temporal attention or resort to window space-time attention
+in a naive manner. In this work, we present Axial-VS, a general and simple
+framework that enhances video segmenters by tracking objects along axial
+trajectories. The framework tackles video segmentation through two sub-tasks:
+short-term within-clip segmentation and long-term cross-clip tracking. In the
+first step, Axial-VS augments an off-the-shelf clip-level video segmenter with
+the proposed axial-trajectory attention, sequentially tracking objects along
+the height- and width-trajectories within a clip, thereby enhancing temporal
+consistency by capturing motion trajectories. The axial decomposition
+significantly reduces the computational complexity for dense features, and
+outperforms the window space-time attention in segmentation quality. In the
+second step, we further employ axial-trajectory attention to the object queries
+in clip-level segmenters, which are learned to encode object information,
+thereby aiding object tracking across different clips and achieving consistent
+segmentation throughout the video. Without bells and whistles, Axial-VS
+showcases state-of-the-art results on video segmentation benchmarks,
+emphasizing its effectiveness in addressing the limitations of modern
+clip-level video segmenters. Code and models are available at
+https://github.com/TACJu/Axial-VS.

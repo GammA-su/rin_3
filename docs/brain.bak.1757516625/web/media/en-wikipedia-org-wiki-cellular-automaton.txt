@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Cellular%20automaton
+
+A cellular automaton is a discrete model of computation studied in automata theory. Cellular automata are also called cellular spaces, tessellation automata, homogeneous structures, cellular structures, tessellation structures, and iterative arrays. Cellular automata have found application in various areas, including physics, theoretical biology and microstructure modeling.

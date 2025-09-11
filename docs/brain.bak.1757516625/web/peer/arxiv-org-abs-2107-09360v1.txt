@@ -1,0 +1,15 @@
+http://arxiv.org/abs/2107.09360v1
+
+We address a biophysical network dynamical model to study how the modulation
+of dopamine (DA) activity and related N-methyl-d-aspartate (NMDA) glutamate
+receptor activity as well as the emerging Pre-Frontal Cortex (PFC) functional
+connectivity network (FCN) affect inhibitory cognitive function in
+schizophrenia in an antisaccade task. The values of the model parameters and
+the topology of the PFC-FCN were estimated by minimizing the differences
+between simulations and the observed distributions of reaction times (RT)
+during the performance of the antisaccade task in 30 patients with
+schizophrenia and 30 healthy controls. We show that the proposed model
+approximates remarkably well the predicted prefrontal cortical DA hypo-activity
+and the related NMDA receptor hypo-function as well as the FCN dysconnection
+pattern that are considered as the major etio-pathological hypotheses to
+explain cognitive deficits in schizophrenia.

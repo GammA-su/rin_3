@@ -1,0 +1,17 @@
+http://arxiv.org/abs/2302.12709v1
+
+As sleep disorders are becoming more prevalent there is an urgent need to
+classify sleep stages in a less disturbing way.In particular, sleep-stage
+classification using simple sensors, such as single-channel
+electroencephalography (EEG), electrooculography (EOG), electromyography (EMG),
+or electrocardiography (ECG) has gained substantial interest. In this study, we
+proposed a sleep model that predicts the next sleep stage and used it to
+improve sleep classification accuracy. The sleep models were built using
+sleep-sequence data and employed either statistical $n$-gram or deep neural
+network-based models. We developed beam-search decoding to combine the
+information from the sensor and the sleep models. Furthermore, we evaluated the
+performance of the $n$-gram and long short-term memory (LSTM) recurrent neural
+network (RNN)-based sleep models and demonstrated the improvement of
+sleep-stage classification using an EOG sensor. The developed sleep models
+significantly improved the accuracy of sleep-stage classification, particularly
+in the absence of an EEG sensor.

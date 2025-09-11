@@ -1,0 +1,6 @@
+http://arxiv.org/abs/2211.13315v1
+
+We mimic the cognitive ability of Human perception, based on Bayesian
+hypothesis, to recognize view-based 3D objects. We consider approximate
+Bayesian (Empirical Bayesian) for perceptual inference for recognition. We
+essentially handle computation with perception.

@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Calcium%20imaging
+
+Calcium imaging is a microscopy technique to optically measure the calcium (Ca2+) status of an isolated cell, tissue or medium. Calcium imaging takes advantage of calcium indicators, fluorescent molecules that respond to the binding of Ca2+ ions by fluorescence properties. Two main classes of calcium indicators exist: chemical indicators and genetically encoded calcium indicators (GECI). This technique has allowed studies of calcium signalling in a wide variety of cell types, and can be used to measure electrical activity in hundreds of neurons in cell culture, or in living animals during ongoing behavior.

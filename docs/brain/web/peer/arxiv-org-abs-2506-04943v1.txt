@@ -1,0 +1,18 @@
+http://arxiv.org/abs/2506.04943v1
+
+The hippocampus encodes space through a striking gradient of place field
+sizes along its dorsal-ventral axis, yet the principles generating this
+continuous gradient from discrete grid cell inputs remain debated. We propose a
+unified theoretical framework establishing that hippocampal place fields arise
+naturally as linear projections of grid cell population activity, interpretable
+as eigenmodes. Critically, we demonstrate that a frequency-dependent decay of
+these grid-to-place connection weights naturally transforms inputs from
+discrete grid modules into a continuous spectrum of place field sizes. This
+multiscale organization is functionally significant: we reveal it shapes the
+inductive bias of the population code, balancing a fundamental trade-off
+between precision and generalization. Mathematical analysis and simulations
+demonstrate an optimal place field size for few-shot learning, which scales
+with environment structure. Our results offer a principled explanation for the
+place field gradient and generate testable predictions, bridging anatomical
+connectivity with adaptive learning in both biological and artificial
+intelligence.

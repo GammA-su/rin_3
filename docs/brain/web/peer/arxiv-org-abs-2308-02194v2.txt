@@ -1,0 +1,23 @@
+http://arxiv.org/abs/2308.02194v2
+
+Direct training of Spiking Neural Networks (SNNs) on neuromorphic hardware
+has the potential to significantly reduce the energy consumption of artificial
+neural network training. SNNs trained with Spike Timing-Dependent Plasticity
+(STDP) benefit from gradient-free and unsupervised local learning, which can be
+easily implemented on ultra-low-power neuromorphic hardware. However,
+classification tasks cannot be performed solely with unsupervised STDP. In this
+paper, we propose Stabilized Supervised STDP (S2-STDP), a supervised STDP
+learning rule to train the classification layer of an SNN equipped with
+unsupervised STDP for feature extraction. S2-STDP integrates error-modulated
+weight updates that align neuron spikes with desired timestamps derived from
+the average firing time within the layer. Then, we introduce a training
+architecture called Paired Competing Neurons (PCN) to further enhance the
+learning capabilities of our classification layer trained with S2-STDP. PCN
+associates each class with paired neurons and encourages neuron specialization
+toward target or non-target samples through intra-class competition. We
+evaluate our methods on image recognition datasets, including MNIST,
+Fashion-MNIST, and CIFAR-10. Results show that our methods outperform
+state-of-the-art supervised STDP learning rules, for comparable architectures
+and numbers of neurons. Further analysis demonstrates that the use of PCN
+enhances the performance of S2-STDP, regardless of the hyperparameter set and
+without introducing any additional hyperparameters.

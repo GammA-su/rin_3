@@ -1,0 +1,23 @@
+http://arxiv.org/abs/2311.08790v1
+
+Macroscopic oscillations in the brain are involved in various cognitive and
+physiological processes, yet their precise function is not not completely
+understood. Communication Through Coherence (CTC) theory proposes that these
+rhythmic electrical patterns might serve to regulate the information flow
+between neural populations. Thus, to communicate effectively, neural
+populations must synchronize their oscillatory activity, ensuring that input
+volleys from the presynaptic population reach the postsynaptic one at its
+maximum phase of excitability. We consider an Excitatory-Inhibitory (E-I)
+network whose macroscopic activity is described by an exact mean-field model.
+The E-I network receives periodic inputs from either one or two external
+sources, for which effective communication will not be achieved in the absence
+of control. We explore strategies based on optimal control theory for
+phase-amplitude dynamics to design a control that sets the target population in
+the optimal phase to synchronize its activity with a specific presynaptic input
+signal and establish communication. The control mechanism resembles the role of
+a higher cortical area in the context of selective attention. To design the
+control, we use the phase-amplitude reduction of a limit cycle and leverage
+recent developments in this field in order to find the most effective control
+strategy regarding a defined cost function. Furthermore, we present results
+that guarantee the local controllability of the system close to the limit
+cycle.

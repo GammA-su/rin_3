@@ -1,0 +1,4 @@
+https://en.wikipedia.org/wiki/Karl%20J.%20Friston
+
+Karl John Friston FRS FMedSci FRSB is a British neuroscientist and theoretician at University College London. He is an authority on brain imaging and theoretical neuroscience, especially the use of physics-inspired statistical methods to model neuroimaging data and other random dynamical systems.
+Friston is a key architect of the free energy principle and active inference. In imaging neuroscience he is best known for statistical parametric mapping and dynamic causal modelling. Friston also acts as a scientific advisor to numerous groups in industry.

@@ -1,0 +1,13 @@
+http://arxiv.org/abs/2503.01867v1
+
+We introduce a novel mathematical framework that unifies neural population
+dynamics, hippocampal sharp wave-ripple (SpWR) generation, and cognitive
+consistency constraints inspired by Heider's theory. Our model leverages
+low-dimensional manifold representations to capture structured neural drift and
+incorporates a balance energy function to enforce coherent synaptic
+interactions, effectively simulating the memory consolidation processes
+observed in biological systems. Simulation results demonstrate that our
+approach not only reproduces key features of SpWR events but also enhances
+network interpretability. This work paves the way for scalable neuromorphic
+architectures that bridge neuroscience and artificial intelligence, offering
+more robust and adaptive learning mechanisms for future intelligent systems.

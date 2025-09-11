@@ -1,0 +1,4 @@
+https://en.wikipedia.org/wiki/Fieldbus
+
+A fieldbus is a member of a family of industrial digital communication networks used for real-time distributed control. Fieldbus profiles are standardized by the 
+International Electrotechnical Commission (IEC) as IEC 61784/61158.

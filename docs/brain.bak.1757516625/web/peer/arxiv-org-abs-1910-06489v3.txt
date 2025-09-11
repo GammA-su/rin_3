@@ -1,0 +1,13 @@
+http://arxiv.org/abs/1910.06489v3
+
+Neuroscientific theory suggests that dopaminergic neurons broadcast global
+reward prediction errors to large areas of the brain influencing the synaptic
+plasticity of the neurons in those regions. We build on this theory to propose
+a multi-agent learning framework with spiking neurons in the generalized linear
+model (GLM) formulation as agents, to solve reinforcement learning (RL) tasks.
+We show that a network of GLM spiking agents connected in a hierarchical
+fashion, where each spiking agent modulates its firing policy based on local
+information and a global prediction error, can learn complex action
+representations to solve RL tasks. We further show how leveraging principles of
+modularity and population coding inspired from the brain can help reduce
+variance in the learning updates making it a viable optimization technique.

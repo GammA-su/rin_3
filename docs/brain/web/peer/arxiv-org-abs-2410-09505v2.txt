@@ -1,0 +1,19 @@
+http://arxiv.org/abs/2410.09505v2
+
+Goal-conditioned hierarchical reinforcement learning (HRL) decomposes complex
+reaching tasks into a sequence of simple subgoal-conditioned tasks, showing
+significant promise for addressing long-horizon planning in large-scale
+environments. This paper bridges the goal-conditioned HRL based on graph-based
+planning to brain mechanisms, proposing a hippocampus-striatum-like
+dual-controller hypothesis. Inspired by the brain mechanisms of organisms
+(i.e., the high-reward preferences observed in hippocampal replay) and
+instance-based theory, we propose a high-return sampling strategy for
+constructing memory graphs, improving sample efficiency. Additionally, we
+derive a model-free lower-level Q-function gradient penalty to resolve the
+model dependency issues present in prior work, improving the generalization of
+Lipschitz constraints in applications. Finally, we integrate these two
+extensions, High-reward Graph and model-free Gradient Penalty (HG2P), into the
+state-of-the-art framework ACLG, proposing a novel goal-conditioned HRL
+framework, HG2P+ACLG. Experimentally, the results demonstrate that our method
+outperforms state-of-the-art goal-conditioned HRL algorithms on a variety of
+long-horizon navigation tasks and robotic manipulation tasks.

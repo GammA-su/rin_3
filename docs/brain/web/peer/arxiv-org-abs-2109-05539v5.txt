@@ -1,0 +1,21 @@
+http://arxiv.org/abs/2109.05539v5
+
+Brain-inspired computation and information processing alongside compatibility
+with neuromorphic hardware have made spiking neural networks (SNN) a promising
+method for solving learning tasks in machine learning (ML). Spiking neurons are
+only one of the requirements for building a bio-plausible learning model.
+Network architecture and learning rules are other important factors to consider
+when developing such artificial agents. In this work, inspired by the human
+visual pathway and the role of dopamine in learning, we propose a
+reward-modulated locally connected spiking neural network, BioLCNet, for visual
+learning tasks. To extract visual features from Poisson-distributed spike
+trains, we used local filters that are more analogous to the biological visual
+system compared to convolutional filters with weight sharing. In the decoding
+layer, we applied a spike population-based voting scheme to determine the
+decision of the network. We employed Spike-timing-dependent plasticity (STDP)
+for learning the visual features, and its reward-modulated variant (R-STDP) for
+training the decoder based on the reward or punishment feedback signal. For
+evaluation, we first assessed the robustness of our rewarding mechanism to
+varying target responses in a classical conditioning experiment. Afterwards, we
+evaluated the performance of our network on image classification tasks of MNIST
+and XOR MNIST datasets.

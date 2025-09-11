@@ -1,0 +1,18 @@
+http://arxiv.org/abs/2407.09089v1
+
+Interrogation of biological pathways is an integral part of omics data
+analysis. Large language models (LLMs) enable the generation of custom pathways
+and gene sets tailored to specific scientific questions. These targeted sets
+are significantly smaller than traditional pathway enrichment analysis
+libraries, reducing multiple hypothesis testing and potentially enhancing
+statistical power. Lomics (Large Language Models for Omics Studies) v1.0 is a
+python-based bioinformatics toolkit that streamlines the generation of pathways
+and gene sets for transcriptomic analysis. It operates in three steps: 1)
+deriving relevant pathways based on the researcher's scientific question, 2)
+generating valid gene sets for each pathway, and 3) outputting the results as
+.GMX files. Lomics also provides explanations for pathway selections.
+Consistency and accuracy are ensured through iterative processes, JSON format
+validation, and HUGO Gene Nomenclature Committee (HGNC) gene symbol
+verification. Lomics serves as a foundation for integrating LLMs into omics
+research, potentially improving the specificity and efficiency of pathway
+analysis.

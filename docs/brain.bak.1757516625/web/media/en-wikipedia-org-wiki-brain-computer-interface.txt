@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Brain%E2%80%93computer%20interface
+
+A brain–computer interface (BCI), sometimes called a brain–machine interface (BMI), is a direct communication link between the brain's electrical activity and an external device, most commonly a computer or robotic limb. BCIs are often directed at researching, mapping, assisting, augmenting, or repairing human cognitive or sensory-motor functions. They are often conceptualized as a human–machine interface that skips the intermediary of moving body parts. BCI implementations range from non-invasive and partially invasive to invasive, based on how physically close electrodes are to brain tissue.

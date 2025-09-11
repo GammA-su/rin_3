@@ -1,0 +1,25 @@
+http://arxiv.org/abs/2504.01565v1
+
+The exploration of brain networks has reached an important milestone as
+relatively large and reliable information has been gathered for connectomes of
+different species. Analyses of connectome data sets reveal that the structural
+length and the distributions of in- and out-node strengths follow heavy-tailed
+lognormal statistics, while the functional network properties exhibit powerlaw
+tails, suggesting that the brain operates close to a critical point where
+computational capabilities and sensitivity to stimulus is optimal. Because
+these universal network features emerge from bottom-up (self-)organization, one
+can pose the question of whether they can be modeled via a common framework,
+particularly through the lens of criticality of statistical physical systems.
+Here, we simultaneously reproduce the powerlaw statistics of connectome edge
+weights and the lognormal distributions of node strengths from an
+avalanche-type model with learning that operates on baseline networks that
+mimic the neuronal circuitry. We observe that the avalanches created by a
+sandpile-like model on simulated neurons connected by a hierarchical modular
+network (HMN) produce robust powerlaw avalanche size distributions with
+critical exponents of 3/2 characteristic of neuronal systems. Introducing
+Hebbian learning, wherein neurons that `fire together, wire together,' recovers
+the powerlaw distribution of edge weights and the lognormal distributions of
+node degrees, comparable to those obtained from connectome data. Our results
+strengthen the notion of a critical brain, one whose local interactions drive
+connectivity and learning without a need for external intervention and precise
+tuning.

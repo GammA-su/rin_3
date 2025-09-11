@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/ARM%20Cortex-A520
+
+The ARM Cortex-A520 is a "little" CPU core model from Arm unveiled in TCS23. It serves as a successor to the CPU core ARM Cortex-A510. The Cortex-A5xx CPU cores series generally focus on high efficiency, the CPU core can be paired with the other CPU cores in its family like ARM Cortex-A720 or/and Cortex-X4 in a CPU cluster.

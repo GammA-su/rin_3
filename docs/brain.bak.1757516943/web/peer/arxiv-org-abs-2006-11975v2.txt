@@ -1,0 +1,23 @@
+http://arxiv.org/abs/2006.11975v2
+
+The hippocampus is an essential brain region for spatial memory and learning.
+Recently, a theoretical model of the hippocampus based on temporal difference
+(TD) learning has been published. Inspired by the successor representation (SR)
+learning algorithms, which decompose value function of TD learning into reward
+and state transition, they argued that the rate of firing of CA1 place cells in
+the hippocampus represents the probability of state transition. This theory,
+called predictive map theory, claims that the hippocampus representing space
+learns the probability of transition from the current state to the future
+state. The neural correlates of expecting the future state are the firing rates
+of the CA1 place cells. This explanation is plausible for the results recorded
+in behavioral experiments, but it is lacking the neurobiological implications.
+  Modifying the SR learning algorithm added biological implications to the
+predictive map theory. Similar with the simultaneous needs of information of
+the current and future state in the SR learning algorithm, the CA1 place cells
+receive two inputs from CA3 and entorhinal cortex. Mathematical transformation
+showed that the SR learning algorithm is equivalent to the heterosynaptic
+plasticity rule. The heterosynaptic plasticity phenomena in CA1 were discussed
+and compared with the modified SR update rule. This study attempted to
+interpret the TD algorithm as the neurobiological mechanism occurring in place
+learning, and to integrate the neuroscience and artificial intelligence
+approaches in the field.

@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Small-world%20network
+
+A small-world network is a graph characterized by a high clustering coefficient and low distances. In an example of the social network, high clustering implies the high probability that two friends of one person are friends themselves. The low distances, on the other hand, mean that there is a short chain of social connections between any two people. Specifically, a small-world network is defined to be a network where the typical distance L between two randomly chosen nodes grows proportionally to the logarithm of the number of nodes N in the network, that is:

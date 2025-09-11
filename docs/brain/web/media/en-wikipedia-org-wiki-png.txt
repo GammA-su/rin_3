@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/PNG
+
+Portable Network Graphics is a raster-graphics file format that supports lossless data compression. PNG was developed as an improved, non-patented replacement for Graphics Interchange Format (GIF).

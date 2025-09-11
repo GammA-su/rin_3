@@ -1,0 +1,17 @@
+http://arxiv.org/abs/2001.06817v1
+
+Silicon-on-insulator (SOI) waveguides with different geometries have been
+employed to design various integrated optical components. Reducing the bending
+radius of the SOI waveguides with low bending loss is essential in minimizing
+the footprint of light-wave circuits. The propagating mode is less confined in
+the core of the ultra-thin SOI waveguide and penetrates to substrate and
+cladding, leading to higher bending loss compared with conventional SOI
+waveguide with the thicker guiding layer. While various bending mechanisms have
+been utilized to reduce the bending loss of conventional SOI waveguides, the
+ultra-thin SOI waveguide bends have not been studied in detail. In this paper,
+we present a 60 nm-thick SOI waveguide bend based on the truncated Eaton lens
+implemented by varying thickness of the guiding layer. The three-dimensional
+full-wave simulations reveal that the designed waveguide bend, with a radius of
+3.9 $\mu m$, reduces the bending loss from 3.3 to 0.42 dB at the wavelength of
+1550 nm. Moreover, the bending loss for the wavelength range of 1260-1675 nm is
+lower than 0.67 dB while the bending loss in the C-band is lower than 0.45 dB.

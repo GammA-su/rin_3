@@ -1,0 +1,16 @@
+http://arxiv.org/abs/1902.06549v2
+
+Technological progress is leading to proliferation and diversification of
+trading venues, thus increasing the relevance of the long-standing question of
+market fragmentation versus consolidation. To address this issue
+quantitatively, we analyse systems of adaptive traders that choose where to
+trade based on their previous experience. We demonstrate that only based on
+aggregate parameters about trading venues, such as the demand to supply ratio,
+we can assess whether a population of traders will prefer fragmentation or
+specialization towards a single venue. We investigate what conditions lead to
+market fragmentation for populations with a long memory and analyse the
+stability and other properties of both fragmented and consolidated steady
+states. Finally we investigate the dynamics of populations with finite memory;
+when this memory is long the true long-time steady states are consolidated but
+fragmented states are strongly metastable, dominating the behaviour out to long
+times.

@@ -1,0 +1,17 @@
+http://arxiv.org/abs/1112.5840v2
+
+A decision is an act or event of decision taking. Decision making always
+includes decision taking, the latter not involving significant exchanges with
+non-deciding agents. A decision outcome is a piece of storable information
+constituting the result of a decision. Decision outcomes are typed, for
+instance: plan, command, assertion, or boolean reply to a question. Decision
+outcomes are seen by an audience and autonomous actions from the audience is
+supposed to realize the putting into effect of a decision outcome, thus leading
+to so-called decision effects. Decision outcomes are supposedly expected by the
+decider. Using a model or a theory concerning the causal chain leading from a
+decision outcome to one or more decision effects may support a decision taker
+decision taker in predicting plausible decision effects for candidate decision
+outcomes. Decision taking is positioned amidst many related notions including:
+decision making, decision process, decision making process, decision process
+making, decision engineering, decision progression, and decision progression
+production.

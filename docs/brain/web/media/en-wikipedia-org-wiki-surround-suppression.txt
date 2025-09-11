@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Surround%20suppression
+
+Surround suppression is where the relative firing rate of a neuron may under certain conditions decrease when a particular stimulus is enlarged. It has been observed in electrophysiology studies of the brain and has been noted in many sensory neurons, most notably in the early visual system. Surround suppression is defined as a reduction in the activity of a neuron in response to a stimulus outside its classical receptive field.

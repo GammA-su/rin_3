@@ -1,0 +1,28 @@
+http://arxiv.org/abs/2001.05078v2
+
+In systems neuroscience, most models posit that brain regions communicate
+information under constraints of efficiency. Yet, evidence for efficient
+communication in structural brain networks characterized by hierarchical
+organization and highly connected hubs remains sparse. The principle of
+efficient coding proposes that the brain transmits maximal information in a
+metabolically economical or compressed form to improve future behavior. To
+determine how structural connectivity supports efficient coding, we develop a
+theory specifying minimum rates of message transmission between brain regions
+to achieve an expected fidelity, and we test five predictions from the theory
+based on random walk communication dynamics. In doing so, we introduce the
+metric of compression efficiency, which quantifies the trade-off between lossy
+compression and transmission fidelity in structural networks. In a large sample
+of youth (n = 1,042; age 8-23 years), we analyze structural networks derived
+from diffusion weighted imaging and metabolic expenditure operationalized using
+cerebral blood flow. We show that structural networks strike compression
+efficiency trade-offs consistent with theoretical predictions. We find that
+compression efficiency prioritizes fidelity with development, heightens when
+metabolic resources and myelination guide communication, explains advantages of
+hierarchical organization, links higher input fidelity to disproportionate
+areal expansion, and shows that hubs integrate information by lossy
+compression. Lastly, compression efficiency is predictive of behavior--beyond a
+conventional metric--for cognitive domains including executive function,
+memory, complex reasoning, and social cognition. Our findings elucidate how
+macroscale connectivity supports efficient coding, and serve to foreground
+communication processes that utilize random walk dynamics constrained by
+network connectivity.

@@ -1,0 +1,14 @@
+http://arxiv.org/abs/2012.10390v2
+
+Recent advances in deep learning have allowed Artificial Intelligence (AI) to
+reach near human-level performance in many sensory, perceptual, linguistic or
+cognitive tasks. There is a growing need, however, for novel, brain-inspired
+cognitive architectures. The Global Workspace theory refers to a large-scale
+system integrating and distributing information among networks of specialized
+modules to create higher-level forms of cognition and awareness. We argue that
+the time is ripe to consider explicit implementations of this theory using deep
+learning techniques. We propose a roadmap based on unsupervised neural
+translation between multiple latent spaces (neural networks trained for
+distinct tasks, on distinct sensory inputs and/or modalities) to create a
+unique, amodal global latent workspace (GLW). Potential functional advantages
+of GLW are reviewed, along with neuroscientific implications.

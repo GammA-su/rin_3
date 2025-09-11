@@ -1,0 +1,15 @@
+http://arxiv.org/abs/1805.01937v4
+
+As a means of dynamically reconfiguring the synaptic weight of a
+superconducting optoelectronic loop neuron, a superconducting flux storage loop
+is inductively coupled to the synaptic current bias of the neuron. A standard
+flux memory cell is used to achieve a binary synapse, and loops capable of
+storing many flux quanta are used to enact multi-stable synapses. Circuits are
+designed to implement supervised learning wherein current pulses add or remove
+flux from the loop to strengthen or weaken the synaptic weight. Designs are
+presented for circuits with hundreds of intermediate synaptic weights between
+minimum and maximum strengths. Circuits for implementing unsupervised learning
+are modeled using two photons to strengthen and two photons to weaken the
+synaptic weight via Hebbian and anti-Hebbian learning rules, and techniques are
+proposed to control the learning rate. Implementation of short-term plasticity,
+homeostatic plasticity, and metaplasticity in loop neurons is discussed.

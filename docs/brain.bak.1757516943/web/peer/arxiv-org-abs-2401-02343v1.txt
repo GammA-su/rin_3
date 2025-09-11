@@ -1,0 +1,22 @@
+http://arxiv.org/abs/2401.02343v1
+
+Large-scale infrastructures are prone to deterioration due to age,
+environmental influences, and heavy usage. Ensuring their safety through
+regular inspections and maintenance is crucial to prevent incidents that can
+significantly affect public safety and the environment. This is especially
+pertinent in the context of electrical power networks, which, while essential
+for energy provision, can also be sources of forest fires. Intelligent drones
+have the potential to revolutionize inspection and maintenance, eliminating the
+risks for human operators, increasing productivity, reducing inspection time,
+and improving data collection quality. However, most of the current methods and
+technologies in aerial robotics have been trialed primarily in indoor testbeds
+or outdoor settings under strictly controlled conditions, always within the
+line of sight of human operators. Additionally, these methods and technologies
+have typically been evaluated in isolation, lacking comprehensive integration.
+This paper introduces the first autonomous system that combines various
+innovative aerial robots. This system is designed for extended-range
+inspections beyond the visual line of sight, features aerial manipulators for
+maintenance tasks, and includes support mechanisms for human operators working
+at elevated heights. The paper further discusses the successful validation of
+this system on numerous electrical power lines, with aerial robots executing
+flights over 10 kilometers away from their ground control stations.

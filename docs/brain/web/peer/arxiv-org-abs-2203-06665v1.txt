@@ -1,0 +1,19 @@
+http://arxiv.org/abs/2203.06665v1
+
+In this paper, we review widely used statistical analysis frameworks for data
+defined along cortical and subcortical surfaces that have been developed in
+last two decades. The cerebral cortex has the topology of a 2D highly
+convoluted sheet. For data obtained along curved non-Euclidean surfaces,
+traditional statistical analysis and smoothing techniques based on the
+Euclidean metric structure are inefficient. To increase the signal-to-noise
+ratio (SNR) and to boost the sensitivity of the analysis, it is necessary to
+smooth out noisy surface data. However, this requires smoothing data on curved
+cortical manifolds and assigning smoothing weights based on the geodesic
+distance along the surface. Thus, many cortical surface data analysis
+frameworks are differential geometric in nature. The smoothed surface data is
+then treated as smooth random fields and statistical inferences can be
+performed within Keith Worsley's random field theory. The methods described in
+this paper are illustrated with the hippocampus surface data set. Using this
+case study, we will determine if there is an effect of family income on the
+growth of hippocampus in children in detail. There are a total of 124 children
+and 82 of them have repeat magnetic resonance images (MRI) two years later.

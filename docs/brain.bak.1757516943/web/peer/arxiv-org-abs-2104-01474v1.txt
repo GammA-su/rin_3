@@ -1,0 +1,26 @@
+http://arxiv.org/abs/2104.01474v1
+
+Animal brains evolved to optimize behavior in dynamically changing
+environments, selecting actions that maximize future rewards. A large body of
+experimental work indicates that such optimization changes the wiring of neural
+circuits, appropriately mapping environmental input onto behavioral outputs. A
+major unsolved scientific question is how optimal wiring adjustments, which
+must target the connections responsible for rewards, can be accomplished when
+the relation between sensory inputs, action taken, environmental context with
+rewards is ambiguous. The computational problem of properly targeting cues,
+contexts and actions that lead to reward is known as structural, contextual and
+temporal credit assignment respectively. In this review, we survey prior
+approaches to these three types of problems and advance the notion that the
+brain's specialized neural architectures provide efficient solutions. Within
+this framework, the thalamus with its cortical and basal ganglia interactions
+serve as a systems-level solution to credit assignment. Specifically, we
+propose that thalamocortical interaction is the locus of meta-learning where
+the thalamus provides cortical control functions that parametrize the cortical
+activity association space. By selecting among these control functions, the
+basal ganglia hierarchically guide thalamocortical plasticity across two
+timescales to enable meta-learning. The faster timescale establishes contextual
+associations to enable rapid behavioral flexibility while the slower one
+enables generalization to new contexts. Incorporating different thalamic
+control functions under this framework clarifies how thalamocortical-basal
+ganglia interactions may simultaneously solve the three credit assignment
+problems.

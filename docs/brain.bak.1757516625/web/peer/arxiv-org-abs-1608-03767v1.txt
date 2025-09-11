@@ -1,0 +1,8 @@
+http://arxiv.org/abs/1608.03767v1
+
+This paper evaluates the difference between human pathway curation and
+current NLP systems. We propose graph analysis methods for quantifying the gap
+between human curated pathway maps and the output of state-of-the-art automatic
+NLP systems. Evaluation is performed on the popular mTOR pathway. Based on
+analyzing where current systems perform well and where they fail, we identify
+possible avenues for progress.

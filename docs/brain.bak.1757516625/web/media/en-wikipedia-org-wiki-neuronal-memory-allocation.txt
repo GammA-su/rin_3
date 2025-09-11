@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Neuronal%20memory%20allocation
+
+Memory allocation is a process that determines which specific synapses and neurons in a neural network will store a given memory. Although multiple neurons can receive a stimulus, only a subset of the neurons will induce the necessary plasticity for memory encoding. The selection of this subset of neurons is termed neuronal allocation. Similarly, multiple synapses can be activated by a given set of inputs, but specific mechanisms determine which synapses actually go on to encode the memory, and this process is referred to as synaptic allocation. Memory allocation was first discovered in the lateral amygdala by Sheena Josselyn and colleagues in Alcino J. Silva's laboratory.

@@ -1,0 +1,11 @@
+http://arxiv.org/abs/1402.2902v1
+
+Hierarchical temporal memory (HTM) tries to mimic the computing in
+cerebral-neocortex. It identifies spatial and temporal patterns in the input
+for making inferences. This may require large number of computationally
+expensive tasks like, dot-product evaluations. Nano-devices that can provide
+direct mapping for such primitives are of great interest. In this work we show
+that the computing blocks for HTM can be mapped using low-voltage,
+fast-switching, magneto-metallic spin-neurons combined with emerging resistive
+cross-bar network (RCN). Results show possibility of more than 200x lower
+energy as compared to 45nm CMOS ASIC design

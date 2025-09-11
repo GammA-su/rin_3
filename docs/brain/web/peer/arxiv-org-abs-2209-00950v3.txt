@@ -1,0 +1,11 @@
+http://arxiv.org/abs/2209.00950v3
+
+We take the testing perspective to understand what the minimal discrimination
+time between two stimuli is for different types of rate coding neurons. Our
+main goal is to describe the testing abilities of two different encoding
+systems: place cells and grid cells. In particular, we show, through the notion
+of adaptation, that a fixed place cell system can have a minimum discrimination
+time that decreases when the stimuli are further away. This could be a
+considerable advantage for the place cell system that could complement the grid
+cell system, which is able to discriminate stimuli that are much closer than
+place cells.

@@ -1,0 +1,21 @@
+http://arxiv.org/abs/1906.05158v2
+
+At zero temperature, a two-dimensional lattice of Majorana zero modes on
+mesoscopic superconducting islands exhibits a topologically-ordered toric code
+phase. Recently, a Landau field theory was used to describe the different
+phases of the aforementioned system and the phase-transitions separating them.
+While the field theory provides details on the properties of the system close
+to the phase-transitions, signatures of topological ordering in the different
+phases have not been computed. This is the primary goal of the current work. We
+describe a lattice gauge theory of the Majorana toric code in terms of
+$\mathrm{U}(1)$ matter fields coupled to an emergent $\mathbb{Z}_2$ gauge
+field. Subsequently, we use a generalized Wilson-loop order-parameter, the
+equal-time Fredenhagen-Marcu order parameter, to characterize the topological
+ordering in the different phases. Our computation provides evidence of the
+toric code phase both in the Mott insulator and the charge-$2e$ superconductor
+phases, while showing that the toric code phase disappears in the charge-$e$
+superconductor phase. In addition, we perturbatively analyze the influence of
+Cooper pair tunneling on the topological gap of the toric code in the limit of
+strong charging energy and show that the toric code phase is, in fact,
+stabilized by the Cooper pair tunneling. Our results are relevant for
+experimental realizations of the Majorana toric code.

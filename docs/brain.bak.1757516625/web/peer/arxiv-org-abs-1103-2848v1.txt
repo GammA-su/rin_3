@@ -1,0 +1,7 @@
+http://arxiv.org/abs/1103.2848v1
+
+Devising a weight assignment policy for assigning credits to multiple authors
+of a manuscript is a challenging task. In this paper, we present a scheme for
+assigning credits to multiple authors that we call a polynomial weight
+assignment scheme. We compare our scheme with other schemes proposed in the
+literature.

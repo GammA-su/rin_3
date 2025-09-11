@@ -1,0 +1,19 @@
+http://arxiv.org/abs/2307.05373v1
+
+Classification of sleep stages plays an essential role in diagnosing
+sleep-related diseases including Sleep Disorder Breathing (SDB) disease. In
+this study, we propose an end-to-end deep learning architecture, named SSNet,
+which comprises of two deep learning networks based on Convolutional Neuron
+Networks (CNN) and Long Short Term Memory (LSTM). Both deep learning networks
+extract features from the combination of Electrooculogram (EOG),
+Electroencephalogram (EEG), and Electromyogram (EMG) signals, as each signal
+has distinct features that help in the classification of sleep stages. The
+features produced by the two-deep learning networks are concatenated to pass to
+the fully connected layer for the classification. The performance of our
+proposed model is evaluated by using two public datasets Sleep-EDF Expanded
+dataset and ISRUC-Sleep dataset. The accuracy and Kappa coefficient are 96.36%
+and 93.40% respectively, for classifying three classes of sleep stages using
+Sleep-EDF Expanded dataset. Whereas, the accuracy and Kappa coefficient are
+96.57% and 83.05% respectively for five classes of sleep stages using Sleep-EDF
+Expanded dataset. Our model achieves the best performance in classifying sleep
+stages when compared with the state-of-the-art techniques.

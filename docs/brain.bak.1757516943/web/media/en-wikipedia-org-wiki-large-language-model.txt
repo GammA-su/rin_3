@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Large%20language%20model
+
+A large language model (LLM) is a language model trained with self-supervised machine learning on a vast amount of text, designed for natural language processing tasks, especially language generation.

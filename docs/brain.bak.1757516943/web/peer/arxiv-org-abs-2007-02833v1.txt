@@ -1,0 +1,20 @@
+http://arxiv.org/abs/2007.02833v1
+
+We present here a model to take advantage of the multi-task nature of complex
+datasets by learning to separate tasks and subtasks in and end to end manner by
+biasing competitive interactions in the network. This method does not require
+additional labelling or reformatting of data in a dataset. We propose an
+alternate view to the monolithic one-task-fits-all learning of multi-task
+problems, and describe a model based on a theory of neuronal attention from
+neuroscience, proposed by Desimone. We create and exhibit a new toy dataset,
+based on the MNIST dataset, which we call MNIST-QA, for testing Visual Question
+Answering architectures in a low-dimensional environment while preserving the
+more difficult components of the Visual Question Answering task, and
+demonstrate the proposed network architecture on this new dataset, as well as
+on COCO-QA and DAQUAR-FULL. We then demonstrate that this model eliminates
+catastrophic interference between tasks on a newly created toy dataset and
+provides competitive results in the Visual Question Answering space. We provide
+further evidence that Visual Question Answering can be approached as a
+multi-task problem, and demonstrate that this new architecture based on the
+Biased Competition model is capable of learning to separate and learn the tasks
+in an end-to-end fashion without the need for task labels.

@@ -1,0 +1,15 @@
+http://arxiv.org/abs/1912.11449v1
+
+In recent years, many molecular and environmental factors have been studied
+to understand how synaptic plasticity is modulated. Sleep, as an evolutionary
+conserved biological function, has shown to be a critical player for the
+consolidation and filtering of synaptic circuitry underlying memory traces.
+Although sleep disturbances do not alter normal memory consolidation, they may
+reflect fundamental circuit malfunctions that can play a significant role in
+exacerbating diseases, such as autism and Alzheimer's disease. Very recently,
+scientists sought to answer part of this enigma and they identified p75
+neurotrophic receptor (p75NTR) as a critical player in mediating impairments in
+hippocampal-dependent associative plasticity upon sleep deprivation. This paper
+will review the role of the p75NTR, critically discuss the impact and
+implications of this research as the bridge for sleep research and neurological
+diseases.

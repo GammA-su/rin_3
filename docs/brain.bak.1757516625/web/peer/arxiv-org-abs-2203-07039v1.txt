@@ -1,0 +1,26 @@
+http://arxiv.org/abs/2203.07039v1
+
+Artificial Spiking Neural Networks (ASNNs) promise greater information
+processing efficiency because of discrete event-based (i.e., spike)
+computation. Several Machine Learning (ML) applications use biologically
+inspired plasticity mechanisms as unsupervised learning techniques to increase
+the robustness of ASNNs while preserving efficiency. Spike Time Dependent
+Plasticity (STDP) and Intrinsic Plasticity (IP) (i.e., dynamic spiking
+threshold adaptation) are two such mechanisms that have been combined to form
+an ensemble learning method. However, it is not clear how this ensemble
+learning should be regulated based on spiking activity. Moreover, previous
+studies have attempted threshold based synaptic pruning following STDP, to
+increase inference efficiency at the cost of performance in ASNNs. However,
+this type of structural adaptation, that employs individual weight mechanisms,
+does not consider spiking activity for pruning which is a better representation
+of input stimuli. We envisaged that plasticity-based spike-regulation and
+spike-based pruning will result in ASSNs that perform better in low resource
+situations. In this paper, a novel ensemble learning method based on entropy
+and network activation is introduced, which is amalgamated with a spike-rate
+neuron pruning technique, operated exclusively using spiking activity. Two
+electroencephalography (EEG) datasets are used as the input for classification
+experiments with a three-layer feed forward ASNN trained using one-pass
+learning. During the learning process, we observed neurons assembling into a
+hierarchy of clusters based on spiking rate. It was discovered that pruning
+lower spike-rate neuron clusters resulted in increased generalization or a
+predictable decline in performance.

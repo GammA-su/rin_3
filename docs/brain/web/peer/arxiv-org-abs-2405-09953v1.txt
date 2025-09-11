@@ -1,0 +1,14 @@
+http://arxiv.org/abs/2405.09953v1
+
+Deep neural networks have provided a computational framework for
+understanding object recognition, grounded in the neurophysiology of the
+primate ventral stream, but fail to account for how we process relational
+aspects of a scene. For example, deep neural networks fail at problems that
+involve enumerating the number of elements in an array, a problem that in
+humans relies on parietal cortex. Here, we build a 'dual-stream' neural network
+model which, equipped with both dorsal and ventral streams, can generalise its
+counting ability to wholly novel items ('zero-shot' counting). In doing so, it
+forms spatial response fields and lognormal number codes that resemble those
+observed in macaque posterior parietal cortex. We use the dual-stream network
+to make successful predictions about behavioural studies of the human gaze
+during similar counting tasks.

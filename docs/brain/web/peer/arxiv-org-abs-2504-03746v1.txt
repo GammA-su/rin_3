@@ -1,0 +1,27 @@
+http://arxiv.org/abs/2504.03746v1
+
+The rapid expansion of the Internet of Things (IoT) generates zettabytes of
+data that demand efficient unsupervised learning systems. Hierarchical Temporal
+Memory (HTM), a third-generation unsupervised AI algorithm, models the
+neocortex of the human brain by simulating columns of neurons to process and
+predict sequences. These neuron columns can memorize and infer sequences across
+multiple orders. While multiorder inferences offer robust predictive
+capabilities, they often come with significant computational overhead. The
+Sequence Memory (SM) component of HTM, which manages these inferences,
+encounters bottlenecks primarily due to its extensive programmable
+interconnects. In many cases, it has been observed that first-order temporal
+relationships have proven to be sufficient without any significant loss in
+efficiency. This paper introduces a Reflex Memory (RM) block, inspired by the
+Spinal Cord's working mechanisms, designed to accelerate the processing of
+first-order inferences. The RM block performs these inferences significantly
+faster than the SM. The integration of RM with HTM forms a system called the
+Accelerated Hierarchical Temporal Memory (AHTM), which processes repetitive
+information more efficiently than the original HTM while still supporting
+multiorder inferences. The experimental results demonstrate that the HTM
+predicts an event in 0.945 s, whereas the AHTM module does so in 0.125 s.
+Additionally, the hardware implementation of RM in a content-addressable memory
+(CAM) block, known as Hardware-Accelerated Hierarchical Temporal Memory
+(H-AHTM), predicts an event in just 0.094 s, significantly improving inference
+speed. Compared to the original algorithm \cite{bautista2020matlabhtm}, AHTM
+accelerates inference by up to 7.55x, while H-AHTM further enhances performance
+with a 10.10x speedup.

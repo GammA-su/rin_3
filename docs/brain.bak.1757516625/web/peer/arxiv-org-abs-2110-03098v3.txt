@@ -1,0 +1,14 @@
+http://arxiv.org/abs/2110.03098v3
+
+This paper presents novel Weighted Finite-State Transducer (WFST) topologies
+to implement Connectionist Temporal Classification (CTC)-like algorithms for
+automatic speech recognition. Three new CTC variants are proposed: (1) the
+"compact-CTC", in which direct transitions between units are replaced with
+<epsilon> back-off transitions; (2) the "minimal-CTC", that only adds <blank>
+self-loops when used in WFST-composition; and (3) the "selfless-CTC" variants,
+which disallows self-loop for non-blank units. Compact-CTC allows for 1.5 times
+smaller WFST decoding graphs and reduces memory consumption by two times when
+training CTC models with the LF-MMI objective without hurting the recognition
+accuracy. Minimal-CTC reduces graph size and memory consumption by two and four
+times for the cost of a small accuracy drop. Using selfless-CTC can improve the
+accuracy for wide context window models.

@@ -1,0 +1,24 @@
+http://arxiv.org/abs/1910.04590v1
+
+The entorhinal-hippocampal circuit plays a critical role in higher brain
+functions, especially spatial cognition. Grid cells in the medial entorhinal
+cortex (MEC) periodically fire with different grid spacing and orientation,
+which makes a contribution that place cells in the hippocampus can uniquely
+encode locations in an environment. But how sparse firing granule cells in the
+dentate gyrus are formed from grid cells in the MEC remains to be determined.
+Recently, the fruit fly olfactory circuit provides a variant algorithm (called
+locality-sensitive hashing) to solve this problem. To investigate how the
+sparse place firing generates in the dentate gyrus can help animals to break
+the perception ambiguity during environment exploration, we build a
+biologically relevant, computational model from grid cells to place cells. The
+weight from grid cells to dentate gyrus granule cells is learned by competitive
+Hebbian learning. We resorted to the robot system for demonstrating our
+cognitive mapping model on the KITTI odometry benchmark dataset. The
+experimental results show that our model is able to stably, robustly build a
+coherent semi-metric topological map in the large-scale outdoor environment.
+The experimental results suggest that the entorhinal-hippocampal circuit as a
+variant locality-sensitive hashing algorithm is capable of generating sparse
+encoding for easily distinguishing different locations in the environment. Our
+experiments also provide theoretical supports that this analogous hashing
+algorithm may be a general principle of computation in different brain regions
+and species.

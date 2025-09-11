@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Artificial%20neuron
+
+An artificial neuron is a mathematical function conceived as a model of a biological neuron in a neural network. The artificial neuron is the elementary unit of an artificial neural network.

@@ -1,0 +1,23 @@
+http://arxiv.org/abs/2011.05595v1
+
+As organism is a dissipative system. The process from multi desires to
+exclusive motivation is of great importance among all sensory-action loops. In
+this paper we argued that a proper Desire-Motivation model should be a
+continuous dynamic mapping from the dynamic desire vector to the sparse
+motivation vector. Meanwhile, it should at least have specific stability and
+adjustability of motivation intensity. Besides, the neuroscience evidences
+suggest that the Desire-Motivation model should have dynamic information
+acquisition and should be a recurrent neural network. A five-equation model is
+built based on the above arguments, namely the Recurrent Gating
+Desire-Motivation (RGDM) model. Additionally, a heuristic speculation based on
+the RGDM model about corresponding brain regions is carried out. It believes
+that the tonic and phasic firing of ventral tegmental area dopamine neurons
+should execute the respective and collective feedback functions of recurrent
+processing. The analysis about the RGMD model shows the expectations about
+individual personality from three dimensions, namely stability, intensity, and
+motivation decision speed. These three dimensions can be combined and create
+eight different personalities, which is correspondent to Jung's personality
+structure theorem. Furthermore, the RGDM model can be used to predict three
+different brand-new types of depressive disorder with different phenotypes.
+Moreover, it can also explain several other psychiatry disorders from new
+perspectives.

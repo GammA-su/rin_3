@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/ARM%20Cortex-A72
+
+The ARM Cortex-A72 is a central processing unit implementing the ARMv8-A 64-bit instruction set designed by ARM Holdings' Austin design centre. The Cortex-A72 is a 3-way decode out-of-order superscalar pipeline. It is available as SIP core to licensees, and its design makes it suitable for integration with other SIP cores into one die constituting a system on a chip (SoC). The Cortex-A72 was announced in 2015 to serve as the successor of the Cortex-A57, and was designed to use 20% less power or offer 90% greater performance.

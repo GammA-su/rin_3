@@ -1,0 +1,13 @@
+http://arxiv.org/abs/2202.11548v1
+
+We report the fabrication and optical characterization of Yb3+-doped
+waveguide amplifiers (YDWA) on the thin film lithium niobate fabricated by
+photolithography assisted chemo-mechanical etching. The fabricated Yb3+-doped
+lithium niobate waveguides demonstrates low propagation loss of 0.13 dB/cm at
+1030 nm and 0.1 dB/cm at 1060 nm. The internal net gain of 5 dB at 1030 nm and
+8 dB at 1060 nm are measured on a 4.0 cm long waveguide pumped by 976nm laser
+diodes, indicating the gain per unit length of 1.25 dB/cm at 1030 nm and 2
+dB/cm at 1060 nm, respectively. The integrated Yb3+-doped lithium niobate
+waveguide amplifiers will benefit the development of a powerful gain platform
+and are expected to contribute to the high-density integration of thin film
+lithium niobate based photonic chip.

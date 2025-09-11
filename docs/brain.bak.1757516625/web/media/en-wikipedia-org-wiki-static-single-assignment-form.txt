@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Static%20single-assignment%20form
+
+In compiler design, static single assignment form is a type of intermediate representation (IR) where each variable is assigned exactly once. SSA is used in most high-quality optimizing compilers for imperative languages, including LLVM, the GNU Compiler Collection, and many commercial compilers.

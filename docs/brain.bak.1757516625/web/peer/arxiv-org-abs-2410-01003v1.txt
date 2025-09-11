@@ -1,0 +1,23 @@
+http://arxiv.org/abs/2410.01003v1
+
+Recent attention-based volumetric segmentation (VS) methods have achieved
+remarkable performance in the medical domain which focuses on modeling
+long-range dependencies. However, for voxel-wise prediction tasks,
+discriminative local features are key components for the performance of the VS
+models which is missing in attention-based VS methods. Aiming at resolving this
+issue, we deliberately incorporate the convolutional encoder branch with
+transformer backbone to extract local and global features in a parallel manner
+and aggregate them in Cross Feature Mixer Module (CFMM) for better prediction
+of segmentation mask. Consequently, we observe that the derived model,
+Y-CT-Net, achieves competitive performance on multiple medical segmentation
+tasks. For example, on multi-organ segmentation, Y-CT-Net achieves an 82.4%
+dice score, surpassing well-tuned VS Transformer/CNN-like baselines
+UNETR/ResNet-3D by 2.9%/1.4%. With the success of Y-CT-Net, we extend this
+concept with hybrid attention models, that derived Y-CH-Net model, which brings
+a 3% improvement in terms of HD95 score for same segmentation task. The
+effectiveness of both models Y-CT-Net and Y-CH-Net verifies our hypothesis and
+motivates us to initiate the concept of Y-CA-Net, a versatile generic
+architecture based upon any two encoders and a decoder backbones, to fully
+exploit the complementary strengths of both convolution and attention
+mechanisms. Based on experimental results, we argue Y-CA-Net is a key player in
+achieving superior results for volumetric segmentation.

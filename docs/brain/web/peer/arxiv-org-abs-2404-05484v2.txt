@@ -1,0 +1,20 @@
+http://arxiv.org/abs/2404.05484v2
+
+Why do mammals need to sleep? Neuroscience treats sleep and wake as default
+and perturbation modes of the brain. It is hypothesized that the brain
+self-organizes neural activities without environmental inputs. This paper
+presents a new computational model of the sleep-wake cycle (SWC) for learning
+and memory. During the sleep mode, the memory consolidation by the
+thalamocortical system is abstracted by a disentangling operator that maps
+context-dependent representations (CDR) to context-independent representations
+(CIR) for generalization. Such a disentangling operator can be mathematically
+formalized by an integral transform that integrates the context variable from
+CDR. During the wake mode, the memory formation by the hippocampal-neocortical
+system is abstracted by an entangling operator from CIR to CDR where the
+context is introduced by physical motion. When designed as inductive bias,
+entangled CDR linearizes the problem of unsupervised learning for sensory
+memory by direct-fit. The concatenation of disentangling and entangling
+operators forms a disentangling-entangling cycle (DEC) as the building block
+for sensorimotor learning. We also discuss the relationship of DEC and SWC to
+the perception-action cycle (PAC) for internal model learning and perceptual
+control theory for the ecological origin of natural languages.

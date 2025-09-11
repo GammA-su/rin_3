@@ -1,0 +1,25 @@
+http://arxiv.org/abs/2206.10357v2
+
+The lack of a comprehensive high-resolution atlas of the cerebellum has
+hampered studies of cerebellar involvement in normal brain function and
+disease. A good representation of the tightly foliated aspect of the cerebellar
+cortex is difficult to achieve because of the highly convoluted surface and the
+time it would take for manual delineation. The quality of manual segmentation
+is influenced by human expert judgment, and automatic labelling is constrained
+by the limited robustness of existing segmentation algorithms. The
+20umisotropic BigBrain dataset provides an unprecedented high resolution
+framework for semantic segmentation compared to the 1000um(1mm) resolution
+afforded by magnetic resonance imaging. To dispense with the manual annotation
+requirement, we propose to train a model to adaptively transfer the annotation
+from the cerebellum on the Allen Brain Human Brain Atlas to the BigBrain in an
+unsupervised manner, taking into account the different staining and spacing
+between sections. The distinct visual discrepancy between the Allen Brain and
+BigBrain prevents existing approaches to provide meaningful segmentation masks,
+and artifacts caused by sectioning and histological slice preparation in the
+BigBrain data pose an extra challenge. To address these problems, we propose a
+two-stage framework where we first transfer the Allen Brain cerebellum to a
+space sharing visual similarity with the BigBrain. We then introduce a
+self-training strategy with a confidence map to guide the model learning from
+the noisy pseudo labels iteratively. Qualitative results validate the
+effectiveness of our approach, and quantitative experiments reveal that our
+method can achieve over 2.6% loss reduction compared with other approaches.

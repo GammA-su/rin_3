@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Cognitive%20model
+
+A cognitive model is a representation of one or more cognitive processes in humans or other animals for the purposes of comprehension and prediction. There are many types of cognitive models, and they can range from box-and-arrow diagrams to a set of equations to software programs that interact with the same tools that humans use to complete tasks. In terms of information processing, cognitive modeling is modeling of human perception, reasoning, memory and action.

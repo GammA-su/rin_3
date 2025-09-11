@@ -1,0 +1,13 @@
+http://arxiv.org/abs/2210.15481v1
+
+We constructed a Susceptible-Addicted-Reformed model and explored the
+dynamics of nonlinear relapse in the Reformed population. The transition from
+susceptible considered {\it at-risk} is modeled using a strictly decreasing
+general function, mimicking an influential factor that reduces the flow into
+the addicted class. The {\it basic reproductive number} is computed.
+Furthermore, $R_0$ determines the local asymptotically stability of the
+addicted-free equilibrium. Conditions for a forward-backward bifurcation were
+established using $R_0$ and other threshold quantities. A stochastic version of
+the model is presented, and some numerical examples are shown. Results showed
+that the influence of the temporarily reformed individuals is highly sensitive
+to the initial addicted population.

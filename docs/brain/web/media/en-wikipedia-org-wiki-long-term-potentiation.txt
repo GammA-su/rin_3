@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Long-term%20potentiation
+
+In neuroscience, long-term potentiation (LTP) is a persistent strengthening of synapses based on recent patterns of activity. These are patterns of synaptic activity that produce a long-lasting increase in signal transmission between two neurons. The opposite of LTP is long-term depression, which produces a long-lasting decrease in synaptic strength.

@@ -1,0 +1,4 @@
+https://en.wikipedia.org/wiki/Hippocampal%20replay
+
+Hippocampal replay is a phenomenon observed in rats, mice, cats, rabbits, songbirds and monkeys.
+During sleep or awake rest, replay refers to the re-occurrence of a sequence of cell activations that also occurred during activity, but the replay has a much faster time scale. It may be in the same order, or in reverse. Cases were also found where a sequence of activations occurs before the actual activity, but it is still the same sequence. This is called preplay.

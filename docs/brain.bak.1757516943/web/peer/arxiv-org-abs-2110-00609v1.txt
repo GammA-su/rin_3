@@ -1,0 +1,13 @@
+http://arxiv.org/abs/2110.00609v1
+
+Calcium imaging using miniscopes are becoming increasingly popular in the
+neuroscience community with a multitude of microendoscope versions, lens
+systems and packages for analysis available as open source. Here we describe in
+detail how to implant lenses and baseplates for the University of California at
+Los Angeles (UCLA) miniscope V3 and V4 using a Gradient Index (GRIN) lens for
+the hippocampus or a combination of prism and GRIN lens for recording in the
+neocortex. Our protocols contain adaptations from several published protocols
+however the GRIN-relay-Prism lens system protocol is developed in-house and not
+previously described. This chapter also suggests how lenses may be re-used and
+how to test the quality of a reused lens. Lastly, we comment on the difference
+between analysis software and the computational needs for different packages.

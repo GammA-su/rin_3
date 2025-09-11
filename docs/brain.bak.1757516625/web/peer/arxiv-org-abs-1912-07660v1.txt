@@ -1,0 +1,21 @@
+http://arxiv.org/abs/1912.07660v1
+
+We present a computational and theoretical model of the neural mechanisms
+underlying human decision-making. We propose a detailed model of the
+interaction between brain regions, under a proposer-predictor-actor-critic
+framework. Task-relevant areas of cortex propose a candidate plan using fast,
+model-free, parallel constraint-satisfaction computations. Other areas of
+cortex and medial temporal lobe can then predict likely outcomes of that plan
+in this situation. This step is optional. This prediction-(or model-) based
+computation produces better accuracy and generalization, at the expense of
+speed. Next, linked regions of basal ganglia act to accept or reject the
+proposed plan based on its reward history in similar contexts. Finally the
+reward-prediction system acts as a critic to determine the value of the outcome
+relative to expectations, and produce dopamine as a training signal for cortex
+and basal ganglia. This model gains many constraints from the hypothesis that
+the mechanisms of complex human decision-making are closely analogous to those
+that have been empirically studied in detail for animal action-selection. We
+argue that by operating sequentially and hierarchically, these same mechanisms
+are responsible for the most complex human plans and decisions. Finally, we use
+the computational model to generate novel hypotheses on causes of human risky
+decision-making, and compare this to other theories of human decision-making.

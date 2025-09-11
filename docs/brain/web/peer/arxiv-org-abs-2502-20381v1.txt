@@ -1,0 +1,14 @@
+http://arxiv.org/abs/2502.20381v1
+
+Neural systems use the same underlying computational substrate to carry out
+analog filtering and signal processing operations, as well as discrete symbol
+manipulation and digital computation. Inspired by the computational principles
+of canonical cortical microcircuits, we propose a framework for using recurrent
+spiking neural networks to seamlessly and robustly switch between analog signal
+processing and categorical and discrete computation. We provide theoretical
+analysis and practical neural network design tools to formally determine the
+conditions for inducing this switch. We demonstrate the robustness of this
+framework experimentally with hardware soft Winner-Take-All and mixed-feedback
+recurrent spiking neural networks, implemented by appropriately configuring the
+analog neuron and synapse circuits of a mixed-signal neuromorphic processor
+chip.

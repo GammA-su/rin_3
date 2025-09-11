@@ -1,0 +1,20 @@
+http://arxiv.org/abs/2503.07396v1
+
+Few-shot image classification has become a popular research topic for its
+wide application in real-world scenarios, however the problem of supervision
+collapse induced by single image-level annotation remains a major challenge.
+Existing methods aim to tackle this problem by locating and aligning relevant
+local features. However, the high intra-class variability in real-world images
+poses significant challenges in locating semantically relevant local regions
+under few-shot settings. Drawing inspiration from the human's complementary
+learning system, which excels at rapidly capturing and integrating semantic
+features from limited examples, we propose the generalization-optimized Systems
+Consolidation Adaptive Memory Dual-Network, SCAM-Net. This approach simulates
+the systems consolidation of complementary learning system with an adaptive
+memory module, which successfully addresses the difficulty of identifying
+meaningful features in few-shot scenarios. Specifically, we construct a
+Hippocampus-Neocortex dual-network that consolidates structured representation
+of each category, the structured representation is then stored and adaptively
+regulated following the generalization optimization principle in a long-term
+memory inside Neocortex. Extensive experiments on benchmark datasets show that
+the proposed model has achieved state-of-the-art performance.

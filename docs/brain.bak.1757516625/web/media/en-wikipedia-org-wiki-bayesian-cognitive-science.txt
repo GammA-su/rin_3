@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Bayesian%20cognitive%20science
+
+Bayesian cognitive science, also known as computational cognitive science, is an approach to cognitive science concerned with the rational analysis of cognition through the use of Bayesian inference and cognitive modeling. The term "computational" refers to the computational level of analysis as put forth by David Marr.

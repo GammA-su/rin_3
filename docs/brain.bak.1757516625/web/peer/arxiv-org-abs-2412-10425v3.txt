@@ -1,0 +1,21 @@
+http://arxiv.org/abs/2412.10425v3
+
+This paper introduces a novel approach to creating adaptive language agents
+by integrating active inference with large language models (LLMs). While LLMs
+demonstrate remarkable capabilities, their reliance on static prompts limits
+adaptation to new information and changing environments. We address this by
+implementing an active inference framework that acts as a cognitive layer above
+an LLM-based agent, dynamically adjusting prompts and search strategies through
+principled information-seeking behavior. Our framework models the environment
+using three state factors (prompt, search, and information states) with seven
+observation modalities capturing quality metrics. By framing the agent's
+learning through the free energy principle, we enable systematic exploration of
+prompt combinations and search strategies. Experimental results demonstrate the
+effectiveness of this approach, with the agent developing accurate models of
+environment dynamics evidenced by emergent structure in observation matrices.
+Action selection patterns reveal sophisticated exploration-exploitation
+behavior, transitioning from initial information-gathering to targeted prompt
+testing. The integration of thermodynamic principles with language model
+capabilities provides a principled framework for creating robust, adaptable
+agents, extending active inference beyond traditional low-dimensional control
+problems to high-dimensional, language-driven environments.

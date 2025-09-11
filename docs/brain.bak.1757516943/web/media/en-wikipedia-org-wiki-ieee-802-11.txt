@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/IEEE%20802.11
+
+IEEE 802.11 is part of the IEEE 802 set of local area network (LAN) technical standards, and specifies the set of medium access control (MAC) and physical layer (PHY) protocols for implementing wireless local area network (WLAN) computer communication. The standard and amendments provide the basis for wireless network products using the Wi-Fi brand and are the world's most widely used wireless computer networking standards. IEEE 802.11 is used in most home and office networks to allow laptops, printers, smartphones, and other devices to communicate with each other and access the Internet without connecting wires. IEEE 802.11 is also a basis for vehicle-based communication networks with IEEE 802.11p.

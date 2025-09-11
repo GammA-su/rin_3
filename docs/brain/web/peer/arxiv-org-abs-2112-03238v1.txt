@@ -1,0 +1,20 @@
+http://arxiv.org/abs/2112.03238v1
+
+Deep brain stimulation (DBS) can alleviate the movement disorders like
+Parkinson's disease (PD). Indeed, it is known that aberrant beta
+(13-30Hz)oscillations and the loss of dopaminergic neurons in the basal
+ganglia-thalamus (BGTH) and cortex characterize the akinesia symptoms of PD.
+However, the relevant biophysical mechanism behind this process still remains
+unclear. Based on the prior striatal inhibitory model, we propose an extended
+BGTH model incorporating medium spine neurons (MSNs) and fast-spiking
+interneurons (FSIs) along with the effect of DBS. We are focusing in this paper
+on an open-loop DBS mode, where the stimulation parameters stay constant
+independent of variations in the disease state, and modifications of parameters
+rely mainly on trial and error of medical experts. Additionally, we propose a
+novel combined model of the cerebellar-basal-ganglia thalamocortical network,
+MSNs, and FSIs, and show new results that indicate that Parkinsonian
+oscillations in the beta-band frequency range emerge from the dynamics of such
+a network. Our model predicts that DBS can be used to suppress beta
+oscillations in globus pallidus pars interna (GPi) neurons. This research will
+help our better understanding of the changes in brain activity caused by DBS,
+providing new insight for studying PD in the future.

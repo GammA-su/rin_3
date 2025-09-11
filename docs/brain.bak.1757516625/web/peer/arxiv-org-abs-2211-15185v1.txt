@@ -1,0 +1,13 @@
+http://arxiv.org/abs/2211.15185v1
+
+The mridangam is a double-headed percussion instrument that plays a key role
+in Carnatic music concerts. This paper presents a novel automatic transcription
+algorithm to classify the strokes played on the mridangam. Onset detection is
+first performed to segment the audio signal into individual strokes, and
+feature vectors consisting of the DFT magnitude spectrum of the segmented
+signal are generated. A multi-layer feedforward neural network is trained using
+the feature vectors as inputs and the manual transcriptions as targets. Since
+the mridangam is a tonal instrument tuned to a given tonic, tonic invariance is
+an important feature of the classifier. Tonic invariance is achieved by
+augmenting the dataset with pitch-shifted copies of the audio. This algorithm
+consistently yields over 83% accuracy on a held-out test dataset.

@@ -1,0 +1,17 @@
+http://arxiv.org/abs/2003.05647v4
+
+Fifty years have passed since David Marr, Masao Ito, and James Albus proposed
+seminal models of cerebellar functions. These models share the essential
+concept that parallel-fiber-Purkinje-cell synapses undergo plastic changes,
+guided by climbing-fiber activities during sensorimotor learning. However, they
+differ in several important respects, including holistic versus complementary
+roles of the cerebellum, pattern recognition versus control as computational
+objectives, potentiation versus depression of synaptic plasticity, teaching
+signals versus error signals transmitted by climbing-fibers, sparse expansion
+coding by granule cells, and cerebellar internal models. In this review, we
+evaluate the different features of the three models based on recent
+computational and experimental studies. While acknowledging that the three
+models have greatly advanced our understanding of cerebellar control mechanisms
+in eye movements and classical conditioning, we propose a new direction for
+computational frameworks of the cerebellum. That is, hierarchical reinforcement
+learning with multiple internal models.

@@ -1,0 +1,20 @@
+http://arxiv.org/abs/1204.1840v1
+
+The Bienenstock-Cooper-Munro (BCM) and Spike Timing-Dependent Plasticity
+(STDP) rules are two experimentally verified form of synaptic plasticity where
+the alteration of synaptic weight depends upon the rate and the timing of pre-
+and post-synaptic firing of action potentials, respectively. Previous studies
+have reported that under specific conditions, i.e. when a random train of
+Poissonian distributed spikes are used as inputs, and weight changes occur
+according to STDP, it has been shown that the BCM rule is an emergent property.
+Here, the applied STDP rule can be either classical pair-based STDP rule, or
+the more powerful triplet-based STDP rule. In this paper, we demonstrate the
+use of two distinct VLSI circuit implementations of STDP to examine whether BCM
+learning is an emergent property of STDP. These circuits are stimulated with
+random Poissonian spike trains. The first circuit implements the classical
+pair-based STDP, while the second circuit realizes a previously described
+triplet-based STDP rule. These two circuits are simulated using 0.35 um CMOS
+standard model in HSpice simulator. Simulation results demonstrate that the
+proposed triplet-based STDP circuit significantly produces the threshold-based
+behaviour of the BCM. Also, the results testify to similar behaviour for the
+VLSI circuit for pair-based STDP in generating the BCM.

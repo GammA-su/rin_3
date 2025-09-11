@@ -1,0 +1,18 @@
+http://arxiv.org/abs/1607.03070v2
+
+Spike-timing-dependent plasticity (STDP) incurs both causal and acausal
+synaptic weight updates, for negative and positive time differences between
+pre-synaptic and post-synaptic spike events. For realizing such updates in
+neuromorphic hardware, current implementations either require forward and
+reverse lookup access to the synaptic connectivity table, or rely on
+memory-intensive architectures such as crossbar arrays. We present a novel
+method for realizing both causal and acausal weight updates using only forward
+lookup access of the synaptic connectivity table, permitting memory-efficient
+implementation. A simplified implementation in FPGA, using a single timer
+variable for each neuron, closely approximates exact STDP cumulative weight
+updates for neuron refractory periods greater than 10 ms, and reduces to exact
+STDP for refractory periods greater than the STDP time window. Compared to
+conventional crossbar implementation, the forward table-based implementation
+leads to substantial memory savings for sparsely connected networks supporting
+scalable neuromorphic systems with fully reconfigurable synaptic connectivity
+and plasticity.

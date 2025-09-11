@@ -1,0 +1,20 @@
+http://arxiv.org/abs/2202.01521v2
+
+The brain is believed to operate in part by making predictions about sensory
+stimuli and encoding deviations from these predictions in the activity of
+"prediction error neurons." This principle defines the widely influential
+theory of predictive coding. The precise circuitry and plasticity mechanisms
+through which animals learn to compute and update their predictions are
+unknown. Homeostatic inhibitory synaptic plasticity is a promising mechanism
+for training neuronal networks to perform predictive coding. Homeostatic
+plasticity causes neurons to maintain a steady, baseline firing rate in
+response to inputs that closely match the inputs on which a network was
+trained, but firing rates can deviate away from this baseline in response to
+stimuli that are mismatched from training. We combine computer simulations and
+mathematical analysis systematically to test the extent to which randomly
+connected, unstructured networks compute prediction errors after training with
+homeostatic inhibitory synaptic plasticity. We find that homeostatic plasticity
+alone is sufficient for computing prediction errors for trivial time-constant
+stimuli, but not for more realistic time-varying stimuli. We use a mean-field
+theory of plastic networks to explain our findings and characterize the
+assumptions under which they apply.

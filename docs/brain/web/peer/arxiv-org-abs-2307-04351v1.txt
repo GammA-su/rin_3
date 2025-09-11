@@ -1,0 +1,20 @@
+http://arxiv.org/abs/2307.04351v1
+
+Materials datasets are usually featured by the existence of many redundant
+(highly similar) materials due to the tinkering material design practice over
+the history of materials research. For example, the materials project database
+has many perovskite cubic structure materials similar to SrTiO$_3$. This sample
+redundancy within the dataset makes the random splitting of machine learning
+model evaluation to fail so that the ML models tend to achieve over-estimated
+predictive performance which is misleading for the materials science community.
+This issue is well known in the field of bioinformatics for protein function
+prediction, in which a redundancy reduction procedure (CD-Hit) is always
+applied to reduce the sample redundancy by ensuring no pair of samples has a
+sequence similarity greater than a given threshold. This paper surveys the
+overestimated ML performance in the literature for both composition based and
+structure based material property prediction. We then propose a material
+dataset redundancy reduction algorithm called MD-HIT and evaluate it with
+several composition and structure based distance threshold sfor reducing data
+set sample redundancy. We show that with this control, the predicted
+performance tends to better reflect their true prediction capability. Our
+MD-hit code can be freely accessed at https://github.com/usccolumbia/MD-HIT

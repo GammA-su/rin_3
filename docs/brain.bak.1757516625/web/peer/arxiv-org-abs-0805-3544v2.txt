@@ -1,0 +1,25 @@
+http://arxiv.org/abs/0805.3544v2
+
+The Ca-sensitive regulatory switch of cardiac muscle is a paradigmatic
+example of protein assemblies that communicate ligand binding through
+allosteric change. The switch is a dimeric complex of troponin C (TnC), an
+allosteric sensor for Ca, and troponin I (TnI), an allosteric reporter.
+Time-resolved equilibrium FRET measurements suggest that the switch activates
+in two steps: a TnI-independent Ca-priming step followed by TnI-dependent
+opening. To resolve the mechanistic role of TnI in activation we performed
+stopped-flow FRET measurements of activation following rapid addition of a
+lacking component (Ca or TnI) and deactivation following rapid chelation of Ca.
+The time-resolved measurements, stopped-flow measurements, and Ca-titration
+measurements were globally analyzed in terms of a new quantitative dynamic
+model of TnC-TnI allostery. The analysis provided a mesoscopic parameterization
+of distance changes, free energy changes, and transition rates among the
+accessible coarse-grained states of the system. The results reveal (i) the
+Ca-induced priming step, which precedes opening, is the rate limiting step in
+activation, (ii) closing is the rate limiting step in deactivation, (iii) TnI
+induces opening, (iv) an incompletely deactivated population when regulatory Ca
+is not bound, which generates an accessory pathway of activation, and (v)
+incomplete activation by Ca--when regulatory Ca is bound, a 3:2 mixture of
+dynamically inter-converting open (active) and primed-closed (partially active)
+conformers is observed (15 C). Temperature-dependent stopped-flow FRET
+experiments provide a near complete thermo-kinetic parametrization of opening.
+<Abstract Truncated>

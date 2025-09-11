@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Power%20supply%20unit%20%28computer%29
+
+A power supply unit (PSU) converts mains AC to low-voltage regulated DC power for the internal components of a desktop computer. Modern personal computers universally use switched-mode power supplies. Some power supplies have a manual switch for selecting input voltage, while others automatically adapt to the main voltage.

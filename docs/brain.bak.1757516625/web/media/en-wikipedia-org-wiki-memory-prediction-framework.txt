@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Memory-prediction%20framework
+
+The memory-prediction framework is a theory of brain function created by Jeff Hawkins and described in his 2004 book On Intelligence. This theory concerns the role of the mammalian neocortex and its associations with the hippocampi and the thalamus in matching sensory inputs to stored memory patterns and how this process leads to predictions of what will happen in the future.

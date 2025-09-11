@@ -1,0 +1,22 @@
+http://arxiv.org/abs/2005.08620v1
+
+The assessment of consciousness and unconsciousness is a challenging issue in
+modern neuroscience. Consciousness is closely related to memory consolidation
+in that memory is a critical component of conscious experience. So far, many
+studies have been reported on memory consolidation during consciousness, but
+there is little research on memory consolidation during unconsciousness.
+Therefore, we aim to assess the unconsciousness in terms of memory
+consolidation using electroencephalogram signals. In particular, we used
+unconscious state during a nap; because sleep is the only state in which
+consciousness disappears under normal physiological conditions. Seven
+participants performed two memory tasks (word-pairs and visuo-spatial) before
+and after the nap to assess the memory consolidation during unconsciousness. As
+a result, spindle power in central, parietal, occipital regions during
+unconsciousness was positively correlated with the performance of location
+memory. With the memory performance, there was also a negative correlation
+between delta connectivity and word-pairs memory, alpha connectivity and
+location memory, and spindle connectivity and word-pairs memory. We
+additionally observed the significant relationship between unconsciousness and
+brain changes during memory recall before and after the nap. These findings
+could help present new insights into the assessment of unconsciousness by
+exploring the relationship with memory consolidation.

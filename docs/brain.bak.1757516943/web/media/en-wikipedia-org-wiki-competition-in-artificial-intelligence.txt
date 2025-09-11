@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Competition%20in%20artificial%20intelligence
+
+Competition in artificial intelligence refers to the rivalry among companies, research institutions, and governments to develop and deploy the most capable artificial intelligence (AI) systems. The competition spans multiple domains, including large language models (LLMs), autonomous vehicles, robotics, computer vision systems, natural language processing (NLP), and AI-optimized hardware.

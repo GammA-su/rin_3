@@ -1,0 +1,28 @@
+http://arxiv.org/abs/2506.19800v1
+
+The function and dynamics of the cortex are fundamentally shaped by the
+specific wiring configurations of its constituent axonal fibers, also known as
+the connectome. However, many dynamical properties of macroscale cortical
+activity are well captured by instead describing the activity as propagating
+waves across the cortical surface, constrained only by the surface's
+two-dimensional geometry. It thus remains an open question why the local
+geometry of the cortex can successfully capture macroscale cortical dynamics,
+despite neglecting the specificity of Fast-conducting, Non-local Projections
+(FNPs) which are known to mediate the rapid and non-local propagation of
+activity between remote neural populations. Here we address this question by
+developing a novel mathematical model of macroscale cortical activity in which
+cortical populations interact both by a continuous sheet and by an additional
+set of FNPs wired independently of the sheet's geometry. By simulating the
+model across a range of connectome topologies, external inputs, and timescales,
+we demonstrate that the addition of FNPs strongly shape the model dynamics of
+rapid, stimulus-evoked responses on fine millisecond timescales ($\lessapprox
+30~\text{ms}$), but contribute relatively little to slower, spontaneous
+fluctuations over longer timescales ($> 30~\text{ms}$), which increasingly
+resemble geometrically constrained dynamics without FNPs. Our results suggest
+that the discrepant views regarding the relative contributions of local
+(geometric) and non-local (connectomic) cortico-cortical interactions are
+context-dependent: While FNPs specified by the connectome are needed to capture
+rapid communication between specific distant populations (as per the rapid
+processing of sensory inputs), they play a relatively minor role in shaping
+slower spontaneous fluctuations (as per resting-state functional magnetic
+resonance imaging).

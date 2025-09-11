@@ -1,0 +1,19 @@
+http://arxiv.org/abs/2009.08111v4
+
+Active inference is a probabilistic framework for modelling the behaviour of
+biological and artificial agents, which derives from the principle of
+minimising free energy. In recent years, this framework has successfully been
+applied to a variety of situations where the goal was to maximise reward,
+offering comparable and sometimes superior performance to alternative
+approaches. In this paper, we clarify the connection between reward
+maximisation and active inference by demonstrating how and when active
+inference agents perform actions that are optimal for maximising reward.
+Precisely, we show the conditions under which active inference produces the
+optimal solution to the Bellman equation--a formulation that underlies several
+approaches to model-based reinforcement learning and control. On partially
+observed Markov decision processes, the standard active inference scheme can
+produce Bellman optimal actions for planning horizons of 1, but not beyond. In
+contrast, a recently developed recursive active inference scheme (sophisticated
+inference) can produce Bellman optimal actions on any finite temporal horizon.
+We append the analysis with a discussion of the broader relationship between
+active inference and reinforcement learning.

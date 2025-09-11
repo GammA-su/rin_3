@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Action%20selection
+
+Action selection is a way of characterizing the most basic problem of intelligent systems: what to do next. In artificial intelligence and computational cognitive science, "the action selection problem" is typically associated with intelligent agents and animats—artificial systems that exhibit complex behavior in an agent environment. The term is also sometimes used in ethology or animal behavior.

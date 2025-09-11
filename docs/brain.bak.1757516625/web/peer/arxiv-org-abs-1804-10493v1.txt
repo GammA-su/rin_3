@@ -1,0 +1,26 @@
+http://arxiv.org/abs/1804.10493v1
+
+Lymphoid leukemia (LL) and lymphoma are neoplasms developed from lymphoid
+cells (LCs). To understand why different forms of LL/lymphoma occur at
+different ages, we analyzed the effects of different types of DNA changes on a
+LC and the cellular characteristics of LCs. Point DNA mutations (PDMs) and
+chromosome changes (CCs) are the two major types of DNA changes. CCs have three
+subtypes by their effects on a LC: great-effect CCs (GECCs), mild-effect CCs
+(MECCs), and intermediate-effect CCs (IECCs). PDMs and MECCs are mostly mild
+thus can accumulate in cells. Some of the PDMs/MECCs contribute to cell
+transformation. A GECC affects one or more genes and can alone drive cell
+transformation. An IECC affects one or more genes and participates in cell
+transformation. Due to cellular characteristics, a LC may have higher
+survivability from DNA changes and require obtaining fewer cancerous properties
+for transformation than a tissue cell. Hence, a LC can be more rapidly
+transformed by a CC. On this basis, we hypothesize that a LC may have three
+pathways on transformation: a slow, a rapid, and an accelerated. Slow pathway
+is driven by accumulation of PDMs/MECCs. Rapid pathway is driven by a GECC in
+"one step". Accelerated pathway is driven by accumulation of
+PDMs/MECCs/IECC(s). Cell transformations of a LC via different pathways occur
+at different ages. A transformation via slow pathway occurs mainly in adults. A
+transformation via rapid pathway occurs at any age and has no increasing
+incidence with age. A transformation via accelerated pathway occurs also at any
+age but has increasing incidence with age. In conclusion, a LC may have three
+pathways on cell transformation, and the occurring age of LL/lymphoma may be
+determined by the transforming pathway of a LC.

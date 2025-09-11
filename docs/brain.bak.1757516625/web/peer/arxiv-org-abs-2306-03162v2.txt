@@ -1,0 +1,12 @@
+http://arxiv.org/abs/2306.03162v2
+
+Current theories suggest that adaptive decision-making necessitates the
+interaction between multiple decision-making systems. The computational
+definitions of different models of decision-making suggest interactions with
+task demands and complexity. We review these computational theories and derive
+experimental predictions that will shed light on the underlying neurobiological
+mechanisms. We use a well-established multi-strategy task and novel
+neurophysiological analyses from hippocampus and striatum as a case study in
+the interaction between task structure and navigational complexity. This
+approach reveals how task structure and navigational complexity interact with
+each other to identify differences between habitual and planned action choices.

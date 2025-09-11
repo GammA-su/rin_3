@@ -1,0 +1,20 @@
+http://arxiv.org/abs/1906.10664v2
+
+Runtime performance variability at the servers has been a major issue,
+hindering the predictable and scalable performance in modern distributed
+systems. Executing requests or jobs redundantly over multiple servers has been
+shown to be effective for mitigating variability, both in theory and practice.
+Systems that employ redundancy has drawn significant attention, and numerous
+papers have analyzed the pain and gain of redundancy under various service
+models and assumptions on the runtime variability. This paper presents a cost
+(pain) vs. latency (gain) analysis of executing jobs of many tasks by employing
+replicated or erasure coded redundancy. Tail heaviness of service time
+variability is decisive on the pain and gain of redundancy and we quantify its
+effect by deriving expressions for the cost and latency. Specifically, we try
+to answer four questions: 1) How do replicated and coded redundancy compare in
+the cost vs. latency tradeoff? 2) Can we introduce redundancy after waiting
+some time and expect to reduce the cost? 3) Can relaunching the tasks that
+appear to be straggling after some time help to reduce cost and/or latency? 4)
+Is it effective to use redundancy and relaunching together? We validate the
+answers we found for each of the questions via simulations that use empirical
+distributions extracted from a Google cluster data.

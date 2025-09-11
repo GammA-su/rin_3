@@ -1,0 +1,22 @@
+http://arxiv.org/abs/2503.21436v1
+
+The ability to learn continuously in artificial neural networks (ANNs) is
+often limited by catastrophic forgetting, a phenomenon in which new knowledge
+becomes dominant. By taking mechanisms of memory encoding in neuroscience (aka.
+engrams) as inspiration, we propose a novel approach that integrates
+stochastically-activated engrams as a gating mechanism for metaplastic
+binarized neural networks (mBNNs). This method leverages the computational
+efficiency of mBNNs combined with the robustness of probabilistic memory traces
+to mitigate forgetting and maintain the model's reliability. Previously
+validated metaplastic optimization techniques have been incorporated to enhance
+synaptic stability further. Compared to baseline binarized models and benchmark
+fully connected continual learning approaches, our method is the only strategy
+capable of reaching average accuracies over 20% in class-incremental scenarios
+and achieving comparable domain-incremental results to full precision
+state-of-the-art methods. Furthermore, we achieve a significant reduction in
+peak GPU and RAM usage, under 5% and 20%, respectively. Our findings
+demonstrate (A) an improved stability vs. plasticity trade-off, (B) a reduced
+memory intensiveness, and (C) an enhanced performance in binarized
+architectures. By uniting principles of neuroscience and efficient computing,
+we offer new insights into the design of scalable and robust deep learning
+systems.

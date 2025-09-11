@@ -1,0 +1,21 @@
+http://arxiv.org/abs/2305.15775v3
+
+Many interpretable AI approaches have been proposed to provide plausible
+explanations for a model's decision-making. However, configuring an explainable
+model that effectively communicates among computational modules has received
+less attention. A recently proposed shared global workspace theory showed that
+networks of distributed modules can benefit from sharing information with a
+bottlenecked memory because the communication constraints encourage
+specialization, compositionality, and synchronization among the modules.
+Inspired by this, we propose Concept-Centric Transformers, a simple yet
+effective configuration of the shared global workspace for interpretability,
+consisting of: i) an object-centric-based memory module for extracting semantic
+concepts from input features, ii) a cross-attention mechanism between the
+learned concept and input embeddings, and iii) standard classification and
+explanation losses to allow human analysts to directly assess an explanation
+for the model's classification reasoning. We test our approach against other
+existing concept-based methods on classification tasks for various datasets,
+including CIFAR100, CUB-200-2011, and ImageNet, and we show that our model
+achieves better classification accuracy than all baselines across all problems
+but also generates more consistent concept-based explanations of classification
+output.

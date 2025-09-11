@@ -1,0 +1,19 @@
+http://arxiv.org/abs/2505.01635v1
+
+Although inspired by neuronal systems in the brain, artificial neural
+networks generally employ point-neurons, which offer far less computational
+complexity than their biological counterparts. Neurons have dendritic arbors
+that connect to different sets of synapses and offer local non-linear
+accumulation - playing a pivotal role in processing and learning. Inspired by
+this, we propose a novel neuron design based on a multi-gate ferroelectric
+field-effect transistor that mimics dendrites. It leverages ferroelectric
+nonlinearity for local computations within dendritic branches, while utilizing
+the transistor action to generate the final neuronal output. The branched
+architecture paves the way for utilizing smaller crossbar arrays in hardware
+integration, leading to greater efficiency. Using an experimentally calibrated
+device-circuit-algorithm co-simulation framework, we demonstrate that networks
+incorporating our dendritic neurons achieve superior performance in comparison
+to much larger networks without dendrites ($\sim$17$\times$ fewer trainable
+weight parameters). These findings suggest that dendritic hardware can
+significantly improve computational efficiency, and learning capacity of
+neuromorphic systems optimized for edge applications.

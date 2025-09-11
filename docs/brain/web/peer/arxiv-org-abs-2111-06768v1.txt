@@ -1,0 +1,18 @@
+http://arxiv.org/abs/2111.06768v1
+
+Spiking neural networks (SNN) are considered as a perspective basis for
+performing all kinds of learning tasks - unsupervised, supervised and
+reinforcement learning. Learning in SNN is implemented through synaptic
+plasticity - the rules which determine dynamics of synaptic weights depending
+usually on activity of the pre- and post-synaptic neurons. Diversity of various
+learning regimes assumes that different forms of synaptic plasticity may be
+most efficient for, for example, unsupervised and supervised learning, as it is
+observed in living neurons demonstrating many kinds of deviations from the
+basic spike timing dependent plasticity (STDP) model. In the present paper, we
+formulate specific requirements to plasticity rules imposed by unsupervised
+learning problems and construct a novel plasticity model generalizing STDP and
+satisfying these requirements. This plasticity model serves as main logical
+component of the novel supervised learning algorithm called SCoBUL (Spike
+Correlation Based Unsupervised Learning) proposed in this work. We also present
+the results of computer simulation experiments confirming efficiency of these
+synaptic plasticity rules and the algorithm SCoBUL.

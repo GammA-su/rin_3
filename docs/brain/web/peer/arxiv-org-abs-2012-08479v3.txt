@@ -1,0 +1,16 @@
+http://arxiv.org/abs/2012.08479v3
+
+The recent success of Bayesian methods in neuroscience and artificial
+intelligence gives rise to the hypothesis that the brain is a Bayesian machine.
+Since logic and learning are both practices of the human brain, it leads to
+another hypothesis that there is a Bayesian interpretation underlying both
+logical reasoning and machine learning. In this paper, we introduce a
+generative model of logical consequence relations. It formalises the process of
+how the truth value of a sentence is probabilistically generated from the
+probability distribution over states of the world. We show that the generative
+model characterises a classical consequence relation, paraconsistent
+consequence relation and nonmonotonic consequence relation. In particular, the
+generative model gives a new consequence relation that outperforms them in
+reasoning with inconsistent knowledge. We also show that the generative model
+gives a new classification algorithm that outperforms several representative
+algorithms in predictive accuracy and complexity on the Kaggle Titanic dataset.

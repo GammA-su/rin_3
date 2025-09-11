@@ -1,0 +1,16 @@
+http://arxiv.org/abs/2209.00413v1
+
+Hardware spiking neural networks hold the promise of realizing artificial
+intelligence with high energy efficiency. In this context, solid-state and
+scalable memristors can be used to mimic biological neuron characteristics.
+However, these devices show limited neuronal behaviors and have to be
+integrated in more complex circuits to implement the rich dynamics of
+biological neurons. Here we studied a NbOx memristor neuron that is capable of
+emulating numerous neuronal dynamics, including tonic spiking, stochastic
+spiking, leaky-integrate-and-fire features, spike latency, temporal
+integration. The device also exhibits phasic bursting, a property that has
+scarcely been observed and studied in solid-state nano-neurons. We show that we
+can reproduce and understand this particular response through simulations using
+non-linear dynamics. These results show that a single NbOx device is sufficient
+to emulate a collection of rich neuronal dynamics that paves a path forward for
+realizing scalable and energy-efficient neuromorphic computing paradigms.

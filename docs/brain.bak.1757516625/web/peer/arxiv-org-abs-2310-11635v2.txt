@@ -1,0 +1,23 @@
+http://arxiv.org/abs/2310.11635v2
+
+The basal ganglia (BG) in the brain exhibit diverse functions for motor,
+cognition, and emotion. Such BG functions could be made via competitive harmony
+between the two competing pathways, direct pathway (DP) (facilitating movement)
+and indirect pathway (IP) (suppressing movement). As a result of break-up of
+harmony between DP and IP, there appear pathological states with disorder for
+movement, cognition, and psychiatry. In this paper, we are concerned about the
+Huntington's disease (HD), which is a genetic neurodegenerative disorder
+causing involuntary movement and severe cognitive and psychiatric symptoms. For
+the HD, the number of D2 SPNs ($N_{\rm D2}$) is decreased due to degenerative
+loss, and hence, by decreasing $x_{\rm D2}$ (fraction of $N_{\rm D2}$), we
+investigate break-up of harmony between DP and IP in terms of their competition
+degree ${\cal C}_d$, given by the ratio of strength of DP (${\cal S}_{DP}$) to
+strength of IP (${\cal S}_{IP}$) (i.e., ${\cal C}_d = {\cal S}_{DP} / {\cal
+S}_{IP}$). In the case of HD, the IP is under-active, in contrast to the case
+of Parkinson's disease with over-active IP, which results in increase in ${\cal
+C}_d$ (from the normal value). Thus, hyperkinetic dyskinesia such as chorea
+(involuntary jerky movement) occurs. We also investigate treatment of HD, based
+on optogenetics and GP ablation, by increasing strength of IP, resulting in
+recovery of harmony between DP and IP. Finally, we study effect of loss of
+healthy synapses of all the BG cells on HD. Due to loss of healthy synapses,
+disharmony between DP and IP increases, leading to worsen symptoms of the HD.

@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Neural%20circuit
+
+A neural circuit is a population of neurons interconnected by synapses to carry out a specific function when activated. Multiple neural circuits interconnect with one another to form large scale brain networks.

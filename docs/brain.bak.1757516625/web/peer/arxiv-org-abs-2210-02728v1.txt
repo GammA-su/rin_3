@@ -1,0 +1,17 @@
+http://arxiv.org/abs/2210.02728v1
+
+Striatal cholinergic interneurons (CINs) use acetylcholine (ACh) and
+glutamate (Glut) to regulate the striatal network since they express vesicular
+transporters for ACh (VAChT) and Glut (VGLUT3). However, whether ACh and Glut
+are released simultaneously and/or independently from cholinergic varicosities
+is an open question. The answer to that question requires the multichannel
+detection of vesicular transporters at the level of single synaptic vesicle
+(SV). Here, we used super-resolution STimulated Emission Depletion microscopy
+(STED) to characterize and quantify the distribution of VAChT and VGLUT3 in
+CINs SVs. Nearest-neighbor distances analysis between VAChT and
+VGLUT3-immunofluorescent spots revealed that 34% of CINs SVs contain both VAChT
+and VGLUT3. In addition, 40% of SVs expressed only VAChT while 26% of SVs
+contain only VGLUT3. These results suggest that SVs from CINs have the
+potential to store simultaneously or independently ACh and/or Glut. Overall,
+these morphological findings support the notion that CINs varicosities can
+signal with either ACh or Glut or both with an unexpected level of complexity.

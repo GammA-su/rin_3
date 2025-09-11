@@ -1,0 +1,12 @@
+http://arxiv.org/abs/0909.5046v1
+
+We study the rapidity losses in central heavy-ion collisions from AGS to RHIC
+energies with the mean rapidity determined from the projectile net-baryon
+distribution after collisions. The projectile net-baryon distribution in the
+full rapidity range was obtained by removing the target contribution
+phenomenologically at forward rapidity region from the experimental net-baryon
+measurements and taking into account the projectile contribution at backward
+rapidity region. Based on the full projectile net-baryon distributions,
+calculation results show that the rapidity loss stops increasing from the SPS
+top energy to RHIC energies, indicating that baryon transport does not depend
+strongly on energy at high energies.

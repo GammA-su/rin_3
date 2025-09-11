@@ -1,0 +1,10 @@
+http://arxiv.org/abs/2408.15021v1
+
+A meta-analysis of spaceflight data from both mouse and human flights reveals
+a striking overlap with Parkinson's disease (PD). Parallels include: changes in
+gait, loss of dopamine, sustained changes in the basal ganglia, loss of
+tyrosine hydroxylase in the substantia nigra, and systemic mitochondrial
+dysfunction. We identified specific Parkinson's genes differentially expressed
+post-spaceflight. These evidences indicate that spaceflight stressor-induced
+changes in the brain may become permanent during deep space exploration, posing
+a risk of PD in astronauts

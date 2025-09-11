@@ -1,0 +1,27 @@
+http://arxiv.org/abs/2205.04347v1
+
+How do humans and animals perform trial-and-error learning when the space of
+possibilities is infinite? In a previous study, we used an interval timing
+production task and discovered an updating strategy in which the agent adjusted
+the behavioral and neuronal noise for exploration. In the experiment, human
+subjects proactively generated a series of timed motor outputs. We found that
+the sequential motor timing varied at two temporal scales: long-term
+correlation around the target interval due to memory drifts and short-term
+adjustments of timing variability according to feedback. We have previously
+described these features of timing variability with an augmented Gaussian
+process, termed reward sensitive Gaussian process (RSGP). Here we provide a
+mechanistic model and simulate the process by borrowing the architecture of
+recurrent neural networks. While recurrent connection provided the long-term
+serial correlation in motor timing, to facilitate reward-driven short-term
+variations, we introduced reward-dependent variability in the network
+connectivity, inspired by the stochastic nature of synaptic transmission in the
+brain. Our model was able to recursively generate an output sequence
+incorporating the internal variability and external reinforcement in a Bayesian
+framework. We show that the model can learn the key features of human behavior.
+Unlike other neural network models that search for unique network connectivity
+for the best match between the model prediction and observation, this model can
+estimate the uncertainty associated with each outcome and thus did a better job
+in teasing apart adjustable task-relevant variability from unexplained
+variability. The proposed artificial neural network model parallels the
+mechanisms of information processing in neural systems and can extend the
+framework of brain-inspired reinforcement learning in continuous state control.

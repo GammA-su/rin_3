@@ -1,0 +1,20 @@
+http://arxiv.org/abs/1706.09007v1
+
+Additively separable hedonic games and fractional hedonic games have received
+considerable attention. They are coalition forming games of selfish agents
+based on their mutual preferences. Most of the work in the literature
+characterizes the existence and structure of stable outcomes (i.e., partitions
+in coalitions), assuming that preferences are given. However, there is little
+discussion on this assumption. In fact, agents receive different utilities if
+they belong to different partitions, and thus it is natural for them to declare
+their preferences strategically in order to maximize their benefit. In this
+paper we consider strategyproof mechanisms for additively separable hedonic
+games and fractional hedonic games, that is, partitioning methods without
+payments such that utility maximizing agents have no incentive to lie about
+their true preferences. We focus on social welfare maximization and provide
+several lower and upper bounds on the performance achievable by strategyproof
+mechanisms for general and specific additive functions. In most of the cases we
+provide tight or asymptotically tight results. All our mechanisms are simple
+and can be computed in polynomial time. Moreover, all the lower bounds are
+unconditional, that is, they do not rely on any computational or complexity
+assumptions.

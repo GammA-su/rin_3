@@ -1,0 +1,25 @@
+http://arxiv.org/abs/2309.12540v3
+
+The basal ganglia (BG) show a variety of functions for motor and cognition.
+There are two competitive pathways in the BG; direct pathway (DP) which
+facilitates movement and indirect pathway (IP) which suppresses movement. It is
+well known that diverse functions of the BG may be made through "balance"
+between DP and IP. But, to the best of our knowledge, so far no quantitative
+analysis for such balance was done. In this paper, as a first time, we
+introduce the competition degree ${\cal C}_d$ between DP and IP. Then, by
+employing ${\cal C}_d$, we quantify their competitive harmony (i.e.,
+competition and cooperative interplay), which could lead to improving our
+understanding of the traditional "balance" so clearly and quantitatively. We
+first consider the case of normal dopamine (DA) level of $\phi^*=0.3$. In the
+case of phasic cortical input (10 Hz), a healthy state with ${\cal C}_d^* =
+2.82$ (i.e., DP is 2.82 times stronger than IP) appears. In this case, normal
+movement occurs via harmony between DP and IP. Next, we consider the case of
+decreased DA level, $\phi = \phi^*(=0.3)~x_{DA}$ ($1 > x_{DA} \geq 0$). With
+decreasing $x_{DA}$ from 1, the competition degree ${\cal C}_d$ between DP and
+IP decreases monotonically from ${\cal C}_d^*$, which results in appearance of
+a pathological Parkinsonian state with reduced ${\cal C}_d$. In this
+Parkinsonian state, strength of IP is much increased than that in the case of
+normal healthy state, leading to disharmony between DP and IP. Due to such
+break-up of harmony between DP and IP, impaired movement occurs. Finally, we
+also study treatment of the pathological Parkinsonian state via recovery of
+harmony between DP and IP.

@@ -1,0 +1,16 @@
+http://arxiv.org/abs/0708.3811v1
+
+This paper proposes a classification of three-revolute orthogonal
+manipulators that have at least one of their DH parameters equal to zero. This
+classification is based on the topology of their workspace. The workspace is
+characterized in a half-cross section by the singular curves. The workspace
+topology is defined by the number of cusps and nodes that appear on these
+singular curves. The manipulators are classified into different types with
+similar kinematic properties. Each type is evaluated according to interesting
+kinematic properties such as, whether the workspace is fully reachable with
+four inverse kinematic solutions or not, the existence of voids, and the
+feasibility of continuous trajectories in the workspace. It is found that
+several orthogonal manipulators have a "well-connected" workspace, that is,
+their workspace is fully accessible with four inverse kinematic solutions and
+any continuous trajectory is feasible. This result is of interest for the
+design of alternative manipulator geometries.

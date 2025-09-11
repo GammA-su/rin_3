@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Neuromodulation
+
+Neuromodulation is the physiological process by which a given neuron uses one or more chemicals to regulate diverse populations of neurons. Neuromodulators typically bind to metabotropic, G-protein coupled receptors (GPCRs) to initiate a second messenger signaling cascade that induces a broad, long-lasting signal. This modulation can last for hundreds of milliseconds to several minutes. Some of the effects of neuromodulators include altering intrinsic firing activity, increasing or decreasing voltage-dependent currents, altering synaptic efficacy, increasing bursting activity and reconfiguring synaptic connectivity.

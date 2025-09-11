@@ -1,0 +1,27 @@
+http://arxiv.org/abs/2006.07166v1
+
+Accurate knowledge of temperatures in power semiconductor modules is crucial
+for proper thermal management of such devices. Precise prediction of
+temperatures allows to operate the system at the physical limit of the device
+avoiding undesirable over-temperatures and thus improve reliability of the
+module. Commonly used thermal models can be based on detailed expert knowledge
+of the device's physical structure or on precise and complete temperature
+distribution measurements. The latter approach is more often used in the
+industry. Recently, we have proposed a linear time invariant state-space
+thermal model based on a compartment representation and its identification
+procedure that is based on the Expectation-Maximization algorithm from
+incomplete temperature data. However, the model still requires to measure
+temperatures of all active elements. In this contribution, we aim to relax the
+need for all measurements. Therefore, we replace the previous dark gray-box
+approach with a structured compartment model. The structure of the model is
+designed by a mesh-based discretization of the physical layout of the module.
+All compartments are assumed to share parameters that are identified from the
+data of the measured elements. Temperatures of the unmeasured elements are
+predicted using the shared parameters. Identification of the parameters is
+possible only with suitable regularization due to limited amount of the data.
+In particular, the model tightening is accomplished by sharing parameters among
+compartments and by constraining the process covariance matrix of the model in
+this contribution. Applicability of the proposed identification procedure is
+discussed in terms of growing state-space and therefore speeding up of the
+identification algorithm is suggested. Performance of the proposed approach is
+tested and demonstrated on simulated data.

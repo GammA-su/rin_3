@@ -1,0 +1,18 @@
+http://arxiv.org/abs/2005.13256v1
+
+Neuropeptide SF (NPSF) is a member of RFamide neuropeptides that play diverse
+roles in central nervous system. Little is know about the effects of NPSF on
+brain functions. Antidepressant-like effect of NPSF was studied in modified
+mice FST. NPSF showed the antidepressant-like effects by decreasing the
+immobility time and increasing the climbing and swimming time. Furthermore, the
+involvement of the adrenergic, serotonergic, cholinergic or dopaminergic
+receptors in the antidepressant-like effect of NPSF was studied in modified
+mice FST. Mice were pretreated with a non-selective {\alpha}-adrenergic
+receptor antagonist phenoxybenzamine, a \b{eta}-adrenergic receptor antagonist,
+propranolol, a non-selective 5-HT2 serotonergic receptor antagonist,
+cyproheptadine, nonselective muscarinic acetylcholine receptor antagonist,
+atropine, or D2, D3, D4 dopamine receptor antagonist, haloperidol. The present
+results confirmed that the antidepressant-like effect of NPSF is mediated, at
+least in part, by an interaction of the {\alpha}-adrenergic, 5-HT2
+serotonergic, muscarinic acetylcholine receptors and D2, D3, D4 dopamine
+receptor in a modified mouse FST.

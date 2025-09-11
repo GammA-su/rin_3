@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Efficient%20coding%20hypothesis
+
+The efficient coding hypothesis was proposed by Horace Barlow in 1961 as a theoretical model of sensory neuroscience in the brain. Within the brain, neurons communicate with one another by sending electrical impulses referred to as action potentials or spikes.

@@ -1,0 +1,15 @@
+http://arxiv.org/abs/2112.14820v1
+
+The current work intends to study the performance of the Hierarchical
+Temporal Memory(HTM) theory for automated classification of text as well as
+documents. HTM is a biologically inspired theory based on the working
+principles of the human neocortex. The current study intends to provide an
+alternative framework for document categorization using the Spatial Pooler
+learning algorithm in the HTM Theory. As HTM accepts only a stream of binary
+data as input, Latent Semantic Indexing(LSI) technique is used for extracting
+the top features from the input and converting them into binary format. The
+Spatial Pooler algorithm converts the binary input into sparse patterns with
+similar input text having overlapping spatial patterns making it easy for
+classifying the patterns into categories. The results obtained prove that HTM
+theory, although is in its nascent stages, performs at par with most of the
+popular machine learning based classifiers.

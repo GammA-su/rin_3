@@ -1,0 +1,26 @@
+http://arxiv.org/abs/1404.2408v1
+
+The spontaneous oxidation of dopamine in slightly alkaline solutions was
+investigated on the basis of the work of Lee and others [Science, 318:426-430,
+2007], and the reaction product was identified as dopamine-melanin. The ability
+of melanin to covalently bind amine functional groups was confirmed by
+quantification of the corresponding binding sites on dopamine-melanin
+aggregates. Furthermore it is possible to redissolve dopamine-melanin
+aggregates in strongly alkaline solutions. The obtained small melanin grains
+were used to build layer-by-layer deposits with poly(diallyldimethylammonium).
+  Different methods of dopamine oxidation to grow melanin films at
+solid--liquid interfaces were developed. All examined methods lead to
+continuous dopamine-melanin films with very similar surface morphologies. The
+dopamine-melanin films become impermeable to electrochemical probes at a
+thickness in the 10 nm range. In this context a higher permeability for
+positively charged and neutral probes than for negatively charged ones was
+confirmed for one preparation method.
+  The adsorption of proteins on dopamine-melanin coatings was explained as
+combination of electrostatic and strong, most probably covalent, interactions.
+To obtain this explanation, the zeta-potential of dopamine-melanin deposits has
+been measured as a function of pH.
+  The formation of melanin by dopamine oxidation in layer-by-layer films of
+poly(L-lysine) (PLL) and hyaluronate (HA) was studied: Melanin is able to
+homogeneously fill $(\text{PLL-HA})_n$ films and the obtained
+polyelectrolyte-melanin composites can be detached from their substrate as
+free-standing membranes prepared by a biomimetic method in mild conditions.

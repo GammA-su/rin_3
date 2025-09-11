@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Neuroprosthetics
+
+Neuroprosthetics is a discipline related to neuroscience and biomedical engineering concerned with developing neural prostheses. They are sometimes contrasted with a brain–computer interface, which connects the brain to a computer rather than a device meant to replace missing biological functionality.

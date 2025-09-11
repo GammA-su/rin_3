@@ -1,0 +1,15 @@
+http://arxiv.org/abs/1904.11058v1
+
+Confined hydration and conformational flexibility are some of the challenges
+encountered for the rational design of selective antagonists of G-protein
+coupled receptors. We present a set of C3-substituted (-)-stepholidine
+derivatives as potent binders of the dopamine D3 receptor. The compounds are
+characterized biochemically, as well as by computer modeling using a novel
+molecular dynamics-based alchemical binding free energy approach which
+incorporates the effect of the displacement of enclosed water molecules from
+the binding site. The free energy of displacement of specific hydration sites
+is obtained using the Hydration Site Analysis method with explicit solvation.
+This work underscores the critical role of confined hydration and
+conformational reorganization in the molecular recognition mechanism of
+dopamine receptors and illustrates the potential of binding free energy models
+to represent these key phenomena.

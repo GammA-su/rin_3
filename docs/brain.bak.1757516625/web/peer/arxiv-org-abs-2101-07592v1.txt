@@ -1,0 +1,10 @@
+http://arxiv.org/abs/2101.07592v1
+
+Unlike the brain, artificial neural networks, including state-of-the-art deep
+neural networks for computer vision, are subject to "catastrophic forgetting":
+they rapidly forget the previous task when trained on a new one. Neuroscience
+suggests that biological synapses avoid this issue through the process of
+synaptic consolidation and metaplasticity: the plasticity itself changes upon
+repeated synaptic events. In this work, we show that this concept of
+metaplasticity can be transferred to a particular type of deep neural networks,
+binarized neural networks, to reduce catastrophic forgetting.

@@ -1,0 +1,14 @@
+http://arxiv.org/abs/2401.10849v1
+
+The structure of the basal ganglia is remarkably similar across a number of
+species (often described in terms of direct, indirect and hyperdirect pathways)
+and is deeply involved in decision making and action selection. In this
+article, we are interested in exploring the role of structure when solving a
+decision task while avoiding to make any strong assumption regarding the actual
+structure. To do so, we exploit the echo state network paradigm that allows to
+solve complex task based on a random architecture. Considering a temporal
+decision task, the question is whether a specific structure allows for better
+performance and if so, whether this structure shares some similarity with the
+basal ganglia. Our results highlight the advantage of having a slow (direct)
+and a fast (hyperdirect) pathway that allows to deal with late information
+during a decision making task.

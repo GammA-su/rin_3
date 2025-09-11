@@ -1,0 +1,15 @@
+http://arxiv.org/abs/2005.00961v3
+
+Recent success of Bayesian methods in neuroscience and artificial
+intelligence gives rise to the hypothesis that the brain is a Bayesian machine.
+Since logic, as the laws of thought, is a product and practice of the human
+brain, it leads to another hypothesis that there is a Bayesian algorithm and
+data-structure for logical reasoning. In this paper, we give a Bayesian account
+of entailment and characterize its abstract inferential properties. The
+Bayesian entailment is shown to be a monotonic consequence relation in an
+extreme case. In general, it is a sort of non-monotonic consequence relation
+without Cautious monotony or Cut. The preferential entailment, which is a
+representative non-monotonic consequence relation, is shown to be maximum a
+posteriori entailment, which is an approximation of the Bayesian entailment. We
+finally discuss merits of our proposals in terms of encoding preferences on
+defaults, handling change and contradiction, and modeling human entailment.

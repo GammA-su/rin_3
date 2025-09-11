@@ -1,0 +1,22 @@
+http://arxiv.org/abs/2302.10163v4
+
+Firing across populations of neurons in many regions of the mammalian brain
+maintains a temporal memory, a neural timeline of the recent past. Behavioral
+results demonstrate that people can both remember the past and anticipate the
+future over an analogous internal timeline. This paper presents a mathematical
+framework for building this timeline of the future. We assume that the input to
+the system is a time series of symbols--sparse tokenized representations of the
+present--in continuous time. The goal is to record pairwise temporal
+relationships between symbols over a wide range of time scales. We assume that
+the brain has access to a temporal memory in the form of the real Laplace
+transform. Hebbian associations with a diversity of synaptic time scales are
+formed between the past timeline and the present symbol. The associative memory
+stores the convolution between the past and the present. Knowing the temporal
+relationship between the past and the present allows one to infer relationships
+between the present and the future. With appropriate normalization, this
+Hebbian associative matrix can store a Laplace successor representation and a
+Laplace predecessor representation from which measures of temporal contingency
+can be evaluated. The diversity of synaptic time constants allows for learning
+of non-stationary statistics as well as joint statistics between triplets of
+symbols. This framework synthesizes a number of recent neuroscientific findings
+including results from dopamine neurons in the mesolimbic forebrain.

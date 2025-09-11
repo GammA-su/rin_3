@@ -1,0 +1,24 @@
+http://arxiv.org/abs/2101.08532v1
+
+A biophysical model of arousal dynamics is used to study mechanisms of
+synchronisation and loss of synchrony among the three key oscillators
+controlling sleep-wake cycles: the circadian, homeostatic, and light
+oscillators. Synchronisation of these rhythms promotes sleep and brain
+clearance and is critical for human health. Conversely, their desynchrony is
+linked to impaired performance and disease. We find that the default state of
+the model corresponds to the endogenous homeostatic period that is far from ~24
+h of the circadian and light-dark cycles. Combined action of light and
+circadian oscillator on the homeostatic rhythm is required to achieve the
+typical sleep-wake pattern of healthy people. Change of homeostatic clearance
+is found to induce two types of desynchronisation: (i) fast clearance rates
+desynchronise the homeostatic oscillator from the circadian, while the
+circadian rhythm remains entrained to light, and (ii) slow clearance maintains
+synchronisation between the homeostatic and circadian oscillators, but the
+period is different from that of the light-dark cycle. Between these regimes,
+all three rhythms are synchronised under the studied conditions. The system is
+highly sensitive to external inputs to the neuronal populations of the
+sleep-wake switch, which can lead to complete loss of sleep. The model shows
+that loss of synchronisation can be caused by changes in the homeostatic
+clearance rate or external input to the neuronal populations of the sleep-wake
+switch. This has implications for understanding individual variability in
+sleep-wake patterns and in mechanisms of sleep and circadian disorders.

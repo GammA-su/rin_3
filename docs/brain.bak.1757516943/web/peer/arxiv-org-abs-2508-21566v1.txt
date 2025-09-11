@@ -1,0 +1,24 @@
+http://arxiv.org/abs/2508.21566v1
+
+Spiking neural networks (SNNs) are artificial neural networks based on
+simulated biological neurons and have attracted much attention in recent
+artificial intelligence technology studies. The dendrites in biological neurons
+have efficient information processing ability and computational power; however,
+the neurons of SNNs rarely match the complex structure of the dendrites.
+Inspired by the nonlinear structure and highly sparse properties of neuronal
+dendrites, in this study, we propose an efficient, lightweight SNN method with
+nonlinear pruning and dendritic integration (NSPDI-SNN). In this method, we
+introduce nonlinear dendritic integration (NDI) to improve the representation
+of the spatiotemporal information of neurons. We implement heterogeneous state
+transition ratios of dendritic spines and construct a new and flexible
+nonlinear synaptic pruning (NSP) method to achieve the high sparsity of SNN. We
+conducted systematic experiments on three benchmark datasets (DVS128 Gesture,
+CIFAR10-DVS, and CIFAR10) and extended the evaluation to two complex tasks
+(speech recognition and reinforcement learning-based maze navigation task).
+Across all tasks, NSPDI-SNN consistently achieved high sparsity with minimal
+performance degradation. In particular, our method achieved the best
+experimental results on all three event stream datasets. Further analysis
+showed that NSPDI significantly improved the efficiency of synaptic information
+transfer as sparsity increased. In conclusion, our results indicate that the
+complex structure and nonlinear computation of neuronal dendrites provide a
+promising approach for developing efficient SNN methods.

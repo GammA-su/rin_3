@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Transcranial%20direct-current%20stimulation
+
+Transcranial direct current stimulation (tDCS) is a form of neuromodulation that uses constant, low direct current delivered via electrodes on the head. This type of neurotherapy was originally developed to help patients with brain injuries or neuropsychiatric conditions such as major depressive disorder. It can be contrasted with cranial electrotherapy stimulation, which generally uses alternating current the same way, as well as transcranial magnetic stimulation.

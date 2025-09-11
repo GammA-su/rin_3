@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Cognitive%20map
+
+A cognitive map is a type of mental representation used by an individual to order their personal store of information about their everyday or metaphorical spatial environment, and the relationship of its component parts. The concept was introduced by Edward Tolman in 1948. He tried to explain the behavior of rats that appeared to learn the spatial layout of a maze, and subsequently the concept was applied to other animals, including humans. The term was later generalized by some researchers, especially in the field of operations research, to refer to a kind of semantic network representing an individual's personal knowledge or schemas.

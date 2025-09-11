@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/ARM%20Cortex-A53
+
+The ARM Cortex-A53 is one of the first two central processing units implementing the ARMv8-A 64-bit instruction set designed by ARM Holdings' Cambridge design centre, along with the Cortex-A57. The Cortex-A53 is a 2-wide decode superscalar processor, capable of dual-issuing some instructions. It was announced October 30, 2012 and is marketed by ARM as either a stand-alone, more energy-efficient alternative to the more powerful Cortex-A57 microarchitecture, or to be used alongside a more powerful microarchitecture in a big.LITTLE configuration. It is available as an IP core to licensees, like other ARM intellectual property and processor designs.

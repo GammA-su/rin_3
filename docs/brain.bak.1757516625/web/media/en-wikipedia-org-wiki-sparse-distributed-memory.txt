@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Sparse%20distributed%20memory
+
+Sparse distributed memory (SDM) is a mathematical model of human long-term memory introduced by Pentti Kanerva in 1988 while he was at NASA Ames Research Center.

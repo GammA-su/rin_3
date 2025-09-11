@@ -1,0 +1,24 @@
+http://arxiv.org/abs/2211.02182v1
+
+The different active roles of neurons and astrocytes during neuronal
+activation are associated with the metabolic processes necessary to supply the
+energy needed for their respective tasks at rest and during neuronal
+activation. Metabolism, in turn, relies on the delivery of metabolites and
+removal of toxic byproducts through diffusion processes and the cerebral blood
+flow. A comprehensive mathematical model of brain metabolism should account not
+only for the biochemical processes and the interaction of neurons and
+astrocytes, but also the diffusion of metabolites. In the present article, we
+present a computational methodology based on a multidomain model of the brain
+tissue and a homogenization argument for the diffusion processes. In our
+spatially distributed compartment model, communication between compartments
+occur both through local transport fluxes, as is the case within local
+astrocyte-neuron complexes, and through diffusion of some substances in some of
+the compartments. The model assumes that diffusion takes place in the
+extracellular space (ECS) and in the astrocyte compartment. In the astrocyte
+compartment, the diffusion across the syncytium network is implemented as a
+function of gap junction strength. The diffusion process is implemented
+numerically by means of a finite element method (FEM) based spatial
+discretization, and robust stiff solvers are used to time integrate the
+resulting large system. Computed experiments show the effects of ECS
+tortuosity, gap junction strength and spatial anisotropy in the astrocyte
+network on the brain energy metabolism.

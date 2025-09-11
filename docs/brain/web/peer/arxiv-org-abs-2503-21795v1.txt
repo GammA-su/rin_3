@@ -1,0 +1,20 @@
+http://arxiv.org/abs/2503.21795v1
+
+Efficient spatial navigation is a hallmark of the mammalian brain, inspiring
+the development of neuromorphic systems that mimic biological principles.
+Despite progress, implementing key operations like back-tracing and handling
+ambiguity in bio-inspired spiking neural networks remains an open challenge.
+This work proposes a mechanism for activity back-tracing in arbitrary,
+uni-directional spiking neuron graphs. We extend the existing replay mechanism
+of the spiking hierarchical temporal memory (S-HTM) by our spike
+timing-dependent threshold adaptation (STDTA), which enables us to perform path
+planning in networks of spiking neurons. We further present an ambiguity
+dependent threshold adaptation (ADTA) for identifying places in an environment
+with less ambiguity, enhancing the localization estimate of an agent. Combined,
+these methods enable efficient identification of the shortest path to an
+unambiguous target. Our experiments show that a network trained on sequences
+reliably computes shortest paths with fewer replays than the steps required to
+reach the target. We further show that we can identify places with reduced
+ambiguity in multiple, similar environments. These contributions advance the
+practical application of biologically inspired sequential learning algorithms
+like the S-HTM towards neuromorphic localization and navigation.

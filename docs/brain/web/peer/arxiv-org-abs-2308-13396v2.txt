@@ -1,0 +1,17 @@
+http://arxiv.org/abs/2308.13396v2
+
+Aptamer-based sensing of small molecules such as dopamine and serotonin in
+the brain, requires characterization of the specific aptamer sequences in
+solutions mimicking the in vivo environment with physiological ionic
+concentrations. In particular, divalent cations (Mg2+ and Ca2+) present in
+brain fluid, have been shown to affect the conformational dynamics of aptamers
+upon target recognition. Thus, for biosensors that transduce aptamer structure
+switching as the signal response, it is critical to interrogate the influence
+of divalent cations on each unique aptamer sequence. Herein, we demonstrate the
+potential of molecular dynamics simulations to predict the behaviour of
+dopamine and serotonin aptamers on sensor surfaces. The simulations enable
+molecular-level visualization of aptamer conformational changes that, in some
+cases, are significantly influenced by divalent cations. The correlations of
+theoretical simulations with experimental findings validate the potential for
+molecular dynamics simulations to predict aptamer-specific behaviors on
+biosensors

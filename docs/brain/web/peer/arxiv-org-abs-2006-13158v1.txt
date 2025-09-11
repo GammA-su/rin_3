@@ -1,0 +1,23 @@
+http://arxiv.org/abs/2006.13158v1
+
+This article reviews how organisms learn and recognize the world through the
+dynamics of neural networks from the perspective of Bayesian inference, and
+introduces a view on how such dynamics is described by the laws for the entropy
+of neural activity, a paradigm that we call thermodynamics of the Bayesian
+brain. The Bayesian brain hypothesis sees the stimulus-evoked activity of
+neurons as an act of constructing the Bayesian posterior distribution based on
+the generative model of the external world that an organism possesses. A closer
+look at the stimulus-evoked activity at early sensory cortices reveals that
+feedforward connections initially mediate the stimulus-response, which is later
+modulated by input from recurrent connections. Importantly, not the initial
+response, but the delayed modulation expresses animals' cognitive states such
+as awareness and attention regarding the stimulus. Using a simple generative
+model made of a spiking neural population, we reproduce the stimulus-evoked
+dynamics with the delayed feedback modulation as the process of the Bayesian
+inference that integrates the stimulus evidence and a prior knowledge with
+time-delay. We then introduce a thermodynamic view on this process based on the
+laws for the entropy of neural activity. This view elucidates that the process
+of the Bayesian inference works as the recently-proposed information-theoretic
+engine (neural engine, an analogue of a heat engine in thermodynamics), which
+allows us to quantify the perceptual capacity expressed in the delayed
+modulation in terms of entropy.

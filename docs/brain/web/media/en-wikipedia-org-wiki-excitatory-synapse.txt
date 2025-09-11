@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Excitatory%20synapse
+
+An excitatory synapse is a synapse in which an action potential in a presynaptic neuron increases the probability of an action potential occurring in a postsynaptic cell. Neurons form networks through which nerve impulses travels, each neuron often making numerous connections with other cells of neurons. These electrical signals may be excitatory or inhibitory, and, if the total of excitatory influences exceeds that of the inhibitory influences, the neuron will generate a new action potential at its axon hillock, thus transmitting the information to yet another cell.

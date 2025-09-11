@@ -1,0 +1,21 @@
+http://arxiv.org/abs/2412.03128v1
+
+The study of plasticity in spiking neural networks is an active area of
+research. However, simulations that involve complex plasticity rules, dense
+connectivity/high synapse counts, complex neuron morphologies, or extended
+simulation times can be computationally demanding. The BrainScaleS-2
+neuromorphic architecture has been designed to address this challenge by
+supporting "hybrid" plasticity, which combines the concepts of programmability
+and inherently parallel emulation. In particular, observables that are
+expensive in numerical simulation, such as per-synapse correlation
+measurements, are implemented directly in the synapse circuits. The evaluation
+of the observables, the decision to perform an update, and the magnitude of an
+update, are all conducted in a conventional program that runs simultaneously
+with the analog neural network. Consequently, these systems can offer a
+scalable and flexible solution in such cases. While previous work on the
+platform has already reported on the use of different kinds of plasticity, the
+descriptions for the spiking neural network experiment topology and protocol,
+and the plasticity algorithm have not been connected. In this work, we
+introduce an integrated framework for describing spiking neural network
+experiments and plasticity rules in a unified high-level experiment description
+language for the BrainScaleS-2 platform and demonstrate its use.

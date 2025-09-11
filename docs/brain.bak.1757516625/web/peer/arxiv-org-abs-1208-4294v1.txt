@@ -1,0 +1,17 @@
+http://arxiv.org/abs/1208.4294v1
+
+We present a condition that guarantees spatially uniformity in the solution
+trajectories of a diffusively-coupled compartmental ODE model, where each
+compartment represents a spatial domain of components interconnected through
+diffusion terms with like components in different compartments. Each set of
+like components has its own weighted undirected graph describing the topology
+of the interconnection between compartments. The condition makes use of the
+Jacobian matrix to describe the dynamics of each compartment as well as the
+Laplacian eigenvalues of each of the graphs. We discuss linear matrix
+inequalities that can be used to verify the condition guaranteeing spatial
+uniformity, and apply the result to a coupled oscillator network. Next we turn
+to reaction-diffusion PDEs with Neumann boundary conditions, and derive an
+analogous condition guaranteeing spatial uniformity of solutions. The paper
+contributes a relaxed condition to check spatial uniformity that allows
+individual components to have their own specific diffusion terms and
+interconnection structures.

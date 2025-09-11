@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Synaptic%20noise
+
+Synaptic noise refers to the constant bombardment of synaptic activity in neurons. This occurs in the background of a cell when potentials are produced without the nerve stimulation of an action potential, and are due to the inherently random nature of synapses. These random potentials have similar time courses as excitatory postsynaptic potentials (EPSPs) and inhibitory postsynaptic potentials (IPSPs), yet they lead to variable neuronal responses. The variability is due to differences in the discharge times of action potentials.

@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Synaptic%20tagging
+
+Synaptic tagging, or the synaptic tagging hypothesis, has been proposed to explain how neural signaling at a particular synapse creates a target for subsequent plasticity-related product (PRP) trafficking essential for sustained LTP and LTD. Although the molecular identity of the tags remains unknown, it has been established that they form as a result of high or low frequency stimulation, interact with incoming PRPs, and have a limited lifespan.

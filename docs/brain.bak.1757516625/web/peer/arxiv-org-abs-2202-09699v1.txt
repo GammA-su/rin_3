@@ -1,0 +1,13 @@
+http://arxiv.org/abs/2202.09699v1
+
+Efficient credit assignment is essential for reinforcement learning
+algorithms in both prediction and control settings. We describe a unified view
+on temporal-difference algorithms for selective credit assignment. These
+selective algorithms apply weightings to quantify the contribution of learning
+updates. We present insights into applying weightings to value-based learning
+and planning algorithms, and describe their role in mediating the backward
+credit distribution in prediction and control. Within this space, we identify
+some existing online learning algorithms that can assign credit selectively as
+special cases, as well as add new algorithms that assign credit backward in
+time counterfactually, allowing credit to be assigned off-trajectory and
+off-policy.

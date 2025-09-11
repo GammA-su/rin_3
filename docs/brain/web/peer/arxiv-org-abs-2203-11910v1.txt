@@ -1,0 +1,23 @@
+http://arxiv.org/abs/2203.11910v1
+
+Computational models of vision have traditionally been developed in a
+bottom-up fashion, by hierarchically composing a series of straightforward
+operations - i.e. convolution and pooling - with the aim of emulating simple
+and complex cells in the visual cortex, resulting in the introduction of deep
+convolutional neural networks (CNNs). Nevertheless, data obtained with recent
+neuronal recording techniques support that the nature of the computations
+carried out in the ventral visual stream is not completely captured by current
+deep CNN models. To fill the gap between the ventral visual stream and deep
+models, several benchmarks have been designed and organized into the
+Brain-Score platform, granting a way to perform multi-layer (V1, V2, V4, IT)
+and behavioral comparisons between the two counterparts. In our work, we aim to
+shift the focus on architectures that take into account lateral recurrent
+connections, a ubiquitous feature of the ventral visual stream, to devise
+adaptive receptive fields. Through recurrent connections, the input s
+long-range spatial dependencies can be captured in a local multi-step fashion
+and, as introduced with Gated Recurrent CNNs (GRCNN), the unbounded expansion
+of the neuron s receptive fields can be modulated through the use of gates. In
+order to increase the robustness of our approach and the biological fidelity of
+the activations, we employ specific data augmentation techniques in line with
+several of the scoring benchmarks. Enforcing some form of invariance, through
+heuristics, was found to be beneficial for better neural predictivity.

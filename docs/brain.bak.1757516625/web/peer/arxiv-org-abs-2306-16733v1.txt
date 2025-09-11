@@ -1,0 +1,6 @@
+http://arxiv.org/abs/2306.16733v1
+
+A recent paper (Flesch et al, 2022) describes behavioural and neural data
+suggesting that task representations are gated in the prefrontal cortex in both
+humans and macaques. This short note proposes an alternative explanation for
+the reported results from the macaque data.

@@ -1,0 +1,10 @@
+http://arxiv.org/abs/0707.2842v1
+
+A classification of a family of 3-revolute (3R) positining manipulators is
+established. This classification is based on the topology of their workspace.
+The workspace is characterized in a half-cross section by the singular curves.
+The workspace topology is defined by the number of cusps and nodes that appear
+on these singular curves. The design parameters space is shown to be divided
+into nine domains of distinct workspace topologies, in which all manipulators
+have similar global kinematic properties. Each separating surface is given as
+an explicit expression in the DH-parameters.

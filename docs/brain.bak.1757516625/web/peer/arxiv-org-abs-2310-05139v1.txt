@@ -1,0 +1,18 @@
+http://arxiv.org/abs/2310.05139v1
+
+Fractional hedonic games are coalition formation games where a player's
+utility is determined by the average value they assign to the members of their
+coalition. These games are a variation of graph hedonic games, which are a
+class of coalition formation games that can be succinctly represented. Due to
+their applicability in network clustering and their relationship to graph
+hedonic games, fractional hedonic games have been extensively studied from
+various perspectives. However, finding welfare-maximizing partitions in
+fractional hedonic games is a challenging task due to the nonlinearity of
+utilities. In fact, it has been proven to be NP-hard and can be solved in
+polynomial time only for a limited number of graph classes, such as trees. This
+paper presents (pseudo)polynomial-time algorithms to compute welfare-maximizing
+partitions in fractional hedonic games on tree-like graphs. We consider two
+types of social welfare measures: utilitarian and egalitarian. Tree-like graphs
+refer to graphs with bounded treewidth and block graphs. A hardness result is
+provided, demonstrating that the pseudopolynomial-time solvability is the best
+possible under the assumption P$\neq$NP.

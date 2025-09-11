@@ -1,0 +1,24 @@
+http://arxiv.org/abs/1007.0565v1
+
+Coherent interaction of laser radiation with multilevel atoms and molecules
+can lead to quantum interference in the electronic excitation pathways. A
+prominent example observed in atomic three-level-systems is the phenomenon of
+electromagnetically induced transparency (EIT), in which a control laser
+induces a narrow spectral transparency window for a weak probe laser beam. The
+concomitant rapid variation of the refractive index in this spectral window can
+give rise to dramatic reduction of the group velocity of a propagating pulse of
+probe light. Dynamic control of EIT via the control laser enables even a
+complete stop, that is, storage, of probe light pulses in the atomic medium.
+Here, we demonstrate optomechanically induced transparency (OMIT)--formally
+equivalent to EIT--in a cavity optomechanical system operating in the resolved
+sideband regime. A control laser tuned to the lower motional sideband of the
+cavity resonance induces a dipole-like interaction of optical and mechanical
+degrees of freedom. Under these conditions, the destructive interference of
+excitation pathways for an intracavity probe field gives rise to a window of
+transparency when a two-photon resonance condition is met. As a salient feature
+of EIT, the power of the control laser determines the width and depth of the
+probe transparency window. OMIT could therefore provide a new approach for
+delaying, slowing and storing light pulses in long-lived mechanical excitations
+of optomechanical systems, whose optical and mechanical properties can be
+tailored in almost arbitrary ways in the micro- and nano-optomechanical
+platforms developed to date.

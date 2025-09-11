@@ -1,0 +1,25 @@
+http://arxiv.org/abs/2501.13628v1
+
+Comparing information structures in between deep neural networks (DNNs) and
+the human brain has become a key method for exploring their similarities and
+differences. Recent research has shown better alignment of vision-language DNN
+models, such as CLIP, with the activity of the human ventral occipitotemporal
+cortex (VOTC) than earlier vision models, supporting the idea that language
+modulates human visual perception. However, interpreting the results from such
+comparisons is inherently limited due to the "black box" nature of DNNs. To
+address this, we combined model-brain fitness analyses with human brain lesion
+data to examine how disrupting the communication pathway between the visual and
+language systems causally affects the ability of vision-language DNNs to
+explain the activity of the VOTC. Across four diverse datasets, CLIP
+consistently outperformed both label-supervised (ResNet) and unsupervised
+(MoCo) models in predicting VOTC activity. This advantage was left-lateralized,
+aligning with the human language network. Analyses of the data of 33 stroke
+patients revealed that reduced white matter integrity between the VOTC and the
+language region in the left angular gyrus was correlated with decreased CLIP
+performance and increased MoCo performance, indicating a dynamic influence of
+language processing on the activity of the VOTC. These findings support the
+integration of language modulation in neurocognitive models of human vision,
+reinforcing concepts from vision-language DNN models. The sensitivity of
+model-brain similarity to specific brain lesions demonstrates that leveraging
+manipulation of the human brain is a promising framework for evaluating and
+developing brain-like computer models.

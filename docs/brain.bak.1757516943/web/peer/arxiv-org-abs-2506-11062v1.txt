@@ -1,0 +1,19 @@
+http://arxiv.org/abs/2506.11062v1
+
+A central idea in understanding brains and building artificial intelligence
+is that structure determines function. Yet, how the brain's complex structure
+arises from a limited set of genetic instructions remains a key question. The
+ultra high-dimensional detail of neural connections vastly exceeds the
+information storage capacity of genes, suggesting a compact, low-dimensional
+blueprint must guide brain development. Our motivation is to uncover this
+blueprint. We introduce a generative model, to learn this underlying
+representation from detailed connectivity maps of mouse cortical microcircuits.
+Our model successfully captures the essential structural information of these
+circuits in a compressed latent space. We found that specific, interpretable
+directions within this space directly relate to understandable network
+properties. Building on this, we demonstrate a novel method to controllably
+generate new, synthetic microcircuits with desired structural features by
+navigating this latent space. This work offers a new way to investigate the
+design principles of neural circuits and explore how structure gives rise to
+function, potentially informing the development of more advanced artificial
+neural networks.

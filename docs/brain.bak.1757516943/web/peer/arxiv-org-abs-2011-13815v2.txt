@@ -1,0 +1,16 @@
+http://arxiv.org/abs/2011.13815v2
+
+Let $Y=X_1+\cdots+X_N$ be a sum of a random number of exchangeable random
+variables, where the random variable $N$ is independent of the $X_j$, and the
+$X_j$ are from the generalized multinomial model introduced by Tallis (1962).
+This relaxes the classical assumption that the $X_j$ are independent. We use
+zero-biased coupling and its generalizations to give explicit error bounds in
+the approximation of $Y$ by a Gaussian random variable in Wasserstein distance
+when either the random variables $X_j$ are centred or $N$ has a Poisson
+distribution. We further establish an explicit bound for the approximation of
+$Y$ by a gamma distribution in stop-loss distance for the special case where
+$N$ is Poisson. Finally, we briefly comment on analogous Poisson approximation
+results that make use of size-biased couplings. The special case of independent
+$X_j$ is given special attention throughout. As well as establishing results
+which extend beyond the independent setting, our bounds are shown to be
+competitive with known results in the independent case.

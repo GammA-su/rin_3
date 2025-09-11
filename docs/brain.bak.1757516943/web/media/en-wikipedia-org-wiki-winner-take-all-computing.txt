@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Winner-take-all%20%28computing%29
+
+Winner-take-all is a computational principle applied in computational models of neural networks by which neurons compete with each other for activation. In the classical form, only the neuron with the highest activation stays active while all other neurons shut down; however, other variations allow more than one neuron to be active, for example the soft winner take-all, by which a power function is applied to the neurons.

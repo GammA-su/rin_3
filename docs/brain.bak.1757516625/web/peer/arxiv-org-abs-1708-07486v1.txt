@@ -1,0 +1,19 @@
+http://arxiv.org/abs/1708.07486v1
+
+Motivation: In transcriptomic and proteomics-based studies, the abundance of
+genes is often compared to functional pathways such as the Kyoto Encyclopaedia
+at Genes and Genomes (KEGG) to identify active metabolic processes. Even though
+a plethora of tools allow to analyze and to compare omics data in respect to
+KEGG pathways, the analysis of multiple conditions is often limited to only a
+defined set of conditions. Furthermore, for transcriptomic datasets, it is
+crucial to compare the entire set of pathways in order to obtain a global
+overview of the species' metabolic functions. Results: Here, we present the
+tool KEGGexpressionMapper, a module, that is implemented in the programming
+language R. The module allows to highlight the expression of transcriptomic or
+proteomic measurements in various conditions on pathways and incorporates
+methods to analyze gene enrichment analyses and expression clustering in time
+series data. KEGGexpressionMapper supports time series data from transcriptomic
+or proteomics measurements from different individuals. As the tool is
+implemented in the scripting language R, it can be integrated into existing
+analysis pipelines to obtain a global overview of the dataset. The R package
+can be downloaded from https://github.com/nthomasCUBE/KEGGexpressionmapper.

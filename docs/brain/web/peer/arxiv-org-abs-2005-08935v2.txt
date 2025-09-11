@@ -1,0 +1,10 @@
+http://arxiv.org/abs/2005.08935v2
+
+An approach to implementing variational Bayesian inference in biological
+systems is considered, under which the thermodynamic free energy of a system
+directly encodes its variational free energy. In the case of the brain, this
+assumption places constraints on the neuronal encoding of generative and
+recognition densities, in particular requiring a stochastic population code.
+The resulting relationship between thermodynamic and variational free energies
+is prefigured in mind-brain identity theses in philosophy and in the Gestalt
+hypothesis of psychophysical isomorphism.

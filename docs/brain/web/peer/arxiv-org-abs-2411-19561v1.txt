@@ -1,0 +1,22 @@
+http://arxiv.org/abs/2411.19561v1
+
+Continuous time crystal (CTC) and quasi-crystal (CTQC) are two novel phases
+of matter characterized by the spontaneous breaking of continuous
+time-translation symmetry. To date, realizations of CTCs with periodic
+oscillations have been reported in only a few physical platforms, and their
+complex properties still require further exploration. Additionally, CTQCs,
+which feature quasi-periodic oscillations at multiple incommensurate
+frequencies, remain elusive. Here we report the experimental observation of CTC
+and CTQC signatures in noble-gas nuclear spins that interact nonlinearly with
+each other through feedback mechanisms. The observed limit cycle and
+quasi-periodic phases display persistent spin oscillations with coherence times
+extending beyond several hours. Notably, these oscillations are robust against
+noise perturbations and exhibit random time phases upon repetitive realization,
+epitomizing the continuous time-translation symmetry-breaking intrinsic to CTCs
+and CTQCs. As the feedback strength increases, the system undergoes a phase
+transition into a new phase characterized by chaotic oscillations, indicative
+of the ``melting" of time crystals. Interestingly, within certain feedback
+regimes, we even observe an unusual reverse phase transition from a chaotic
+phase back to time crystal phases. This work broadens the catalog of new phases
+of spin gas and unlocks opportunities in precision measurements, including
+multimode masers and tests of fundamental symmetries.

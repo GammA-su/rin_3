@@ -1,0 +1,17 @@
+http://arxiv.org/abs/2408.07155v1
+
+The intersection of artificial intelligence and bioinformatics has enabled
+significant advancements in drug discovery, particularly through the
+application of machine learning models. In this study, we present a combined
+approach using genetic algorithms and deep learning models to address two
+critical aspects of drug discovery: the generation of novel tyrosine kinase
+inhibitors and the prediction of their bioactivity. The generative model
+leverages genetic algorithms to create new small molecules with optimized ADMET
+(absorption, distribution, metabolism, excretion, and toxicity) and
+drug-likeness properties. Concurrently, a deep learning model is employed to
+predict the bioactivity of these generated molecules against tyrosine kinases,
+a key enzyme family involved in various cellular processes and cancer
+progression. By integrating these advanced computational methods, we
+demonstrate a powerful framework for accelerating the generation and
+identification of potential tyrosine kinase inhibitors, contributing to more
+efficient and effective early-stage drug discovery processes.

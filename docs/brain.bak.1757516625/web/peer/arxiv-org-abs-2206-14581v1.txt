@@ -1,0 +1,16 @@
+http://arxiv.org/abs/2206.14581v1
+
+Synaptic memory consolidation has been heralded as one of the key mechanisms
+for supporting continual learning in neuromorphic Artificial Intelligence (AI)
+systems. Here we report that a Fowler-Nordheim (FN) quantum-tunneling device
+can implement synaptic memory consolidation similar to what can be achieved by
+algorithmic consolidation models like the cascade and the elastic weight
+consolidation (EWC) models. The proposed FN-synapse not only stores the
+synaptic weight but also stores the synapse's historical usage statistic on the
+device itself. We also show that the operation of the FN-synapse is
+near-optimal in terms of the synaptic lifetime and we demonstrate that a
+network comprising FN-synapses outperforms a comparable EWC network for a small
+benchmark continual learning task. With an energy footprint of femtojoules per
+synaptic update, we believe that the proposed FN-synapse provides an
+ultra-energy-efficient approach for implementing both synaptic memory
+consolidation and persistent learning.

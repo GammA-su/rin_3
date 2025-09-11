@@ -1,0 +1,25 @@
+http://arxiv.org/abs/2303.08530v2
+
+Efficient processing and transfer of information in neurons have been linked
+to noise-induced resonance phenomena such as coherence resonance (CR), and
+adaptive rules in neural networks have been mostly linked to two prevalent
+mechanisms: spike-timing-dependent plasticity (STDP) and homeostatic structural
+plasticity (HSP). Thus, this paper investigates CR in small-world and random
+adaptive networks of Hodgkin-Huxley neurons driven by STDP and HSP. Our
+numerical study indicates that the degree of CR strongly depends, and in
+different ways, on the adjusting rate parameter $P$, which controls STDP, on
+the characteristic rewiring frequency parameter $F$, which controls HSP, and on
+the parameters of the network topology. In particular, we found two robust
+behaviors: (i) Decreasing $P$ (which enhances the weakening effect of STDP on
+synaptic weights) and decreasing $F$ (which slows down the swapping rate of
+synapses between neurons) always leads to higher degrees of CR in small-world
+and random networks, provided that the synaptic time delay parameter $\tau_c$
+has some appropriate values. (ii) Increasing the synaptic time delay $\tau_c$
+induces multiple CR (MCR) -- the occurrence of multiple peaks in the degree of
+coherence as $\tau_c$ changes -- in small-world and random networks, with MCR
+becoming more pronounced at smaller values of $P$ and $F$. Our results imply
+that STDP and HSP can jointly play an essential role in enhancing the time
+precision of firing necessary for optimal information processing and transfer
+in neural systems and could thus have applications in designing networks of
+noisy artificial neural circuits engineered to use CR to optimize information
+processing and transfer.

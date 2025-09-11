@@ -1,0 +1,23 @@
+http://arxiv.org/abs/2407.15132v1
+
+Parcellation of human cerebellar pathways is essential for advancing our
+understanding of the human brain. Existing diffusion MRI tractography
+parcellation methods have been successful in defining major cerebellar fibre
+tracts, while relying solely on fibre tract structure. However, each fibre
+tract may relay information related to multiple cognitive and motor functions
+of the cerebellum. Hence, it may be beneficial for parcellation to consider the
+potential importance of the fibre tracts for individual motor and cognitive
+functional performance measures. In this work, we propose a multimodal
+data-driven method for cerebellar pathway parcellation, which incorporates both
+measures of microstructure and connectivity, and measures of individual
+functional performance. Our method involves first training a multitask deep
+network to predict various cognitive and motor measures from a set of fibre
+tract structural features. The importance of each structural feature for
+predicting each functional measure is then computed, resulting in a set of
+structure-function saliency values that are clustered to parcellate cerebellar
+pathways. We refer to our method as Deep Multimodal Saliency Parcellation
+(DeepMSP), as it computes the saliency of structural measures for predicting
+cognitive and motor functional performance, with these saliencies being applied
+to the task of parcellation. Applying DeepMSP we found that it was feasible to
+identify multiple cerebellar pathway parcels with unique structure-function
+saliency patterns that were stable across training folds.

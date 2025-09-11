@@ -1,0 +1,22 @@
+http://arxiv.org/abs/1005.4830v1
+
+Several firing patterns experimentally observed in neural populations have
+been successfully correlated to animal behavior. Population bursting, hereby
+regarded as a period of high firing rate followed by a period of quiescence, is
+typically observed in groups of neurons during behavior. Biophysical
+membrane-potential models of single cell bursting involve at least three
+equations. Extending such models to study the collective behavior of neural
+populations involves thousands of equations and can be very expensive
+computationally. For this reason, low dimensional population models that
+capture biophysical aspects of networks are needed.
+  \noindent The present paper uses a firing-rate model to study mechanisms that
+trigger and stop transitions between tonic and phasic population firing. These
+mechanisms are captured through a two-dimensional system, which can potentially
+be extended to include interactions between different areas of the nervous
+system with a small number of equations. The typical behavior of midbrain
+dopaminergic neurons in the rodent is used as an example to illustrate and
+interpret our results.
+  \noindent The model presented here can be used as a building block to study
+interactions between networks of neurons. This theoretical approach may help
+contextualize and understand the factors involved in regulating burst firing in
+populations and how it may modulate distinct aspects of behavior.

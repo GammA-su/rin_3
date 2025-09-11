@@ -1,0 +1,17 @@
+http://arxiv.org/abs/1911.00307v1
+
+The cortex learns to make associations between stimuli and spiking activity
+which supports behaviour. It does this by adjusting synaptic weights. The
+complexity of these transformations implies that synapses have to change
+without access to the full error information, a problem typically referred to
+as "credit-assignment". However, it remains unknown how the cortex solves this
+problem. We propose that a combination of plasticity rules, 1) Hebbian, 2)
+acetylcholine-dependent and 3) noradrenaline-dependent excitatory plasticity,
+together with 4) inhibitory plasticity restoring E/I balance, effectively
+solves the credit assignment problem. We derive conditions under-which a neuron
+model can learn a number of associations approaching its theoretical capacity.
+We confirm our predictions regarding acetylcholine-dependent and inhibitory
+plasticity by reanalysing experimental data. Our work suggests that detailed
+cortical E/I balance reduces the dimensionality of the problem of associating
+inputs with outputs, thereby allowing imperfect "supervision" by
+neuromodulatory systems to guide learning effectively.

@@ -1,0 +1,19 @@
+http://arxiv.org/abs/1108.1352v1
+
+Program understanding is an important aspect in Software Maintenance and
+Reengineering. Understanding the program is related to execution behaviour and
+relationship of variable involved in the program. The task of finding all
+statements in a program that directly or indirectly influence the value for an
+occurrence of a variable gives the set of statements that can affect the value
+of a variable at some point in a program is called a program slice. Program
+slicing is a technique for extracting parts of computer programs by tracing the
+programs' control and data flow related to some data item. This technique is
+applicable in various areas such as debugging, program comprehension and
+understanding, program integration, cohesion measurement, re-engineering,
+maintenance, testing where it is useful to be able to focus on relevant parts
+of large programs. This paper focuses on the various slicing techniques (not
+limited to) like static slicing, quasi static slicing, dynamic slicing and
+conditional slicing. This paper also includes various methods in performing the
+slicing like forward slicing, backward slicing, syntactic slicing and semantic
+slicing. The slicing of a program is carried out using Java which is a object
+oriented programming language.

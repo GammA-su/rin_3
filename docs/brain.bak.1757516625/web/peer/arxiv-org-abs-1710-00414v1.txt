@@ -1,0 +1,18 @@
+http://arxiv.org/abs/1710.00414v1
+
+Redundancy for straggler mitigation, originally in data download and more
+recently in distributed computing context, has been shown to be effective both
+in theory and practice. Analysis of systems with redundancy has drawn
+significant attention and numerous papers have studied pain and gain of
+redundancy under various service models and assumptions on the straggler
+characteristics. We here present a cost (pain) vs. latency (gain) analysis of
+using simple replication or erasure coding for straggler mitigation in
+executing jobs with many tasks. We quantify the effect of the tail of task
+execution times and discuss tail heaviness as a decisive parameter for the cost
+and latency of using redundancy. Specifically, we find that coded redundancy
+achieves better cost vs. latency tradeoff than simple replication and can yield
+reduction in both cost and latency under less heavy tailed execution times. We
+show that delaying redundancy is not effective in reducing cost and that
+delayed relaunch of stragglers can yield significant reduction in cost and
+latency. We validate these observations by comparing with the simulations that
+use empirical distributions extracted from Google cluster data.

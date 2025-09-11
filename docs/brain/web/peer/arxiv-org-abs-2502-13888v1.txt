@@ -1,0 +1,26 @@
+http://arxiv.org/abs/2502.13888v1
+
+Background: Mutations in KMT2B are a recognized cause of early-onset complex
+dystonia, with deep brain stimulation (DBS) of the internal globus pallidus
+(GPi-DBS) being an effective treatment. However, gait impairment, particularly
+freezing of gait (FOG), remains a significant challenge in DYT-KMT2B patients
+post-DBS. Objectives: To characterize the emergence of FOG in DYT-KMT2B
+patients treated with GPi-DBS and explore potential underlying mechanisms,
+including striatonigral degeneration. Methods: Five patients (four females)
+with KMT2B-related dystonia and protein-truncating variants (PTVs) were
+retrospectively analyzed. Clinical progression, response to GPi-DBS, and the
+presence of FOG were documented. Dopaminergic function was assessed using
+DaTscan (SPECT for ^123I-ioflupane) in four patients. Results: FOG developed in
+all patients, with onset ranging from 1 to 15.5 years post-DBS. DaTscan
+abnormalities, indicative of bilateral striatal dopaminergic denervation, were
+observed in four cases. Prior to DBS, all patients exhibited dystonia
+unresponsive to L-dopa, and post-DBS, FOG remained refractory to dopaminergic
+treatment in most cases. Despite initial improvements in gait post-DBS, only
+one patient maintained independent ambulation at the last follow-up.
+Conclusions: FOG is an emerging complication in DYT-KMT2B patients with PTVs
+undergoing GPi-DBS, potentially linked to underlying striatonigral
+degeneration. The findings suggest a need for long-term motor surveillance and
+consideration of alternative therapeutic strategies, including dopaminergic
+trials, in this patient population. Further studies are required to elucidate
+the precise mechanisms driving DBS-related hypokinetic gait disturbances in
+DYT-KMT2B dystonia.

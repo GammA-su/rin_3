@@ -1,0 +1,19 @@
+http://arxiv.org/abs/2001.07203v2
+
+Active inference is a normative principle underwriting perception, action,
+planning, decision-making and learning in biological or artificial agents. From
+its inception, its associated process theory has grown to incorporate complex
+generative models, enabling simulation of a wide range of complex behaviours.
+Due to successive developments in active inference, it is often difficult to
+see how its underlying principle relates to process theories and practical
+implementation. In this paper, we try to bridge this gap by providing a
+complete mathematical synthesis of active inference on discrete state-space
+models. This technical summary provides an overview of the theory, derives
+neuronal dynamics from first principles and relates this dynamics to biological
+processes. Furthermore, this paper provides a fundamental building block needed
+to understand active inference for mixed generative models; allowing continuous
+sensations to inform discrete representations. This paper may be used as
+follows: to guide research towards outstanding challenges, a practical guide on
+how to implement active inference to simulate experimental behaviour, or a
+pointer towards various in-silico neurophysiological responses that may be used
+to make empirical predictions.

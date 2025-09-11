@@ -1,0 +1,23 @@
+http://arxiv.org/abs/2405.04546v1
+
+Spiking Neural Networks (SNNs), recognized for their biological plausibility
+and energy efficiency, employ sparse and asynchronous spikes for communication.
+However, the training of SNNs encounters difficulties coming from
+non-differentiable activation functions and the movement of spike-based
+inter-layer data. Spike-Timing Dependent Plasticity (STDP), inspired by
+neurobiology, plays a crucial role in SNN's learning, but its still lacks the
+conscious part of the brain used for learning. Considering the issue, this
+research work proposes a Consciousness Driven STDP (CD-STDP), an improved
+solution addressing inherent limitations observed in conventional STDP models.
+CD-STDP, designed to infuse the conscious part as coefficients of long-term
+potentiation (LTP) and long-term depression (LTD), exhibit a dynamic nature.
+The model connects LTP and LTD coefficients to current and past state of
+synaptic activities, respectively, enhancing consciousness and adaptability.
+This consciousness empowers the model to effectively learn while understanding
+the input patterns. The conscious coefficient adjustment in response to current
+and past synaptic activity extends the model's conscious and other cognitive
+capabilities, offering a refined and efficient approach for real-world
+applications. Evaluations on MNIST, FashionMNIST and CALTECH datasets showcase
+$CD$-STDP's remarkable accuracy of 98.6%, 85.61% and 99.0%, respectively, in a
+single hidden layer SNN. In addition, analysis of conscious elements and
+consciousness of the proposed model on SNN is performed.

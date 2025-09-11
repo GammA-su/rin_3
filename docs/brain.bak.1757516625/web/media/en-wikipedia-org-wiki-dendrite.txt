@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Dendrite
+
+A dendrite or dendron is a branched cytoplasmic process that extends from a nerve cell that propagates the electrochemical stimulation received from other neural cells to the cell body, or soma, of the neuron from which the dendrites project. Electrical stimulation is transmitted onto dendrites by upstream neurons via synapses which are located at various points throughout the dendritic tree.

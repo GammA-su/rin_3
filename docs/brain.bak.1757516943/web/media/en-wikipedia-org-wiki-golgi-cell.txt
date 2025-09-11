@@ -1,0 +1,5 @@
+https://en.wikipedia.org/wiki/Golgi%20cell
+
+In neuroscience, Golgi cells are the most abundant inhibitory interneurons found within the granular layer of the cerebellum. Golgi cells can be found in the granular layer at various layers. The Golgi cell is essential for controlling the activity of the granular layer. They were first identified as inhibitory in 1964.
+It was also the first example of an inhibitory feedback network in which the inhibitory interneuron was identified anatomically.
+Golgi cells produce a wide lateral inhibition that reaches beyond the afferent synaptic field and inhibit granule cells via feedforward and feedback inhibitory loops. These cells synapse onto the dendrite of granule cells and unipolar brush cells. They receive excitatory input from mossy fibres, also synapsing on granule cells, and parallel fibers, which are long granule cell axons. Thereby this circuitry allows for feed-forward and feed-back inhibition of granule cells.

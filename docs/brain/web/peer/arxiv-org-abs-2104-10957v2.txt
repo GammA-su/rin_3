@@ -1,0 +1,24 @@
+http://arxiv.org/abs/2104.10957v2
+
+Song appreciation involves a broad range of mental processes, and different
+neural networks may be activated by different song types. The aim of the
+present study was to show differential functional connectivity of the
+prefrontal cortices while listening to breakup and rebellious songs. Breakup
+songs describe romance and longing, whereas rebellious songs convey criticism
+of conventional ideas or socio-cultural norms. We hypothesized that the medial
+and lateral prefrontal cortices may interact with different brain regions in
+response to these two song types. Functional magnetic resonance imaging data of
+fifteen participants were collected while they were listening to two complete
+breakup songs and two complete rebellious songs currently popular in Taiwan.
+The results showed that listening to the breakup songs, compared to the
+rebellious songs, enhanced the coupling between the medial prefrontal cortex
+and several emotion-related regions, including the thalamus, caudate, amygdala,
+hippocampus, middle orbitofrontal cortex, and right inferior frontal gyrus.
+This coupling may reflect the neural processes of pain empathy, reward
+processing, compassion, and reappraisal in response to longing and sorrow
+expressed by the breakup songs. Compared to the breakup songs, listening to the
+rebellious songs was associated with enhanced coupling between subregions in
+the prefrontal and orbitofrontal cortices. These areas might work in concert to
+support re-evaluation of conventional ideas or socio-cultural norms as
+suggested by the rebellious songs. This study advanced our understanding of the
+integration of brain functions while processing complex information.

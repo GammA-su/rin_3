@@ -1,0 +1,18 @@
+http://arxiv.org/abs/1809.03442v3
+
+We study individual decision-making behavioral on generic view. Using a
+formal mathematical model, we investigate the action mechanism of decision
+behavioral under subjective perception changing of task attributes. Our model
+is built on work in two kinds classical behavioral decision making theory:
+"prospect theory (PT)" and "image theory (IT)". We consider subjective
+attributes preference of decision maker under the whole decision process.
+Strategies collection and selection mechanism are induced according the
+description of multi-attributes decision making. A novel behavioral
+decision-making framework named "ladder theory (LT)" is proposed. By real four
+cases comparing, the results shows that the LT have better explanation and
+prediction ability then PT and IT under some decision situations. Furthermore,
+we use our model to shed light on that the LT theory can cover PT and IT
+ideally. It is the enrichment and development for classical behavioral decision
+theory and, it has positive theoretical value and instructive significance for
+explaining plenty of real decision-making phenomena. It may facilitate our
+understanding of how individual decision-making performed actually.

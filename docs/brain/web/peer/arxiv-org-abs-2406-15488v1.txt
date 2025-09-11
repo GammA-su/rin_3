@@ -1,0 +1,15 @@
+http://arxiv.org/abs/2406.15488v1
+
+Achieving General Artificial Intelligence (AGI) has long been a grand
+challenge in the field of AI, and brain-inspired computing is widely
+acknowledged as one of the most promising approaches to realize this goal. This
+paper introduces a novel brain-inspired AI framework, Orangutan. It simulates
+the structure and computational mechanisms of biological brains on multiple
+scales, encompassing multi-compartment neuron architectures, diverse synaptic
+connection modalities, neural microcircuits, cortical columns, and brain
+regions, as well as biochemical processes including facilitation, feedforward
+inhibition, short-term potentiation, and short-term depression, all grounded in
+solid neuroscience. Building upon these highly integrated brain-like
+mechanisms, I have developed a sensorimotor model that simulates human saccadic
+eye movements during object observation. The model's algorithmic efficacy was
+validated through testing with the observation of handwritten digit images.

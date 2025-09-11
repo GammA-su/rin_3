@@ -1,0 +1,12 @@
+http://arxiv.org/abs/2408.04636v1
+
+It has been proposed that there is a wave excitation in animal brains, whose
+role is to represent three dimensional local space in a working memory.
+Evidence for the wave comes from the mammalian thalamus, the central body of
+the insect brain, and from computational models of spatial cognition. This is
+described in related papers. I assess the Bayesian probability that the wave
+exists, from this evidence. The probability of the wave in the brain is
+robustly greater than 0.4. If there is such a wave, we may need to re-think our
+whole understanding of the brain, in a break from classical neuroscience. I ask
+other researchers to comment on the wave hypothesis and on this assessment. In
+a companion paper, I outline possible ways to test it.

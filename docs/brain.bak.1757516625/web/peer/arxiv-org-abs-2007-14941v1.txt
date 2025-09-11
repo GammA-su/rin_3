@@ -1,0 +1,26 @@
+http://arxiv.org/abs/2007.14941v1
+
+Analyzing the brain in terms of organizational structures at intermediate
+scales provides an approach to negotiate the complexity arising from
+interactions between its large number of components. Focusing on a wiring
+diagram that spans the cortex, basal ganglia and thalamus of the Macaque brain,
+we provide a mesoscopic-level description of the topological architecture of
+one of the most well-studied mammalian connectomes. The robust modules we
+identify each comprise densely inter-connected cortical and sub-cortical areas
+that play complementary roles in executing specific cognitive functions. We
+find that physical proximity between areas is insufficient to explain the
+modular organization, as similar mesoscopic structures can be obtained even
+after factoring out the effect of distance constraints on the connectivity. We
+observe that the distribution profile of brain areas, classified in terms of
+their intra- and inter-modular connectivity, is conserved across the principal
+cortical subdivisions, as well as, sub-cortical structures. In particular
+provincial hubs, which have significantly higher number of connections with
+members of their module, but relatively less well-connected to other modules,
+are the only class that exhibits homophily, i.e., a discernible preference to
+connect to each other. By considering a process of diffusive propagation we
+demonstrate that this architecture, instead of localizing the activity,
+facilitates rapid communication across the connectome. By supplementing the
+topological information about the Macaque connectome with physical locations,
+volumes and functions of the constituent areas and analyzing this augmented
+dataset, we reveal a counter-intuitive role played by the modular architecture
+of the brain in promoting global interaction.

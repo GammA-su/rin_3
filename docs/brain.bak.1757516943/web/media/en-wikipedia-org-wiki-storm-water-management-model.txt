@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Storm%20Water%20Management%20Model
+
+The United States Environmental Protection Agency (EPA) Storm Water Management Model (SWMM) is a dynamic rainfall–runoff–subsurface runoff simulation model used for single-event to long-term (continuous) simulation of the surface/subsurface hydrology quantity and quality from primarily urban/suburban areas.

@@ -1,0 +1,19 @@
+http://arxiv.org/abs/2310.17797v1
+
+The bottom two layers of a neuromorphic architecture are designed and shown
+to be capable of online clustering and supervised classification. An active
+spiking dendrite model is used, and a single dendritic segment performs
+essentially the same function as a classic integrate-and-fire point neuron. A
+single dendrite is then composed of multiple segments and is capable of online
+clustering. Although this work focuses primarily on dendrite functionality, a
+multi-point neuron can be formed by combining multiple dendrites. To
+demonstrate its clustering capability, a dendrite is applied to spike sorting,
+an important component of brain-computer interface applications. Supervised
+online classification is implemented as a network composed of multiple
+dendrites and a simple voting mechanism. The dendrites operate independently
+and in parallel. The network learns in an online fashion and can adapt to
+macro-level changes in the input stream. Achieving brain-like capabilities,
+efficiencies, and adaptability will require a significantly different approach
+than conventional deep networks that learn via compute-intensive back
+propagation. The model described herein may serve as the foundation for such an
+approach.

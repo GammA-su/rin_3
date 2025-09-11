@@ -1,0 +1,21 @@
+http://arxiv.org/abs/2212.04286v2
+
+We live in a world brimming with uncertainty, where we constantly have to
+make a lot of decisions under incomplete information. We are firm believers
+that our subjective belief cannot be computed by rigorous mathematical formula;
+instead based on Darwin's natural selection (the evolution process is simulated
+by machine learning with genetic programming), a proposed computational model
+that incorporates insights from quantum theory to describe and explain
+decision-making under uncertainty. Unlike other decision-making theories that
+explain the decision-making process through probability theory, our proposed
+decision theory discovers "laws" of thought by learning observed historical
+data. There is no differential equation and no transition probability in our
+decision theory, our decision model has an emphasis on machine learning, where
+decision-makers build-up their experience by being rewarded or punished for
+each decision they make and prepare them for making better decisions in the
+future. We do not model with the usual utility function, but with quantum
+decision tree that simulates people's decision process. Each quantum decision
+tree includes a set of strategies; every time a decision is made, the
+decision-maker first chooses a strategy from the quantum decision tree's
+strategy pool, and then chooses an action based on the degree of belief which
+is obtained by genetic programming based on maximizing expected value.

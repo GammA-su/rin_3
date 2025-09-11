@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Recurrent%20thalamo-cortical%20resonance
+
+Recurrent thalamo-cortical resonance or thalamocortical oscillation is an observed phenomenon of oscillatory neural activity between the thalamus and various cortical regions of the brain. It is proposed by Rodolfo Llinas and others as a theory for the integration of sensory information into the whole of perception in the brain. Thalamocortical oscillation is proposed to be a mechanism of synchronization between different cortical regions of the brain, a process known as temporal binding. This is possible through the existence of thalamocortical networks, groupings of thalamic and cortical cells that exhibit oscillatory properties.

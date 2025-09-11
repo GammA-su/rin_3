@@ -1,0 +1,18 @@
+http://arxiv.org/abs/1204.1706v1
+
+Spike-Timing Dependent Plasticity (STDP) is believed to play an important
+role in learning and the formation of computational function in the brain. The
+classical model of STDP which considers the timing between pairs of
+pre-synaptic and post-synaptic spikes (p-STDP) is incapable of reproducing
+synaptic weight changes similar to those seen in biological experiments which
+investigate the effect of either higher order spike trains (e.g. triplet and
+quadruplet of spikes), or, simultaneous effect of the rate and timing of spike
+pairs on synaptic plasticity. In this paper, we firstly investigate synaptic
+weight changes using a p-STDP circuit and show how it fails to reproduce the
+mentioned complex biological experiments. We then present a new STDP VLSI
+circuit which acts based on the timing among triplets of spikes (t-STDP) that
+is able to reproduce all the mentioned experimental results. We believe that
+our new STDP VLSI circuit improves upon previous circuits, whose learning
+capacity exceeds current designs due to its capability of mimicking the
+outcomes of biological experiments more closely; thus plays a significant role
+in future VLSI implementation of neuromorphic systems.

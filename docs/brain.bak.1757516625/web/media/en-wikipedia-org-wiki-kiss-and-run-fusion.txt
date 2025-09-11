@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Kiss-and-run%20fusion
+
+Kiss-and-run fusion is a type of synaptic vesicle release where the vesicle opens and closes transiently. In this form of exocytosis, the vesicle docks and transiently fuses at the presynaptic membrane and releases its neurotransmitters across the synapse, after which the vesicle can then be reused.

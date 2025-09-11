@@ -1,0 +1,6 @@
+http://arxiv.org/abs/1409.2071v2
+
+This manuscript deals with the analysis and VLSI implementation of adaptive
+information processing derived from biological measurements. Specifically,
+models for short term plasticity, long term plasticity and metaplasticity are
+derived from biological measurements and implemented in CMOS circuits.

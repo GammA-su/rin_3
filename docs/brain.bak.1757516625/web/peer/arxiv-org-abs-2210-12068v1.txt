@@ -1,0 +1,14 @@
+http://arxiv.org/abs/2210.12068v1
+
+Since their Nobel Prize winning discovery in 2005, grid cells have been
+studied extensively by neuroscientists. Their multi-scale periodic firing rates
+tiling the environment as the animal moves around has been shown as critical
+for path integration. Multiple experiments have shown that grid cells also fire
+for other representations such as olfactory, attention mechanisms, imagined
+movement, and concept organization potentially acting as a form of neural
+recycling and showing the possible brain mechanism for cognitive maps that
+Tolman envisioned in 1948. Grid cell integration into artificial neural
+networks may enable more robust, generalized, and smarter computers. In this
+paper we give an overview of grid cell research since their discovery, their
+role in neuroscience and cognitive science, and possible future directions of
+artificial intelligence research.

@@ -1,0 +1,14 @@
+http://arxiv.org/abs/2208.04256v2
+
+Radio astronomy is vulnerable to interference from a variety of anthropogenic
+sources. Among the many strategies for mitigation of this interference is
+coherent time-domain canceling (CTC), which ideally allows one to "look
+through" interference, as opposed to avoiding the interference or deleting the
+afflicted data. However, CTC is difficult to implement, not well understood,
+and at present this strategy is not in regular use at any major radio
+telescope. This paper presents a review of CTC including a new comprehensive
+study of the capabilities and limitations of CTC using metrics relevant to
+radio astronomy, including fraction of interference power removed and increase
+in noise. This work is motivated by the emergence of a new generation of
+communications systems which pose a significantly increased threat to radio
+astronomy and which may overwhelm mitigation methods now in place.

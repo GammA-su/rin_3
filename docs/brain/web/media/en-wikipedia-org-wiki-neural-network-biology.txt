@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Neural%20network%20%28biology%29
+
+A neural network, also called a neuronal network, is an interconnected population of neurons. Biological neural networks are studied to understand the organization and functioning of nervous systems.

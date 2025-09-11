@@ -1,0 +1,15 @@
+http://arxiv.org/abs/1309.1465v2
+
+In supersymmetric theories, there is a scalar quartic related to the top and
+bottom yukawas that gives LHC observable decays of the stop or sbottom. After
+electroweak symmetry breaking, this quartic induces the decay of the stop
+(sbottom) to a charged Higgs and the sbottom (stop) without allowing for the
+corresponding channel involving the W boson. Unlike other scalar quartics, this
+scalar quartic is measurable at the LHC and for compressed spectra may even be
+the discovery channel for the stop or sbottom. Observing this decay and
+measuring the value of the quartic interaction would give direct evidence that
+the underlying theory is supersymmetric as only a fermionic symmetry can relate
+a scalar quartic to a yukawa interaction. This decay pathway is explored and
+situations where it can be the dominant decay mode for either the stop or the
+sbottom are highlighted. Measurement of this decay mode at the LHC would
+unambiguously show that the underlying theory of nature was supersymmetric.

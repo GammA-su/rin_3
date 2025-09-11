@@ -1,0 +1,33 @@
+http://arxiv.org/abs/2409.11758v1
+
+Abstract Objective In Genetic Absence Epilepsy Rats From Strasbourg ( GAERS
+s), epileptogenesis takes place during brain maturation and correlates with
+increased mRNA expression of D3 dopamine receptors (D3R). Whether these
+alterations are the consequence of seizure repetition or contribute to the
+development of epilepsy remains to be clarified. Here, we addressed the
+involvement of the dopaminergic system in epilepsy onset in GAERS s. Methods
+Experiments were performed using rats at different stages of brain maturation
+from three strains according to their increasing propensity to develop absence
+seizures: nonepileptic control rats ( NEC s), Wistar Hannover rats, and GAERS
+s. Changes in dopaminergic neurotransmission were investigated using different
+behavioral and neurochemical approaches: autoradiography of D3R and dopamine
+transporter, single photon emission computed tomographic imaging, acute and
+chronic drug effects on seizure recordings (dopaminergic agonists and
+antagonists), quinpirole-induced yawns and dopamine synaptosomal uptake,
+microdialysis, brain tissue monoamines, and brain-derived neurotrophic factor
+quantification. Results Autoradiography revealed an increased expression of D3R
+in 14-day-old GAERS s, before absence seizure onset, that persists in
+adulthood, as compared to age-matched NEC s. This was confirmed by increased
+yawns, a marker of D3R activity, and increased seizures when animals were
+injected with quinpirole at low doses to activate D3R. We also observed a
+concomitant increase in the expression and activity of the dopamine transporter
+in GAERS s before seizure onset, consistent with both lowered dopamine basal
+level and increased phasic responses. Significance Our data show that the
+dopaminergic system is persistently altered in GAERS s, which may contribute
+not only to behavioral comorbidities but also as an etiopathogenic factor in
+the development of epilepsy. The data suggest that an imbalanced dopaminergic
+tone may contribute to absence epilepsy development and seizure onset, as its
+reversion by a chronic treatment with a dopamine stabilizer significantly
+suppressed epileptogenesis. Our data suggest a potential new target for
+antiepileptic therapies and/or improvement of quality of life of epileptic
+patients.

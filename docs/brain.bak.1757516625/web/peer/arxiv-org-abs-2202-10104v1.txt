@@ -1,0 +1,9 @@
+http://arxiv.org/abs/2202.10104v1
+
+The PRRT protocol enables applications with strict performance requirements
+such as Cyber-Physical Systems, as it provides predictably low, end-to-end
+delay via cross-layer pacing and timely error correction via Hybrid ARQ (HARQ).
+However, the implemented HARQ uses computationally complex Maximum Distance
+Separable (MDS) codes to generate redundancy. In this paper we propose code
+partitioning for the complexity reduction of MDS codes, thereby enabling their
+deployment on constrained embedded devices.

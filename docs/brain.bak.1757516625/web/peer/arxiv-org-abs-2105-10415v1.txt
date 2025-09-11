@@ -1,0 +1,24 @@
+http://arxiv.org/abs/2105.10415v1
+
+We analyse the dynamics of the improved discretised version of the well known
+Izhikevich neuronmodel under the action of external electromagnetic field. It
+is found that the three-dimensional IZHmap shows rich dynamics. With the
+variation of the electromagnetic field, period-doubling routeto chaos in a
+repeating fashion is observed from the bifurcation diagram. Even the forward
+andbackward continuation bifurcation diagram which do not completely overlap
+suggests that there is multistability in the system. The phenomenon of
+bistability (coexistence of periodic and chaotic attractors) is observed. The
+presence of periodic and chaotic attractor is aided by the maximal Lyapunov
+exponent diagram. The Lyapunov phase diagram of electromagnetic field and
+synapses current shows a large parameter region of chaotic and periodic
+behaviors with the presence of unbounded regions as well. The IZH map shows a
+plethora of spiking and bursting patterns such as mixed-mode patterns, tonic
+spiking, phasic spiking, steady spikes, regular spikes, spike bursting,
+periodic bursting, phasic bursting, chaotic firing, etc with the variation of
+electromagnetic coupling strength and the synapses current. We also investigate
+the presence of chimera states in a ring-star, ring, star network of IZH map
+neurons. Chimera states are found in the case of ring-star and ring network
+while synchronised clusters were found in the case of star network and are
+aided by the spatiotemporal plots, space-time plot, recurrence plots. The rich
+dynamics shown by the discretised IZH map makes it a promising research model
+to study about neurodynamics.

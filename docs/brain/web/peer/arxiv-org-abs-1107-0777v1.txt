@@ -1,0 +1,15 @@
+http://arxiv.org/abs/1107.0777v1
+
+Decision under risk and uncertainty has been attracting attention in
+neuroeconomics and neuroendocrinology of decision-making. This paper
+demonstrated that the neurotransmitter receptor theory-based value (utility)
+function can account for human and animal risk-taking behavior. The theory
+predicts that (i) when dopaminergic neuronal response is efficiently coupled to
+the formation of ligand-receptor complex, subjects are risk-aversive
+(irrespective of their satisfaction level) and (ii) when the coupling is
+inefficient, subjects are risk-seeking at low satisfaction levels, consistent
+with risk-sensitive foraging theory in ecology. It is further suggested that
+some anomalies in decision under risk are due to inefficiency of the coupling
+between dopamine receptor activation and neuronal response. Future directions
+in the application of the model to studies in neuroeconomics of addiction and
+neuroendocrine modulation of risk-taking behavior are discussed.

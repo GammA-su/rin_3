@@ -1,0 +1,18 @@
+http://arxiv.org/abs/2111.07919v1
+
+We investigate spike-timing dependent plasticity (STPD) in the case of a
+synapse connecting two neural cells. We develop a theoretical analysis of
+several STDP rules using Markovian theory. In this context there are two
+different timescales, fast neural activity and slower synaptic weight updates.
+Exploiting this timescale separation, we derive the long-time limits of a
+single synaptic weight subject to STDP. We show that the pairing model of
+presynaptic and postsynaptic spikes controls the synaptic weight dynamics for
+small external input, on an excitatory synapse. This result implies in
+particular that mean-field analysis of plasticity may miss some important
+properties of STDP. Anti-Hebbian STDP seems to favor the emergence of a stable
+synaptic weight, but only for high external input. In the case of inhibitory
+synapse the pairing schemes matter less, and we observe convergence of the
+synaptic weight to a non-null value only for Hebbian STDP. We extensively study
+different asymptotic regimes for STDP rules, raising interesting questions for
+future works on adaptative neural networks and, more generally, on adaptive
+systems.

@@ -1,0 +1,22 @@
+http://arxiv.org/abs/2411.05712v2
+
+When trained on large-scale object classification datasets, certain
+artificial neural network models begin to approximate core object recognition
+(COR) behaviors and neural response patterns in the primate visual ventral
+stream (VVS). While recent machine learning advances suggest that scaling model
+size, dataset size, and compute resources improve task performance, the impact
+of scaling on brain alignment remains unclear. In this study, we explore
+scaling laws for modeling the primate VVS by systematically evaluating over 600
+models trained under controlled conditions on benchmarks spanning V1, V2, V4,
+IT and COR behaviors. We observe that while behavioral alignment continues to
+scale with larger models, neural alignment saturates. This observation remains
+true across model architectures and training datasets, even though models with
+stronger inductive bias and datasets with higher-quality images are more
+compute-efficient. Increased scaling is especially beneficial for higher-level
+visual areas, where small models trained on few samples exhibit only poor
+alignment. Finally, we develop a scaling recipe, indicating that a greater
+proportion of compute should be allocated to data samples over model size. Our
+results suggest that while scaling alone might suffice for alignment with human
+core object recognition behavior, it will not yield improved models of the
+brain's visual ventral stream with current architectures and datasets,
+highlighting the need for novel strategies in building brain-like models.

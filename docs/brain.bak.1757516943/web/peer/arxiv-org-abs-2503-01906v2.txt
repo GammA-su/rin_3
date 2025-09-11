@@ -1,0 +1,23 @@
+http://arxiv.org/abs/2503.01906v2
+
+We present a model inspired by the Global Workspace Theory that integrates
+specialized modules to perform a sequential reasoning task. A controller
+selectively routes information between modules through the workspace using a
+gating mechanism. This approach allows the model to chain operations by
+iteratively broadcasting information between specialized domains, mimicking
+System-2 reasoning. We evaluate the model's performance on a simple addition
+task, where two addends must be summed. The task can be solved by routing
+information sequentially through an Input module, an Increment module (multiple
+times), and finally an Output module. We consider two implementations of this
+system with increasing complexity. First, using hand-designed modules operating
+on one-hot digit representations, the controller (a LSTM recurrent network)
+learns to select the appropriate modules (input, increment, output) in the
+appropriate sequence. Second, we replace the hand-designed modules with learned
+representation modules for MNIST images and an increment module trained on the
+task objectives; here again, the controller learns the appropriate sequential
+module selection to solve the task. Finally, we show that the Global Workspace
+model, while having fewer parameters, outperforms LSTMs and Transformers when
+tested on unseen addition operations (both interpolations and extrapolations of
+addition operations seen during training). Our results highlight the potential
+of architectures inspired by the Global Workspace Theory to enhance deep
+learning's reasoning capabilities.

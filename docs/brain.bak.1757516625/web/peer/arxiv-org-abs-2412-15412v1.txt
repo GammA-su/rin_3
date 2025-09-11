@@ -1,0 +1,23 @@
+http://arxiv.org/abs/2412.15412v1
+
+Efficiently identifying sleep stages is crucial for unraveling the
+intricacies of sleep in both preclinical and clinical research. The
+labor-intensive nature of manual sleep scoring, demanding substantial
+expertise, has prompted a surge of interest in automated alternatives. Sleep
+studies in mice play a significant role in understanding sleep patterns and
+disorders and underscore the need for robust scoring methodologies. In
+response, this study introduces LG-Sleep, a novel subject-independent deep
+neural network architecture designed for mice sleep scoring through
+electroencephalogram (EEG) signals. LG-Sleep extracts local and global temporal
+transitions within EEG signals to categorize sleep data into three stages:
+wake, rapid eye movement (REM) sleep, and non-rapid eye movement (NREM) sleep.
+The model leverages local and global temporal information by employing
+time-distributed convolutional neural networks to discern local temporal
+transitions in EEG data. Subsequently, features derived from the convolutional
+filters traverse long short-term memory blocks, capturing global transitions
+over extended periods. Crucially, the model is optimized in an
+autoencoder-decoder fashion, facilitating generalization across distinct
+subjects and adapting to limited training samples. Experimental findings
+demonstrate superior performance of LG-Sleep compared to conventional deep
+neural networks. Moreover, the model exhibits good performance across different
+sleep stages even when tasked with scoring based on limited training samples.

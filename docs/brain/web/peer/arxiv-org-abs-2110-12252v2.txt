@@ -1,0 +1,25 @@
+http://arxiv.org/abs/2110.12252v2
+
+Predictive coding is the leading algorithmic framework to understand how
+expectations shape our experience of reality. Its main tenet is that sensory
+neurons encode prediction error: the residuals between a generative model of
+the sensory world and the actual sensory input. However, it is yet unclear how
+this scheme generalises to the multi-level hierarchical architecture of sensory
+processing. Theoretical accounts of predictive coding agree that neurons
+computing prediction error and the generative model exist at all levels of the
+processing hierarchy. However, there is not a current consensus of how
+predictions from independent models at different stages are integrated during
+the computation of prediction error. Here we investigated predictive processing
+with respect to two independent concurrent generative models in the auditory
+pathway using functional magnetic resonance imaging. We used two paradigms
+where human participants listened to sequences of either pure tones or
+FM-sweeps while we recorded BOLD responses in inferior colliculus (IC), medial
+geniculate body (MGB), and auditory cortex (AC). Each paradigm included the
+induction of two generative models: one based on local stimulus statistics; and
+another model based on the subjective expectations induced by task instruction.
+We used Bayesian model comparison to test whether neural responses in IC, MGB,
+and AC encoded prediction error with respect to either of the two generative
+models, or a combination of both. Results showed that neural populations in
+bilateral IC, MGB, and AC encode prediction error with respect to a combination
+of the two generative models, suggesting that the predictive architecture of
+predictive coding might be more complex than previously hypothesised.

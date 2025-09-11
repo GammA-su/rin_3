@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Microsoft%20Office
+
+Microsoft Office, MS Office, or simply Office, is an office suite and family of client software, server software, and services developed by Microsoft. The first version of the Office suite, announced by Bill Gates on August 1, 1988, at COMDEX, contained Microsoft Word, Microsoft Excel, and Microsoft PowerPoint — all three of which remain core products in Office — and over time Office applications have grown substantially closer with shared features such as a common spell checker, Object Linking and Embedding data integration and Visual Basic for Applications scripting language. Microsoft also positions Office as a development platform for line-of-business software under the Office Business Applications brand.

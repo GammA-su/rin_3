@@ -1,0 +1,17 @@
+http://arxiv.org/abs/1910.12492v3
+
+Sensory predictions by the brain in all modalities take place as a result of
+bottom-up and top-down connections both in the neocortex and between the
+neocortex and the thalamus. The bottom-up connections in the cortex are
+responsible for learning, pattern recognition, and object classification, and
+have been widely modelled using artificial neural networks (ANNs). Here, we
+present a neural network architecture modelled on the top-down corticothalamic
+connections and the behaviour of the thalamus: a corticothalamic neural network
+(CTNN), consisting of an auto-encoder connected to a difference engine with a
+threshold. We demonstrate that the CTNN is input agnostic, multi-modal, robust
+during partial occlusion of one or more sensory inputs, and has significantly
+higher processing efficiency than other predictive coding models, proportional
+to the number of sequentially similar inputs in a sequence. This increased
+efficiency could be highly significant in more complex implementations of this
+architecture, where the predictive nature of the cortex will allow most of the
+incoming data to be discarded.

@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Free%20energy%20principle
+
+The free energy principle is a mathematical principle of information physics. Its application to fMRI brain imaging data as a theoretical framework suggests that the brain reduces surprise or uncertainty by making predictions based on internal models and uses sensory input to update its models so as to improve the accuracy of its predictions. This principle approximates an integration of Bayesian inference with active inference, where actions are guided by predictions and sensory feedback refines them. From it, wide-ranging inferences have been made about brain function, perception, and action. Its applicability to living systems has been questioned.

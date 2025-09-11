@@ -1,0 +1,25 @@
+http://arxiv.org/abs/2106.08281v3
+
+In this paper, we focus on identifying differentially activated brain regions
+using a light sheet fluorescence microscopy - a recently developed technique
+for whole-brain imaging. Most existing statistical methods solve this problem
+by partitioning the brain regions into two classes: significantly and
+non-significantly activated. However, for the brain imaging problem at the
+center of our study, such binary grouping may provide overly simplistic
+discoveries by filtering out weak but important signals, that are typically
+adulterated by the noise present in the data. To overcome this limitation, we
+introduce a new Bayesian approach that allows classifying the brain regions
+into several tiers with varying degrees of relevance. Our approach is based on
+a combination of shrinkage priors - widely used in regression and multiple
+hypothesis testing problems - and mixture models - commonly used in model-based
+clustering. In contrast to the existing regularizing prior distributions, which
+use either the spike-and-slab prior or continuous scale mixtures, our class of
+priors is based on a discrete mixture of continuous scale mixtures and devises
+a cluster-shrinkage version of the Horseshoe prior. As a result, our approach
+provides a more general setting for Bayesian sparse estimation, drastically
+reduces the number of shrinkage parameters needed, and creates a framework for
+sharing information across units of interest. We show that this approach leads
+to more biologically meaningful and interpretable results in our brain imaging
+problem, since it allows the discrimination between active and inactive
+regions, while at the same time ranking the discoveries into clusters
+representing tiers of similar importance.

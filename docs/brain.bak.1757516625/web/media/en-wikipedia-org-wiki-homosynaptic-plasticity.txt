@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Homosynaptic%20plasticity
+
+Homosynaptic plasticity is one type of synaptic plasticity. Homosynaptic plasticity is input-specific, meaning changes in synapse strength occur only at post-synaptic targets specifically stimulated by a pre-synaptic target. Therefore, the spread of the signal from the pre-synaptic cell is localized.

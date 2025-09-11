@@ -1,0 +1,25 @@
+http://arxiv.org/abs/2504.11733v3
+
+Inspired by the dual-stream theory of the human visual system (HVS) - where
+the ventral stream is responsible for object recognition and detail analysis,
+while the dorsal stream focuses on spatial relationships and motion perception
+- an increasing number of video quality assessment (VQA) works built upon this
+framework are proposed. Recent advancements in large multi-modal models,
+notably Contrastive Language-Image Pretraining (CLIP), have motivated
+researchers to incorporate CLIP into dual-stream-based VQA methods. This
+integration aims to harness the model's superior semantic understanding
+capabilities to replicate the object recognition and detail analysis in ventral
+stream, as well as spatial relationship analysis in dorsal stream. However,
+CLIP is originally designed for images and lacks the ability to capture
+temporal and motion information inherent in videos. To address the limitation,
+this paper propose a Decoupled Vision-Language Modeling with Text-Guided
+Adaptation for Blind Video Quality Assessment (DVLTA-VQA), which decouples
+CLIP's visual and textual components, and integrates them into different stages
+of the NR-VQA pipeline. Specifically, a Video-Based Temporal CLIP module is
+proposed to explicitly model temporal dynamics and enhance motion perception,
+aligning with the dorsal stream. Additionally, a Temporal Context Module is
+developed to refine inter-frame dependencies, further improving motion
+modeling. On the ventral stream side, a Basic Visual Feature Extraction Module
+is employed to strengthen detail analysis. Finally, a text-guided adaptive
+fusion strategy is proposed to enable dynamic weighting of features,
+facilitating more effective integration of spatial and temporal information.

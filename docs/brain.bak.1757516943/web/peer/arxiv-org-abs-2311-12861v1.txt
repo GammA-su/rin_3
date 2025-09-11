@@ -1,0 +1,17 @@
+http://arxiv.org/abs/2311.12861v1
+
+Sophisticated machine learning struggles to transition onto battery-operated
+devices due to the high-power consumption of neural networks. Researchers have
+turned to neuromorphic engineering, inspired by biological neural networks, for
+more efficient solutions. While previous research focused on artificial neurons
+and synapses, an essential component has been overlooked: dendrites. Dendrites
+transmit inputs from synapses to the neuron's soma, applying both passive and
+active transformations. However, neuromorphic circuits replace these
+sophisticated computational channels with metallic interconnects. In this
+study, we introduce a versatile circuit that emulates a segment of a dendrite
+which exhibits gain, introduces delays, and performs integration. We show how
+sound localisation - a biological example of dendritic computation - is not
+possible with the existing passive dendrite circuits but can be achieved using
+this proposed circuit. We also find that dendrites can form bursting neurons.
+This significant discovery suggests the potential to fabricate neural networks
+solely comprised of dendrite circuits.

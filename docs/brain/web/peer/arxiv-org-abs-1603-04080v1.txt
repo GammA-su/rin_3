@@ -1,0 +1,16 @@
+http://arxiv.org/abs/1603.04080v1
+
+We present a digital implementation of the Spike Timing Dependent Plasticity
+(STDP) learning rule. The proposed digital implementation consists of an
+exponential decay generator array and a STDP adaptor array. On the arrival of a
+pre- and post-synaptic spike, the STDP adaptor will send a digital spike to the
+decay generator. The decay generator will then generate an exponential decay,
+which will be used by the STDP adaptor to perform the weight adaption. The
+exponential decay, which is computational expensive, is efficiently implemented
+by using a novel stochastic approach, which we analyse and characterise here.
+We use a time multiplexing approach to achieve 8192 (8k) virtual STDP adaptors
+and decay generators with only one physical implementation of each. We have
+validated our stochastic STDP approach with measurement results of a balanced
+excitation/inhibition experiment. Our stochastic approach is ideal for
+implementing the STDP learning rule in large-scale spiking neural networks
+running in real time.

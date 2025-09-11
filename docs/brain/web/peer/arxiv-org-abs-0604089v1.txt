@@ -1,0 +1,26 @@
+http://arxiv.org/abs/cond-mat/0604089v1
+
+This article investigates the relationship between the interconnectivity and
+simulated dynamics of the thalamocortical system from the specific perspective
+of attempting to maximize the diversity of cortical states. This is achieved by
+designing the dynamics such that they favor opposing activity between adjacent
+regions, thus promoting dynamic diversity while avoiding widespread activation
+or de-activation. The anti-ferromagnetic Ising model with Metropolis dynamics
+is adopted and applied to four variations of the large-scale connectivity of
+the cat thalamocortical system: (a) considering only cortical regions and
+connections; (b) considering the entire thalamocortical system; (c) the same as
+in (b) but with the thalamic connections rewired so as to maintain the
+statistics of node degree and node degree correlations; and (d) as in (b) but
+with attenuated weights of the connections between cortical and thalamic nodes.
+A series of interesting findings are obtained, including the identification of
+specific substructures revealed by correlations between the activity of
+adjacent regions in case (a) and a pronounced effect of the thalamic
+connections in splitting the thalamocortical regions into two large groups of
+nearly homogenous opposite activation (i.e. cortical regions and thalamic
+nuclei, respectively) in cases (b) and (c). The latter effect is due to the
+existence of dense connections between cortical and thalamic regions and the
+lack of interconnectivity between the latter. Another interesting result
+regarding case (d) is the fact that the pattern of thalamic correlations tended
+to mirror that of the cortical regions. The possibility to control the level of
+correlation between the cortical regions by varying the strength of
+thalamocortical connections is also identified and discussed.

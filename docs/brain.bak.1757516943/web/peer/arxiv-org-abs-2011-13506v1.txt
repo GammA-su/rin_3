@@ -1,0 +1,26 @@
+http://arxiv.org/abs/2011.13506v1
+
+Brain networks can be defined and explored through their connectivity. Here,
+we analyzed the relationship between structural connectivity (SC) across 2,514
+regions that cover the entire brain and brainstem, and their dynamic functional
+connectivity (DFC). To do so, we focused on a combination of two metrics: the
+first assesses the degree of SC-DFC similarity and the second is the intrinsic
+variability of the DFC networks over time. Overall, we found that cerebellar
+networks have a smaller DFC variability than other networks in the brain.
+Moreover, the internal structure of the cerebellum could be clearly divided in
+two distinct posterior and anterior parts, the latter also connected to the
+brainstem. The mechanism to maintain small variability of the DFC in the
+posterior part of the cerebellum is consistent with another of our findings,
+namely, that this structure exhibits the highest SC-DFC similarity relative to
+the other networks studied. By contrast, the anterior part of the cerebellum
+also exhibits small DFC variability but it has the lowest SC-DFC similarity,
+suggesting a different mechanism is at play. Because this structure connects to
+the brainstem, which regulates sleep cycles, cardiac and respiratory
+functioning, we suggest that such critical functionality drives the low
+variability in the DFC. Overall, the low variability detected in DFC expands
+our current knowledge of cerebellar networks, which are extremely rich and
+complex, participating in a wide range of cognitive functions, from movement
+control and coordination to executive function or emotional regulation.
+Moreover, the association between such low variability and structure suggests
+that differentiated computational principles can be applied in the cerebellum
+as opposed to other structures, such as the cerebral cortex.

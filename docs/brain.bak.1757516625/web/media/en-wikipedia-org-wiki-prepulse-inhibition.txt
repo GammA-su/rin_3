@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Prepulse%20inhibition
+
+Prepulse inhibition (PPI) is a neurological phenomenon in which a weaker prestimulus (prepulse) inhibits the reaction of an organism to a subsequent strong reflex-eliciting stimulus (pulse), often using the startle reflex. The stimuli are usually acoustic, but tactile stimuli and light stimuli are also used. When prepulse inhibition is high, the corresponding one-time startle response is reduced.

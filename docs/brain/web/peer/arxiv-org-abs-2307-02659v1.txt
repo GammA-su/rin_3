@@ -1,0 +1,27 @@
+http://arxiv.org/abs/2307.02659v1
+
+Computational models of cortical activity provide insight into the mechanisms
+of higher-order processing in the human brain including planning, perception
+and the control of movement. Activity in the cortex is ongoing even in the
+absence of sensory input or discernible movements and is thought to be linked
+to the topology of cortical circuitry. However, the connectivity and its
+functional role in the generation of spatio-temporal firing patterns and
+cortical computations are still unknown. Movement of the body is a key function
+of the brain, with the motor cortex the main cortical area implicated in the
+generation of movement. We built a spiking neural network model of the motor
+cortex which incorporates a laminar structure and circuitry based on a previous
+cortical model. A local connectivity scheme was implemented to introduce more
+physiological plausibility to the cortex model, and the effect on the rates,
+distributions and irregularity of neuronal firing was compared to the original
+random connectivity method and experimental data. Local connectivity increased
+the distribution of and overall rate of neuronal firing. It also resulted in
+the irregularity of firing being more similar to those observed in experimental
+measurements. The larger variability in dynamical behaviour of the local
+connectivity model suggests that the topological structure of the connections
+in neuronal population plays a significant role in firing patterns during
+spontaneous activity. This model took steps towards replicating the macroscopic
+network of the motor cortex, replicating realistic spatiotemporal firing to
+shed light on information coding in the cortex. Large scale computational
+models such as this one can capture how structure and function relate to
+observable neuronal firing behaviour, and investigates the underlying
+computational mechanisms of the brain.

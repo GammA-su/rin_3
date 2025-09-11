@@ -1,0 +1,20 @@
+http://arxiv.org/abs/2412.02515v1
+
+As numerical simulations grow in complexity, their demands on computing time
+and energy increase. Hardware accelerators offer significant efficiency gains
+in many computationally intensive scientific fields, but their use in
+computational neuroscience remains limited. Neuromorphic substrates, such as
+the BrainScaleS architectures, offer significant advantages, especially for
+studying complex plasticity rules that require extended simulation runtimes.
+This work presents the implementation of a calcium-based plasticity rule that
+integrates calcium dynamics based on the synaptic tagging-and-capture
+hypothesis on the BrainScaleS-2 system. The implementation of the plasticity
+rule for a single synapse involves incorporating the calcium dynamics and the
+plasticity rule equations. The calcium dynamics are mapped to the analog
+circuits of BrainScaleS-2, while the plasticity rule equations are numerically
+solved on its embedded digital processors. The main hardware constraints
+include the speed of the processors and the use of integer arithmetic. By
+adjusting the timestep of the numerical solver and introducing stochastic
+rounding, we demonstrate that BrainScaleS-2 accurately emulates a single
+synapse following a calcium-based plasticity rule across four stimulation
+protocols and validate our implementation against a software reference model.

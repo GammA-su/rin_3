@@ -1,0 +1,20 @@
+http://arxiv.org/abs/2502.21235v1
+
+Some evidence suggests that people with autism spectrum disorder exhibit
+patterns of brain functional dysconnectivity relative to their typically
+developing peers, but specific findings have yet to be replicated. To
+facilitate this replication goal with data from the Autism Brain Imaging Data
+Exchange (ABIDE), we propose a flexible and interpretable model for
+participant-specific voxel-level brain functional connectivity. Our approach
+efficiently handles massive participant-specific whole brain voxel-level
+connectivity data that exceed one trillion data points. The key component of
+the model is to leverage the block structure induced by defined regions of
+interest to introduce parsimony in the high-dimensional connectivity matrix
+through a block covariance structure. Associations between brain functional
+connectivity and participant characteristics -- including eye status during the
+resting scan, sex, age, and their interactions -- are estimated within a
+Bayesian framework. A spike-and-slab prior facilitates hypothesis testing to
+identify voxels associated with autism diagnosis. Simulation studies are
+conducted to evaluate the empirical performance of the proposed model and
+estimation framework. In ABIDE, the method replicates key findings from the
+literature and suggests new associations for investigation.

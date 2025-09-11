@@ -1,0 +1,8 @@
+http://arxiv.org/abs/2506.03370v1
+
+This note is a survey of various results on the capabilities of unique hard
+attention transformers encoders (UHATs) to recognize formal languages. We
+distinguish between masked vs. non-masked, finite vs. infinite image and
+general vs. bilinear attention score functions. We recall some relations
+between these models, as well as a lower bound in terms of first-order logic
+and an upper bound in terms of circuit complexity.

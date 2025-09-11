@@ -1,0 +1,22 @@
+http://arxiv.org/abs/2503.00836v1
+
+In recent years, researchers have increasingly sought batteries as an
+efficient and cost-effective solution for energy storage and supply, owing to
+their high energy density, low cost, and environmental resilience. However, the
+issue of dendrite growth has emerged as a significant obstacle in battery
+development. Excessive dendrite growth during charging and discharging
+processes can lead to battery short-circuiting, degradation of electrochemical
+performance, reduced cycle life, and abnormal exothermic events. Consequently,
+understanding the dendrite growth process has become a key challenge for
+researchers. In this study, we investigated dendrite growth mechanisms in
+batteries using a combined machine learning approach, specifically a
+two-dimensional artificial convolutional neural network (CNN) model, along with
+computational methods. We developed two distinct computer models to predict
+dendrite growth in batteries. The CNN-1 model employs standard convolutional
+neural network techniques for dendritic growth prediction, while CNN-2
+integrates additional physical parameters to enhance model robustness. Our
+results demonstrate that CNN-2 significantly enhances prediction accuracy,
+offering deeper insights into the impact of physical factors on dendritic
+growth. This improved model effectively captures the dynamic nature of dendrite
+formation, exhibiting high accuracy and sensitivity. These findings contribute
+to the advancement of safer and more reliable energy storage systems.

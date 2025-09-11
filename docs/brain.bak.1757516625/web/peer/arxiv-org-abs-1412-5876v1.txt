@@ -1,0 +1,10 @@
+http://arxiv.org/abs/1412.5876v1
+
+A 2x2 Mach-Zehnder optical switch design with a footprint of 0.5 ${\mu}$m x
+2.5 ${\mu}$m using nanomechanical gap plasmon phase modulators
+[arXiv:1410.0273] is presented. The extremely small footprint and modest
+optical loss are enabled by the strong phase modulation of gap plasmons in a
+mechanically actuated 17 nm air gap. Frequency-domain finite-element modeling
+at 780 nm shows that the insertion loss is ${\leq}$ 8.5 dB, the extinction
+ratio is > 25 dB, and crosstalk for all ports is > 24 dB. A design optimization
+approach and its dependence on geometrical parameters are discussed.

@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Potts%20model
+
+In statistical mechanics, the Potts model, a generalization of the Ising model, is a model of interacting spins on a crystalline lattice. By studying the Potts model, one may gain insight into the behaviour of ferromagnets and certain other phenomena of solid-state physics. The strength of the Potts model is not so much that it models these physical systems well; it is rather that the one-dimensional case is exactly solvable, and that it has a rich mathematical formulation that has been studied extensively.

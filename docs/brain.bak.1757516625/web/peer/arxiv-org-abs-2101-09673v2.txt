@@ -1,0 +1,13 @@
+http://arxiv.org/abs/2101.09673v2
+
+Incentive mechanism design is crucial for enabling federated learning. We
+deal with clustering problem of agents contributing to federated learning
+setting. Assuming agents behave selfishly, we model their interaction as a
+stable coalition partition problem using hedonic games where agents and
+clusters are the players and coalitions, respectively. We address the following
+question: is there a family of hedonic games ensuring a Nash-stable coalition
+partition? We propose the Nash-stable set which determines the family of
+hedonic games possessing at least one Nash-stable partition, and analyze the
+conditions of non-emptiness of the Nash-stable set. Besides, we deal with the
+decentralized clustering. We formulate the problem as a non-cooperative game
+and prove the existence of a potential game.

@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Models%20of%20neural%20computation
+
+Models of neural computation are attempts to elucidate, in an abstract and mathematical fashion, the core principles that underlie information processing in biological nervous systems, or functional components thereof. This article aims to provide an overview of the most definitive models of neuro-biological computation as well as the tools commonly used to construct and analyze them.

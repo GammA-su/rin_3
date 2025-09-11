@@ -1,0 +1,16 @@
+http://arxiv.org/abs/2106.13541v2
+
+Navigation to multiple cued reward locations has been increasingly used to
+study rodent learning. Though deep reinforcement learning agents have been
+shown to be able to learn the task, they are not biologically plausible.
+Biologically plausible classic actor-critic agents have been shown to learn to
+navigate to single reward locations, but which biologically plausible agents
+are able to learn multiple cue-reward location tasks has remained unclear. In
+this computational study, we show versions of classic agents that learn to
+navigate to a single reward location, and adapt to reward location
+displacement, but are not able to learn multiple paired association navigation.
+The limitation is overcome by an agent in which place cell and cue information
+are first processed by a feedforward nonlinear hidden layer with synapses to
+the actor and critic subject to temporal difference error-modulated plasticity.
+Faster learning is obtained when the feedforward layer is replaced by a
+recurrent reservoir network.

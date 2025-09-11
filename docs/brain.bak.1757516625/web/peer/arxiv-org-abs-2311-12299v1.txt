@@ -1,0 +1,10 @@
+http://arxiv.org/abs/2311.12299v1
+
+We report a thin-film lithium niobate electro-optic isolator fabricated by
+photolithography-assisted chemo-mechanical etching in this work. The device
+demonstrates 39.50 dB isolation when subjected to a 24 GHz microwave of 25.5
+dBm on its electrodes. The measured isolation remains consistently above 30 dB
+within the 1510 nm to 1600 nm wavelength range. The overall device insertion
+loss, specifically the fiber-to-fiber insert loss, has been measured to be 2.6
+dB, which is attributed to our highly efficient spot size converter and the low
+propagation loss observed in the fabricated waveguides.

@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Radar
+
+Radar is a system that uses radio waves to determine the distance (ranging), direction, and radial velocity of objects relative to the site. It is a radiodetermination method used to detect and track aircraft, ships, spacecraft, guided missiles, motor vehicles, weather formations and terrain. The term RADAR was coined in 1940 by the United States Navy as an acronym for "radio detection and ranging". The term radar has since entered English and other languages as an anacronym, a common noun, losing all capitalization.

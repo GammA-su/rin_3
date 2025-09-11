@@ -1,0 +1,21 @@
+http://arxiv.org/abs/2501.18770v1
+
+Vagus nerve stimulation (VNS) has emerged as a promising therapeutic
+intervention across various neurological and psychiatric conditions, including
+epilepsy, depression, and stroke rehabilitation; however, its mechanisms of
+action on neural circuits remain incompletely understood. Here, we present a
+novel theoretical framework based on predictive coding that conceptualizes VNS
+effects through differential modulation of feedforward and feedback neural
+circuits. Based on recent evidence, we propose that VNS shifts the balance
+between feedforward and feedback processing through multiple neuromodulatory
+systems, resulting in enhanced feedforward signal transmission. This framework
+integrates anatomical pathways, receptor distributions, and physiological
+responses to explain the influence of the VNS on neural dynamics across
+different spatial and temporal scales. VNS may facilitate neural plasticity and
+adaptive behavior through acetylcholine and noradrenaline (norepinephrine),
+which differentially modulate feedforward and feedback signaling. This
+mechanistic understanding serves as a basis for interpreting the cognitive and
+therapeutic outcomes across different clinical conditions. Our perspective
+provides a unified theoretical framework for understanding circuit-specific VNS
+effects and suggests new directions for investigating their therapeutic
+mechanisms.

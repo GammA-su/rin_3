@@ -1,0 +1,16 @@
+http://arxiv.org/abs/2008.07625v1
+
+Liquid liquid phase separation (LLPS) mediated by pi-cation bonds between
+tyrosine and arginine residues are of biological importance. To understand the
+interactions between proteins in the condensed phase in close analogy to
+complex coacervation, we run multiple umbrella calculations between oligomers
+containing tyrosine (pY) and arginine (pR). We find pR-pY complexation to be
+energetically driven. Metadynamics simulations reveal that this energy of
+complexation comes primarily from pi-cation bonds. On running free energy
+calculation for the second binding step of complex coacervation, we find
+striking similarities between this process and pi-mediated LLPS. These
+calculations lead us to believe that contrary to the common notion, complex
+coacervation as whole, which involves an entropic complexation followed by an
+energetic aggregation is not invoked by proteins containing arginine and
+tyrosine residues. Rather, the latter step in itself, in which neutral polyion
+pairs aggregate together is the correct mechanism for pi-cation mediated LLPS.

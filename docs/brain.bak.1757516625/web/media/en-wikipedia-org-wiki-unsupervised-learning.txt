@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Unsupervised%20learning
+
+Unsupervised learning is a framework in machine learning where, in contrast to supervised learning, algorithms learn patterns exclusively from unlabeled data. Other frameworks in the spectrum of supervisions include weak- or semi-supervision, where a small portion of the data is tagged, and self-supervision. Some researchers consider self-supervised learning a form of unsupervised learning.

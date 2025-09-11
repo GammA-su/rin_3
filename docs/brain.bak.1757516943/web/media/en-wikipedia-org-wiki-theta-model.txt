@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Theta%20model
+
+The theta model, or Ermentrout–Kopell canonical model, is a biological neuron model originally developed to mathematically describe neurons in the animal Aplysia. The model is particularly well-suited to describe neural bursting, which is characterized by periodic transitions between rapid oscillations in the membrane potential followed by quiescence. This bursting behavior is often found in neurons responsible for controlling and maintaining steady rhythms such as breathing, swimming, and digesting. Of the three main classes of bursting neurons, the theta model describes parabolic bursting, which is characterized by a parabolic frequency curve during each burst.

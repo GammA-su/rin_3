@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Physical%20oncology
+
+Physical oncology (PO) is defined as the study of the role of mechanical signals in a cancerous tumor. The mechanical signals can be forces, pressures. If we generalize we will speak of "stress field" and "stress tensor".

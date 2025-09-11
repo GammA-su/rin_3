@@ -1,0 +1,13 @@
+http://arxiv.org/abs/2010.00262v1
+
+Active inference (AI) is a persuasive theoretical framework from
+computational neuroscience that seeks to describe action and perception as
+inference-based computation. However, this framework has yet to provide
+practical sensorimotor control algorithms that are competitive with alternative
+approaches. In this work, we frame active inference through the lens of control
+as inference (CaI), a body of work that presents trajectory optimization as
+inference. From the wider view of `probabilistic numerics', CaI offers
+principled, numerically robust optimal control solvers that provide uncertainty
+quantification, and can scale to nonlinear problems with approximate inference.
+We show that AI may be framed as partially-observed CaI when the cost function
+is defined specifically in the observation states.

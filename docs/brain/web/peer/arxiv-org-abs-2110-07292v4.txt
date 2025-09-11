@@ -1,0 +1,17 @@
+http://arxiv.org/abs/2110.07292v4
+
+Standard models of biologically realistic or biologically inspired
+reinforcement learning employ a global error signal, which implies the use of
+shallow networks. On the other hand, error backpropagation allows the use of
+networks with multiple layers. However, precise error backpropagation is
+difficult to justify in biologically realistic networks because it requires
+precise weighted error backpropagation from layer to layer. In this study, we
+introduce a novel network that solves this problem by propagating only the sign
+of the plasticity change (i.e., LTP/LTD) throughout the whole network, while
+neuromodulation controls the learning rate. Neuromodulation can be understood
+as a rectified error or relevance signal, while the top-down sign of the error
+signal determines whether long-term potentiation or long-term depression will
+occur. To demonstrate the effectiveness of this approach, we conducted a real
+robotic task as proof of concept. Our results show that this paradigm can
+successfully perform complex tasks using a biologically plausible learning
+mechanism.

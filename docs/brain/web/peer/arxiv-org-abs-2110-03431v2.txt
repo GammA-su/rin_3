@@ -1,0 +1,16 @@
+http://arxiv.org/abs/2110.03431v2
+
+Hierarchical Temporal Memory (HTM) is an unsupervised learning algorithm
+inspired by the features of the neocortex that can be used to continuously
+process stream data and detect anomalies, without requiring a large amount of
+data for training nor requiring labeled data. HTM is also able to continuously
+learn from samples, providing a model that is always up-to-date with respect to
+observations. These characteristics make HTM particularly suitable for
+supporting online failure prediction in cloud systems, which are systems with a
+dynamically changing behavior that must be monitored to anticipate problems.
+This paper presents the first systematic study that assesses HTM in the context
+of failure prediction. The results that we obtained considering 72
+configurations of HTM applied to 12 different types of faults introduced in the
+Clearwater cloud system show that HTM can help to predict failures with
+sufficient effectiveness (F-measure = 0.76), representing an interesting
+practical alternative to (semi-)supervised algorithms.

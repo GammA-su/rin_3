@@ -1,0 +1,16 @@
+http://arxiv.org/abs/2201.05464v1
+
+Enquiries concerning the underlying mechanisms and the emergent properties of
+a biological brain have a long history of theoretical postulates and
+experimental findings. Today, the scientific community tends to converge to a
+single interpretation of the brain's cognitive underpinnings -- that it is a
+Bayesian inference machine. This contemporary view has naturally been a strong
+driving force in recent developments around computational and cognitive
+neurosciences. Of particular interest is the brain's ability to process the
+passage of time -- one of the fundamental dimensions of our experience. How can
+we explain empirical data on human time perception using the Bayesian brain
+hypothesis? Can we replicate human estimation biases using Bayesian models?
+What insights can the agent-based machine learning models provide for the study
+of this subject? In this chapter, we review some of the recent advancements in
+the field of time perception and discuss the role of Bayesian processing in the
+construction of temporal models.

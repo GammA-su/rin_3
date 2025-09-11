@@ -1,0 +1,26 @@
+http://arxiv.org/abs/2110.06882v1
+
+The motor-driven intracellular transport of vesicles to synaptic targets in
+the axons and dendrites of neurons plays a crucial role in normal cell
+function. Moreover, stimulus-dependent regulation of active transport is an
+important component of long-term synaptic plasticity, whereas the disruption of
+vesicular transport can lead to the onset of various neurodegenerative
+diseases. In this paper we investigate how the discrete and stochastic nature
+of vesicular transport in axons contributes to fluctuations in the accumulation
+of resources within synaptic targets. We begin by solving the first passage
+time problem of a single motor-cargo complex (particle) searching for synaptic
+targets distributed along a one-dimensional axonal cable. We then use queuing
+theory
+  to analyze the accumulation of synaptic resources under the combined effects
+of multiple search-and-capture events and degradation. In particular, we
+determine the steady-state mean and variance of the distribution of synaptic
+resources along the axon in response to the periodic insertion of particles.
+The mean distribution recovers the spatially decaying distribution of resources
+familiar from deterministic population models. However, the discrete nature of
+vesicular transport can lead to Fano factors that are greater than unity
+(non-Poissonian) across the array of synapses, resulting in significant
+fluctuation bursts. We also find that each synaptic Fano factor is independent
+of the rate of particle insertion but increases monotonically with the amount
+of protein cargo in each vesicle. This implies that fluctuations can be reduced
+by increasing the injection rate while decreasing the cargo load of each
+vesicle.

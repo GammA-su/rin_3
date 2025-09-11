@@ -1,0 +1,16 @@
+http://arxiv.org/abs/2201.12447v1
+
+Visible-wavelength very large-scale integration (VLSI) photonic circuits have
+potential to play important roles in quantum information and sensing
+technologies. The realization of scalable, high-speed, and low-loss photonic
+mesh circuits depends on reliable and well-engineered visible photonic
+components. Here we report a low-voltage optical phase shifter based on
+piezo-actuated mechanical cantilevers, fabricated on a CMOS compatible, 200 mm
+wafer-based visible photonics platform. We show linear phase and amplitude
+modulation with 6 V$_{\pi}$-cm in differential operation, -1.5 dB to -2 dB
+insertion loss, and up to 40 dB contrast in the 700 nm - 780 nm range. By
+adjusting selected cantilever parameters, we demonstrate a low-displacement and
+a high-displacement device, both exhibiting a nearly flat frequency response
+from DC to a peak mechanical resonance at 23 MHz and 6.8 MHz respectively,
+which through resonant enhancement of Q~40, further decreases the operating
+voltage down to 0.15 V$_{\pi}$-cm.

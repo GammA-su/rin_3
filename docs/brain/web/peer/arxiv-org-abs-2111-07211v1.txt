@@ -1,0 +1,25 @@
+http://arxiv.org/abs/2111.07211v1
+
+Differential equation-based physiological models of sleep-wake networks
+describe sleep-wake regulation by simulating the activity of wake- and
+sleep-promoting neuronal populations and the modulation of these populations by
+homeostatic and circadian ($\sim24$ h) drives. Here, we consider a sleep-wake
+flip-flop network model consisting of mutually inhibitory interactions between
+wake- and sleep-promoting neuronal populations. Motivated by changes in sleep
+behavior during early childhood as babies transition from napping to
+non-napping behavior, we vary homeostatic and circadian modulation and analyze
+effects on resulting sleep-wake patterns. To identify the types and sequences
+of bifurcations leading to changes in stable sleep-wake patterns in this
+piecewise-smooth model, we employ multiple mathematical methods, including
+fast-slow decomposition and numerical computation of circle maps. We find that
+the average daily number of sleeps exhibits a period adding sequence as the
+homeostatic time constants are reduced, and that the temporal circadian profile
+influences the number of observed solutions in the sequence. These solutions
+emerge through sequences of saddle-node and border collision bifurcations,
+where the particular sequence depends on parameter values. When the temporal
+circadian profile is steep, as is observed with long day lengths, some sleep
+patterns are lost and bistability of other patterns may occur. We analyze a
+limiting case of the temporal circadian waveform, a circadian hard switch
+model, to understand this loss of solutions. Generally, our holistic analysis
+approach provides an alternative analysis method for model systems that defy
+conventional numerical bifurcation analysis techniques.

@@ -1,0 +1,28 @@
+http://arxiv.org/abs/2501.06762v1
+
+Continuous, adaptive learning-the ability to adapt to the environment and
+improve performance-is a hallmark of both natural and artificial intelligence.
+Biological organisms excel in acquiring, transferring, and retaining knowledge
+while adapting to dynamic environments, making them a rich source of
+inspiration for artificial neural networks (ANNs). This study explores how
+neuromodulation, a fundamental feature of biological learning systems, can help
+address challenges such as catastrophic forgetting and enhance the robustness
+of ANNs in continuous learning scenarios. Driven by neuromodulators including
+dopamine (DA), acetylcholine (ACh), serotonin (5-HT) and noradrenaline (NA),
+neuromodulatory processes in the brain operate at multiple scales, facilitating
+dynamic responses to environmental changes through mechanisms ranging from
+local synaptic plasticity to global network-wide adaptability. Importantly, the
+relationship between neuromodulators, and their interplay in the modulation of
+sensory and cognitive processes are more complex than expected, demonstrating a
+"many-to-one" neuromodulator-to-task mapping. To inspire the design of novel
+neuromodulation-aware learning rules, we highlight (i) how
+multi-neuromodulatory interactions enrich single-neuromodulator-driven
+learning, (ii) the impact of neuromodulators at multiple spatial and temporal
+scales, and correspondingly, (iii) strategies to integrate neuromodulated
+learning into or approximate it in ANNs. To illustrate these principles, we
+present a case study to demonstrate how neuromodulation-inspired mechanisms,
+such as DA-driven reward processing and NA-based cognitive flexibility, can
+enhance ANN performance in a Go/No-Go task. By integrating multi-scale
+neuromodulation, we aim to bridge the gap between biological learning and
+artificial systems, paving the way for ANNs with greater flexibility,
+robustness, and adaptability.

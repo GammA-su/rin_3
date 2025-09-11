@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Flash%20memory
+
+Flash memory is an electronic non-volatile computer memory storage medium that can be electrically erased and reprogrammed. The two main types of flash memory, NOR flash and NAND flash, are named for the NOR and NAND logic gates. Both use the same cell design, consisting of floating-gate MOSFETs. They differ at the circuit level, depending on whether the state of the bit line or word lines is pulled high or low; in NAND flash, the relationship between the bit line and the word lines resembles a NAND gate; in NOR flash, it resembles a NOR gate.

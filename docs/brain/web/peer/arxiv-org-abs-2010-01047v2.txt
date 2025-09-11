@@ -1,0 +1,20 @@
+http://arxiv.org/abs/2010.01047v2
+
+Predictive coding is an influential theory of cortical function which posits
+that the principal computation the brain performs, which underlies both
+perception and learning, is the minimization of prediction errors. While
+motivated by high-level notions of variational inference, detailed
+neurophysiological models of cortical microcircuits which can implements its
+computations have been developed. Moreover, under certain conditions,
+predictive coding has been shown to approximate the backpropagation of error
+algorithm, and thus provides a relatively biologically plausible
+credit-assignment mechanism for training deep networks. However, standard
+implementations of the algorithm still involve potentially neurally implausible
+features such as identical forward and backward weights, backward nonlinear
+derivatives, and 1-1 error unit connectivity. In this paper, we show that these
+features are not integral to the algorithm and can be removed either directly
+or through learning additional sets of parameters with Hebbian update rules
+without noticeable harm to learning performance. Our work thus relaxes current
+constraints on potential microcircuit designs and hopefully opens up new
+regions of the design-space for neuromorphic implementations of predictive
+coding.

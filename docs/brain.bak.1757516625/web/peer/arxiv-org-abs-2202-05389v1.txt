@@ -1,0 +1,23 @@
+http://arxiv.org/abs/2202.05389v1
+
+Recent developments in network neuroscience have highlighted the importance
+of developing techniques for analyzing and modeling brain networks. A
+particularly powerful approach for studying complex neural systems is to
+formulate generative models that use wiring rules to synthesize networks
+closely resembling the topology of a given connectome. Successful models can
+highlight the principles by which a network is organized (identify structural
+features that arise from wiring rules versus those that emerge) and potentially
+uncover the mechanisms by which it grows and develops. Previous research has
+shown that such models can validate the effectiveness of spatial embedding and
+other (non-spatial) wiring rules in shaping the network topology of the human
+connectome. In this research, we propose variants of the action-based model
+that combine a variety of generative factors capable of explaining the topology
+of the human connectome. We test the descriptive validity of our models by
+evaluating their ability to explain between-subject variability. Our analysis
+provides evidence that geometric constraints are vital for connectivity between
+brain regions, and an action-based model relying on both topological and
+geometric properties can account for between-subject variability in structural
+network properties. Further, we test correlations between parameters of
+subject-optimized models and various measures of cognitive ability and find
+that higher cognitive ability is associated with an individual's tendency to
+form long-range or non-local connections.

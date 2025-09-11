@@ -1,0 +1,12 @@
+http://arxiv.org/abs/2104.14364v2
+
+How does your brain decide what you will do next? Over the past few decades
+compelling evidence has emerged that the basal ganglia, a collection of nuclei
+in the fore- and mid-brain of all vertebrates, are vital to action selection.
+Gurney, Prescott, and Redgrave published an influential computational account
+of this idea in Biological Cybernetics in 2001. Here we take a look back at
+this pair of papers, outlining the "GPR" model contained therein, the context
+of that model's development, and the influence it has had over the past twenty
+years. Tracing its lineage into models and theories still emerging now, we are
+encouraged that the GPR model is that rare thing, a computational model of a
+brain circuit whose advances were directly built on by others.

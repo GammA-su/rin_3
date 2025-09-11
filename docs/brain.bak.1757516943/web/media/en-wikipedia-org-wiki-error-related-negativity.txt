@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Error-related%20negativity
+
+Error-related negativity (ERN), sometimes referred to as the Ne, is a component of an event-related potential (ERP). ERPs are electrical activity in the brain as measured through electroencephalography (EEG) and time-locked to an external event or a response. A robust ERN component is observed after errors are committed during various choice tasks, even when the participant is not explicitly aware of making the error; however, in the case of unconscious errors the ERN is reduced. An ERN is also observed when non-human primates commit errors.

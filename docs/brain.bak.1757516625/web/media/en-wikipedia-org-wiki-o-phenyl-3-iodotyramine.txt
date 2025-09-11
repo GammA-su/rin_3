@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/O-Phenyl-3-iodotyramine
+
+o-Phenyl-3-iodotyramine (o-PIT) is a drug which acts as a selective agonist for the trace amine-associated receptor 1 (TAAR1). It has reasonable selectivity for TAAR1 but relatively low potency, and is rapidly metabolised in vivo, making it less useful for research than newer ligands such as RO5166017. Its EC50Tooltip half-maximal effective concentration values have been reported to be 35 nM for the mouse TAAR1, 2.4 nM at the rat TAAR1, and 9.5 nM at the human TAAR1.

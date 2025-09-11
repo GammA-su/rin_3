@@ -1,0 +1,28 @@
+http://arxiv.org/abs/2410.21882v1
+
+As AI closely interacts with human society, it is crucial to ensure that its
+decision-making is safe, altruistic, and aligned with human ethical and moral
+values. However, existing research on embedding ethical and moral
+considerations into AI remains insufficient, and previous external constraints
+based on principles and rules are inadequate to provide AI with long-term
+stability and generalization capabilities. In contrast, the intrinsic
+altruistic motivation based on empathy is more willing, spontaneous, and
+robust. Therefore, this paper is dedicated to autonomously driving intelligent
+agents to acquire morally behaviors through human-like affective empathy
+mechanisms. We draw inspiration from the neural mechanism of human brain's
+moral intuitive decision-making, and simulate the mirror neuron system to
+construct a brain-inspired affective empathy-driven altruistic decision-making
+model. Here, empathy directly impacts dopamine release to form intrinsic
+altruistic motivation. Based on the principle of moral utilitarianism, we
+design the moral reward function that integrates intrinsic empathy and
+extrinsic self-task goals. A comprehensive experimental scenario incorporating
+empathetic processes, personal objectives, and altruistic goals is developed.
+The proposed model enables the agent to make consistent moral decisions
+(prioritizing altruism) by balancing self-interest with the well-being of
+others. We further introduce inhibitory neurons to regulate different levels of
+empathy and verify the positive correlation between empathy levels and
+altruistic preferences, yielding conclusions consistent with findings from
+psychological behavioral experiments. This work provides a feasible solution
+for the development of ethical AI by leveraging the intrinsic human-like
+empathy mechanisms, and contributes to the harmonious coexistence between
+humans and AI.

@@ -1,0 +1,24 @@
+http://arxiv.org/abs/2204.07478v2
+
+Synaptic communication is studied by communication engineers for two main
+reasons. One is to enable novel neuroengineering applications that require
+interfacing with neurons. The other reason is to draw inspiration for the
+design of synthetic molecular communication systems. Both of these goals
+require understanding of how the chemical synaptic signal is sensed and
+transduced at the synaptic receiver (Rx). While signal reception in synaptic
+molecular communication (SMC) depends heavily on the kinetics of the receptors
+employed by the synaptic Rxs, existing channel models for SMC either
+oversimplify the receptor kinetics or employ complex, high-dimensional kinetic
+schemes limited to specific types of receptors. Both approaches do not
+facilitate a comparative analysis of different types of natural synapses. In
+this paper, we propose a novel deterministic channel model for SMC which
+employs a generic three-state receptor model that captures the characteristics
+of the most important receptor types in SMC. The model is based on a transfer
+function expansion of Fick's diffusion equation and accounts for release,
+diffusion, and degradation of neurotransmitters as well as their reversible
+binding to finitely many generic postsynaptic receptors. The proposed SMC model
+is the first that allows studying the impact of the characteristic dynamics of
+the main postsynaptic receptor types on synaptic signal transmission. Numerical
+results indicate that the proposed model indeed exhibits a wide range of
+biologically plausible dynamics when specialized to specific natural receptor
+types.

@@ -1,0 +1,21 @@
+http://arxiv.org/abs/2406.01883v1
+
+Humans learn multiple tasks in succession with minimal mutual interference,
+through the context gating mechanism in the prefrontal cortex (PFC). The
+brain-inspired models of spiking neural networks (SNN) have drawn massive
+attention for their energy efficiency and biological plausibility. To overcome
+catastrophic forgetting when learning multiple tasks in sequence, current SNN
+models for lifelong learning focus on memory reserving or regularization-based
+modification, while lacking SNN to replicate human experimental behavior.
+Inspired by biological context-dependent gating mechanisms found in PFC, we
+propose SNN with context gating trained by the local plasticity rule (CG-SNN)
+for lifelong learning. The iterative training between global and local
+plasticity for task units is designed to strengthen the connections between
+task neurons and hidden neurons and preserve the multi-task relevant
+information. The experiments show that the proposed model is effective in
+maintaining the past learning experience and has better task-selectivity than
+other methods during lifelong learning. Our results provide new insights that
+the CG-SNN model can extend context gating with good scalability on different
+SNN architectures with different spike-firing mechanisms. Thus, our models have
+good potential for parallel implementation on neuromorphic hardware and model
+human's behavior.

@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Entropy%20in%20thermodynamics%20and%20information%20theory
+
+Because the mathematical expressions for information theory developed by Claude Shannon and Ralph Hartley in the 1940s are similar to the mathematics of statistical thermodynamics worked out by Ludwig Boltzmann and J. Willard Gibbs in the 1870s, in which the concept of entropy is central, Shannon was persuaded to employ the same term 'entropy' for his measure of uncertainty. Information entropy is often presumed to be equivalent to physical (thermodynamic) entropy.

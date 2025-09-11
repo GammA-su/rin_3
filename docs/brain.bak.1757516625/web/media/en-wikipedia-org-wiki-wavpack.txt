@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/WavPack
+
+WavPack is a free and open-source lossless audio compression format and application implementing the format. It is unique in the way that it supports hybrid audio compression alongside normal compression which is similar to how FLAC works. It also supports compressing a wide variety of lossless formats, including various variants of PCM and also DSD as used in SACDs, together with its support for surround audio.

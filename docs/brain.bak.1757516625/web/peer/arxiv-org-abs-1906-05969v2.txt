@@ -1,0 +1,8 @@
+http://arxiv.org/abs/1906.05969v2
+
+This work presents a differential FBAR circulator that uses the bending mode
+to mechanically modulate the FBAR mode without any varactors or switches. The
+differential FBAR circulator achieves a 61.5 dB isolation (IX) with an
+insertion loss (IL) of 1.8 dB at 2.68 GHz, demonstrating the first MEMS-only
+circulator. The isolation bandwidth at -25 dB is 4.7 MHz and power handling of
+the circulator is limited by the FBARs to +34 dBm.

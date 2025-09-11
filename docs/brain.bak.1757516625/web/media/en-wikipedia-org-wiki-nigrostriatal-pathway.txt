@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Nigrostriatal%20pathway
+
+The nigrostriatal pathway is a bilateral dopaminergic pathway in the brain that connects the substantia nigra pars compacta (SNc) in the midbrain with the dorsal striatum in the forebrain. It is one of the four major dopamine pathways in the brain, and is critical in the production of movement as part of a system called the basal ganglia motor loop. Dopaminergic neurons of this pathway release dopamine from axon terminals that synapse onto GABAergic medium spiny neurons (MSNs), also known as spiny projection neurons (SPNs), located in the striatum.

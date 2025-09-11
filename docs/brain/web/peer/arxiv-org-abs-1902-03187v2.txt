@@ -1,0 +1,20 @@
+http://arxiv.org/abs/1902.03187v2
+
+Stochastic gradient descent requires that training samples be drawn from a
+uniformly random distribution of the data. For a deployed system that must
+learn online from an uncontrolled and unknown environment, the ordering of
+input samples often fails to meet this criterion, making lifelong learning a
+difficult challenge. We exploit the locality of the unsupervised Spike Timing
+Dependent Plasticity (STDP) learning rule to target local representations in a
+Spiking Neural Network (SNN) to adapt to novel information while protecting
+essential information in the remainder of the SNN from catastrophic forgetting.
+In our Controlled Forgetting Networks (CFNs), novel information triggers
+stimulated firing and heterogeneously modulated plasticity, inspired by
+biological dopamine signals, to cause rapid and isolated adaptation in the
+synapses of neurons associated with outlier information. This targeting
+controls the forgetting process in a way that reduces the degradation of
+accuracy for older tasks while learning new tasks. Our experimental results on
+the MNIST dataset validate the capability of CFNs to learn successfully over
+time from an unknown, changing environment, achieving 95.36% accuracy, which we
+believe is the best unsupervised accuracy ever achieved by a fixed-size,
+single-layer SNN on a completely disjoint MNIST dataset.

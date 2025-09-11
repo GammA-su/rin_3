@@ -1,0 +1,14 @@
+http://arxiv.org/abs/2103.03274v2
+
+Computations on the dendritic trees of neurons have important constraints.
+Voltage dependent conductances in dendrites are not similar to arbitrary
+direct-current generation, they are the basis for dendritic nonlinearities and
+they do not allow converting positive currents into negative currents. While it
+has been speculated that the dendritic tree of a neuron can be seen as a
+multi-layer neural network and it has been shown that such an architecture
+could be computationally strong, we do not know if that computational strength
+is preserved under these biological constraints. Here we simulate models of
+dendritic computation with and without these constraints. We find that
+dendritic model performance on interesting machine learning tasks is not hurt
+by these constraints but may benefit from them. Our results suggest that single
+real dendritic trees may be able to learn a surprisingly broad range of tasks.

@@ -1,0 +1,11 @@
+http://arxiv.org/abs/2011.12351v1
+
+We present Hindsight Network Credit Assignment (HNCA), a novel learning
+method for stochastic neural networks, which works by assigning credit to each
+neuron's stochastic output based on how it influences the output of its
+immediate children in the network. We prove that HNCA provides unbiased
+gradient estimates while reducing variance compared to the REINFORCE estimator.
+We also experimentally demonstrate the advantage of HNCA over REINFORCE in a
+contextual bandit version of MNIST. The computational complexity of HNCA is
+similar to that of backpropagation. We believe that HNCA can help stimulate new
+ways of thinking about credit assignment in stochastic compute graphs.

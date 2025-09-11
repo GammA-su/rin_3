@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Catastrophic%20interference
+
+Catastrophic interference, also known as catastrophic forgetting, is the tendency of an artificial neural network to abruptly and drastically forget previously learned information upon learning new information.

@@ -1,0 +1,20 @@
+http://arxiv.org/abs/2408.06347v1
+
+Schizophrenia is a globally prevalent psychiatric disorder that severely
+impairs daily life. Schizophrenia is caused by dopamine imbalances in the
+fronto-striatal pathways of the brain, which influences fine motor control in
+the cerebellum. This leads to abnormalities in handwriting. The goal of this
+study was to develop an accurate, objective, and accessible computational
+method to be able to distinguish schizophrenic handwriting samples from
+non-schizophrenic handwriting samples. To achieve this, data from Crespo et al.
+(2019) was used, which contains images of handwriting samples from
+schizophrenic and non-schizophrenic patients. The data was preprocessed and
+augmented to produce a more robust model that can recognize different types of
+handwriting. The data was used to train several different convolutional neural
+networks, and the model with the base architecture of InceptionV3 performed the
+best, differentiating between the two types of image with a 92% accuracy rate.
+To make this model accessible, a secure website was developed for medical
+professionals to use for their patients. Such a result suggests that
+handwriting analysis through computational models holds promise as a
+non-invasive and objective method for clinicians to diagnose and monitor
+schizophrenia.

@@ -1,0 +1,28 @@
+http://arxiv.org/abs/2204.05138v2
+
+This article presents an artificial intelligence (AI) architecture intended
+to simulate the iterative updating of the human working memory system. It
+features several interconnected neural networks designed to emulate the
+specialized modules of the cerebral cortex. These are structured hierarchically
+and integrated into a global workspace. They are capable of temporarily
+maintaining high-level representational patterns akin to the psychological
+items maintained in working memory. This maintenance is made possible by
+persistent neural activity in the form of two modalities: sustained neural
+firing (resulting in a focus of attention) and synaptic potentiation (resulting
+in a short-term store). Representations held in persistent activity are
+recursively replaced resulting in incremental changes to the content of the
+working memory system. As this content gradually evolves, successive processing
+states overlap and are continuous with one another. The present article will
+explore how this architecture can lead to iterative shift in the distribution
+of coactive representations, ultimately leading to mental continuity between
+processing states, and thus to human-like thought and cognition. Like the human
+brain, this AI working memory store will be linked to multiple imagery
+(topographic map) generation systems corresponding to various sensory
+modalities. As working memory is iteratively updated, the maps created in
+response will construct sequences of related mental imagery. Thus, neural
+networks emulating the prefrontal cortex and its reciprocal interactions with
+early sensory and motor cortex capture the imagery guidance functions of the
+human brain. This sensory and motor imagery creation, coupled with an
+iteratively updated working memory store may provide an AI system with the
+cognitive assets needed to achieve synthetic consciousness or artificial
+sentience.

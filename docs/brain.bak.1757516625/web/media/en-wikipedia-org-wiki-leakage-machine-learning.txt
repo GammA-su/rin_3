@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Leakage%20%28machine%20learning%29
+
+In statistics and machine learning, leakage is the use of information in the model training process which would not be expected to be available at prediction time, causing the predictive scores (metrics) to overestimate the model's utility when run in a production environment.

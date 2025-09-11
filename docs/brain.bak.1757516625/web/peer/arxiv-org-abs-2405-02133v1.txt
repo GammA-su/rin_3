@@ -1,0 +1,17 @@
+http://arxiv.org/abs/2405.02133v1
+
+Collective decision-making enables multi-robot systems to act autonomously in
+real-world environments. Existing collective decision-making mechanisms suffer
+from the so-called speed versus accuracy trade-off or rely on high complexity,
+e.g., by including global communication. Recent work has shown that more
+efficient collective decision-making mechanisms based on artificial neural
+networks can be generated using methods from evolutionary computation. A major
+drawback of these decision-making neural networks is their limited
+interpretability. Analyzing evolved decision-making mechanisms can help us
+improve the efficiency of hand-coded decision-making mechanisms while
+maintaining a higher interpretability. In this paper, we analyze evolved
+collective decision-making mechanisms in detail and hand-code two new
+decision-making mechanisms based on the insights gained. In benchmark
+experiments, we show that the newly implemented collective decision-making
+mechanisms are more efficient than the state-of-the-art collective
+decision-making mechanisms voter model and majority rule.

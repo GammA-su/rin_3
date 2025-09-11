@@ -1,0 +1,19 @@
+http://arxiv.org/abs/2204.04733v1
+
+Current neural decoding methods typically aim at explaining behavior based on
+neural activity via supervised learning. However, since generally there is a
+strong connection between learning of subjects and their expectations on
+long-term rewards, we propose NeuRL, an inverse reinforcement learning approach
+that (1) extracts an intrinsic reward function from collected trajectories of a
+subject in closed form, (2) maps neural signals to this intrinsic reward to
+account for long-term dependencies in the behavior and (3) predicts the
+simulated behavior for unseen neural signals by extracting Q-values and the
+corresponding Boltzmann policy based on the intrinsic reward values for these
+unseen neural signals. We show that NeuRL leads to better generalization and
+improved decoding performance compared to supervised approaches. We study the
+behavior of rats in a response-preparation task and evaluate the performance of
+NeuRL within simulated inhibition and per-trial behavior prediction. By
+assigning clear functional roles to defined neuronal populations our approach
+offers a new interpretation tool for complex neuronal data with testable
+predictions. In per-trial behavior prediction, our approach furthermore
+improves accuracy by up to 15% compared to traditional methods.

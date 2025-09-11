@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Augmented%20reality
+
+Augmented reality (AR), also known as mixed reality (MR), is a technology that overlays real-time 3D-rendered computer graphics onto a portion of the real world through a display, such as a handheld device or head-mounted display. This experience is seamlessly interwoven with the physical world such that it is perceived as an immersive aspect of the real environment. In this way, augmented reality alters one's ongoing perception of a real-world environment, compared to virtual reality, which aims to completely replace the user's real-world environment with a simulated one. Augmented reality is typically visual, but can span multiple sensory modalities, including auditory, haptic, and somatosensory.

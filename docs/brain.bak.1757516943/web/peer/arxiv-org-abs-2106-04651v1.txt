@@ -1,0 +1,18 @@
+http://arxiv.org/abs/2106.04651v1
+
+We propose that the entirety of the prefrontal cortex can be seen as
+fundamentally premotor in nature. By this, we mean that the prefrontal cortex
+consists of an action abstraction hierarchy whose core function is the
+potentiation and depotentiation of possible action plans at different levels of
+granularity. We argue that the apex of the hierarchy should revolve around the
+process of goal selection, which we posit is inherently a form of abstract
+action optimization. Anatomical and functional evidence supports the idea that
+this hierarchy originates on the orbital surface of the brain and extends
+dorsally to motor cortex. Our view, therefore, positions the orbitofrontal
+cortex as the central site for the optimization of goal selection policies, and
+suggests that other proposed roles are aspects of this more general function.
+We conclude by proposing that the dynamical systems approach, which works well
+in motor systems, can be extended to the rest of prefrontal cortex. Our
+proposed perspective will reframe outstanding questions, open up new areas of
+inquiry, and will align theories of prefrontal function with evolutionary
+principles.

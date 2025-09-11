@@ -1,0 +1,20 @@
+http://arxiv.org/abs/2002.02807v2
+
+Human beings and other vertebrates show remarkable performance and efficiency
+in locomotion, but the functioning of their biological control systems for
+locomotion is still only partially understood. The basic patterns and timing
+for locomotion are provided by a central pattern generator (CPG) in the spinal
+cord. The cerebellum is known to play an important role in adaptive locomotion.
+Recent studies have given insights into the error signals responsible for
+driving the cerebellar adaptation in locomotion. However, the question of how
+the cerebellar output influences the gait remains unanswered. We hypothesize
+that the cerebellar correction is applied to the pattern formation part of the
+CPG. Here, a bio-inspired control system for adaptive locomotion of the
+musculoskeletal system of the mouse is presented, where a cerebellar-like
+module adapts the step time by using the double support interlimb asymmetry as
+a temporal teaching signal. The control system is tested on a simulated mouse
+in a split-belt treadmill setup similar to those used in experiments with real
+mice. The results show adaptive locomotion behavior in the interlimb parameters
+similar to that seen in humans and mice. The control system adaptively
+decreases the double support asymmetry that occurs due to environmental
+perturbations in the split-belt protocol.

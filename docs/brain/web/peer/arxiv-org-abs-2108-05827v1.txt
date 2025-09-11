@@ -1,0 +1,16 @@
+http://arxiv.org/abs/2108.05827v1
+
+Synaptic plasticity is vital for learning and memory in the brain. It
+consists of long-term potentiation (LTP) and long-term depression (LTD). Spike
+frequency is one of the major components of synaptic plasticity in the brain, a
+noisy environment. Recently, we mathematically analysed the frequency-dependent
+synaptic plasticity (FDP) in vivo and found that LTP is more likely to occur
+with an increase in the frequency of background synaptic activity. Previous
+studies suggest fluctuation in the amplitude of background synaptic activity.
+However, little is understood about the relationship between synaptic
+plasticity and the fluctuation in the background synaptic activity. To address
+this issue, we performed numerical simulations of a calcium-based synapse
+model. Then, we found attenuation of the tendency to become LTD due to an
+increase in the fluctuation of background synaptic activity, leading to an
+enhancement of synaptic weight. Our result suggests that the fluctuation affect
+synaptic plasticity in the brain.

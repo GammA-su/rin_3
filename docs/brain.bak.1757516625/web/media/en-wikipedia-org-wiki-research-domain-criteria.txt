@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Research%20Domain%20Criteria
+
+The Research Domain Criteria (RDoC) project is an initiative of personalized medicine in psychiatry developed by US National Institute of Mental Health (NIMH). In contrast to the Diagnostic and Statistical Manual of Mental Disorders (DSM) maintained by the American Psychiatric Association (APA), RDoC aims to address the heterogeneity in the current nosology by providing a biologically-based, rather than symptom-based, framework for understanding mental disorders. "RDoC is an attempt to create a new kind of taxonomy for mental disorders by bringing the power of modern research approaches in genetics, neuroscience, and behavioral science to the problem of mental illness."

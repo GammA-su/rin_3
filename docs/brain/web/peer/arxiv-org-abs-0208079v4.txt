@@ -1,0 +1,16 @@
+http://arxiv.org/abs/cond-mat/0208079v4
+
+Spike-timing-dependent plasticity (STDP) has recently been shown in some
+physiological studies. STDP depends on the precise temporal relationship of
+pre- and post-synaptic spikes. Many authors have indicated that a precise
+balance between long-term potentiation (LTP) and long-term depression (LTD) of
+STDP is significant for a stable learning. However, a situation in which the
+balance is maintained precisely is inconceivable in the brain. Using a method
+of the statistical neurodynamics, we show robust retrieval properties of
+spatio-temporal patterns in an associative memory model against the imbalance
+between LTP and LTD. When the fluctuation of LTD is assumed to obey a Gaussian
+distribution with mean 0 and variance $\delta^2$, the storage capacity takes a
+finite value even at large $\delta$. This means that the balance between LTP
+and LTD of STDP need not to be maintained precisely, but must be maintained on
+average. Furthermore, we found that a basin of attraction becomes smaller as
+$\delta$ increases while an initial critical overlap remains unchanged.

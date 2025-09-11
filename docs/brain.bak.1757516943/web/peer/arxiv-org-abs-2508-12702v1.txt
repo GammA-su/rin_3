@@ -1,0 +1,21 @@
+http://arxiv.org/abs/2508.12702v1
+
+Robust information representation and its persistent maintenance are
+fundamental for higher cognitive functions. Existing models employ distinct
+neural mechanisms to separately address noise-resistant processing or
+information maintenance, yet a unified framework integrating both operations
+remains elusive -- a critical gap in understanding cortical computation. Here,
+we introduce a recurrent neural circuit that combines divisive normalization
+with self-excitation to achieve both robust encoding and stable retention of
+normalized inputs. Mathematical analysis shows that, for suitable parameter
+regimes, the system forms a continuous attractor with two key properties: (1)
+input-proportional stabilization during stimulus presentation; and (2)
+self-sustained memory states persisting after stimulus offset. We demonstrate
+the model's versatility in two canonical tasks: (a) noise-robust encoding in a
+random-dot kinematogram (RDK) paradigm; and (b) approximate Bayesian belief
+updating in a probabilistic Wisconsin Card Sorting Test (pWCST). This work
+establishes a unified mathematical framework that bridges noise suppression,
+working memory, and approximate Bayesian inference within a single cortical
+microcircuit, offering fresh insights into the brain's canonical computation
+and guiding the design of biologically plausible artificial neural
+architectures.

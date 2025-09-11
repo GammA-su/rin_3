@@ -1,0 +1,18 @@
+http://arxiv.org/abs/2407.06195v1
+
+Mammals navigate novel environments and exhibit resilience to sparse
+environmental sensory cues via place and grid cells, which encode position in
+space. While the efficiency of grid cell coding has been extensively studied,
+the computational role of place cells is less well understood. This gap arises
+partially because spatial information measures have, until now, been limited to
+single place cells. We derive and implement a higher-order spatial information
+measure, allowing for the study of the emergence of multiple place cells in a
+self-supervised manner. We show that emergent place cells have many desirable
+features, including high-accuracy spatial decoding. This is the first work in
+which higher-order spatial information measures that depend solely on place
+cells' firing rates have been derived and which focuses on the emergence of
+multiple place cells via self-supervised learning. By quantifying the spatial
+information of multiple place cells, we enhance our understanding of place cell
+formation and capabilities in recurrent neural networks, thereby improving the
+potential navigation capabilities of artificial systems in novel environments
+without objective location information.

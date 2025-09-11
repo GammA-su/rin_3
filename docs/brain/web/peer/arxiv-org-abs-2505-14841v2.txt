@@ -1,0 +1,21 @@
+http://arxiv.org/abs/2505.14841v2
+
+Spiking neural networks (SNNs) promise energy-efficient computation by
+mimicking biological neural dynamics, yet existing plasticity rules focus on
+isolated spike pairs and fail to leverage the synchronous activity patterns
+that drive learning in biological systems. We introduce
+spike-synchrony-dependent plasticity (SSDP), a training approach that adjusts
+synaptic weights based on the degree of synchronous neural firing rather than
+spike timing order. Our method operates as a local, post-optimization mechanism
+that applies updates to sparse parameter subsets, maintaining computational
+efficiency with linear scaling. SSDP serves as a lightweight event-structure
+regularizer, biasing the network toward biologically plausible spatio-temporal
+synchrony while preserving standard convergence behavior. SSDP seamlessly
+integrates with standard backpropagation while preserving the forward
+computation graph. We validate our approach across single-layer SNNs and
+spiking Transformers on datasets from static images to high-temporal-resolution
+tasks, demonstrating improved convergence stability and enhanced robustness to
+spike-time jitter and event noise. These findings provide new insights into how
+biological neural networks might leverage synchronous activity for efficient
+information processing and suggest that synchrony-dependent plasticity
+represents a key computational principle underlying neural learning.

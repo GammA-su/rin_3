@@ -1,0 +1,19 @@
+http://arxiv.org/abs/2410.01022v2
+
+Grid cells in the medial entorhinal cortex (MEC) of the mammalian brain
+exhibit a strikingly regular hexagonal firing field over space. These cells are
+learned after birth and are thought to support spatial navigation but also more
+abstract computations. Although various computational models, including those
+based on artificial neural networks, have been proposed to explain the
+formation of grid cells, the process through which the MEC circuit ${\it
+learns}$ to develop grid cells remains unclear. In this study, we argue that
+predictive coding, a biologically plausible plasticity rule known to learn
+visual representations, can also train neural networks to develop hexagonal
+grid representations from spatial inputs. We demonstrate that grid cells emerge
+robustly through predictive coding in both static and dynamic environments, and
+we develop an understanding of this grid cell learning capability by
+analytically comparing predictive coding with existing models. Our work
+therefore offers a novel and biologically plausible perspective on the learning
+mechanisms underlying grid cells. Moreover, it extends the predictive coding
+theory to the hippocampal formation, suggesting a unified learning algorithm
+for diverse cortical representations.

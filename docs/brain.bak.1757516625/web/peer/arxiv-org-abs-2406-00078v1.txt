@@ -1,0 +1,16 @@
+http://arxiv.org/abs/2406.00078v1
+
+Project managers need to manage risks throughout the project lifecycle and,
+thus, need to know how changes in activity durations influence project duration
+and risk. We propose a new indicator (the Activity Risk Index, ARI) that
+measures the contribution of each activity to the total project risk while it
+is underway. In particular, the indicator informs us about what activities
+contribute the most to the project's uncertainty so that project managers can
+pay closer attention to the performance of these activities. The main
+difference between our indicator and other activity sensitivity metrics in the
+literature (e.g. cruciality, criticality, significance, or schedule sensitivity
+indices) is that our indicator is based on the Schedule Risk Baseline concept
+instead of on cost or schedule baselines. The new metric not only provides
+information at the beginning of the project, but also while it is underway.
+Furthermore, the ARI is the only one to offer a normalized result: if we add
+its value for each activity, the total sum is 100%.

@@ -1,0 +1,18 @@
+http://arxiv.org/abs/2110.04074v1
+
+Active inference, a corollary of the free energy principle, is a formal way
+of describing the behavior of certain kinds of random dynamical systems that
+have the appearance of sentience. In this chapter, we describe how active
+inference combines Bayesian decision theory and optimal Bayesian design
+principles under a single imperative to minimize expected free energy. It is
+this aspect of active inference that allows for the natural emergence of
+information-seeking behavior. When removing prior outcomes preferences from
+expected free energy, active inference reduces to optimal Bayesian design,
+i.e., information gain maximization. Conversely, active inference reduces to
+Bayesian decision theory in the absence of ambiguity and relative risk, i.e.,
+expected utility maximization. Using these limiting cases, we illustrate how
+behaviors differ when agents select actions that optimize expected utility,
+expected information gain, and expected free energy. Our T-maze simulations
+show optimizing expected free energy produces goal-directed information-seeking
+behavior while optimizing expected utility induces purely exploitive behavior
+and maximizing information gain engenders intrinsically motivated behavior.

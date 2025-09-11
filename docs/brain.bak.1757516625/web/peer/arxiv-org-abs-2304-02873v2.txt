@@ -1,0 +1,14 @@
+http://arxiv.org/abs/2304.02873v2
+
+Sleep is considered to play an essential role in memory reorganization.
+Despite its importance, classical theoretical models did not focus on some
+sleep characteristics. Here, we review recent theoretical approaches
+investigating their roles in learning and discuss the possibility that
+non-rapid eye movement (NREM) sleep selectively consolidates memory, and rapid
+eye movement (REM) sleep reorganizes the representations of memories. We first
+review the possibility that slow waves during NREM sleep contribute to memory
+selection by using sequential firing patterns and the existence of up and down
+states. Second, we discuss the role of dreaming during REM sleep in developing
+neuronal representations. We finally discuss how to develop these points
+further, emphasizing the connections to experimental neuroscience and machine
+learning.

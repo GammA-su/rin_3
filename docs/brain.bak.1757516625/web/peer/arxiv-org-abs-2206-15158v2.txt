@@ -1,0 +1,26 @@
+http://arxiv.org/abs/2206.15158v2
+
+Neural mass models are used to simulate cortical dynamics and to explain the
+electrical and magnetic fields measured using electro- and
+magnetoencephalography. Simulations evince a complex phase-space structure for
+these kinds of models; including stationary points and limit cycles and the
+possibility for bifurcations and transitions among different modes of activity.
+This complexity allows neural mass models to describe the itinerant features of
+brain dynamics. However, expressive, nonlinear neural mass models are often
+difficult to fit to empirical data without additional simplifying assumptions:
+e.g., that the system can be modelled as linear perturbations around a fixed
+point. In this study we offer a mathematical analysis of neural mass models,
+specifically the canonical microcircuit model, providing analytical solutions
+describing dynamical itinerancy. We derive a perturbation analysis up to second
+order of the phase flow, together with adiabatic approximations. This allows us
+to describe amplitude modulations as gradient flows on a potential function of
+intrinsic connectivity. These results provide analytic proof-of-principle for
+the existence of semi-stable states of cortical dynamics at the scale of a
+cortical column. Crucially, this work allows for model inversion of neural mass
+models, not only around fixed points, but over regions of phase space that
+encompass transitions among semi or multi-stable states of oscillatory
+activity. In principle, this formulation of cortical dynamics may improve our
+understanding of the itinerancy that underwrites measures of cortical activity
+(through EEG or MEG). Crucially, these theoretical results speak to model
+inversion in the context of multiple semi-stable brain states, such as onset of
+seizure activity in epilepsy or beta bursts in Parkinsons disease.

@@ -1,0 +1,19 @@
+http://arxiv.org/abs/2408.01163v3
+
+In cognitive neuroscience and brain-computer interface research, accurately
+predicting imagined stimuli is crucial. This study investigates the
+effectiveness of Domain Adaptation (DA) in enhancing imagery prediction using
+primarily visual data from fMRI scans of 18 subjects. Initially, we train a
+baseline model on visual stimuli to predict imagined stimuli, utilizing data
+from 14 brain regions. We then develop several models to improve imagery
+prediction, comparing different DA methods. Our results demonstrate that DA
+significantly enhances imagery prediction in binary classification on our
+dataset, as well as in multiclass classification on a publicly available
+dataset. We then conduct a DA-enhanced searchlight analysis, followed by
+permutation-based statistical tests to identify brain regions where imagery
+decoding is consistently above chance across subjects. Our DA-enhanced
+searchlight predicts imagery contents in a highly distributed set of brain
+regions, including the visual cortex and the frontoparietal cortex, thereby
+outperforming standard cross-domain classification methods. The complete code
+and data for this paper have been made openly available for the use of the
+scientific community.

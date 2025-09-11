@@ -1,0 +1,17 @@
+http://arxiv.org/abs/1411.6506v5
+
+Network data are increasingly collected along with other variables of
+interest. Our motivation is drawn from neurophysiology studies measuring brain
+connectivity networks for a sample of individuals along with their membership
+to a low or high creative reasoning group. It is of paramount importance to
+develop statistical methods for testing of global and local changes in the
+structural interconnections among brain regions across groups. We develop a
+general Bayesian procedure for inference and testing of group differences in
+the network structure, which relies on a nonparametric representation for the
+conditional probability mass function associated with a network-valued random
+variable. By leveraging a mixture of low-rank factorizations, we allow simple
+global and local hypothesis testing adjusting for multiplicity. An efficient
+Gibbs sampler is defined for posterior computation. We provide theoretical
+results on the flexibility of the model and assess testing performance in
+simulations. The approach is applied to provide novel insights on the
+relationships between human brain networks and creativity.

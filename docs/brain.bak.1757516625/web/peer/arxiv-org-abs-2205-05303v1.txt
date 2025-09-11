@@ -1,0 +1,16 @@
+http://arxiv.org/abs/2205.05303v1
+
+Top-down feedback in cortex is critical for guiding sensory processing, which
+has prominently been formalized in the theory of hierarchical predictive coding
+(hPC). However, experimental evidence for error units, which are central to the
+theory, is inconclusive, and it remains unclear how hPC can be implemented with
+spiking neurons. To address this, we connect hPC to existing work on efficient
+coding in balanced networks with lateral inhibition, and predictive computation
+at apical dendrites. Together, this work points to an efficient implementation
+of hPC with spiking neurons, where prediction errors are computed not in
+separate units, but locally in dendritic compartments. The implied model shows
+a remarkable correspondence to experimentally observed cortical connectivity
+patterns, plasticity and dynamics, and at the same time can explain hallmarks
+of predictive processing, such as mismatch responses, in cortex. We thus
+propose dendritic predictive coding as one of the main organizational
+principles of cortex.

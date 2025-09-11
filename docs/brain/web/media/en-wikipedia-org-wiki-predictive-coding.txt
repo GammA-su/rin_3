@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Predictive%20coding
+
+In neuroscience, predictive coding is a theory of brain function which postulates that the brain is constantly generating and updating a "mental model" of the environment. According to the theory, such a mental model is used to predict input signals from the senses that are then compared with the actual input signals from those senses. Predictive coding is member of a wider set of theories that follow the Bayesian brain hypothesis.

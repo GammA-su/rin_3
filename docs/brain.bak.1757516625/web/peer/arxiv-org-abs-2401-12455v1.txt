@@ -1,0 +1,27 @@
+http://arxiv.org/abs/2401.12455v1
+
+We present a multi-agent Deep Reinforcement Learning (DRL) framework for
+managing large transportation infrastructure systems over their life-cycle.
+Life-cycle management of such engineering systems is a computationally
+intensive task, requiring appropriate sequential inspection and maintenance
+decisions able to reduce long-term risks and costs, while dealing with
+different uncertainties and constraints that lie in high-dimensional spaces. To
+date, static age- or condition-based maintenance methods and risk-based or
+periodic inspection plans have mostly addressed this class of optimization
+problems. However, optimality, scalability, and uncertainty limitations are
+often manifested under such approaches. The optimization problem in this work
+is cast in the framework of constrained Partially Observable Markov Decision
+Processes (POMDPs), which provides a comprehensive mathematical basis for
+stochastic sequential decision settings with observation uncertainties, risk
+considerations, and limited resources. To address significantly large state and
+action spaces, a Deep Decentralized Multi-agent Actor-Critic (DDMAC) DRL method
+with Centralized Training and Decentralized Execution (CTDE), termed as
+DDMAC-CTDE is developed. The performance strengths of the DDMAC-CTDE method are
+demonstrated in a generally representative and realistic example application of
+an existing transportation network in Virginia, USA. The network includes
+several bridge and pavement components with nonstationary degradation,
+agency-imposed constraints, and traffic delay and risk considerations. Compared
+to traditional management policies for transportation networks, the proposed
+DDMAC-CTDE method vastly outperforms its counterparts. Overall, the proposed
+algorithmic framework provides near optimal solutions for transportation
+infrastructure management under real-world constraints and complexities.

@@ -1,0 +1,26 @@
+http://arxiv.org/abs/2411.16075v2
+
+AI's significant recent advances using general-purpose circuit computations
+offer a potential window into how the neocortex and cerebellum of the brain are
+able to achieve a diverse range of functions across sensory, cognitive, and
+motor domains, despite their uniform circuit structures. However, comparing the
+brain and AI is challenging unless clear similarities exist, and past reviews
+have been limited to comparison of brain-inspired vision AI and the visual
+neocortex. Here, to enable comparisons across diverse functional domains, we
+subdivide circuit computation into three elements -- circuit structure,
+input/outputs, and the learning algorithm -- and evaluate the similarities for
+each element. With this novel approach, we identify wide-ranging similarities
+and convergent evolution in the brain and AI, providing new insights into key
+concepts in neuroscience. Furthermore, inspired by processing mechanisms of AI,
+we propose a new theory that integrates established neuroscience theories,
+particularly the theories of internal models and the mirror neuron system. Both
+the neocortex and cerebellum predict future world events from past information
+and learn from prediction errors, thereby acquiring models of the world. These
+models enable three core processes: (1) Prediction -- generating future
+information, (2) Understanding -- interpreting the external world via
+compressed and abstracted sensory information, and (3) Generation --
+repurposing the future-information generation mechanism to produce other types
+of outputs. The universal application of these processes underlies the ability
+of the neocortex and cerebellum to accomplish diverse functions with uniform
+circuits. Our systematic approach, insights, and theory promise groundbreaking
+advances in understanding the brain.

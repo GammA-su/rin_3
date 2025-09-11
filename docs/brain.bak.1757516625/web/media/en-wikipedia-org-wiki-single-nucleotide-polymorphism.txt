@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Single-nucleotide%20polymorphism
+
+In genetics and bioinformatics, a single-nucleotide polymorphism is a germline substitution of a single nucleotide at a specific position in the genome. Although certain definitions require the substitution to be present in a sufficiently large fraction of the population, many publications do not apply such a frequency threshold.

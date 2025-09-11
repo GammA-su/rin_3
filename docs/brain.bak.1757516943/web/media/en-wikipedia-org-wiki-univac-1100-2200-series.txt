@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/UNIVAC%201100/2200%20series
+
+The UNIVAC 1100/2200 series is a series of compatible 36-bit computer systems, beginning with the UNIVAC 1107 in 1962, initially made by Sperry Rand. The series continues to be supported today by Unisys Corporation as the ClearPath Dorado Series. The solid-state 1107 model number was in the same sequence as the earlier vacuum-tube computers, but the early computers were not compatible with their solid-state successors.

@@ -1,0 +1,28 @@
+http://arxiv.org/abs/2412.06355v1
+
+Recent advances in spiking neural networks (SNNs) have a predominant focus on
+network architectures, while relatively little attention has been paid to the
+underlying neuron model. The point neuron models, a cornerstone of deep SNNs,
+pose a bottleneck on the network-level expressivity since they depict somatic
+dynamics only. In contrast, the multi-compartment models in neuroscience offer
+remarkable expressivity by introducing dendritic morphology and dynamics, but
+remain underexplored in deep learning due to their unaffordable computational
+cost and inflexibility. To combine the advantages of both sides for a flexible,
+efficient yet more powerful model, we propose the dendritic spiking neuron
+(DendSN) incorporating multiple dendritic branches with nonlinear dynamics.
+Compared to the point spiking neurons, DendSN exhibits significantly higher
+expressivity. DendSN's flexibility enables its seamless integration into
+diverse deep SNN architectures. To accelerate dendritic SNNs (DendSNNs), we
+parallelize dendritic state updates across time steps, and develop Triton
+kernels for GPU-level acceleration. As a result, we can construct large-scale
+DendSNNs with depth comparable to their point SNN counterparts. Next, we
+comprehensively evaluate DendSNNs' performance on various demanding tasks. By
+modulating dendritic branch strengths using a context signal, catastrophic
+forgetting of DendSNNs is substantially mitigated. Moreover, DendSNNs
+demonstrate enhanced robustness against noise and adversarial attacks compared
+to point SNNs, and excel in few-shot learning settings. Our work firstly
+demonstrates the possibility of training bio-plausible dendritic SNNs with
+depths and scales comparable to traditional point SNNs, and reveals superior
+expressivity and robustness of reduced dendritic neuron models in deep
+learning, thereby offering a fresh perspective on advancing neural network
+design.

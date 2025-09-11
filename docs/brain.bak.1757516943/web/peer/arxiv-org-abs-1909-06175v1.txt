@@ -1,0 +1,17 @@
+http://arxiv.org/abs/1909.06175v1
+
+Feedforward convolutional neural networks are the prevalent model of core
+object recognition. For challenging conditions, such as occlusion,
+neuroscientists believe that the recurrent connectivity in the visual cortex
+aids object recognition. In this work we investigate if and how artificial
+neural networks can also benefit from recurrent connectivity. For this we
+systematically compare architectures comprised of bottom-up (B), lateral (L)
+and top-down (T) connections. To evaluate performance, we introduce two novel
+stereoscopic occluded object datasets, which bridge the gap from classifying
+digits to recognizing 3D objects. The task consists of recognizing one target
+object occluded by multiple occluder objects. We find that recurrent models
+perform significantly better than their feedforward counterparts, which were
+matched in parametric complexity. We show that for challenging stimuli, the
+recurrent feedback is able to correctly revise the initial feedforward guess of
+the network. Overall, our results suggest that both artificial and biological
+neural networks can exploit recurrence for improved object recognition.

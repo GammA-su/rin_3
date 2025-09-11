@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Loss%20aversion
+
+In cognitive science and behavioral economics, loss aversion refers to a cognitive bias in which the same situation is perceived as worse if it is framed as a loss, rather than a gain. It should not be confused with risk aversion, which describes the rational behavior of valuing an uncertain outcome at less than its expected value.

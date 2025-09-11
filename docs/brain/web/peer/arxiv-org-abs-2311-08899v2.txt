@@ -1,0 +1,20 @@
+http://arxiv.org/abs/2311.08899v2
+
+Continuous time crystals (CTCs) are characterized by sustained oscillations
+that break the time translation symmetry. Since the ruling out of equilibrium
+CTCs by no-go theorems, the emergence of such dynamical phases has been
+observed in various driven-dissipative quantum platforms. The current
+understanding of CTCs is mainly based on mean-field (MF) theories, which fail
+to address the problem of whether the long-range time crystalline order exists
+in noisy, spatially extended systems without the protection of all-to-all
+couplings. Here, we propose a new kind of CTC realized in a quantum contact
+model through self-organized bistability (SOB). The exotic CTCs stem from the
+interplay between collective dissipation induced by the first-order absorbing
+phase transitions (APTs) and slow constant driving provided by an incoherent
+pump. The stability of such oscillatory phases in finite dimensions under the
+action of intrinsic quantum fluctuations is scrutinized by the functional
+renormalization group method and numerical simulations. Occurring at the edge
+of quantum synchronization, the CTC phase exhibits an inherent period and
+amplitude with a coherence time diverging with system size, thus also
+constituting a boundary time crystal (BTC). Our results serve as a solid route
+towards self-protected CTCs in strongly interacting open systems.

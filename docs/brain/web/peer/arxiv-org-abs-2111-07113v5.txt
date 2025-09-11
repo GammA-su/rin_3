@@ -1,0 +1,21 @@
+http://arxiv.org/abs/2111.07113v5
+
+Mitigating nonlinear weight update characteristics is one of the main
+challenges in designing neural networks based on synaptic devices. This paper
+presents a novel weight update method named conditional reverse update scheme
+(CRUS) for hardware neural network (HNN) consisting of synaptic devices with
+highly nonlinear or abrupt conductance update characteristics. We formulate a
+linear optimization method of conductance in synaptic devices to reduce the
+average deviation of weight changes from those calculated by the Stochastic
+Gradient Rule (SGD) algorithm. We introduce a metric called update noise (UN)
+to analyze the training dynamics during training. We then design a weight
+update rule that reduces the UN averaged over the training process. The
+optimized network achieves >90% accuracy on the MNIST dataset under highly
+nonlinear long-term potentiation (LTP) and long-term depression (LTD)
+conditions while using inaccurate and infrequent conductance sensing.
+Furthermore, the proposed method shows better accuracy than previously reported
+nonlinear weight update mitigation techniques under the same hardware
+specifications and device conditions. It also exhibits robustness to temporal
+variations in conductance updates. We expect our scheme to relieve design
+requirements in device and circuit engineering and serve as a practical
+technique that can be applied to future HNNs.

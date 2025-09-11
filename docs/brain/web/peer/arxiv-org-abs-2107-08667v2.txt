@@ -1,0 +1,22 @@
+http://arxiv.org/abs/2107.08667v2
+
+To develop a deep-learning model that integrates radiomics analysis for
+enhanced performance of COVID-19 and Non-COVID-19 pneumonia detection using
+chest X-ray image, two deep-learning models were trained based on a pre-trained
+VGG-16 architecture: in the 1st model, X-ray image was the sole input; in the
+2nd model, X-ray image and 2 radiomic feature maps (RFM) selected by the
+saliency map analysis of the 1st model were stacked as the input. Both models
+were developed using 812 chest X-ray images with 262/288/262
+COVID-19/Non-COVID-19 pneumonia/healthy cases, and 649/163 cases were assigned
+as training-validation/independent test sets. In 1st model using X-ray as the
+sole input, the 1) sensitivity, 2) specificity, 3) accuracy, and 4) ROC
+Area-Under-the-Curve of COVID-19 vs Non-COVID-19 pneumonia detection were 1)
+0.90$\pm$0.07 vs 0.78$\pm$0.09, 2) 0.94$\pm$0.04 vs 0.94$\pm$0.04, 3)
+0.93$\pm$0.03 vs 0.89$\pm$0.03, and 4) 0.96$\pm$0.02 vs 0.92$\pm$0.04. In the
+2nd model, two RFMs, Entropy and Short-Run-Emphasize, were selected with their
+highest cross-correlations with the saliency maps of the 1st model. The
+corresponding results demonstrated significant improvements (p<0.05) of
+COVID-19 vs Non-COVID-19 pneumonia detection: 1) 0.95$\pm$0.04 vs
+0.85$\pm$0.04, 2) 0.97$\pm$0.02 vs 0.96$\pm$0.02, 3) 0.97$\pm$0.02 vs
+0.93$\pm$0.02, and 4) 0.99$\pm$0.01 vs 0.97$\pm$0.02. The reduced variations
+suggested a superior robustness of 2nd model design.

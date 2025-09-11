@@ -1,0 +1,19 @@
+http://arxiv.org/abs/1804.09291v1
+
+Modern video codecs including the newly developed AOM/AV1 utilize hybrid
+coding techniques to remove spatial and temporal redundancy. However, efficient
+exploitation of statistical dependencies measured by a mean squared error (MSE)
+does not always produce the best psychovisual result. One interesting approach
+is to only encode visually relevant information and use a different coding
+method for "perceptually insignificant" regions in the frame, which can lead to
+substantial data rate reductions while maintaining visual quality. In this
+paper, we introduce a texture analyzer before encoding the input sequences to
+identify detail irrelevant texture regions in the frame using convolutional
+neural networks. We designed and developed a new coding tool referred to as
+texture mode for AV1, where if texture mode is selected at the encoder, no
+inter-frame prediction is performed for the identified texture regions.
+Instead, displacement of the entire region is modeled by just one set of motion
+parameters. Therefore, only the model parameters are transmitted to the decoder
+for reconstructing the texture regions. Non-texture regions in the frame are
+coded conventionally. We show that for many standard test sets, the proposed
+method achieved significant data rate reductions.

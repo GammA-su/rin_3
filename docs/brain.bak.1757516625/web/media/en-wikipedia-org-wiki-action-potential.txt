@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Action%20potential
+
+An action potential is a series of quick changes in voltage across a cell membrane. An action potential occurs when the membrane potential of a specific cell rapidly rises and falls. This depolarization then causes adjacent locations to similarly depolarize. Action potentials occur in several types of excitable cells, which include animal cells like neurons and muscle cells, as well as some plant cells. Certain endocrine cells such as pancreatic beta cells, and certain cells of the anterior pituitary gland are also excitable cells.

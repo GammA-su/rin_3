@@ -1,0 +1,24 @@
+http://arxiv.org/abs/2206.12980v2
+
+Schizophrenia is a chronic neuropsychiatric disorder that causes distinct
+structural alterations within the brain. We hypothesize that deep learning
+applied to a structural neuroimaging dataset could detect disease-related
+alteration and improve classification and diagnostic accuracy. We tested this
+hypothesis using a single, widely available, and conventional T1-weighted MRI
+scan, from which we extracted the 3D whole-brain structure using standard
+post-processing methods. A deep learning model was then developed, optimized,
+and evaluated on three open datasets with T1-weighted MRI scans of patients
+with schizophrenia. Our proposed model outperformed the benchmark model, which
+was also trained with structural MR images using a 3D CNN architecture. Our
+model is capable of almost perfectly (area under the ROC curve = 0.987)
+distinguishing schizophrenia patients from healthy controls on unseen
+structural MRI scans. Regional analysis localized subcortical regions and
+ventricles as the most predictive brain regions. Subcortical structures serve a
+pivotal role in cognitive, affective, and social functions in humans, and
+structural abnormalities of these regions have been associated with
+schizophrenia. Our finding corroborates that schizophrenia is associated with
+widespread alterations in subcortical brain structure and the subcortical
+structural information provides prominent features in diagnostic
+classification. Together, these results further demonstrate the potential of
+deep learning to improve schizophrenia diagnosis and identify its structural
+neuroimaging signatures from a single, standard T1-weighted brain MRI.

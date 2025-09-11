@@ -1,0 +1,13 @@
+http://arxiv.org/abs/2302.03023v4
+
+Accurate predictive models of the visual cortex neural response to natural
+visual stimuli remain a challenge in computational neuroscience. In this work,
+we introduce V1T, a novel Vision Transformer based architecture that learns a
+shared visual and behavioral representation across animals. We evaluate our
+model on two large datasets recorded from mouse primary visual cortex and
+outperform previous convolution-based models by more than 12.7% in prediction
+performance. Moreover, we show that the self-attention weights learned by the
+Transformer correlate with the population receptive fields. Our model thus sets
+a new benchmark for neural response prediction and can be used jointly with
+behavioral and neural recordings to reveal meaningful characteristic features
+of the visual cortex.

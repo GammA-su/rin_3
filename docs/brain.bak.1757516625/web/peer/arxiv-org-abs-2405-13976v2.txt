@@ -1,0 +1,20 @@
+http://arxiv.org/abs/2405.13976v2
+
+The drive to develop artificial neural networks that efficiently utilize
+resources has generated significant interest in bio-inspired Spiking Neural
+Networks (SNNs). These networks are particularly attractive due to their
+potential in applications requiring low power and memory. This potential is
+further enhanced by the ability to perform online local learning, enabling them
+to adapt to dynamic environments. This requires the model to be adaptive in a
+self-supervised manner. While self-supervised learning has seen great success
+in many deep learning domains, its application for online local learning in
+multi-layer SNNs remains underexplored. In this paper, we introduce the
+"EchoSpike Predictive Plasticity" (ESPP) learning rule, a pioneering online
+local learning rule designed to leverage hierarchical temporal dynamics in SNNs
+through predictive and contrastive coding. We validate the effectiveness of
+this approach using benchmark datasets, demonstrating that it performs on par
+with current state-of-the-art supervised learning rules. The temporal and
+spatial locality of ESPP makes it particularly well-suited for low-cost
+neuromorphic processors, representing a significant advancement in developing
+biologically plausible self-supervised learning models for neuromorphic
+computing at the edge.

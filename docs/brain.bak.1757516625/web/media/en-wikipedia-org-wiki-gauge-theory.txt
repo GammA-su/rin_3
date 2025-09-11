@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Gauge%20theory
+
+In physics, a gauge theory is a type of field theory in which the Lagrangian, and hence the dynamics of the system itself, does not change under local transformations according to certain smooth families of operations. Formally, the Lagrangian is invariant under these transformations.

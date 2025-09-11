@@ -1,0 +1,23 @@
+http://arxiv.org/abs/1206.2716v1
+
+A biological pathway represents a set of genes that serves a particular
+cellular or a physiological function. The genes within the same pathway are
+expected to function together and hence may interact with each other. It is
+also known that many genes, and so pathways, interact with other environmental
+variables. However, no formal procedure has yet been developed to evaluate the
+pathway-environment interaction. In this article, we propose a semiparametric
+method to model the pathway-environment interaction. The method connects a
+least square kernel machine and a semiparametric mixed effects model. We model
+nonparametrically the environmental effect via a natural cubic spline. Both a
+pathway effect and an interaction between a pathway and an environmental effect
+are modeled nonparametrically via a kernel machine, and we estimate variance
+component representing an interaction effect under a semiparametric mixed
+effects model. We then employ a restricted likelihood ratio test and a score
+test to evaluate the main pathway effect and the pathway-environment
+interaction. The approach was applied to a genetic pathway data of Type II
+diabetes, and pathways with either a significant main pathway effect, an
+interaction effect or both were identified. Other methods previously developed
+determined many as having a significant main pathway effect only. Furthermore,
+among those significant pathways, we discovered some pathways having a
+significant pathway-environment interaction effect, a result that other methods
+would not be able to detect.

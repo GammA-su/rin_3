@@ -1,0 +1,24 @@
+http://arxiv.org/abs/2407.04525v4
+
+Recent progress in artificial intelligence (AI) has been driven by insights
+from neuroscience, particularly with the development of artificial neural
+networks (ANNs). This has significantly enhanced the replication of complex
+cognitive tasks such as vision and natural language processing. Despite these
+advances, ANNs struggle with continual learning, adaptable knowledge transfer,
+robustness, and resource efficiency - capabilities that biological systems
+handle seamlessly. Specifically, ANNs often overlook the functional and
+morphological diversity of the brain, hindering their computational
+capabilities. Furthermore, incorporating cell-type specific neuromodulatory
+effects into ANNs with neuronal heterogeneity could enable learning at two
+spatial scales: spiking behavior at the neuronal level, and synaptic plasticity
+at the circuit level, thereby potentially enhancing their learning abilities.
+In this article, we summarize recent bio-inspired models, learning rules and
+architectures and propose a biologically-informed framework for enhancing ANNs.
+Our proposed dual-framework approach highlights the potential of spiking neural
+networks (SNNs) for emulating diverse spiking behaviors and dendritic
+compartments to simulate morphological and functional diversity of neuronal
+computations. Finally, we outline how the proposed approach integrates
+brain-inspired compartmental models and task-driven SNNs, balances
+bioinspiration and complexity, and provides scalable solutions for pressing AI
+challenges, such as continual learning, adaptability, robustness, and
+resource-efficiency.

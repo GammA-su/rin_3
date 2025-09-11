@@ -1,0 +1,10 @@
+http://arxiv.org/abs/1710.00055v1
+
+We report a comprehensive study on the performance of uniform and non-uniform
+based subwavelength grating couplers in Silicon-on-Insulator. The two
+performance metrics, coupling efficiency and bandwidth enhancement and
+trade-offs is presented. We also present, design parameters to achieve
+high-efficiency and broadband operation based on the detailed study of various
+loss mechanisms in the grating. Based on the detailed analysis subwavelength
+grating coupler designs with efficiency as high as 84 % with a 1 dB bandwidth
+of 50 nm and 98 % with a 44 nm 1 dB bandwidth is presented.

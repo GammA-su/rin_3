@@ -1,0 +1,24 @@
+http://arxiv.org/abs/2509.05908v1
+
+Recently, cross-attention-based contextual automatic speech recognition (ASR)
+models have made notable advancements in recognizing personalized biasing
+phrases. However, the effectiveness of cross-attention is affected by
+variations in biasing information volume, especially when the length of the
+biasing list increases significantly. We find that, regardless of the length of
+the biasing list, only a limited amount of biasing information is most relevant
+to a specific ASR intermediate representation. Therefore, by identifying and
+integrating the most relevant biasing information rather than the entire
+biasing list, we can alleviate the effects of variations in biasing information
+volume for contextual ASR. To this end, we propose a purified semantic
+correlation joint modeling (PSC-Joint) approach. In PSC-Joint, we define and
+calculate three semantic correlations between the ASR intermediate
+representations and biasing information from coarse to fine: list-level,
+phrase-level, and token-level. Then, the three correlations are jointly modeled
+to produce their intersection, so that the most relevant biasing information
+across various granularities is highlighted and integrated for contextual
+recognition. In addition, to reduce the computational cost introduced by the
+joint modeling of three semantic correlations, we also propose a purification
+mechanism based on a grouped-and-competitive strategy to filter out irrelevant
+biasing phrases. Compared with baselines, our PSC-Joint approach achieves
+average relative F1 score improvements of up to 21.34% on AISHELL-1 and 28.46%
+on KeSpeech, across biasing lists of varying lengths.

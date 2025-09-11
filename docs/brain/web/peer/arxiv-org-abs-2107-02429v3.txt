@@ -1,0 +1,15 @@
+http://arxiv.org/abs/2107.02429v3
+
+Spike-timing-dependent plasticity(STDP) is a biological process in which the
+precise order and timing of neuronal spikes affect the degree of synaptic
+modification. While there have been numerous research focusing on the role of
+STDP in neural coding, the functional implications of STDP at the macroscopic
+level in the brain have not been fully explored yet. In this work, we propose a
+neurodynamical model based on STDP that renders storage and retrieval of a
+group of associative memories. We showed that the function of STDP at the
+macroscopic level is to form a "memory plane" in the neural state space which
+dynamically encodes high dimensional data. We derived the analytic relation
+between the input, the memory plane, and the induced macroscopic neural
+oscillations around the memory plane. Such plane produces a limit cycle in
+reaction to a similar memory cue, which can be used for retrieval of the
+original input.

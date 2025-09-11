@@ -1,0 +1,14 @@
+http://arxiv.org/abs/1904.05401v1
+
+Recently, it was shown that a communication system could be represented as a
+deep learning (DL) autoencoder. Inspired by this idea, we target the problem of
+OFDM-based wireless cross-technology communication (CTC) where both
+in-technology and CTC transmissions take place simultaneously. We propose
+DeepCTC, a DL-based autoencoder approach allowing us to exploit DL for joint
+optimization of transmitter and receivers for both in-technology as well as CTC
+communication in an end-to-end manner. Different from classical CTC designs, we
+can easily weight in-technology against CTC communication. Moreover, CTC
+broadcasts can be efficiently realized even in the presence of heterogeneous
+CTC receivers with diverse OFDM technologies. Our numerical analysis confirms
+the feasibility of DeepCTC as both in-technology and CTC messages can be
+decoded with sufficient low block error rate.

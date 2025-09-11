@@ -1,0 +1,26 @@
+http://arxiv.org/abs/2503.23972v2
+
+Biological neural systems efficiently learn from delayed rewards despite
+relying on noisy synaptic transmission and lacking centralized optimization
+mechanisms. In contrast, artificial neural networks trained with reinforcement
+learning typically rely on backpropagation (BP), which limits their use in
+resource-constrained systems or with non-differentiable components. While
+noise-based alternatives, like reward-modulated Hebbian learning (RMHL),
+provide a biologically grounded framework for credit assignment, they struggle
+with temporal delays and hierarchical processing -key challenges in real-world
+learning. In this work, we derive a novel noise-based learning rule to address
+these challenges. Drawing inspiration from biological neural circuits, our
+method uses reward prediction errors as its optimization target to generate
+increasingly advantageous behavior, and incorporates an eligibility trace to
+facilitate retrospective credit assignment. Its formulation relies on local
+information, aligning with biological constraints and enabling neuromorphic
+implementation. Experimental validation on reinforcement tasks (immediate and
+delayed rewards) shows our approach significantly outperforms RMHL and achieves
+performance comparable to BP, although with slower convergence due to its
+noise-driven updates. While tested on simple architectures, the results
+highlight the potential of noise-driven, brain-inspired learning for low-power
+adaptive systems, particularly in scenarios where energy efficiency and
+biological plausibility are a priority. These findings also offer mechanistic
+insights into how dopamine-like signals and synaptic stochasticity may jointly
+enable learning in biological networks, bridging computational models with
+neurobiological principles.

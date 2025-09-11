@@ -1,0 +1,26 @@
+http://arxiv.org/abs/2210.09976v1
+
+Superconducting optoelectronic loop neurons are a class of circuits
+potentially conducive to networks for large-scale artificial cognition. These
+circuits employ superconducting components including single-photon detectors,
+Josephson junctions, and transformers to achieve neuromorphic functions. To
+date, all simulations of loop neurons have used first-principles circuit
+analysis to model the behavior of synapses, dendrites, and neurons. These
+circuit models are computationally inefficient and leave opaque the
+relationship between loop neurons and other complex systems. Here we introduce
+a modeling framework that captures the behavior of the relevant synaptic,
+dendritic, and neuronal circuits at a phenomenological level without resorting
+to full circuit equations. Within this compact model, each dendrite is
+discovered to obey a single nonlinear leaky-integrator ordinary differential
+equation, while a neuron is modeled as a dendrite with a thresholding element
+and an additional feedback mechanism for establishing a refractory period. A
+synapse is modeled as a single-photon detector coupled to a dendrite, where the
+response of the single-photon detector follows a closed-form expression. We
+quantify the accuracy of the phenomenological model relative to circuit
+simulations and find that the approach reduces computational time by a factor
+of ten thousand while maintaining accuracy of one part in ten thousand. We
+demonstrate the use of the model with several basic examples. The net increase
+in computational efficiency enables future simulation of large networks, while
+the formulation provides a connection to a large body of work in applied
+mathematics, computational neuroscience, and physical systems such as spin
+glasses.

@@ -1,0 +1,20 @@
+http://arxiv.org/abs/1807.01491v2
+
+NMDA receptors (NMDA-R) typically contribute to excitatory synaptic
+transmission in the central nervous system. While calcium influx through NMDA-R
+plays a critical role in synaptic plasticity, experimental evidence indicates
+that NMDAR-mediated calcium influx also modifies neuronal excitability through
+the activation of calcium-activated potassium channels. This mechanism has not
+yet been studied theoretically. Our theoretical model provides a simple
+description of neuronal electrical activity that takes into account the tonic
+activity of extrasynaptic NMDA receptors and a cytosolic calcium compartment.
+We show that calcium influx mediated by the tonic activity of NMDA-R can be
+coupled directly to the activation of calcium-activated potassium channels,
+resulting in an overall inhibitory effect on neuronal excitability.
+Furthermore, the presence of tonic NMDA-R activity promotes bistability in
+electrical activity by dramatically increasing the stimulus interval where both
+a stable steady state and repetitive firing can coexist. These results could
+provide an intrinsic mechanism for the constitution of memory traces in
+neuronal circuits. They also shed light on the way by which $\beta$-amyloids
+can alter neuronal activity when interfering with NMDA-R in Alzheimer's disease
+and cerebral ischemia.

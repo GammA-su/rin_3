@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Head%20direction%20cell
+
+Head direction (HD) cells are neurons found in a number of brain regions that increase their firing rates above baseline levels only when the animal's head points in a specific direction. They have been reported in rats, monkeys, mice, chinchillas and bats, but are thought to be common to all mammals, perhaps all vertebrates and perhaps even some invertebrates, and to underlie the "sense of direction". When the animal's head is facing in the cell's "preferred firing direction" these neurons fire at a steady rate, but firing decreases back to baseline rates as the animal's head turns away from the preferred direction.

@@ -1,0 +1,27 @@
+http://arxiv.org/abs/2401.13467v1
+
+The mechanisms underlying pathologically synchronized neural oscillations in
+Parkinson's disease (PD) and generalized epilepsies are jointly explored via a
+neural field model of the corticothalamic-basal ganglia (CTBG) system. The
+basal ganglia (BG) are approximated as a single effective population and their
+roles in modulating oscillatory corticothalamic (CT) dynamics and vice versa
+are analyzed. Besides normal EEG rhythms, enhanced activity around 4 Hz and 20
+Hz exists in the model, consistent with characteristic frequencies in PD. These
+rhythms result from resonances in loops between the BG and CT populations,
+analogous to those underlying epileptic oscillations in a previous CT model.
+Dopamine depletion is argued to weaken the dampening of these resonances in PD,
+and network connections explain the significant coherence between BG, thalamic,
+and cortical activity around 4-8 Hz and 20 Hz. Parallels between the afferent
+and efferent connection sites of the thalamic reticular nucleus (TRN) and BG
+predict low dopamine to correspond to a reduced likelihood of tonic-clonic
+(grand mal) seizures, agreeing with experimental findings. Further, the model
+predicts an increased likelihood of absence (petit mal) seizure resulting from
+low dopamine levels matching experimental findings. Suppression of absence
+seizure activity is shown when afferent and efferent BG connections to the CT
+system are strengthened, consistent with other CTBG modeling studies. The BG
+are demonstrated to suppress activity of the CTBG system near tonic-clonic
+seizure states, providing insight into the reported efficacy of current
+treatments in BG circuits. Sleep states of the TRN are also found to suppress
+pathological PD activity matching observations. Overall, the findings
+demonstrate strong parallels between coherent oscillations in generalized
+epilepsies and PD, and provide insights into possible comorbidities.

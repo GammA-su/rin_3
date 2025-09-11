@@ -1,0 +1,18 @@
+http://arxiv.org/abs/2211.07398v2
+
+The brain's white matter (WM) undergoes developmental and degenerative
+processes during the human lifespan. To investigate the relationship between WM
+anatomical regions and age, we study diffusion magnetic resonance imaging
+tractography that is finely parcellated into fiber clusters in the deep,
+superficial, and cerebellar WM. We propose a deep-learning-based age prediction
+model that leverages large convolutional kernels and inverted bottlenecks. We
+improve performance using novel discrete multi-faceted mix data augmentation
+and a novel prior-knowledge-based loss function that encourages age predictions
+in the expected range. We study a dataset of 965 healthy young adults (22-37
+years) derived from the Human Connectome Project (HCP). Experimental results
+demonstrate that the proposed model achieves a mean absolute error of 2.59
+years and outperforms compared methods. We find that the deep WM is the most
+informative for age prediction in this cohort, while the superficial WM is the
+least informative. Overall, the most predictive WM tracts are the
+thalamo-frontal tract from the deep WM and the intracerebellar input and
+Purkinje tract from the cerebellar WM.
